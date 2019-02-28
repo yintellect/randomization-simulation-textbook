@@ -1,0 +1,13 @@
+arm
+base
+blockTools
+foreign
+gtools
+knitr
+lattice
+lme4
+MASS
+Matrix
+Rcpp
+ri
+xtable

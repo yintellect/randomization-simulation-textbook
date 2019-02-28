@@ -1,0 +1,1035 @@
+qnorm(.6)
+qnorm(.4)
+plot(c(0,30),c(0,10),type="n",xlab="df",ylab="tvalue")
+lines(1:30,qt(.975,df=1:30))
+qt(.975,df=1:30)
+qt(.975,100)
+qt(.975,1000)
+xvs <- -seq(-4,4,.01)
+xvs
+plot(xvs,dnorm(xvs))
+plot(xvs,dnorm(xvs),type="l")
+lines(xvs,dt(xvs,df=5))
+lines(xvs,dt(xvs,df=2))
+plot(xvs,dnorm(xvs),type="l")
+lines(xvs,dt(xvs,df=2))
+dt(0,df=5)
+dt(1,df=5)
+plot(xvs,dnorm(xvs),type="l")
+plot(xvs,dnorm(xvs)/dt(xvs,df=5),type="l")
+plot(xvs,dt(xvs,df=5)/dnorm(xvs),type="l")
+c(1,2,3)
+x<- c(1,2,3)
+x
+length(x)
+rnorm(3)
+rnorm(5)
+rt(5,3)
+A <- rt(100,5)
+B <- rnorm(100)
+mean(A,B)
+mean(cbind(A,B))
+mean(rbind(A,B))
+mean(A)
+mean(B)
+mean(as.matrix(cbind(A,B)))
+t.test(A,B)
+ks.test(A,B)
+A <- rt(1000,5)
+ks.test(A,B)
+B <- rnorm(1000)
+ks.test(A,B)
+B <- rnorm(10000)
+ks.test(A,B)
+A <- rt(10000,5)
+ks.test(A,B)
+length(A)
+mean(A)
+mean(A~B)
+mean(A|B)
+mean(cbind(A,B))
+?apply
+apply(cbind(A,B), 2, mean)
+apply(cbind(A,B), 1, mean)
+letters(1:8)
+??letters
+letters[1:8]
+letters
+x <- cbind(x1 = 3, x2 = c(4:1, 2:5))
+x
+dimnames(x)
+dimnames(x)[[1]] <- letters[1:8]
+dimnames
+dimnames(x)
+apply(x, 2, mean, trim = .2)
+apply(x, 2, mean)
+apply(x, 2, mean, trim = 2)
+apply(x, 2, mean, trim = 5)
+col.sums <- apply(x, 2, sum)
+col.sums
+stopifnot( apply(x, 2, is.vector))
+apply(x, 2, sort)
+cave <- function(x, c1, c2) c(mean(x[c1]), mean(x[c2]))
+apply(x,1, cave,  c1="x1", c2=c("x1","x2"))
+load("http://jakebowers.org/PS230Data/gss.rda")
+load(url("http://jakebowers.org/PS230Data/gss.rda"))
+str(gss)
+names(gss)
+subset(gss,subset=id==2011)
+summary(babies)
+summary(gss$babies)
+head(gss)
+gss$hhkids<-with(gss,babies+preteen+teens)
+head(gss)
+gss<-within(gss,{   hhkids<-babies+preteen+teens
+})
+head(gss)
+str(gss)
+mean(gss$hhkids)
+require(mosaic)
+deal(gss[,c("id","babies","preteen","teens","hhkids")],10)
+set.seed(20120911)
+deal(gss[,c("id","babies","preteen","teens","hhkids")],10)
+newids<-sample(nrow(gss),10)
+summary(newids)
+newids
+gss[newids,c("id","babies","preteen","teens","hhkids")]
+newids<-sort(newids)
+gss[newids,c("id","babies","preteen","teens","hhkids")]
+load(url("http://jakebowers.org/PS230Data/gss.rda"))
+str(gss)
+boxplot(gss$age,range=0)
+library(lattice)
+print(bwplot(~age,data=gss,coef=0))
+(sd.age<-sd(gss$age,na.rm=TRUE))
+?recode
+??recode
+install.packages("car")
+library(car)
+gss$dem<-recode(gss$partyid,                "c('strong democrat','not str democrat','ind,near dem')=1 ; c('independent','other party')=NA ; NA=NA ; else=0")
+load(url("http://jakebowers.org/PS230Data/gss.rda"))
+gss$dem<-recode(gss$partyid,                "c('strong democrat','not str democrat','ind,near dem')=1 ; c('independent','other party')=NA ; NA=NA ; else=0")
+with(gss,table(partyid,dem,useNA="ifany"))
+gss_good<-na.omit(subset(gss,select=c("id","hhkids","dem","partyid")))
+str(gss_good)
+themodel<-lm(hhkids~dem,data=gss_good) print(themodel)
+print(themodel)
+set.seed(12345)#
+plot(hhkids~jitter(dem),data=gss_good,col="gray",axes=FALSE,pch=19,#
+     xlab="Party ( 0=Rep, 1=Dem) (jittered)",#
+     ylab=" Number Of Children In Household",ylim=range(gss_good$hhkids))#
+axis(1,at=c(0,1),labels=c("Rep","Dem"))#
+axis(2)#
+set.seed(12345) ##Only need to get the jittering to repeat the same as before.#
+points(fitted(themodel)~jitter(dem),data=gss_good,cex=.7)#
+##Now show mean+/- 1 sd intervals#
+thesds<-with(gss_good,tapply(hhkids,dem,sd))#
+themeans<-with(gss_good,tapply(hhkids,dem,mean))#
+segments(c(0,1),themeans-thesds,c(0,1),themeans+thesds,lwd=2)#
+points(c(0,1),themeans,cex=2)#
+##And show 68% coverage intervals and medians (aka 50th percentile)#
+the68pctint<-simplify2array(with(gss_good,tapply(hhkids,dem,function(x){#
+  quantile(x,c(.16,.84))})))#
+themedians<-with(gss_good,tapply(hhkids,dem,function(x){quantile(x,.5)}))#
+segments(c(0,1)+.1,the68pctint["16%",],c(0,1)+.1,the68pctint["84%",])#
+points(c(0,1)+.1,themedians,cex=2,pch=2)
+load(url("http://jakebowers.org/PS230Data/pk.df.rda")) ##The name of the dataframe or dataset is pk.df.
+str(pk.df)
+pk.good<-na.omit(subset(pk.df,select=c('ridp','wardur','id')))
+str(pk.good)
+lm1<-lm(ridp~wardur,data=pk.good)
+summmary(lm1)
+summary(lm1)
+xyplot(ridp+fitted(lm1)~wardur, data=pk.good,        pch=c(1,19),col=c('black','black'),        ylab='Number of Refugees/Displaced Persons',        xlab='Civil War Duration (Years)',        scales=list(x=list(tick.number=10)))
+library(mosaic)
+xyplot(ridp+fitted(lm1)~wardur, data=pk.good,        pch=c(1,19),col=c('black','black'),        ylab='Number of Refugees/Displaced Persons',        xlab='Civil War Duration (Years)',        scales=list(x=list(tick.number=10)))
+par(mfrow=c(1,1),mgp=c(1.25,.5,0), # adjust plotting margins, etc    mar=c(5,1,0,0),oma=c(0,0,0,0)) # see ?par for information
+plot(ridp~wardur,data=pk.df, # plot raw data     ylab='Number of Refugees/Displaced Persons',     xlab='Civil War Duration (Years)')
+points(fitted(lm1)~wardur,pch=19,cex=.5,data=lm1$model)
+plot(ridp~UNpk,data=pk.good,cex=.5,       ylab='Number of Refugees/Displaced Persons',       xlab='UN Peace Keepers? (0=No, 1=Yes)')
+load(url("http://jakebowers.org/PS230Data/pk.df.rda"))
+pk.good<-na.omit(subset(pk.df,select=c('ridp','wardur','warstart.yr','warstart.hist.yr','UNpk','id')))
+plot(ridp~UNpk,data=pk.good,cex=.5,       ylab='Number of Refugees/Displaced Persons',       xlab='UN Peace Keepers? (0=No, 1=Yes)')
+lines(fitted(lm3)~UNpk,data=pk.good)
+lm3<-lm(ridp~UNpk,data=pk.good) signif(coef(lm3),4)
+lines(fitted(lm3)~UNpk,data=pk.good)
+points(fitted(lm3)~UNpk,data=pk.good,pch=19)
+ load(url("http://jakebowers.org/PS230Data/nes08sm.rda"))
+dim(nes08sm)
+ideo<-V085084
+table(nes08sm$pid)
+table(with(nes08sm,pid))
+nes08sm$dem<-with(nes08sm,ifelse(pid<3,1,0))
+table(with(nes08sm,pid,dem))
+table(nes08sm$pid,nes08sm$dem)
+table(with(nes08sm,cbind(pid,dem)))
+table(with(nes08sm,c(pid,dem)))
+table(nes08sm$pid,nes08sm$dem)
+lm(formula = ftdemrep ~ inc, data = nes08sm)
+head(nes08sm)
+lm(formula = ftdemrep ~ ideo, data = nes08sm)
+lm(formula = ftdemrep ~ ideo female, data = nes08sm)
+lm(formula = ftdemrep ~ ideo +female, data = nes08sm)
+#
+# Stop if p < 0.05#
+#
+numiter <- 1000#
+estimate <- rep(NA,numiter)#
+#
+for (iter in 1:numiter) {#
+#
+Nmax <- 1000#
+Y0 <- rnorm(Nmax,0,2)#
+Y1 <- rnorm(Nmax,1,2)#
+#
+Z <- sample(c(rep(1,Nmax/2),rep(0,Nmax/2)))#
+Y <- Y0#
+Y[Z==1] <- Y1[Z==1]#
+#
+for (N in 30:Nmax) {#
+	count <- c(1:N)#
+	pval <- t.test(Y[count][Z[count]==1],Y[count][Z[count]==0])$p.value#
+	if (pval <= 0.05) break#
+	}#
+	#
+N#
+#
+estimate[iter] <- mean(Y[count][Z[count]==1]) - mean(Y[count][Z[count]==0])#
+#
+}#
+#
+mean(estimate)
+mean(Y1-Y0)
+Y
+#
+# Stop if p < 0.05#
+#
+numiter <- 100#
+estimate <- rep(NA,numiter)#
+counts <- rep(NA,numiter)#
+#
+for (iter in 1:numiter) {#
+#
+Nmax <- 1000#
+Y0 <- rnorm(Nmax,0,2)#
+Y1 <- rnorm(Nmax,1,2)#
+#
+Z <- sample(c(rep(1,Nmax/2),rep(0,Nmax/2)))#
+Y <- Y0#
+Y[Z==1] <- Y1[Z==1]#
+#
+for (N in 30:Nmax) {#
+	count <- c(1:N)#
+	pval <- t.test(Y[count][Z[count]==1],Y[count][Z[count]==0])$p.value#
+	if (pval <= 0.05) break#
+	}#
+	#
+counts[iter] <- N#
+#
+estimate[iter] <- mean(Y[count][Z[count]==1]) - mean(Y[count][Z[count]==0])#
+#
+}#
+#
+mean(estimate)
+counts
+plot(counts,estimate)
+#
+# Stop if p < 0.05#
+#
+numiter <- 100#
+estimate <- rep(NA,numiter)#
+counts <- rep(NA,numiter)#
+#
+for (iter in 1:numiter) {#
+#
+Nmax <- 1000#
+Y0 <- rnorm(Nmax,0,1)#
+Y1 <- rnorm(Nmax,1,1)#
+#
+Z <- sample(c(rep(1,Nmax/2),rep(0,Nmax/2)))#
+Y <- Y0#
+Y[Z==1] <- Y1[Z==1]#
+#
+for (N in 30:Nmax) {#
+	count <- c(1:N)#
+	pval <- t.test(Y[count][Z[count]==1],Y[count][Z[count]==0])$p.value#
+	if (pval <= 0.05) break#
+	}#
+	#
+counts[iter] <- N#
+#
+estimate[iter] <- mean(Y[count][Z[count]==1]) - mean(Y[count][Z[count]==0])#
+#
+}#
+#
+mean(estimate)
+plot(counts,estimate)
+#
+# Stop if p < 0.05#
+#
+numiter <- 100#
+estimate <- rep(NA,numiter)#
+counts <- rep(NA,numiter)#
+#
+for (iter in 1:numiter) {#
+#
+Nmax <- 1000#
+Y0 <- rnorm(Nmax,0,1)#
+Y1 <- rnorm(Nmax,0.5,1)#
+#
+Z <- sample(c(rep(1,Nmax/2),rep(0,Nmax/2)))#
+Y <- Y0#
+Y[Z==1] <- Y1[Z==1]#
+#
+for (N in 30:Nmax) {#
+	count <- c(1:N)#
+	pval <- t.test(Y[count][Z[count]==1],Y[count][Z[count]==0])$p.value#
+	if (pval <= 0.05) break#
+	}#
+	#
+counts[iter] <- N#
+#
+estimate[iter] <- mean(Y[count][Z[count]==1]) - mean(Y[count][Z[count]==0])#
+#
+}#
+#
+mean(estimate)
+#
+# Stop if p < 0.05#
+#
+numiter <- 100#
+estimate <- rep(NA,numiter)#
+counts <- rep(NA,numiter)#
+#
+for (iter in 1:numiter) {#
+#
+Nmax <- 1000#
+Y0 <- rnorm(Nmax,0,10)#
+Y1 <- rnorm(Nmax,1,10)#
+#
+Z <- sample(c(rep(1,Nmax/2),rep(0,Nmax/2)))#
+Y <- Y0#
+Y[Z==1] <- Y1[Z==1]#
+#
+for (N in 30:Nmax) {#
+	count <- c(1:N)#
+	pval <- t.test(Y[count][Z[count]==1],Y[count][Z[count]==0])$p.value#
+	if (pval <= 0.05) break#
+	}#
+	#
+counts[iter] <- N#
+#
+estimate[iter] <- mean(Y[count][Z[count]==1]) - mean(Y[count][Z[count]==0])#
+#
+}#
+#
+mean(estimate)
+plot(counts,estimate)
+#
+# Stop if p < 0.05#
+#
+numiter <- 100#
+estimate <- rep(NA,numiter)#
+counts <- rep(NA,numiter)#
+#
+for (iter in 1:numiter) {#
+#
+Nmax <- 1000#
+Y0 <- rnorm(Nmax,0,3)#
+Y1 <- rnorm(Nmax,1,3)#
+#
+Z <- sample(c(rep(1,Nmax/2),rep(0,Nmax/2)))#
+Y <- Y0#
+Y[Z==1] <- Y1[Z==1]#
+#
+for (N in 30:Nmax) {#
+	count <- c(1:N)#
+	pval <- t.test(Y[count][Z[count]==1],Y[count][Z[count]==0])$p.value#
+	if (pval <= 0.05) break#
+	}#
+	#
+counts[iter] <- N#
+#
+estimate[iter] <- mean(Y[count][Z[count]==1]) - mean(Y[count][Z[count]==0])#
+#
+}#
+#
+mean(estimate)#
+plot(counts,estimate)
+#
+# Stop if p < 0.05#
+#
+numiter <- 100#
+estimate <- rep(NA,numiter)#
+counts <- rep(NA,numiter)#
+#
+for (iter in 1:numiter) {#
+#
+Nmax <- 1000#
+Y0 <- rnorm(Nmax,0,2)#
+Y1 <- rnorm(Nmax,2,2)#
+#
+Z <- sample(c(rep(1,Nmax/2),rep(0,Nmax/2)))#
+Y <- Y0#
+Y[Z==1] <- Y1[Z==1]#
+#
+for (N in 30:Nmax) {#
+	count <- c(1:N)#
+	pval <- t.test(Y[count][Z[count]==1],Y[count][Z[count]==0])$p.value#
+	if (pval <= 0.05) break#
+	}#
+	#
+counts[iter] <- N#
+#
+estimate[iter] <- mean(Y[count][Z[count]==1]) - mean(Y[count][Z[count]==0])#
+#
+}#
+#
+mean(estimate)#
+plot(counts,estimate)
+#
+# Stop if p < 0.05#
+#
+numiter <- 100#
+estimate <- rep(NA,numiter)#
+counts <- rep(NA,numiter)#
+#
+for (iter in 1:numiter) {#
+#
+Nmax <- 1000#
+Y0 <- rnorm(Nmax,0,2)#
+Y1 <- rnorm(Nmax,1,2)#
+#
+Z <- sample(c(rep(1,Nmax/2),rep(0,Nmax/2)))#
+Y <- Y0#
+Y[Z==1] <- Y1[Z==1]#
+#
+for (N in 30:Nmax) {#
+	count <- c(1:N)#
+	pval <- t.test(Y[count][Z[count]==1],Y[count][Z[count]==0])$p.value#
+	if (pval <= 0.05) break#
+	}#
+	#
+counts[iter] <- N#
+#
+estimate[iter] <- mean(Y[count][Z[count]==1]) - mean(Y[count][Z[count]==0])#
+#
+}#
+#
+mean(estimate)#
+plot(counts,estimate)
+#
+# Stop if p < 0.05#
+#
+numiter <- 100#
+estimate <- rep(NA,numiter)#
+counts <- rep(NA,numiter)#
+#
+for (iter in 1:numiter) {#
+#
+Nmax <- 200#
+Y0 <- rnorm(Nmax,0,2)#
+Y1 <- rnorm(Nmax,1,2)#
+#
+Z <- sample(c(rep(1,Nmax/2),rep(0,Nmax/2)))#
+Y <- Y0#
+Y[Z==1] <- Y1[Z==1]#
+#
+for (N in 30:Nmax) {#
+	count <- c(1:N)#
+	pval <- t.test(Y[count][Z[count]==1],Y[count][Z[count]==0])$p.value#
+	if (pval <= 0.05) break#
+	}#
+	#
+counts[iter] <- N#
+#
+estimate[iter] <- mean(Y[count][Z[count]==1]) - mean(Y[count][Z[count]==0])#
+#
+}#
+#
+mean(estimate)#
+plot(counts,estimate)
+#
+# Stop if p < 0.05#
+#
+numiter <- 100#
+estimate <- rep(NA,numiter)#
+counts <- rep(NA,numiter)#
+#
+for (iter in 1:numiter) {#
+#
+Nmax <- 200#
+Y0 <- rnorm(Nmax,0,2)#
+Y1 <- rnorm(Nmax,1,2)#
+#
+Z <- sample(c(rep(1,Nmax/2),rep(0,Nmax/2)))#
+Y <- Y0#
+Y[Z==1] <- Y1[Z==1]#
+#
+for (N in 30:Nmax) {#
+	count <- c(1:N)#
+	pval <- t.test(Y[count][Z[count]==1],Y[count][Z[count]==0])$p.value#
+	if (pval <= 0.025) break#
+	}#
+	#
+counts[iter] <- N#
+#
+estimate[iter] <- mean(Y[count][Z[count]==1]) - mean(Y[count][Z[count]==0])#
+#
+}#
+#
+mean(estimate)#
+plot(counts,estimate)
+#
+# Stop if p < 0.05#
+#
+numiter <- 100#
+estimate <- rep(NA,numiter)#
+counts <- rep(NA,numiter)#
+#
+for (iter in 1:numiter) {#
+#
+Nmax <- 200#
+Y0 <- rnorm(Nmax,0,2)#
+Y1 <- rnorm(Nmax,1,2)#
+#
+Z <- sample(c(rep(1,Nmax/2),rep(0,Nmax/2)))#
+Y <- Y0#
+Y[Z==1] <- Y1[Z==1]#
+#
+for (N in 30:Nmax) {#
+	count <- c(1:N)#
+	pval <- t.test(Y[count][Z[count]==1],Y[count][Z[count]==0])$p.value#
+	if (pval <= 0.01) break#
+	}#
+	#
+counts[iter] <- N#
+#
+estimate[iter] <- mean(Y[count][Z[count]==1]) - mean(Y[count][Z[count]==0])#
+#
+}#
+#
+mean(estimate)#
+plot(counts,estimate)
+#
+# Stop if p < 0.05#
+#
+numiter <- 100#
+estimate <- rep(NA,numiter)#
+counts <- rep(NA,numiter)#
+#
+for (iter in 1:numiter) {#
+#
+Nmax <- 200#
+Y0 <- rnorm(Nmax,0,2)#
+Y1 <- rnorm(Nmax,1,2)#
+#
+Z <- sample(c(rep(1,Nmax/2),rep(0,Nmax/2)))#
+Y <- Y0#
+Y[Z==1] <- Y1[Z==1]#
+#
+for (N in 30:Nmax) {#
+	count <- c(1:N)#
+	pval <- t.test(Y[count][Z[count]==1],Y[count][Z[count]==0])$p.value#
+	if (pval <= 0.001) break#
+	}#
+	#
+counts[iter] <- N#
+#
+estimate[iter] <- mean(Y[count][Z[count]==1]) - mean(Y[count][Z[count]==0])#
+#
+}#
+#
+mean(estimate)#
+plot(counts,estimate)
+#
+# Stop if p < 0.05#
+#
+numiter <- 100#
+estimate <- rep(NA,numiter)#
+counts <- rep(NA,numiter)#
+#
+for (iter in 1:numiter) {#
+#
+Nmax <- 200#
+Y0 <- rnorm(Nmax,0,2)#
+Y1 <- rnorm(Nmax,1,2)#
+#
+Z <- sample(c(rep(1,Nmax/2),rep(0,Nmax/2)))#
+Y <- Y0#
+Y[Z==1] <- Y1[Z==1]#
+#
+for (N in 30:Nmax) {#
+	count <- c(1:N)#
+	pval <- t.test(Y[count][Z[count]==1],Y[count][Z[count]==0])$p.value#
+	if (pval <= 0.0001) break#
+	}#
+	#
+counts[iter] <- N#
+#
+estimate[iter] <- mean(Y[count][Z[count]==1]) - mean(Y[count][Z[count]==0])#
+#
+}#
+#
+mean(estimate)#
+plot(counts,estimate)
+#
+# Stop if p < 0.05#
+#
+numiter <- 100#
+estimate <- rep(NA,numiter)#
+counts <- rep(NA,numiter)#
+#
+for (iter in 1:numiter) {#
+#
+Nmax <- 500#
+Y0 <- rnorm(Nmax,0,2)#
+Y1 <- rnorm(Nmax,1,2)#
+#
+Z <- sample(c(rep(1,Nmax/2),rep(0,Nmax/2)))#
+Y <- Y0#
+Y[Z==1] <- Y1[Z==1]#
+#
+for (N in 30:Nmax) {#
+	count <- c(1:N)#
+	pval <- t.test(Y[count][Z[count]==1],Y[count][Z[count]==0])$p.value#
+	if (pval <= 0.01) break#
+	}#
+	#
+counts[iter] <- N#
+#
+estimate[iter] <- mean(Y[count][Z[count]==1]) - mean(Y[count][Z[count]==0])#
+#
+}#
+#
+mean(estimate)#
+plot(counts,estimate)
+#
+# Stop if p < 0.05#
+#
+numiter <- 100#
+estimate <- rep(NA,numiter)#
+counts <- rep(NA,numiter)#
+#
+for (iter in 1:numiter) {#
+#
+Nmax <- 500#
+Y0 <- rnorm(Nmax,0,2)#
+Y1 <- rnorm(Nmax,1,2)#
+#
+Z <- sample(c(rep(1,Nmax/2),rep(0,Nmax/2)))#
+Y <- Y0#
+Y[Z==1] <- Y1[Z==1]#
+#
+for (N in 30:Nmax) {#
+	count <- c(1:N)#
+	pval <- t.test(Y[count][Z[count]==1],Y[count][Z[count]==0])$p.value#
+	if (pval <= 0.025) break#
+	}#
+	#
+counts[iter] <- N#
+#
+estimate[iter] <- mean(Y[count][Z[count]==1]) - mean(Y[count][Z[count]==0])#
+#
+}#
+#
+mean(estimate)#
+plot(counts,estimate)
+#
+# Stop if p < 0.05#
+#
+numiter <- 100#
+estimate <- rep(NA,numiter)#
+counts <- rep(NA,numiter)#
+#
+for (iter in 1:numiter) {#
+#
+Nmax <- 500#
+Y0 <- rnorm(Nmax,0,2)#
+Y1 <- rnorm(Nmax,1,2)#
+#
+Z <- sample(c(rep(1,Nmax/2),rep(0,Nmax/2)))#
+Y <- Y0#
+Y[Z==1] <- Y1[Z==1]#
+#
+for (N in 30:Nmax) {#
+	count <- c(1:N)#
+	pval <- t.test(Y[count][Z[count]==1],Y[count][Z[count]==0])$p.value#
+	if (pval <= 0.05) break#
+	}#
+	#
+counts[iter] <- N#
+#
+estimate[iter] <- mean(Y[count][Z[count]==1]) - mean(Y[count][Z[count]==0])#
+#
+}#
+#
+mean(estimate)#
+plot(counts,estimate)
+#
+# Stop if p < 0.05#
+#
+numiter <- 100#
+estimate <- rep(NA,numiter)#
+counts <- rep(NA,numiter)#
+#
+for (iter in 1:numiter) {#
+#
+Nmax <- 500#
+Y0 <- rnorm(Nmax,0,2)#
+Y1 <- rnorm(Nmax,0,2)#
+#
+Z <- sample(c(rep(1,Nmax/2),rep(0,Nmax/2)))#
+Y <- Y0#
+Y[Z==1] <- Y1[Z==1]#
+#
+for (N in 30:Nmax) {#
+	count <- c(1:N)#
+	pval <- t.test(Y[count][Z[count]==1],Y[count][Z[count]==0])$p.value#
+	if (pval <= 0.05) break#
+	}#
+	#
+counts[iter] <- N#
+#
+estimate[iter] <- mean(Y[count][Z[count]==1]) - mean(Y[count][Z[count]==0])#
+#
+}#
+#
+mean(estimate)#
+plot(counts,estimate)
+print("ate")
+#
+# Stop if p < 0.05#
+#
+mean0 <- 0#
+mean1 <- 2#
+#
+#
+numiter <- 100#
+estimate <- rep(NA,numiter)#
+counts <- rep(NA,numiter)#
+#
+for (iter in 1:numiter) {#
+#
+Nmax <- 500#
+Y0 <- rnorm(Nmax,mean0,2)#
+Y1 <- rnorm(Nmax,mean1,2)#
+#
+Z <- sample(c(rep(1,Nmax/2),rep(0,Nmax/2)))#
+Y <- Y0#
+Y[Z==1] <- Y1[Z==1]#
+#
+for (N in 30:Nmax) {#
+	count <- c(1:N)#
+	pval <- t.test(Y[count][Z[count]==1],Y[count][Z[count]==0])$p.value#
+	if (pval <= 0.05) break#
+	}#
+	#
+counts[iter] <- N#
+#
+estimate[iter] <- mean(Y[count][Z[count]==1]) - mean(Y[count][Z[count]==0])#
+#
+}#
+print "ATE = " (mean1-mean0)#
+mean(estimate)#
+plot(counts,estimate)
+print ("ATE = ") (mean1-mean0)
+print ("ATE = ",mean1-mean0)
+print ("ATE = ",(mean1-mean0))
+#
+# Stop if p < 0.05#
+#
+mean0 <- 0#
+mean1 <- 2#
+#
+#
+numiter <- 100#
+estimate <- rep(NA,numiter)#
+counts <- rep(NA,numiter)#
+#
+for (iter in 1:numiter) {#
+#
+Nmax <- 500#
+Y0 <- rnorm(Nmax,mean0,2)#
+Y1 <- rnorm(Nmax,mean1,2)#
+#
+Z <- sample(c(rep(1,Nmax/2),rep(0,Nmax/2)))#
+Y <- Y0#
+Y[Z==1] <- Y1[Z==1]#
+#
+for (N in 30:Nmax) {#
+	count <- c(1:N)#
+	pval <- t.test(Y[count][Z[count]==1],Y[count][Z[count]==0])$p.value#
+	if (pval <= 0.05) break#
+	}#
+	#
+counts[iter] <- N#
+#
+estimate[iter] <- mean(Y[count][Z[count]==1]) - mean(Y[count][Z[count]==0])#
+#
+}#
+ATE <- mean1-mean0#
+ATE#
+mean(estimate)#
+plot(counts,estimate)
+#
+# Stop if p < 0.05#
+#
+mean0 <- 0#
+mean1 <- 2#
+#
+#
+numiter <- 100#
+estimate <- rep(NA,numiter)#
+counts <- rep(NA,numiter)#
+#
+for (iter in 1:numiter) {#
+#
+Nmax <- 200#
+Y0 <- rnorm(Nmax,mean0,2)#
+Y1 <- rnorm(Nmax,mean1,2)#
+#
+Z <- sample(c(rep(1,Nmax/2),rep(0,Nmax/2)))#
+Y <- Y0#
+Y[Z==1] <- Y1[Z==1]#
+#
+for (N in 30:Nmax) {#
+	count <- c(1:N)#
+	pval <- t.test(Y[count][Z[count]==1],Y[count][Z[count]==0])$p.value#
+	if (pval <= 0.05) break#
+	}#
+	#
+counts[iter] <- N#
+#
+estimate[iter] <- mean(Y[count][Z[count]==1]) - mean(Y[count][Z[count]==0])#
+#
+}#
+ATE <- mean1-mean0#
+ATE#
+mean(estimate)#
+plot(counts,estimate)
+#
+# Stop if p < 0.05#
+#
+mean0 <- 0#
+mean1 <- 2#
+#
+#
+numiter <- 100#
+estimate <- rep(NA,numiter)#
+counts <- rep(NA,numiter)#
+#
+for (iter in 1:numiter) {#
+#
+Nmax <- 200#
+Y0 <- rnorm(Nmax,mean0,2)#
+Y1 <- rnorm(Nmax,mean1,2)#
+#
+Z <- sample(c(rep(1,Nmax/2),rep(0,Nmax/2)))#
+Y <- Y0#
+Y[Z==1] <- Y1[Z==1]#
+#
+for (N in 30:Nmax) {#
+	count <- c(1:N)#
+	pval <- t.test(Y[count][Z[count]==1],Y[count][Z[count]==0])$p.value#
+	if (pval <= 0.01) break#
+	}#
+	#
+counts[iter] <- N#
+#
+estimate[iter] <- mean(Y[count][Z[count]==1]) - mean(Y[count][Z[count]==0])#
+#
+}#
+ATE <- mean1-mean0#
+ATE#
+mean(estimate)#
+plot(counts,estimate)
+#
+# Stop if p < 0.05#
+#
+mean0 <- 0#
+mean1 <- 1#
+#
+#
+numiter <- 100#
+estimate <- rep(NA,numiter)#
+counts <- rep(NA,numiter)#
+#
+for (iter in 1:numiter) {#
+#
+Nmax <- 200#
+Y0 <- rnorm(Nmax,mean0,2)#
+Y1 <- rnorm(Nmax,mean1,2)#
+#
+Z <- sample(c(rep(1,Nmax/2),rep(0,Nmax/2)))#
+Y <- Y0#
+Y[Z==1] <- Y1[Z==1]#
+#
+for (N in 30:Nmax) {#
+	count <- c(1:N)#
+	pval <- t.test(Y[count][Z[count]==1],Y[count][Z[count]==0])$p.value#
+	if (pval <= 0.05) break#
+	}#
+	#
+counts[iter] <- N#
+#
+estimate[iter] <- mean(Y[count][Z[count]==1]) - mean(Y[count][Z[count]==0])#
+#
+}#
+ATE <- mean1-mean0#
+ATE#
+mean(estimate)#
+plot(counts,estimate)
+rm(list=ls())       # clear objects in memory#
+library(ri)         # load the RI package#
+set.seed(1234567)   # random number seed, so that results are reproducible
+Z <-  c(1,1,1,0,0,0,0,0,0,0)       # one possible treatment assignment#
+Y <-  c{5,4,0,3,2,0,0,0,0,0)  # observed outcomes given assignment#
+#
+#
+probs <- genprobexact(Z,blockvar=NULL)   # no blocking is assumed when generating probability of treatment#
+#
+ate <- estate(Y,Z,prob=probs)      # estimate the ATE#
+#
+perms <- genperms(Z,maxiter=10000,blockvar=NULL)   # set the number of simulated random assignments#
+#
+# ------------------------------------------------------#
+# estimate sampling dist under the sharp null that tau=0#
+# ------------------------------------------------------#
+#
+Ys <- genouts(Y,Z,ate=0)    # create potential outcomes under the sharp null of no effect for any unit#
+#
+distout <- gendist(Ys,perms,prob=probs)  # generate the sampling distribution  based on the implied schedule of potential outcomes implied by the null hypothesis#
+#
+ate                             # estimated ATE#
+sum(abs(distout) >= abs(ate))   # two-tailed comparison used to calculate p-value#
+sum(    distout  >=     ate )   # two-tailed comparison used to calculate p-value#
+sort(distout)                   # list the distribution of estimates under the sharp null of no effect#
+#
+dispdist(distout,ate)       # display p-values, 95% confidence interval, standard error under the null, and graph the sampling distribution under the null
+Z <-  c(1,1,1,0,0,0,0,0,0,0)       # one possible treatment assignment#
+Y <-  c(5,4,0,3,2,0,0,0,0,0)  # observed outcomes given assignment#
+#
+#
+probs <- genprobexact(Z,blockvar=NULL)   # no blocking is assumed when generating probability of treatment#
+#
+ate <- estate(Y,Z,prob=probs)      # estimate the ATE#
+#
+perms <- genperms(Z,maxiter=10000,blockvar=NULL)   # set the number of simulated random assignments
+length(perms)
+Ys <- genouts(Y,Z,ate=0)    # create potential outcomes under the sharp null of no effect for any unit#
+#
+distout <- gendist(Ys,perms,prob=probs)  # generate the sampling distribution  based on the implied schedule of potential outcomes implied by the null hypothesis#
+#
+ate                             # estimated ATE#
+sum(abs(distout) >= abs(ate))   # two-tailed comparison used to calculate p-value#
+sum(    distout  >=     ate )   # two-tailed comparison used to calculate p-value#
+sort(distout)                   # list the distribution of estimates under the sharp null of no effect#
+#
+dispdist(distout,ate)       # display p-values, 95% confidence interval, standard error under the null, and graph the sampling distribution under the null
+nrow(perms)
+ncol(perms)
+ate
+10/120
+rep(1,5)
+c(rep(1,15),rep(0,15))
+y<-c(1.75, 1.41, 1.96, 1.03, 2.38, 2.19, 1.81, 1.91, 1.47, 2.25, 1.53,#
+2.79, 2.54, 2.36, 2.65,  2.69, 2.58, 3.27, 3.52, 2.93)#
+#
+x<-c(0.59, 0.49, 0.65, 0.41, 0.84, 0.87, 0.69, 0.72, 0.67, 0.93, 0.76,1.04, 0.87, 0.92, 0.92, 1.04, 0.94, 1.15, 1.13, 1.09)#
+plot(x,y,xlim=c(0.4,2.5))#
+fit<-loess(y~x)
+lines(predict(fit)~x, col="blue")
+plot(x,y,xlim=c(0.4,2.5))#
+fit<-loess(y~x)#
+newx <- data.frame(x = seq(from = min(x), to = max(x), length = 100))#
+#
+#
+#
+lines(predict(fit, newdata = newx) ~ x, data = newx, col = "blue")
+newx
+predict(fit, newdata = newx)
+predict(fit, newdata = newx) ~ x
+swim = fetchData("swim100m.csv")
+head(swim)
+with(data=swim,sqrt(year))
+with(data=swim,sqrt(year ~ sex))
+mean(year ~ sex, data=swim)
+mean(year ~ sex)
+with(data=swim,sqrt(year[sex == "F"]))
+with(data=swim,sqrt(year[sex == "M"]))
+?deal
+sample(kids,5)
+sample(swim$kids,5)
+swim$kids
+sample(swim$year,5)
+sample(swim$year,5,replace = F)
+sample(swim$year,10,replace = F)
+swim$yeaar
+swim$year
+?sample
+sample(swim$year,20,replace = F)
+sort(sample(swim$year,20,replace = F))
+sort(sample(swim$year,20,replace = T))
+IQR(swim$year)
+histogram(year,data=swim)
+histogram(~year,data=swim)
+histogram(swim$year)
+head(swim)
+bwplot(~year,data=swim)
+bwplot(year,data=swim)
+bwplot(year ~sex,data=swim)
+bwplot(swim~year)
+bwplot(swim$year)
+bwplot(swim$year ~ swim$sex)
+?tally
+?bwplot
+??bwplot
+?do
+do(3)* "hi"
+confint(year)
+confint(year, data=swim)
+confint(swim$year)
+pnorm(0)
+pnorm(.5181)
+pnorm(.0181)
+pnorm(-.2454)
+pnorm(-.2454-.1027)
+rm(list=ls())       # clear objects in memory#
+setwd("/Users/donaldgreen/Dropbox/Teaching 2012-2013/Experiments/Data and R Programs/Extras")#
+library(ri)        # load the RI package#
+library(foreign)    # package allows R to read Stata datasets#
+#
+set.seed(1234567)   # random number seed, so that results are reproducible#
+#
+# data involve only the personal and standard texts#
+#
+tax <- read.dta("Text message & tax collection subset.dta")#
+#
+names(tax)#
+#
+# ITT effects#
+#
+Z <- tax$personal#
+Y <- tax$amountpaid  #
+#
+# note that you can restrict the sample to compliers if you like#
+#
+#  Z <- tax$personal[tax$complier==1]  #
+#  Y <- tax$amountpaid[tax$complier==1]               #
+#
+probs <- genprobexact(Z)          # generate probability of treatment #
+#
+ate <- estate(Y,Z,prob=probs)     # estimate the ATE#
+#
+perms <- genperms(Z,maxiter=100000)  # set the number of simulated random assignments#
+#
+Ys <- genouts(Y,Z,ate=0)            # create potential outcomes UNDER THE SHARP NULL OF NO EFFECT FOR ANY UNIT#
+#
+distout <- gendist(Ys,perms,prob=probs)  # generate the sampling distribution  based on the schedule of potential outcomes implied by the null hypothesis#
+#
+ate                                 # estimated ATE#
+sum(distout >= ate)                 # one-tailed comparison used to calculate p-value (greater than)#
+sum(abs(distout) >= abs(ate))       # two-tailed comparison used to calculate p-value#
+#
+dispdist(distout,ate)               # display p-values, 95% confidence interval, standard error under the null, and graph the sampling distribution under the null

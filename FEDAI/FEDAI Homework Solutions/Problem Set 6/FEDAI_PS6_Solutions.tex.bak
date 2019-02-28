@@ -1,0 +1,421 @@
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% PROBLEM SET LATEX TEMPLATE FILE
+% DEFINE DOCUMENT STYLE, LOAD PACKAGES
+\documentclass[11pt,notitlepage]{article}\usepackage[]{graphicx}\usepackage[]{color}
+%% maxwidth is the original width if it is less than linewidth
+%% otherwise use linewidth (to make sure the graphics do not exceed the margin)
+\makeatletter
+\def\maxwidth{ %
+  \ifdim\Gin@nat@width>\linewidth
+    \linewidth
+  \else
+    \Gin@nat@width
+  \fi
+}
+\makeatother
+
+\definecolor{fgcolor}{rgb}{0.345, 0.345, 0.345}
+\newcommand{\hlnum}[1]{\textcolor[rgb]{0.686,0.059,0.569}{#1}}%
+\newcommand{\hlstr}[1]{\textcolor[rgb]{0.192,0.494,0.8}{#1}}%
+\newcommand{\hlcom}[1]{\textcolor[rgb]{0.678,0.584,0.686}{\textit{#1}}}%
+\newcommand{\hlopt}[1]{\textcolor[rgb]{0,0,0}{#1}}%
+\newcommand{\hlstd}[1]{\textcolor[rgb]{0.345,0.345,0.345}{#1}}%
+\newcommand{\hlkwa}[1]{\textcolor[rgb]{0.161,0.373,0.58}{\textbf{#1}}}%
+\newcommand{\hlkwb}[1]{\textcolor[rgb]{0.69,0.353,0.396}{#1}}%
+\newcommand{\hlkwc}[1]{\textcolor[rgb]{0.333,0.667,0.333}{#1}}%
+\newcommand{\hlkwd}[1]{\textcolor[rgb]{0.737,0.353,0.396}{\textbf{#1}}}%
+
+\usepackage{framed}
+\makeatletter
+\newenvironment{kframe}{%
+ \def\at@end@of@kframe{}%
+ \ifinner\ifhmode%
+  \def\at@end@of@kframe{\end{minipage}}%
+  \begin{minipage}{\columnwidth}%
+ \fi\fi%
+ \def\FrameCommand##1{\hskip\@totalleftmargin \hskip-\fboxsep
+ \colorbox{shadecolor}{##1}\hskip-\fboxsep
+     % There is no \\@totalrightmargin, so:
+     \hskip-\linewidth \hskip-\@totalleftmargin \hskip\columnwidth}%
+ \MakeFramed {\advance\hsize-\width
+   \@totalleftmargin\z@ \linewidth\hsize
+   \@setminipage}}%
+ {\par\unskip\endMakeFramed%
+ \at@end@of@kframe}
+\makeatother
+
+\definecolor{shadecolor}{rgb}{.97, .97, .97}
+\definecolor{messagecolor}{rgb}{0, 0, 0}
+\definecolor{warningcolor}{rgb}{1, 0, 1}
+\definecolor{errorcolor}{rgb}{1, 0, 0}
+\newenvironment{knitrout}{}{} % an empty environment to be redefined in TeX
+
+\usepackage{alltt}    % ADD COMMENTS USING A PERCENT SIGN
+\usepackage{amsfonts}
+\usepackage{amsthm}
+\usepackage{amsmath, booktabs}
+\usepackage{mathtools}
+\usepackage{amssymb}
+\usepackage{subfig}
+\usepackage{setspace}
+\usepackage{fullpage}
+\usepackage{verbatim}
+\usepackage{graphicx}
+\usepackage{tabularx}
+\usepackage{longtable}
+\usepackage{multicol}
+\usepackage{multirow}
+\setlength{\parindent}{0in}  	% uncomment to remove indent at start of paragraphs
+\usepackage{pdflscape}
+\usepackage[english]{babel}
+\usepackage[pdftex]{hyperref}
+\usepackage{natbib}
+\usepackage{caption}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{graphics}
+\usepackage{multirow}
+\usepackage{graphics}
+\usepackage{hyperref}
+\usepackage{longtable}
+\usepackage{latexsym}
+\usepackage{rotating}
+\usepackage{setspace}
+\usepackage{layouts} 
+\usepackage[titletoc]{appendix}
+\DeclareGraphicsExtensions{.pdf,.jpg,.png}
+\usepackage[margin=1in]{geometry}
+\usepackage{enumerate}
+\usepackage{float}
+
+\newcolumntype{L}[1]{>{\raggedright\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\usepackage[T1]{fontenc}				
+
+
+\usepackage{xcolor}
+\usepackage[printwatermark]{xwatermark}
+\newwatermark[allpages,color=black!50,angle=45,scale=1,xpos=0,ypos=0]{DO NOT DISTRIBUTE}
+
+
+
+
+\title{Field Experiments: Design, Analysis and Interpretation \\
+Solutions for Chapter 6 Exercises}
+\author{Alan S. Gerber and Donald P. Green\footnote{Solutions prepared by Peter M. Aronow and revised by Alexander Coppock}}
+\date{\today}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\begin{document}
+
+\maketitle
+
+
+\section*{Question 1}
+The following three quantities are similar in appearance but refer to different things. Describe the differences.
+\begin{itemize}
+\item $E[Y_i(d(1))|D_i = 1]$ \\
+Answer:\\
+This expression refers to the expected potential outcome of $Y_i$ given the treatment received by the assigned treatment group $D_i(1)$ for the subgroup of subjects who would actually receive the treatment ($D_i=1$).
+\item $E[Y_i(d(1))|d_i(1) = 1]$ \\
+Answer:\\
+This expression refers to the expected potential outcome of $Y_i$ given the treatment received by the assigned treatment group $D_i(1)$ for the subgroup of subjects who received the treatment when assigned to it ($d_i(1)=1$). In the case of one-sided non-compliance, this subgroup is the Compliers.
+\item $E[Y_i(d(1))|d_i(1) = d_i(0) = 1]$\\
+Answer:\\
+This expression refers to the expected potential outcome of $Y_i$ given the treatment received by the assigned treatment group $d_i(1)$ for the subgroup of subjects known as Always-Takers, who always receive the treatment regardless of whether they are assigned to the treatment group ($d_i (1)=d_i (0)=1$).  
+
+\end{itemize}
+
+\section*{Question 2}
+The following expression appears in the proof of the CACE theorem. Interpret the meaning of each term in the expression, and explain why the expression as a whole is equal to zero: $E[Y_i(d(1))|d_i(1) = d_i(0) = 0] - E[Y_i(d(0))|d_i(1) = d_i(0) = 0]$.\\
+Answer:\\
+The first expression refers to the expected potential outcome of $Y_i$ given the treatment received by the assigned treatment group $d_i (1)$ for the subgroup of subjects known as Never-Takers, who never receive the treatment regardless of whether they are assigned to the treatment group ($d_i (1)=d_i (0)=0$). The second expression refers to the expected potential outcome of $Y_i$ given the treatment received by the assigned control group $d_i (0)$ for the subgroup of subjects known as Never-Takers, who never receive the treatment regardless of whether they are assigned to the treatment group ($d_i (1)=d_i (0)=0$). These are equal because Never-Takers reveal the same potential outcome regardless of treatment assignment.
+
+\section*{Question 3}
+Assuming that the excludability and non-interference assumptions hold, are the following statements true or false? Explain your reasoning.
+\begin{enumerate}[a)]
+\item Among Compliers, the ITT equals the ATE. \\
+Answer:\\
+True.  For Compliers, treatment assigned equals treatment received, and so ITT = ATE.
+\item Among Defiers, the ITT equals the ATE.\\
+Answer:\\
+False:  For Defiers, treatment assigned is the opposite of treatment received, and so ITT = -ATE.
+\item Among Always-Takers and Never-Takers, the ITT and ATE are zero.\\
+Answer: \\
+False. For Always-takers and Never-takers, the ITT is zero because they respond the same to both experimental assignments. The ATE among these subgroups may not be nonzero; the ATE is not revealed empirically.
+\end{enumerate}
+
+\section*{Question 4}
+When analyzing experiments with two-sided noncompliance, why is it incorrect to define Compliers as ``those who take the treatment if assigned to treatment''? \\
+Answer:\\
+This definition should be ``those who take the treatment if AND ONLY IF assigned to treatment.''  The definition given in the question would also hold for Always-takers, who take the treatment if assigned to treatment.
+
+\section*{Question 5}
+Suppose that a sample contains $30\%$ Always-Takers, $40\%$ Never-Takers, $15\%$ Compliers, and $15\%$ Defiers. What is the $ITT_D$? \\
+Answer:\\
+Recall from equation (6.19): $ITT_D= \pi_C+ \pi_AT- (\pi_D + \pi_AT) = \pi_C- \pi_D$, which in this case implies that the $ITT_D = 0$.
+
+\section*{Question 6}
+Suppose that, in violation of the monotonicity assumption, a sample contains both Compliers and Defiers. Let $\pi_C$ be the proportion of subjects who are Compliers, and let $\pi_D$ be the proportion of subjects who are Defiers. Show that the CACE is nevertheless identified if (i) the ATE among Defiers equals the ATE among Compliers and (ii) $\pi_C \neq \pi_D$.\\
+Answer:\\
+Let's re-write equation (6.20) assuming that the two ATEs are the same and that the denominator is nonzero:
+\begin{equation*}
+\frac{ITT}{ITT_D} =\frac{(ATE│Compliers) \pi_C-(ATE|Defiers)\pi_D}{(\pi_C-\pi_D )}=\frac{(ATE│Compliers) (\pi_C- \pi_D)}{(\pi_C-\pi_D)}=(ATE│Compliers).
+\end{equation*}
+
+\section*{Question 7}
+In experiments with one-sided noncompliance, the ATE among subjects who receive the treatment (sometimes called the average treatment-on-the-treated effect, or ATT) is the same as the CACE, because only Compliers receive the treatment. Explain why the ATT is not the same as the CACE in the context of two-sided noncompliance.\\
+Answer:\\
+Under two-sided noncompliance, both Compliers and Always-takers receive treatment when assigned to the treatment group, and Always-takers receive treatment when assigned to the control group.  Therefore, as we move from one-sided to two-sided noncompliance, ``the treated'' no longer refers to Compliers, and the ATT no longer equals the CACE.
+
+\section*{Question 8}
+In the Milwaukee domestic violence experiment, researchers working in collaboration with police officers randomly assigned one of three treatments when officers responded to an incident involving domestic violence.\footnote{Sherman et al.1992.} Officers were instructed to arrest the perpetrator and hold him overnight, arrest the perpetrator but release him after a brief period, or issue a warning. The full breakdown of assigned and actual treatments is presented in Table 6.7, along with observed rates of later arrest in the three treatment conditions.
+
+% Table generated by Excel2LaTeX from sheet 'Sheet1'
+\begin{table}[H]
+  \centering
+  \caption{Question 8 Table}
+    \begin{tabular}{rrrrr}
+    \toprule
+          &       & \multicolumn{3}{c}{Assigned Treatment} \\
+    \midrule
+          &       & Full Arrest & Brief Arrest & Warning \\
+    \multicolumn{1}{c}{\multirow{3}[0]{*}{Actual Treatment}} & Full Arrest & 400   & 13    & 1 \\
+    \multicolumn{1}{c}{} & Brief Arrest & 1     & 384   & 1 \\
+    \multicolumn{1}{c}{} & Warning & 3     & 1     & 396 \\
+          & Total N & 404   & 398   & 398 \\
+    \multicolumn{1}{c}{\multirow{2}[0]{*}{Subsequent Outcomes}} & Calls to hotline to report perpetrator & 296   & 301   & 261 \\
+    \multicolumn{1}{c}{} & Perpetrators later arrested & 146   & 157   & 151 \\
+    \bottomrule
+    \end{tabular}%
+\end{table}%
+
+\begin{enumerate}[a)]
+\item Consider a simplified coding of the assigned and actual treatment, dividing subjects into two categories: arrest or non-arrest. Evaluate the plausibility of the non-interference, excludability, and monotonicity assumptions in this application.\\
+Answer:\\
+Non-interference: Potential outcomes reflect only the subject's own treatment status and not the status of other observations. It is possible, though unlikely, that perpetrators discuss their treatments with one another, in which case potential outcomes might be affected not only by one's own treatment but whether it seems severe or lenient vis-a-vis other treatments that other subjects have received.\\
+Excludability: Potential outcomes respond solely to receipt of the treatment and not the random assignment of the treatment or any indirect byproduct of random assignment (e.g., other actions that the responding police officer takes in addition to or instead of issuing a warning or making an arrest; for example, a police officer who is instructed to make no arrest might say/do other threatening things to compensate for the lenient punishment). There is no reason to believe that compensatory actions were taken in this study. \\
+Monotonicity implies that there are no subjects who would be arrested if assigned to non-arrest and not arrested if assigned to arrest.  This assumption seems plausible, as it is hard to imagine a scenario by which arrests occur if and only if no arrest is assigned. 
+
+\item Assume that the core assumptions hold, and calculate the $\widehat{ITT_D}$, $\widehat{ITT}$, and $\widehat{CACE}$ given the simplified treatment categorization. Interpret the results.\\
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{pi_at} \hlkwb{<-} \hlnum{2}\hlopt{/}\hlnum{398}
+\hlstd{pi_nt} \hlkwb{<-} \hlstd{(}\hlnum{3}\hlopt{+}\hlnum{1}\hlstd{)}\hlopt{/}\hlstd{(}\hlnum{404}\hlopt{+}\hlnum{398}\hlstd{)}
+\hlstd{pi_c} \hlkwb{<-} \hlnum{1} \hlopt{-} \hlstd{pi_at} \hlopt{-} \hlstd{pi_nt}
+\hlstd{itt_d} \hlkwb{<-} \hlstd{pi_c}
+\hlstd{itt_d}
+\end{alltt}
+\begin{verbatim}
+## [1] 0.99
+\end{verbatim}
+\begin{alltt}
+\hlstd{itt_hotline} \hlkwb{<-} \hlstd{(}\hlnum{296} \hlopt{+} \hlnum{301}\hlstd{)}\hlopt{/}\hlstd{(}\hlnum{404} \hlopt{+} \hlnum{398}\hlstd{)} \hlopt{-} \hlstd{(}\hlnum{261}\hlopt{/}\hlnum{398}\hlstd{)}
+\hlstd{itt_hotline}
+\end{alltt}
+\begin{verbatim}
+## [1] 0.08861
+\end{verbatim}
+\begin{alltt}
+\hlstd{cace_hotline} \hlkwb{<-} \hlstd{itt_hotline}\hlopt{/}\hlstd{itt_d}
+\hlstd{cace_hotline}
+\end{alltt}
+\begin{verbatim}
+## [1] 0.08951
+\end{verbatim}
+\begin{alltt}
+\hlstd{itt_arrest} \hlkwb{<-} \hlstd{(}\hlnum{303}\hlstd{)}\hlopt{/}\hlstd{(}\hlnum{802}\hlstd{)} \hlopt{-} \hlstd{(}\hlnum{151}\hlopt{/}\hlnum{398}\hlstd{)}
+\hlstd{itt_arrest}
+\end{alltt}
+\begin{verbatim}
+## [1] -0.001591
+\end{verbatim}
+\begin{alltt}
+\hlstd{cace_arrest} \hlkwb{<-} \hlstd{itt_arrest}\hlopt{/}\hlstd{itt_d}
+\hlstd{cace_arrest}
+\end{alltt}
+\begin{verbatim}
+## [1] -0.001608
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+Let's first consider the effects on hotline calls.  The estimated CACE of 0.09 means that among Compliers (those who are arrested if and only if assigned to arrest), an actual arrest appears to increase the probability of subsequent hotline calls by 9 percentage points.  The estimated CACE of \ensuremath{-0.002} for subsequent arrests means that among Compliers, actual arrest decreases the probability of subsequent arrest by a mere 0.2 percentage points.  
+
+
+\item Suppose monotonicity were not assumed. What do the results of the simplified treatment suggest about the maximum and minimum values of $\pi_{NT}$, $\pi_{AT}$, and $\pi_{C}$? \\
+Answer:\\
+Without assuming monotonicity, we return to what the observable quantities imply about the latent groups' shares of the subject pool.\\
+
+Subjects who were treated when assigned to control: $\hat{\pi_{AT}} + \hat{\pi_{D}} = \frac{2}{398} = 0.00503$ \\
+Subjects who were not treated when assigned to control:  $\hat{\pi_{NT}} + \hat{\pi_{C}} = \frac{396}{398} = 0.99497$\\
+Subjects who were treated when assigned to treatment: $\hat{\pi_{AT}} + \hat{\pi_{C}} = \frac{401+397}{404+398} = 0.99501$\\
+Subjects who were not treated when assigned to treatment: $\hat{\pi_{NT}} + \hat{\pi_{D}} = \frac{4}{404+398} = 0.00499$\\
+
+The lower bounds for shares of Defiers, Always-takers, or Never-takers is 0.  The last line enables us to put an upper bound on the share of Defiers and Never-takers: 0.00499, or 0.499\%. The first line enables us to put an upper bound on the share of Always-takers: 0.503\%.  If Never-takers were as high as 0.499\%, the share of Compliers cannot be lower than 0.99497 - 0.00499 = 0.98998. If there were no Never-takers, the maximum share of Compliers is 99.497\%.
+
+\item More complexity is introduced when we consider the full array of three treatment assignments and three forms of actual treatment. In the case of two assigned treatments and two actual treatments, we have four types of subjects (Compliers, Defiers, Never-Takers, and Always-Takers). How many types of subjects are there with three treatment assignments and three forms of actual treatment?\\
+Answer:\\
+There are 27 possible types.  See table below.
+
+\item How many types are there if you make the following ``monotonicity'' stipulations: 
+\begin{enumerate}[(i)]
+\item Anyone who is fully arrested if assigned to be warned would also be fully arrested if assigned to be briefly arrested or fully arrested
+\item Anyone who is fully arrested if assigned to be briefly arrested would also be fully arrested if assigned to be fully arrested
+\item Anyone who is briefly arrested if assigned to be warned would also be briefly arrested if assigned to be briefly arrested
+\item Anyone who is warned if assigned to be arrested would also be warned if assigned to be warned.
+\end{enumerate}
+\end{enumerate}
+
+The table below shows all 27 possible combinations of potential outcomes for treatment.  After accounting for all four restrictions, 10 types remain.
+
+\begin{table}[H]
+  \centering
+  \caption{Question 8 Table}
+    \begin{tabular}{rrrrrrrrr}
+    \toprule
+          & Z = Warning & Z = Brief Arrest & Z = Full Arrest & \multicolumn{5}{c}{Monotonicity Constraints} \\
+    \midrule
+    Type  & D(0)  & D(1)  & D(2)  & i     & ii    & iii   & iv    & all four \\ \hline
+    1     & 0     & 0     & 0     &       &       &       &       &  \\
+    2     & 0     & 0     & 1     &       &       &       &       &  \\
+    3     & 0     & 0     & 2     &       &       &       &       &  \\
+    4     & 0     & 1     & 0     &       &       &       &       &  \\
+    5     & 0     & 1     & 1     &       &       &       &       &  \\
+    6     & 0     & 1     & 2     &       &       &       &       &  \\
+    7     & 0     & 2     & 0     &       & X     &       &       & X \\
+    8     & 0     & 2     & 1     &       & X     &       &       & X \\
+    9     & 0     & 2     & 2     &       &       &       &       &  \\
+    10    & 1     & 0     & 0     &       &       & X     & X     & X \\
+    11    & 1     & 0     & 1     &       &       & X     & X     & X \\
+    12    & 1     & 0     & 2     &       &       & X     & X     & X \\
+    13    & 1     & 1     & 0     &       &       &       & X     & X \\
+    14    & 1     & 1     & 1     &       &       &       &       &  \\
+    15    & 1     & 1     & 2     &       &       &       &       &  \\
+    16    & 1     & 2     & 0     &       & X     & X     & X     & X \\
+    17    & 1     & 2     & 1     &       & X     & X     &       & X \\
+    18    & 1     & 2     & 2     &       &       & X     &       & X \\
+    19    & 2     & 0     & 0     & X     &       &       & X     & X \\
+    20    & 2     & 0     & 1     & X     &       &       & X     & X \\
+    21    & 2     & 0     & 2     & X     &       &       & X     & X \\
+    22    & 2     & 1     & 0     & X     &       &       & X     & X \\
+    23    & 2     & 1     & 1     & X     &       &       &       & X \\
+    24    & 2     & 1     & 2     & X     &       &       &       & X \\
+    25    & 2     & 2     & 0     & X     & X      &       & X     & X \\
+    26    & 2     & 2     & 1     & X     & X      &       &       & X \\
+    27    & 2     & 2     & 2     &       &       &       &       &  \\ \hline
+    Total Types & 27    & 27    & 27    & 19    & 21    & 21    & 17    & 10 \\
+    \bottomrule
+    \end{tabular}%
+\end{table}%
+
+
+\section*{Question 9}
+In their study of the effects of conscription on criminal activity in Argentina, Galiani, Rossi, and Schargrodsky use official records of draft lottery numbers, military service, and prosecutions for a cohort of men born between 1958 and 1962.\footnote{Galiani, Rossi, and Schargrodsky 2010.} Draft eligibility is scored 1 if an individual had a draft lottery number that caused him to be drafted, and 0 otherwise. Draft lottery numbers were selected randomly by drawing balls from an urn. Military service is scored 1 if the individual actually served in the armed services, and 0 otherwise. Subsequent criminal activity is scored 1 if the individual had a judicial record of prosecution for a serious offense. For a sample of 5,000 observations, the authors report an $\widehat{ITT_D}$ of 0.6587 (SE = 0.0012), an $\widehat{ITT}$ of 0.0018 (SE = 0.0006), and a $\widehat{CACE}$ of 0.0026 (SE = 0.0008). The authors note that the $\widehat{CACE}$ implies a 3.75\% increase in the probability of criminal prosecution with military service.
+\begin{enumerate}[a)]
+\item Interpret the $\widehat{ITT_D}$, $\widehat{ITT}$, $\widehat{CACE}$, and their standard errors.\\
+Answer:\\
+The $\widehat{ITT_D}$ refers to the difference in rates of military service between the treatment and control groups.  Evidently, the treatment group was 65.87 percentage points more likely to serve in the military than the control group. The $\widehat{ITT}$ refers to the difference in prosecution rates between the assigned treatment and control groups (irrespective of whether a subject actually served).  The estimate of 0.0018 implies that the treatment group was 0.18 percentage points more likely to be prosecuted than the assigned control group. The $\widehat{CACE}$ is the estimated ATE among Compliers, those who serve in the military if and only if they have a draft-eligible number.  This estimate is 0.0026, which implies that Compliers become 0.26 percentage points more likely to be prosecuted as a result of serving in the military.  The standard errors are a measure of statistical uncertainty, and a rule of thumb is that a 95\% confidence interval may be formed by adding and subtracting +/- 2SEs.  In this case, the 95\% interval for $\widehat{ITT_D}$ is 65.87 +/- 0.0024; for $\widehat{ITT}$ is 0.0018 +/- 0.0012; for $\widehat{CACE}$, it is 0.0026 +/- 0.0016.  The margin of uncertainty for the $\widehat{ITT}$ and $\widehat{CACE}$ is fairly wide, but the intervals are on the positive side of zero, suggesting that military service (if the exclusion restriction holds) has a criminogenic effect.
+
+\item The authors note that 4.21\% of subjects who were not draft eligible nevertheless served in the armed forces. Based on this information and the results shown above, calculate the proportion of Never-Takers, Always-Takers, and Compliers under the assumption of monotonicity.\\
+Answer:\\
+Monotonicity means that the proportion of Defiers is zero. The 4.21\% who served without being drafted implies that Always-takers are 4.21\% of the subject pool.  From the $\widehat{ITT_D}$ of 0.6587 we infer the Compliers are 65.87\% of the subject pool.  That leaves 1 - 4.21\% - 65.87\% = 29.9\% who are Never-takers.
+
+
+\item Discuss the plausibility of the monotonicity, non-interference, and excludability assumptions in this application. If an assumption strikes you as implausible, indicate whether you think the $\widehat{CACE}$ is biased upward or downward. \\
+Answer:\\
+Let's analyze each assumption. Monotonicity implies no Defiers. Defiers are those who serve in the military if and only if they are not drafted. Given that one ordinarily think of people who join the military on their own volition as being willing to go if drafted, it is difficult to imagine that many people fit this description, so this assumption seems plausible. Random assignment implies that treatment assignment is independent of the potential outcomes. Although some lotteries are implemented incompetently or corruptly, we are given no reason to suspect that here. Non-interference means that potential outcomes reflect only the treatment or control status of the subject in question and do not depend on the status of other observations. In this case the potential outcome is whether a subject will be prosecuted. It seems possible that one's criminal career could be shaped by whether one's friends are or aren't drafted, but it is not clear how this violation of non-interference would bias the results, since if my friends are drafted it might make me more likely to engage in criminal conduct regardless of whether I am assigned to treatment or control. Excludability means that potential outcomes respond solely to receipt of the treatment (military service) and not the random assignment of the treatment or any indirect byproduct of random assignment (e.g., draft dodging). If citizens who are drafted are more easily monitored (e.g., their finger prints are recorded) then there might be an upward bias in the measurement of the crime committed by those assigned to treatment simply because it is easier to solve a crime committed by them. 
+\end{enumerate}
+
+\section*{Question 10}
+In her study of election monitoring in Indonesia, Hyde randomly assigned international election observers to monitor certain polling stations.\footnote{Hyde2010.} Here, we consider a subset of her experiment where approximately 20\% of the villages were assigned to the treatment group. Because of difficult terrain and time constraints, observers monitored 68 of the 409 polling places assigned to treatment. Observers also monitored 21 of the 1,562 stations assigned to the control group. The dependent variable here is the number of ballots that were declared invalid by polling station officials.
+\begin{enumerate}[a)]
+\item Is monotonicity a plausible assumption in this application? \\
+Answer:\\
+Monotonicity implies no Defiers. Defiers in this context are polling stations that are monitored if and only if they are assigned to the control group.  Monotonicity seems a plausible assumption if one imagines that polling stations are monitored in the control group because monitors are tourists who like to monitor spots that are close to tourist attractions.  These attractions would also draw their attention if the polling stations in question were in the treatment group.
+\item Under the assumption of monotonicity, what proportion of subjects (polling locations) would you estimate to be Compliers, Never-Takers, and Always-Takers?\\
+Answer:\\
+Monotonicity implies that Defiers make up 0\% of the subject pool.  Always-takers make up $\hat{\pi_{AT}}=\frac{21}{1562}=0.013$ or 1.3\%.  Compliers make up $\hat{\pi_{C}}=\frac{68}{409}-\frac{21}{1562}=0.153$ of 15.3\%.  Therefore, Never-takers make up 83.4\%.
+\item Explain what the non-interference assumption means in the context of this experiment.\\
+Answer:\\
+Non-interference means that each polling station's potential outcomes respond only to whether the polling station itself is treated. This assumption would be jeopardized if monitors, for example, displace corruption when they monitor nearby polling stations. Under that scenario, the ``untreated'' potential outcome may rise when neighboring stations are treated, causing bias when treated and untreated stations are compared in order to gauge the ATE of treatment vs. no treatment.
+
+\item Download the sample dataset at http://isps.research.yale.edu/FEDAI and estimate the ITT and the CACE. Interpret the results.
+
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{Z} \hlkwb{<-} \hlkwd{as.integer}\hlstd{(hyde}\hlopt{$}\hlstd{Sample)} \hlopt{-}\hlnum{1}   \hlcom{# monitoring treatment}
+\hlstd{Y} \hlkwb{<-} \hlstd{hyde}\hlopt{$}\hlstd{invalidballots}
+\hlstd{D} \hlkwb{<-} \hlkwd{as.numeric}\hlstd{(hyde}\hlopt{$}\hlstd{observed}\hlopt{==}\hlstr{"yes"}\hlstd{)}
+\hlstd{probs} \hlkwb{<-} \hlkwd{genprobexact}\hlstd{(Z)}
+\hlstd{ITT} \hlkwb{<-} \hlkwd{estate}\hlstd{(Y,Z,}\hlkwc{prob}\hlstd{=probs)}
+\hlstd{ITTd} \hlkwb{<-} \hlkwd{estate}\hlstd{(D,Z,}\hlkwc{prob}\hlstd{=probs)}
+\hlstd{CACE} \hlkwb{<-} \hlstd{ITT}\hlopt{/}\hlstd{ITTd}
+\hlstd{ITT}
+\end{alltt}
+\begin{verbatim}
+## [1] 4.824
+\end{verbatim}
+\begin{alltt}
+\hlstd{CACE}
+\end{alltt}
+\begin{verbatim}
+## [1] 31.57
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+The ITT is estimated by comparing means in the assigned control 81.33 and treatment groups 86.16, for a difference of 4.82: assignment to monitoring appears to increase the number of invalid ballots by 4.82 per polling station.  The CACE is estimated by dividing the ITT by the ITTd, calculated above: 31.57. Assuming non-interference, excludability, and monotonicity, this estimate implies that an actual visit by observers causes an increase of 31.57 invalid ballots among Compliers (polling stations that are observed if and only if assigned to treatment).
+
+\item Use randomization inference to test the sharp null hypothesis that there is no intent-to-treat effect for any polling location. Interpret the results. Explain why testing the null hypothesis that the ITT is zero for all subjects serves the same purpose as testing the null hypothesis that the ATE is zero for all Compliers.
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{perms} \hlkwb{<-} \hlkwd{genperms}\hlstd{(Z,}\hlkwc{maxiter}\hlstd{=}\hlnum{10000}\hlstd{)}
+\end{alltt}
+\begin{verbatim}
+## Too many permutations to use exact method.
+## Defaulting to approximate method.
+## Increase maxiter to at least Inf to perform exact estimation.
+\end{verbatim}
+\begin{alltt}
+\hlstd{Ys} \hlkwb{<-} \hlkwd{genouts}\hlstd{(Y,Z,}\hlkwc{ate}\hlstd{=}\hlnum{0}\hlstd{)}
+\hlstd{distout} \hlkwb{<-} \hlkwd{gendist}\hlstd{(Ys,perms,}\hlkwc{prob}\hlstd{=probs)}
+\hlstd{p.value.twosided} \hlkwb{<-} \hlkwd{mean}\hlstd{(}\hlkwd{abs}\hlstd{(distout)} \hlopt{>=} \hlkwd{abs}\hlstd{(ITT))}
+\hlstd{p.value.twosided}
+\end{alltt}
+\begin{verbatim}
+## [1] 0.4973
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+\end{enumerate}
+
+Testing the null hypothesis of zero ITT for all subjects, we generated 10,000 randomizations and compared the observed ITT to the sampling distribution of simulated ITTs.  We obtained a two-tailed p-value of 0.5 because the observed value was larger than approximately 50\% of the simulated ITTs.  We therefore cannot reject the sharp null hypothesis of no effect for any unit. Testing the null that the ITT is zero for all subjects is the same as testing the null that the CACE is zero for all compliers because the ITT is in the numerator of the CACE. 
+
+\section*{Question 11}
+A large-scale experiment conducted between 2002 and 2005 assessed the effects of Head Start, a preschool enrichment program designed to improve school readiness.\footnote{Puma et al. 2010. We focus here on one part of the study, the sample of four-year-old subjects.} The assigned treatment encouraged a nationally representative sample of eligible (low-income) parents to enroll their four-year-olds in Head Start. Of the 1,253 children assigned to the Head Start treatment, 79.8\% actually enrolled in Head Start; 855 of the children assigned to the control group (13.9\%) nevertheless enrolled in Head Start. One of the outcomes of interest is pre-academic skills, as manifest at the end of the yearlong intervention. The principal investigators report that scores averaged 365.0 among students assigned to the treatment group and 360.5 among students assigned to the control group, with a two-tailed p-value of .041. Two years later, students completed first grade. Their first grade scores on a test of academic skills averaged 447.7 in the treatment group and 449.0 in the control group, with a two-tailed $p$-value of 0.380.
+
+\begin{enumerate}[a)]
+\item Estimate the CACE for this experiment, using pre-academic skills scores as the outcome.\\
+Answer:\\
+The estimated CACE is: $\widehat{CACE} = \frac{365 - 360.5}{0.798 - 0.139} = 6.28$
+\item Estimate the CACE for this experiment, using academic skills in first grade as an outcome.
+Answer:\\
+The estimated CACE is: $\widehat{CACE} = \frac{447.7 - 449.0}{0.798 - 0.139} = -1.97$
+\item Estimate the average downstream effect of pre-academic skills on first grade academic skills. Hint: Divide the estimated ITT (from a regression of first grade academic skills on assigned treatment) by the estimated $ITT_D$ (from a regression of pre-academic skills on assigned treatment). Interpret your results. Are the assumptions required to identify this downstream effect plausible in this application? If not, would you expect the apparent downstream effect to be overestimated or underestimated?\\
+Answer:\\
+The estimated downstream CACE is: $\widehat{CACE} = \frac{447.7 - 449.0}{365 - 360.5} = -0.29$\\
+The results suggest, surprisingly, that an improvement in pre-academic skills among Compliers (those whose pre-academic skills change if they are exposed to the treatment) led to a deterioration of academic skills in first grade.  For every one-point gain in pre-academic skills, there was a 0.29 drop in first grade skills.  Ordinarily, one would expect a positive relationship (building early skills help build skills later on).  One possible explanation for this anomalous result is sampling variability.  Another is a violation of the exclusion restriction.  Suppose, for the sake of argument, that Head Start teachers were coaching students to help them perform better on tests of pre-academic skills.  (One could define this sort of teaching-to-the-test as the effect of Head Start, in which case there would be no excludability violation.)  Suppose that coaching boosts pre-academic skills scores but lowers first grade scores because the same tricks that are used on the pre-academic skills test lower grades on the first grade test.  The excluded factor of coaching boosts the denominator and lowers the numerator, and so the net bias is difficult to predict.
+
+\end{enumerate}
+
+\end{document}
+

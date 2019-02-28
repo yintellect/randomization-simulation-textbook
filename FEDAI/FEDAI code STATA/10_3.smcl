@@ -1,0 +1,376 @@
+{smcl}
+{com}{sf}{ul off}{txt}{.-}
+      name:  {res}solution10_3j
+       {txt}log:  {res}/Users/yy2633/MA/2019Spring/RA/FEDAI code STATA/10_3.smcl
+  {txt}log type:  {res}smcl
+ {txt}opened on:  {res}21 Feb 2019, 23:16:05
+{txt}
+{com}. 
+. *part j
+.         input z Y0M0 Y1M0 Y0M1 Y1M1 M0 M1
+
+     {txt}        z       Y0M0       Y1M0       Y0M1       Y1M1         M0         M1
+  1{com}.         0 0 0 0 0 0 0 
+{txt}  2{com}.         0 0 0 0 0 0 1
+{txt}  3{com}.         0 0 0 0 0 1 1
+{txt}  4{com}.         0 0 1 0 1 0 0
+{txt}  5{com}.         0 0 1 0 1 0 1 
+{txt}  6{com}.         0 0 1 0 1 1 1
+{txt}  7{com}.         1 1 0 1 1 0 0
+{txt}  8{com}.         1 1 0 1 1 0 1
+{txt}  9{com}.         1 1 0 1 1 1 1
+{txt} 10{com}.         1 0 1 1 1 0 0
+{txt} 11{com}.         1 0 1 1 1 0 1
+{txt} 12{com}.         1 0 1 1 1 1 1
+{txt} 13{com}.         end
+{txt}
+{com}. 
+{txt}end of do-file
+
+{com}. mean z
+{res}
+{txt}Mean estimation{col 35}Number of obs{col 51}= {res}        12
+
+{txt}{hline 13}{c TT}{hline 11}{hline 11}{hline 14}{hline 12}
+{col 14}{c |}       Mean{col 26}   Std. Err.{col 38}     [95% Con{col 51}f. Interval]
+{hline 13}{c +}{hline 11}{hline 11}{hline 14}{hline 12}
+{space 11}z {c |}{col 14}{res}{space 2}       .5{col 26}{space 2} .1507557{col 37}{space 5}  .168189{col 51}{space 3}  .831811
+{txt}{hline 13}{c BT}{hline 11}{hline 11}{hline 14}{hline 12}
+
+{com}. do "/var/folders/lq/kpkh76g117x_022m6mtrnlzc0000gp/T//SD13951.000000"
+{txt}
+{com}. qui ritest z _b[z], reps(2000) saveresampling(zresample.dta): mean z
+{err}Warning: 100% of the resampled realizations for _pm_1 are exactly identical to original value
+{txt}
+{com}. 
+{txt}end of do-file
+
+{com}. do "/var/folders/lq/kpkh76g117x_022m6mtrnlzc0000gp/T//SD13951.000000"
+{txt}
+{com}. use "zresample.dta", clear
+{txt}
+{com}. 
+{txt}end of do-file
+
+{com}. do "/var/folders/lq/kpkh76g117x_022m6mtrnlzc0000gp/T//SD13951.000000"
+{txt}
+{com}. set matsize 2000
+{txt}
+{com}. 
+. matrix coefmat=J(2000, 3, .)
+{txt}
+{com}. 
+. 
+. matrix tcoefmat=J(2000, 2, .)
+{txt}
+{com}. 
+. matrix mcoefmat=J(2000, 2, .)
+{txt}
+{com}. 
+{txt}end of do-file
+
+{com}. do "/var/folders/lq/kpkh76g117x_022m6mtrnlzc0000gp/T//SD13951.000000"
+{txt}
+{com}. forvalues i = 1/2000 {c -(}          
+{txt}  2{com}.                 gen M_`i' = M0*(1-z`i') + M1*z`i'
+{txt}  3{com}.                 gen Y_`i' = Y0M0*(1-z`i')*(1-M_`i') + Y1M0*(z`i')*(1-M_`i') + Y0M1*(1-z`i')*(M_`i') + Y1M1*(z`i')*(M_`i')
+{txt}  4{com}.                 
+.                 qui reg Y_`i' M_`i' z`i'
+{txt}  5{com}.                 matrix coefmat[`i', 1] = _b[_cons]
+{txt}  6{com}.                 matrix coefmat[`i', 2] = _b[M_`i']
+{txt}  7{com}.                 matrix coefmat[`i', 3] = _b[z`i']
+{txt}  8{com}.                 
+.                 
+.                 qui: reg Y_`i' z`i'
+{txt}  9{com}.                 
+.                 matrix tcoefmat[`i', 1] = _b[_cons]
+{txt} 10{com}.                 matrix tcoefmat[`i', 2] = _b[z`i']
+{txt} 11{com}.                 
+.                 qui: reg Y_`i' M_`i' 
+{txt} 12{com}.                 
+.                 matrix mcoefmat[`i', 1] = _b[_cons]
+{txt} 13{com}.                 matrix mcoefmat[`i', 2] = _b[M_`i']
+{txt} 14{com}.                                 
+.                 
+. {c )-}
+{err}no room to add more variables
+{p 4 4 2}
+Up to
+5,000 variables are currently
+allowed, although you could reset the maximum
+using {bf:set maxvar};
+see help {help memory}.
+{p_end}
+{txt}{search r(900), local:r(900);}
+
+end of do-file
+
+{search r(900), local:r(900);}
+
+{com}. do "/var/folders/lq/kpkh76g117x_022m6mtrnlzc0000gp/T//SD13951.000000"
+{txt}
+{com}. mat U = J(rowsof(coefmat),1,1)
+{txt}
+{com}. mat sum = U'*coefmat
+{txt}
+{com}. mat lis sum
+{res}
+{txt}sum[1,3]
+    c1  c2  c3
+c1 {res}  .   .   .
+{reset}
+{com}. mat meanvec = sum/rowsof(coefmat)
+{txt}
+{com}. mat list meanvec
+{res}
+{txt}meanvec[1,3]
+    c1  c2  c3
+c1 {res}  .   .   .
+{reset}
+{com}. 
+{txt}end of do-file
+
+{com}. do "/var/folders/lq/kpkh76g117x_022m6mtrnlzc0000gp/T//SD13951.000000"
+{txt}
+{com}. clear
+{txt}
+{com}. log using 10_3, name(solution10_3j)
+{err}log file already open
+{txt}{search r(604), local:r(604);}
+
+end of do-file
+
+{search r(604), local:r(604);}
+
+{com}. do "/var/folders/lq/kpkh76g117x_022m6mtrnlzc0000gp/T//SD13951.000000"
+{txt}
+{com}. set matsize 1400
+{txt}
+{com}. 
+. matrix coefmat=J(1400, 3, .)
+{txt}
+{com}. 
+. 
+. matrix tcoefmat=J(1400, 2, .)
+{txt}
+{com}. 
+. matrix mcoefmat=J(1400, 2, .)
+{txt}
+{com}. 
+{txt}end of do-file
+
+{com}. do "/var/folders/lq/kpkh76g117x_022m6mtrnlzc0000gp/T//SD13951.000000"
+{txt}
+{com}.         input z Y0M0 Y1M0 Y0M1 Y1M1 M0 M1
+
+     {txt}        z       Y0M0       Y1M0       Y0M1       Y1M1         M0         M1
+  1{com}.         0 0 0 0 0 0 0 
+{txt}  2{com}.         0 0 0 0 0 0 1
+{txt}  3{com}.         0 0 0 0 0 1 1
+{txt}  4{com}.         0 0 1 0 1 0 0
+{txt}  5{com}.         0 0 1 0 1 0 1 
+{txt}  6{com}.         0 0 1 0 1 1 1
+{txt}  7{com}.         1 1 0 1 1 0 0
+{txt}  8{com}.         1 1 0 1 1 0 1
+{txt}  9{com}.         1 1 0 1 1 1 1
+{txt} 10{com}.         1 0 1 1 1 0 0
+{txt} 11{com}.         1 0 1 1 1 0 1
+{txt} 12{com}.         1 0 1 1 1 1 1
+{txt} 13{com}.         end
+{txt}
+{com}.         
+. 
+{txt}end of do-file
+
+{com}. do "/var/folders/lq/kpkh76g117x_022m6mtrnlzc0000gp/T//SD13951.000000"
+{txt}
+{com}. forvalues i = 1/1400 {c -(}          
+{txt}  2{com}.                 gen M_`i' = M0*(1-z`i') + M1*z`i'
+{txt}  3{com}.                 gen Y_`i' = Y0M0*(1-z`i')*(1-M_`i') + Y1M0*(z`i')*(1-M_`i') + Y0M1*(1-z`i')*(M_`i') + Y1M1*(z`i')*(M_`i')
+{txt}  4{com}.                 
+.                 qui reg Y_`i' M_`i' z`i'
+{txt}  5{com}.                 matrix coefmat[`i', 1] = _b[_cons]
+{txt}  6{com}.                 matrix coefmat[`i', 2] = _b[M_`i']
+{txt}  7{com}.                 matrix coefmat[`i', 3] = _b[z`i']
+{txt}  8{com}.                 
+.                 
+.                 qui: reg Y_`i' z`i'
+{txt}  9{com}.                 
+.                 matrix tcoefmat[`i', 1] = _b[_cons]
+{txt} 10{com}.                 matrix tcoefmat[`i', 2] = _b[z`i']
+{txt} 11{com}.                 
+.                 qui: reg Y_`i' M_`i' 
+{txt} 12{com}.                 
+.                 matrix mcoefmat[`i', 1] = _b[_cons]
+{txt} 13{com}.                 matrix mcoefmat[`i', 2] = _b[M_`i']
+{txt} 14{com}.                                 
+.                 
+. {c )-}
+{err}z1 not found
+{txt}{search r(111), local:r(111);}
+
+end of do-file
+
+{search r(111), local:r(111);}
+
+{com}. do "/var/folders/lq/kpkh76g117x_022m6mtrnlzc0000gp/T//SD13951.000000"
+{txt}
+{com}. use "zresample.dta", clear
+{txt}
+{com}. 
+{txt}end of do-file
+
+{com}. do "/var/folders/lq/kpkh76g117x_022m6mtrnlzc0000gp/T//SD13951.000000"
+{txt}
+{com}. forvalues i = 1/1400 {c -(}          
+{txt}  2{com}.                 gen M_`i' = M0*(1-z`i') + M1*z`i'
+{txt}  3{com}.                 gen Y_`i' = Y0M0*(1-z`i')*(1-M_`i') + Y1M0*(z`i')*(1-M_`i') + Y0M1*(1-z`i')*(M_`i') + Y1M1*(z`i')*(M_`i')
+{txt}  4{com}.                 
+.                 qui reg Y_`i' M_`i' z`i'
+{txt}  5{com}.                 matrix coefmat[`i', 1] = _b[_cons]
+{txt}  6{com}.                 matrix coefmat[`i', 2] = _b[M_`i']
+{txt}  7{com}.                 matrix coefmat[`i', 3] = _b[z`i']
+{txt}  8{com}.                 
+.                 
+.                 qui: reg Y_`i' z`i'
+{txt}  9{com}.                 
+.                 matrix tcoefmat[`i', 1] = _b[_cons]
+{txt} 10{com}.                 matrix tcoefmat[`i', 2] = _b[z`i']
+{txt} 11{com}.                 
+.                 qui: reg Y_`i' M_`i' 
+{txt} 12{com}.                 
+.                 matrix mcoefmat[`i', 1] = _b[_cons]
+{txt} 13{com}.                 matrix mcoefmat[`i', 2] = _b[M_`i']
+{txt} 14{com}.                                 
+.                 
+. {c )-}
+{txt}
+{com}. 
+. 
+{txt}end of do-file
+
+{com}. do "/var/folders/lq/kpkh76g117x_022m6mtrnlzc0000gp/T//SD13951.000000"
+{txt}
+{com}. mat U = J(rowsof(coefmat),1,1)
+{txt}
+{com}. mat sum = U'*coefmat
+{txt}
+{com}. mat lis sum
+{res}
+{txt}sum[1,3]
+           c1         c2         c3
+c1 {res} 352.56024  343.95095  358.34322
+{reset}
+{com}. mat meanvec = sum/rowsof(coefmat)
+{txt}
+{com}. mat list meanvec
+{res}
+{txt}meanvec[1,3]
+           c1         c2         c3
+c1 {res} .25182874  .24567925  .25595945
+{reset}
+{com}. 
+{txt}end of do-file
+
+{com}. help round
+
+. do "/var/folders/lq/kpkh76g117x_022m6mtrnlzc0000gp/T//SD13951.000000"
+{txt}
+{com}. mat list round(meanvec, 0.001)
+{err}round(meanvec invalid name
+matrix round(meanvec, not found
+{txt}{search r(111), local:r(111);}
+
+end of do-file
+
+{search r(111), local:r(111);}
+
+{com}. do "/var/folders/lq/kpkh76g117x_022m6mtrnlzc0000gp/T//SD13951.000000"
+{txt}
+{com}. mat list meanvec ,format(%8.4f)
+{res}
+{txt}meanvec[1,3]
+        c1      c2      c3
+c1 {res} 0.2518  0.2457  0.2560
+{reset}
+{com}. 
+{txt}end of do-file
+
+{com}. do "/var/folders/lq/kpkh76g117x_022m6mtrnlzc0000gp/T//SD13951.000000"
+{txt}
+{com}. mat list meanvec ,format(%8.3f)
+{res}
+{txt}meanvec[1,3]
+       c1     c2     c3
+c1 {res} 0.252  0.246  0.256
+{reset}
+{com}. 
+{txt}end of do-file
+
+{com}. do "/var/folders/lq/kpkh76g117x_022m6mtrnlzc0000gp/T//SD13951.000000"
+{txt}
+{com}. mat list meanvec ,format(%8.2f)
+{res}
+{txt}meanvec[1,3]
+      c1    c2    c3
+c1 {res} 0.25  0.25  0.26
+{reset}
+{com}. 
+{txt}end of do-file
+
+{com}. do "/var/folders/lq/kpkh76g117x_022m6mtrnlzc0000gp/T//SD13951.000000"
+{txt}
+{com}. mat V = J(rowsof(tcoefmat),1,1)
+{txt}
+{com}. mat sum = V'*tcoefmat
+{txt}
+{com}. mat lis sum
+{res}
+{txt}sum[1,2]
+           c1         c2
+c1 {res} 467.83333  469.83333
+{reset}
+{com}. mat meanvec = sum/rowsof(tcoefmat)
+{txt}
+{com}. mat list meanvec
+{res}
+{txt}meanvec[1,2]
+           c1         c2
+c1 {res} .33416667  .33559524
+{reset}
+{com}. 
+{txt}end of do-file
+
+{com}. do "/var/folders/lq/kpkh76g117x_022m6mtrnlzc0000gp/T//SD13951.000000"
+{txt}
+{com}. mat W = J(rowsof(mcoefmat),1,1)
+{txt}
+{com}. mat sum = W'*mcoefmat
+{txt}
+{com}. mat lis sum
+{res}
+{txt}sum[1,2]
+           c1         c2
+c1 {res} 469.45238     469.25
+{reset}
+{com}. mat meanvec = sum/rowsof(mcoefmat)
+{txt}
+{com}. mat list meanvec
+{res}
+{txt}meanvec[1,2]
+           c1         c2
+c1 {res} .33532313  .33517857
+{reset}
+{com}. 
+{txt}end of do-file
+
+{com}. do "/var/folders/lq/kpkh76g117x_022m6mtrnlzc0000gp/T//SD13951.000000"
+{txt}
+{com}. log close solution10_3j
+      {txt}name:  {res}solution10_3j
+       {txt}log:  {res}/Users/yy2633/MA/2019Spring/RA/FEDAI code STATA/10_3.smcl
+  {txt}log type:  {res}smcl
+ {txt}closed on:  {res}21 Feb 2019, 23:28:24
+{txt}{.-}
+{smcl}
+{txt}{sf}{ul off}

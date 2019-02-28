@@ -1,0 +1,1034 @@
+Y
+cbind(party, Y0, YD, YR, Y)
+cbind(party, Y0, YD, YR, d, Y)
+lm(Y ~ as.factor(d))
+out <- lm(Y ~ as.factor(d))#
+summary(out)
+rm(list=ls(all=T))#
+N <- 500#
+#
+party <- c(rep("R",N/2), rep("D", N/2))#
+Y0 <- runif(N,0,1)#
+YD <- c(Y0[party=="R"]-rnorm(N/2,5,2) , Y0[party=="D"]+rnorm(N/2,5,2))#
+YR <- c(Y0[party=="R"]+rnorm(N/2,5,2) , Y0[party=="D"]-rnorm(N/2,5,2))#
+d <- sample(1:3, N, replace=T)#
+d#
+#
+Y <- rep(NA, N)#
+#
+for(i in 1:N){#
+	Y[i] <- ifelse(d[i]==1, Y0[i], ifelse(d[i]==2, YD[i], ifelse(d[i]==3, YR[i], Y[i])))#
+}#
+#
+cbind(party, Y0, YD, YR, d, Y)#
+out <- lm(Y ~ as.factor(d))#
+summary(out)
+out2 <- lm(Y ~ as.factor(d) + party)#
+summary(out2)
+out2 <- lm(Y ~ as.factor(d) + as.factor(party))#
+summary(out2)
+summary(out)
+out3 <- lm(Y ~ as.factor(d) + as.factor(party) + as.factor(d):as.factor(party))#
+summary(out3)
+cbind(party, Y0, YD, YR, d, Y)
+block.N <- N/2#
+#
+d.D <- sample(1:3, block.N, replace=T)#
+d.R <- sample(1:3, block.N, replace=T)
+block.N <- N/2#
+#
+d.D <- sample(1:3, block.N, replace=T)#
+d.R <- sample(1:3, block.N, replace=T)#
+#
+# define#
+# if d=1 then congruent#
+# if d=2 then non congruent#
+# if d=3 then control#
+#
+Y.D <- rep(NA, block.N)#
+Y.R <- rep(NA, block.N)#
+#
+for(i in 1:block.N){#
+	Y.D[i] <- ifelse(d.D[i]==1, YD[i], ifelse(d.D[i]==2, YR[i], ifelse(d.D[i]==3, Y0[i], Y[i])))#
+	Y.R[i] <- ifelse(d.R[i]==1, YR[i], ifelse(d.R[i]==2, YD[i], ifelse(d.R[i]==3, Y0[i], Y[i])))#
+}
+Y.blocked <- c(Y.R, Y.D)
+Y.blocked <- c(Y.R, Y.D)#
+d.blocked <- c(d.R, d.D)#
+cbind(party, Y0, YD, YR, d.blocked, Y.blocked)
+block.N <- N/2#
+#
+d.D <- sample(1:3, block.N, replace=T)#
+d.R <- sample(1:3, block.N, replace=T)#
+#
+# define#
+# if d=1 then congruent#
+# if d=2 then non congruent#
+# if d=3 then control#
+#
+Y.D <- rep(NA, block.N)#
+Y.R <- rep(NA, block.N)#
+#
+for(i in 1:block.N){#
+	Y.D[i] <- ifelse(d.D[i]==1, YD[i], ifelse(d.D[i]==2, YR[i], ifelse(d.D[i]==3, Y0[i], Y.D[i])))#
+	Y.R[i] <- ifelse(d.R[i]==1, YR[i], ifelse(d.R[i]==2, YD[i], ifelse(d.R[i]==3, Y0[i], Y.D[i])))#
+}#
+#
+Y.blocked <- c(Y.R, Y.D)#
+d.blocked <- c(d.R, d.D)#
+cbind(party, Y0, YD, YR, d.blocked, Y.blocked)
+for(i in 1:block.N){#
+	Y.R[i] <- ifelse(d.R[i]==1, YR[i], ifelse(d.R[i]==2, YD[i], ifelse(d.R[i]==3, Y0[i], Y.D[i])))#
+	Y.D[i] <- ifelse(d.D[i]==1, YD[i+length(block.N)], ifelse(d.D[i]==2, YR[i+length(block.N)], ifelse(d.D[i]==3, Y0[i+length(block.N)], Y.D[i])))#
+}#
+#
+Y.blocked <- c(Y.R, Y.D)#
+d.blocked <- c(d.R, d.D)#
+cbind(party, Y0, YD, YR, d.blocked, Y.blocked)
+Y.D <- rep(NA, block.N)#
+Y.R <- rep(NA, block.N)#
+#
+Y0.R <- Y0[1:(N/2)]#
+Y0.D <- Y0[(N/2)+1:N]#
+YR.R <- YR[1:(N/2)]#
+YR.D <- YR[(N/2)+1:N]#
+YD.R <- YD[1:(N/2)]#
+YD.D <- YD[(N/2)+1:N]#
+#
+for(i in 1:block.N){#
+	Y.R[i] <- ifelse(d.R[i]==1, YR.R[i], ifelse(d.R[i]==2, YD.R[i], ifelse(d.R[i]==3, Y0.R[i], Y.D[i])))#
+	Y.D[i] <- ifelse(d.D[i]==1, YD.D[i], ifelse(d.D[i]==2, YR.D[i], ifelse(d.D[i]==3, Y0.D[i], Y.D[i])))#
+}#
+#
+Y.blocked <- c(Y.R, Y.D)#
+d.blocked <- c(d.R, d.D)#
+cbind(party, Y0, YD, YR, d.blocked, Y.blocked)
+d.blocked <- relevel(d.blocked, ref="3")#
+out.CT <- lm(Y.blocked ~ as.factor(d.blocked))#
+summary(out.CT)#
+#
+out2.CT <- lm(Y.blocked ~ as.factor(d.blocked) + as.factor(party))#
+summary(out2.CT)#
+#
+out3.CT <- lm(Y.blocked ~ as.factor(d.blocked) + as.factor(party) + as.factor(d.blocked):as.factor(party))#
+summary(out3.CT)
+d.blocked <- relevel(d.blocked, ref=3)
+d.blocked <- as.factor(d.blocked)#
+d.blocked <- relevel(d.blocked, ref=3)
+out.CT <- lm(Y.blocked ~ as.factor(d.blocked))#
+summary(out.CT)#
+#
+out2.CT <- lm(Y.blocked ~ as.factor(d.blocked) + as.factor(party))#
+summary(out2.CT)#
+#
+out3.CT <- lm(Y.blocked ~ as.factor(d.blocked) + as.factor(party) + as.factor(d.blocked):as.factor(party))#
+summary(out3.CT)
+summary(out3)
+R tutorial 6: the RI package#
+# Al Fang (ahf2116@columbia.edu)#
+#######################################
+#
+rm(list=ls(all=T))#
+#
+# install.packages("ri", dependencies=T)#
+#
+library(ri)#
+#
+N <- 100#
+m <- 50#
+Y <- sample(1:500, N)#
+D <- sample(1:N %in% sample(1:N, m), 1, 0)#
+#
+cbind(Y,D)
+R tutorial 6: the RI package#
+# Al Fang (ahf2116@columbia.edu)#
+#######################################
+#
+rm(list=ls(all=T))#
+#
+# install.packages("ri", dependencies=T)#
+#
+library(ri)#
+#
+N <- 100#
+m <- 50#
+Y <- sample(1:500, N)#
+D <- ifelse(1:N %in% sample(1:N, m), 1, 0)#
+#
+cbind(Y,D)
+R tutorial 6: the RI package#
+# Al Fang (ahf2116@columbia.edu)#
+#######################################
+#
+rm(list=ls(all=T))#
+#
+# install.packages("ri", dependencies=T)#
+#
+library(ri)#
+#
+N <- 100#
+m <- 50#
+Y <- sample(1:500, N)#
+D <- ifelse(1:N %in% sample(1:N, m), 1, 0)#
+#
+b <- c(rep(1,N/2), rep(2,N/2))
+b
+probs <- genprobexact(Z, blockvar=b)
+R tutorial 6: the RI package#
+# Al Fang (ahf2116@columbia.edu)#
+#######################################
+#
+rm(list=ls(all=T))#
+#
+# install.packages("ri", dependencies=T)#
+#
+library(ri)#
+#
+N <- 100#
+m <- 50#
+Y <- sample(1:500, N)#
+Z <- ifelse(1:N %in% sample(1:N, m), 1, 0)#
+b <- c(rep(1,N/2), rep(2,N/2))#
+#
+probs <- genprobexact(Z, blockvar=b)#
+table(probs)
+ate <- estate(Y, Z, prob=probs)#
+ate
+perms <- genperms(Z,maxiter=10000)
+perms
+Ys <- genouts(Y, Z, ate=0)
+Ys
+distout <- gendist(Ys, perms, prob=probs)
+distout
+ate
+mean(abs(distout) >= abs(ate))
+distout
+mean(distout)
+ate
+dispdist(distout, ate)
+Ys <- genouts(Y, Z, ate=ate)#
+#
+# generate sampling distribution based on schedule#
+# of potential outcomes implied by the sharp null#
+#
+distout <- gendist(Ys, perms, prob=probs)
+ate									# estimated ATE#
+mean(abs(distout) >= abs(ate))		# two tailed comparison used to calculate p value
+dispdist(distout, ate)
+R Starter Code - Randomization Inference#
+#############################################
+#
+# install.packages("ri", dependencies=TRUE)#
+library(ri)#
+#
+## Generate data, or read in your data set#
+#
+N <- 50#
+m <- 25#
+#
+d <- ifelse(1:N %in% sample(1:N, m), 1, 0)#
+Y0 <- runif(N,0,1)#
+Y1 <- Y0 + rnorm(N,5,2)#
+Y <- Y1*d + Y0*(1-d)
+cbind(Y0,Y1,d,Y)	# look at your data
+mean(Y[d==1]) - mean(Y[d==0])
+lm(Y~d)
+R Starter Code - Randomization Inference#
+# POLS 4368 Section - Feb 12 2013#
+#############################################
+#
+#####################################
+## Load the RI package#
+#####################################
+#
+# install.packages("ri", dependencies=TRUE)#
+library(ri)#
+#
+#####################################
+## Generate data, or read-in data#
+#####################################
+N <- 50#
+m <- 25
+d <- ifelse(1:N %in% sample(1:N, m), 1, 0)#
+Y0 <- runif(N,0,1)#
+Y1 <- Y0 + rnorm(N,5,2)#
+Y <- Y1*d + Y0*(1-d)#
+#
+cbind(Y0,Y1,d,Y)	# look at your data
+R Starter Code - Randomization Inference#
+# POLS 4368 Section - Feb 12 2013#
+#############################################
+#
+#####################################
+## Load the RI package#
+#####################################
+#
+# install.packages("ri", dependencies=TRUE)#
+library(ri)#
+set.seed(1234567)#
+#
+#####################################
+## Generate data, or read-in data#
+#####################################
+N <- 50#
+m <- 25#
+#
+d <- ifelse(1:N %in% sample(1:N, m), 1, 0)#
+Y0 <- runif(N,0,1)#
+Y1 <- Y0 + rnorm(N,5,2)#
+Y <- Y1*d + Y0*(1-d)#
+#
+cbind(Y0,Y1,d,Y)	# look at your data#
+#
+## Conduct analysis of actual experiment#
+## Estimate the ATE#
+#
+# nonparametric#
+mean(Y[d==1]) - mean(Y[d==0])#
+#
+# or fitting data to ols#
+lm(Y~d)
+Conduct randomization inference#
+## This code is also from "RI Example -- Clingingsmith_source.R" #
+##		from Chapter 3 under "Data and R Programs" on Courseworks#
+#########################################################################
+#
+# Define inputs (Z, Y, any blocking variable, or pre-treatment variables)#
+# Z must be a binary variable 0=control, 1=treatment#
+Z <- D
+probs <- genprobexact(Z)#
+ate <- estate(Y,Z,prob=probs)
+probs <- genprobexact(Z)
+Z
+R Starter Code - Randomization Inference#
+# POLS 4368 Section - Feb 12 2013#
+#############################################
+#
+#####################################
+## Load the RI package#
+#####################################
+#
+# install.packages("ri", dependencies=TRUE)#
+library(ri)#
+set.seed(1234567)#
+#
+#####################################
+## Generate data, or read-in data#
+#####################################
+N <- 50#
+m <- 25#
+#
+d <- ifelse(1:N %in% sample(1:N, m), 1, 0)#
+Y0 <- runif(N,0,1)#
+Y1 <- Y0 + rnorm(N,5,2)#
+Y <- Y1*d + Y0*(1-d)#
+#
+cbind(Y0,Y1,d,Y)	# look at your data#
+#
+## Conduct analysis of actual experiment#
+## Estimate the ATE#
+#
+# nonparametric#
+mean(Y[d==1]) - mean(Y[d==0])#
+#
+# or fitting data to ols#
+lm(Y~d)#
+#
+#########################################################################
+## Conduct randomization inference#
+## This code is also from "RI Example -- Clingingsmith_source.R" #
+##		from Chapter 3 under "Data and R Programs" on Courseworks#
+#########################################################################
+#
+# Define inputs (Z, Y, any blocking variable, or pre-treatment variables)#
+# Z must be a binary variable 0=control, 1=treatment#
+Z <- d#
+probs <- genprobexact(Z)
+probs
+ate <- estate(Y,Z,prob=probs)
+ate
+Set the number of simulated random assignments#
+perms <- genperms(Z,maxiter=10000)
+Create potential outcomes UNDER THE SHARP NULL OF NO EFFECT FOR ANY UNIT#
+Ys <- genouts(Y,Z,ate=0)
+Generate the sampling distribution based on schedule of potential outcome#
+# implied by the sharp null hypothesis#
+distout <- gendist(Ys,perms,prob=probs)#
+#
+ate                                 # estimated ATE
+sum(distout >= ate)                 # one-tailed comparison used to calculate p-value (greater than)
+sum(abs(distout) >= abs(ate))       # two-tailed comparison used to calculate p-value
+dispdist(distout,ate)               # display p-values, 95% confidence interval, standard error under the null, and graph the sampling distribution under the null
+dispdist(distout,ate)
+R Starter Code - Randomization Inference#
+# POLS 4368 Section - Feb 12 2013#
+#############################################
+#
+#####################################
+## Load the RI package#
+#####################################
+#
+# install.packages("ri", dependencies=TRUE)#
+library(ri)#
+set.seed(1234567)#
+#
+#####################################
+## Generate data, or read-in data#
+#####################################
+N <- 50#
+m <- 25#
+#
+d <- ifelse(1:N %in% sample(1:N, m), 1, 0)#
+Y0 <- runif(N,0,1)#
+Y1 <- Y0 + rnorm(N,2,2)#
+Y <- Y1*d + Y0*(1-d)#
+#
+cbind(Y0,Y1,d,Y)	# look at your data#
+#
+## Conduct analysis of actual experiment#
+## Estimate the ATE#
+#
+# nonparametric#
+mean(Y[d==1]) - mean(Y[d==0])#
+#
+# or fitting data to ols#
+lm(Y~d)#
+#
+#########################################################################
+## Conduct randomization inference#
+## This code is also from "RI Example -- Clingingsmith_source.R" #
+##		from Chapter 3 under "Data and R Programs" on Courseworks#
+#########################################################################
+#
+# Define inputs (Z, Y, any blocking variable, or pre-treatment variables)#
+# Z must be a binary variable 0=control, 1=treatment#
+Z <- d#
+probs <- genprobexact(Z)#
+ate <- estate(Y,Z,prob=probs)#
+#
+# Set the number of simulated random assignments#
+perms <- genperms(Z,maxiter=10000) #
+#
+# Create potential outcomes UNDER THE SHARP NULL OF NO EFFECT FOR ANY UNIT#
+Ys <- genouts(Y,Z,ate=0)#
+#
+# Generate the sampling distribution based on schedule of potential outcome#
+# implied by the sharp null hypothesis#
+distout <- gendist(Ys,perms,prob=probs)#
+#
+ate                                 # estimated ATE#
+sum(distout >= ate)                 # one-tailed comparison used to calculate p-value (greater than)#
+sum(abs(distout) >= abs(ate))       # two-tailed comparison used to calculate p-value#
+#
+dispdist(distout,ate)               # display p-values, 95% confidence interval, standard error under the null, and graph the sampling distribution under the null
+--------------------------------------------------------------#
+# estimation of confidence intervals assuming ATE=estimated ATE#
+#--------------------------------------------------------------#
+Ys <- genouts(Y,Z,ate=ate)            # create potential outcomes UNDER THE ASSUMPTION THAT ATE=ESTIMATED ATE#
+#
+distout <- gendist(Ys,perms,prob=probs)  # generate the sampling distribution  based on the schedule of potential outcomes implied by the null hypothesis#
+#
+dispdist(distout,ate)               # display p-values, 95% confidence interval, standard error under the null, and graph the sampling distribution under the null
+library(pwr)
+R Code - Power analysis example.R#
+# POLS 4368 - TA: Albert Fang#
+######################################
+# Install package: pwr#
+install.packages("pwr", dependencies=T)
+rm(list=ls(all=T))   # clear memory#
+library(pwr)
+?pwr.t2n.test
+n.t <- 50			# sample size, treatment group#
+n.c <- 50			# sample size, control group#
+sig.level <- .05	# set test size alpha = 0.05#
+#
+pwr.t2n.test(n1=n.t, n2=n.c , d=d, sig.level=sig.level, alternative="two.sided")
+pwr.t2n.test(n1=n.t, n2=n.c, sig.level=sig.level, alternative="two.sided")
+pwr.t2n.test(n1=n.t, n2=n.c, d=NULL, sig.level=sig.level, alternative="two.sided")
+?pwr.t2n.test
+pwr.t2n.test(n1=n1, n2=n2 , d=d, sig.level=sig.level, alternative="two.sided")
+n1 <- 50#
+n2 <- 50#
+sig.level <- 0.05#
+#
+pwr.t2n.test(n1=n1, n2=n2 , d=d, sig.level=sig.level, alternative="two.sided")
+n1 <- 50#
+n2 <- 50#
+sig.level <- 0.05#
+d <- 0.6#
+#
+pwr.t2n.test(n1=n1, n2=n2 , d=d, sig.level=sig.level, alternative="two.sided")
+?pwr.t2n.test
+R Code - Power analysis example.R#
+# POLS 4368 - TA: Albert Fang#
+######################################
+# Install package: pwr#
+# install.packages("pwr", dependencies=T)#
+#
+rm(list=ls(all=T))   # clear memory#
+library(pwr)#
+#
+# RELEVANT FUNCTIONS#
+# pwr.t2n.test -  two samples (different sizes) t-tests of means#
+# pwr.2p2n.test - two proportions (different sample sizes)#
+# pwr.2p.test - two proportions (same sample sizes)#
+# Toy Example#
+#
+n1 <- 50			# sample size, group 1 (e.g. "treatment")#
+n2 <- 50			# sample size, group 2 (e.g. "control")#
+sig.level <- 0.05	# test size alpha = 0.05#
+d <- 0.6			# effect size#
+#
+pwr.t2n.test(n1=n1, n2=n2 , d=d, sig.level=sig.level, alternative="two.sided")
+pwr.t2n.test(n1=n1, n2=n2 , d=d, sig.level=sig.level, alternative="two.sided")$power
+pwrout <- function(n1,n2,d,sig.level=0.05){#
+	pwr.t2n.test(n1=n1, n2=n2 , d=d, sig.level=sig.level, alternative="two.sided")$power#
+}
+seq(100, 1000, 50)
+n <- seq(100, 1000, 50)
+n
+plot(n, pwrout(n/3, n/3, d, .05))
+R Code - Power analysis example.R#
+# POLS 4368 - TA: Albert Fang#
+######################################
+# Install package: pwr#
+# install.packages("pwr", dependencies=T)#
+#
+rm(list=ls(all=T))   # clear memory#
+library(pwr)
+pwrout <- function(n1,n2,d,sig.level=0.05){#
+	pwr.t2n.test(n1=n1, n2=n2 , d=d, sig.level=sig.level, alternative="two.sided")$power#
+}#
+#
+# Let's plot power against simulated Ns#
+#
+n <- seq(100, 1000, 50)#
+#
+plot(n, pwrout(n/3, n/3, d, .05))
+?pwr.2p.test
+?pwr.t2n.test
+n <- seq(100, 1000, 50)#
+d <- 0.2#
+#
+plot(n, pwrout(n/3, n/3, d, .05))
+n <- seq(100, 1000, 50)#
+d <- 0.6#
+#
+plot(n, pwrout(n/3, n/3, d, .05))
+plot(n, pwrout(n/3, n/3, d, .05), type="l")
+plot(n, pwrout(n/3, n/3, d, .05), type="l", ylab="Power", xlab="Sample Size")
+n <- seq(100, 1000, 50)#
+d <- 0.4#
+#
+plot(n, pwrout(n/3, n/3, d, .05), type="l", ylab="Power", xlab="Sample Size")
+plot(n, pwrout(n/3, n/3, d, .05), type="l", ylab="Power", xlab="Sample Size")#
+abline(v=0.8, lty=2, col="red")
+plot(n, pwrout(n/3, n/3, d, .05), type="l", ylab="Power", xlab="Sample Size")#
+abline(h=0.8, lty=2, col="red")
+plot(n, pwrout(n/3, n/3, d, .05), type="l", ylab="Power", xlab="Sample Size")#
+lines(n, pwrout(n/5, n/5, d, .05))#
+abline(h=0.8, lty=2, col="red")
+plot(n, pwrout(n/2, n/2, d, .05), type="l", ylab="Power", xlab="Sample Size")#
+lines(n, pwrout(n/3, n/3, d, .05))#
+lines(n, pwrout(n/4, n/4, d, .05))#
+lines(n, pwrout(n/5, n/5, d, .05))#
+abline(h=0.8, lty=2, col="red")
+plot(n, pwrout(n/5, n/5, d, .05), type="l", ylab="Power", xlab="Sample Size")#
+lines(n, pwrout(n/4, n/4, d, .05))#
+lines(n, pwrout(n/3, n/3, d, .05))#
+lines(n, pwrout(n/2, n/2, d, .05))#
+abline(h=0.8, lty=2, col="red")
+plot(n, pwrout(n/5, n/5, d, .05), type="l", ylab="Power", xlab="Sample Size", ylim=c(0,1))#
+lines(n, pwrout(n/4, n/4, d, .05))#
+lines(n, pwrout(n/3, n/3, d, .05))#
+lines(n, pwrout(n/2, n/2, d, .05))#
+abline(h=0.8, lty=2, col="red")
+d <- 0.5#
+#
+plot(n, pwrout(n/5, n/5, d, .05), type="l", ylab="Power", xlab="Sample Size", ylim=c(0,1))#
+lines(n, pwrout(n/4, n/4, d, .05))#
+lines(n, pwrout(n/3, n/3, d, .05))#
+lines(n, pwrout(n/2, n/2, d, .05))#
+abline(h=0.8, lty=2, col="red")
+d <- 0.002#
+#
+plot(n, pwrout(n/5, n/5, d, .05), type="l", ylab="Power", xlab="Sample Size", ylim=c(0,1))#
+lines(n, pwrout(n/4, n/4, d, .05))#
+lines(n, pwrout(n/3, n/3, d, .05))#
+lines(n, pwrout(n/2, n/2, d, .05))#
+abline(h=0.8, lty=2, col="red")
+d <- 0.02#
+#
+plot(n, pwrout(n/5, n/5, d, .05), type="l", ylab="Power", xlab="Sample Size", ylim=c(0,1))#
+lines(n, pwrout(n/4, n/4, d, .05))#
+lines(n, pwrout(n/3, n/3, d, .05))#
+lines(n, pwrout(n/2, n/2, d, .05))#
+abline(h=0.8, lty=2, col="red")
+d <- 0.1#
+#
+plot(n, pwrout(n/5, n/5, d, .05), type="l", ylab="Power", xlab="Sample Size", ylim=c(0,1))#
+lines(n, pwrout(n/4, n/4, d, .05))#
+lines(n, pwrout(n/3, n/3, d, .05))#
+lines(n, pwrout(n/2, n/2, d, .05))#
+abline(h=0.8, lty=2, col="red")
+d <- 0.12#
+#
+plot(n, pwrout(n/5, n/5, d, .05), type="l", ylab="Power", xlab="Sample Size", ylim=c(0,1))#
+lines(n, pwrout(n/4, n/4, d, .05))#
+lines(n, pwrout(n/3, n/3, d, .05))#
+lines(n, pwrout(n/2, n/2, d, .05))#
+abline(h=0.8, lty=2, col="red")
+d <- 0.2#
+#
+plot(n, pwrout(n/5, n/5, d, .05), type="l", ylab="Power", xlab="Sample Size", ylim=c(0,1))#
+lines(n, pwrout(n/4, n/4, d, .05))#
+lines(n, pwrout(n/3, n/3, d, .05))#
+lines(n, pwrout(n/2, n/2, d, .05))#
+abline(h=0.8, lty=2, col="red")
+d <- 0.25#
+#
+plot(n, pwrout(n/5, n/5, d, .05), type="l", ylab="Power", xlab="Sample Size", ylim=c(0,1))#
+lines(n, pwrout(n/4, n/4, d, .05))#
+lines(n, pwrout(n/3, n/3, d, .05))#
+lines(n, pwrout(n/2, n/2, d, .05))#
+abline(h=0.8, lty=2, col="red")
+plot(n, pwrout(n/5, n/5, d, .05), type="l", ylab="Power", xlab="Sample Size", ylim=c(0,1))
+lines(n, pwrout(n/4, n/4, d, .05))
+lines(n, pwrout(n/3, n/3, d, .05))
+lines(n, pwrout(n/2, n/2, d, .05))
+abline(h=0.8, lty=2, col="red")
+n
+plot(n, pwrout(n/5, n/5, d, .05), type="l", ylab="Power", xlab="Sample Size", ylim=c(0,1))
+R Code - Rosenbaum confidence intervals.R#
+# POLS 4368 - TA: Albert Fang#
+# 19 Feb 2013#
+######################################
+#
+# Install RI package#
+# install.packages("ri", dependencies=TRUE)#
+#
+rm(list=ls(all=T))   # clear memory#
+library(ri)
+?invert.ci
+R Code - Rosenbaum confidence intervals.R#
+# POLS 4368 - TA: Albert Fang#
+# 19 Feb 2013#
+######################################
+#
+# Install RI package#
+# install.packages("ri", dependencies=TRUE)#
+#
+rm(list=ls(all=T))   # clear memory#
+library(ri)#
+#
+######################################
+#
+# the invert.ci() function in the RI package#
+#
+# Experimental code to generate endpoints of Rosenbaum (2002)-style#
+# confidence intervals through inversion of a constant effects hypothesis.#
+# Only conducts inference with the difference in (weighted) means#
+# as the test statistic, no covariate adjustment#
+#
+# Intuition behind method:#
+# 1) Take Y1, subtract posited ATE#
+# 2) Test statistical significance between actual Y0s and #
+#    synthetic Y0s manufactured in the treatment group#
+# 3) Repeat (1) and (2) for a bunch of posited ATEs, for each#
+#	 test the null (mean synthetic Y0s = mean actual Y0s)#
+# Note: if you overshoot you start to strain credulity#
+#
+# the invert.ci() function:#
+#   Input arguments:#
+#	Y - numeric vector of length N, outcome variable#
+#	Z - binary vector (0 or 1) of length N, treatment indicator#
+#	prob - numeric vector within the (0,1) interval of length N, #
+#		probability of treatment assignment, as outputted by genprob() or genprobexact().#
+#		When prob=NULL (the default), assumes uniform probability of assignment#
+#		to treatment equal to the mean of Z#
+#	perms - N-by-r permutation matrix, as output by genperms or genperms.custom#
+#	targetp - target p-value for the endpoint of the confidence interval#
+#
+######################################
+#
+# Generate some data (from Rosenbaum example.R in "Data and R Programs" on Courseworks)#
+#
+ntreat <- 500#
+ncontrol <- 3500#
+N <- ntreat+ncontrol#
+#
+# ratio of treatment to control standard deviations#
+ratio <- 2#
+#
+Y0 <- rnorm(N)#
+Y0 <- Y0 - mean(Y0)#
+Y1 <- rnorm(N)*ratio#
+Y1 <- Y1 - mean(Y1)
+Z <- c(rep(1,ntreat),rep(0,ncontrol))
+perms <- genperms(Z,maxiter=500)
+perms
+upperci <- lowerci <- rep(NA,ncol(perms))
+upperci
+lowerci
+Nupperci <- Nlowerci <- rep(NA,ncol(perms))
+Pupperci <- Plowerci <- rep(NA,ncol(perms))
+for (i in 1:ncol(perms)) {#
+	Zri <- perms[,i]#
+	Y <- Y0*(1-Zri) + Y1*Zri#
+	upperci[i] <- invert.ci(Y,Zri,prob=rep(mean(Zri),N),perms=perms,targetp=0.975)#
+	lowerci[i] <- invert.ci(Y,Zri,prob=rep(mean(Zri),N),perms=perms,targetp=0.025)#
+	seest <- (var(Y[Zri==1])/sum(Zri) + var(Y[Zri==0])/sum(1-Zri))^.5#
+	ateest <- mean(Y[Zri==1]) - mean(Y[Zri==0])#
+	Nupperci[i] <- ateest + 1.96*seest#
+	Nlowerci[i] <- ateest - 1.96*seest#
+	Ys <- genouts(Y,Zri,ate=ateest)#
+	cis <- quantile(gendist(Ys,perms,prob=rep(mean(Zri),N)),c(0.025,0.975))#
+	Plowerci[i] <- cis[1]#
+	Pupperci[i] <- cis[2]#
+	cat(i,"")#
+}
+Coverage of Neyman + normal approx#
+mean(Nupperci >= 0 & Nlowerci <= 0,na.rm=TRUE)#
+# Coverage of Rosenbaum method#
+mean(upperci >= 0 & lowerci <= 0,na.rm=TRUE)#
+# Coverage of Aronow method#
+mean(Pupperci >= 0 & Plowerci <= 0,na.rm=TRUE)#
+#
+# Summarizing intervals#
+summary(Nupperci)#
+summary(upperci)#
+summary(Pupperci)#
+#
+summary(Nlowerci)#
+summary(lowerci)#
+summary(Plowerci)
+R Code - Rosenbaum confidence intervals.R#
+# POLS 4368 - Experiments#
+# 19 Feb 2013#
+######################################
+#
+# Install RI package#
+# install.packages("ri", dependencies=TRUE)#
+#
+rm(list=ls(all=T))   # clear memory#
+library(ri)#
+#
+######################################
+#
+# the invert.ci() function in the RI package#
+#
+# Experimental code to generate endpoints of Rosenbaum (2002)-style#
+# confidence intervals through inversion of a constant effects hypothesis.#
+# Only conducts inference with the difference in (weighted) means#
+# as the test statistic, no covariate adjustment#
+#
+# Intuition behind method:#
+# 1) Take Y1, subtract posited ATE#
+# 2) Test statistical significance between actual Y0s and #
+#    synthetic Y0s manufactured in the treatment group#
+# 3) Repeat (1) and (2) for a bunch of posited ATEs, for each#
+#	 test the null (mean synthetic Y0s = mean actual Y0s)#
+# Note: if you overshoot you start to strain credulity#
+#
+# the invert.ci() function:#
+#   Input arguments:#
+#	Y - numeric vector of length N, outcome variable#
+#	Z - binary vector (0 or 1) of length N, treatment indicator#
+#	prob - numeric vector within the (0,1) interval of length N, #
+#		probability of treatment assignment, as outputted by genprob() or genprobexact().#
+#		When prob=NULL (the default), assumes uniform probability of assignment#
+#		to treatment equal to the mean of Z#
+#	perms - N-by-r permutation matrix, as output by genperms or genperms.custom#
+#	targetp - target p-value for the endpoint of the confidence interval#
+#
+######################################
+# Example: from Rosenbaum example.R in "Data and R Programs" on Courseworks#
+#
+# Generate some data #
+#
+ntreat <- 500#
+ncontrol <- 3500#
+N <- ntreat+ncontrol#
+#
+# ratio of treatment to control standard deviations#
+ratio <- 2#
+#
+Y0 <- rnorm(N)#
+Y0 <- Y0 - mean(Y0)#
+Y1 <- rnorm(N)*ratio#
+Y1 <- Y1 - mean(Y1)#
+#
+# True ATE is Zero.#
+#
+Z <- c(rep(1,ntreat),rep(0,ncontrol))#
+#
+perms <- genperms(Z,maxiter=500)#
+#
+upperci <- lowerci <- rep(NA,ncol(perms))#
+Nupperci <- Nlowerci <- rep(NA,ncol(perms))#
+Pupperci <- Plowerci <- rep(NA,ncol(perms))
+This code will take a node list and an edgelist and make a cool graph out of it.  #
+## I find that the code is pretty fragile, i.e. it doesn't handle it very well when there are mistakes.  #
+rm(list=ls())      #
+setwd("/Users/al/Documents/Methods Workshop/")#
+set.seed(1234567)   #
+library(foreign)#
+library(sna)#
+library(network)#
+nodes <- read.csv("aec_fb_nodes.csv")#
+edges <- read.csv("aec_fb_edges.csv")#
+node.id <- seq(1:length(nodes[,1]))#
+names<- nodes$name#
+edgelist <- cbind(#
+  rep(NA, length(edges[,1])),#
+  rep(NA, length(edges[,1])),#
+  rep(1, length(edges[,1]))#
+)#
+for (i in 1:length(edges[,1])){#
+ edgelist[i, 1] <- node.id[nodes$uid==edges[i, 1]]#
+ edgelist[i, 2] <- node.id[nodes$uid==edges[i, 2]]#
+}#
+aec.fb.network<-as.network(edgelist)#
+aec.fb.adjacency<-as.sociomatrix(aec.fb.network)
+information.centrality <- infocent(aec.fb.adjacency)
+degree <- degree(aec.fb.adjacency)
+information.centrality
+degree
+betweenness <- betweenness(aec.fb.adjacency)
+betweenness
+plot(information.centrality, betweenness)
+plot(information.centrality, degree)
+plot(betweenness, degree)
+rm(list=ls(all=T))#
+library(sna)#
+rgraph(5)
+gplot(rgraph(5))
+gplot(rgraph(5), mode="graph")
+gplot(rgraph(5, mode="graph"))
+rm(list=ls(all=T))
+X <- c(1:200)
+X
+randfun <- function() {#
+  teststat <- -1#
+	while (teststat < 0.05) {#
+		Zri <- sample(c(rep(0,180),rep(1,20))) # imbalanced design#
+		fstat <- summary(lm(Zri~X))$fstatistic#
+		teststat <- pf(fstat[1],fstat[2],fstat[3],lower.tail=FALSE)  # extract F-test p-value#
+			}#
+	return(Zri)#
+}
+?pf
+library(ri)
+?genperms.custom
+rm(list=ls(all=T))#
+library(ri)#
+set.seed(12345)#
+## Rejected randomization scheme: reject if and only if there is significant imbalance#
+#
+X <- c(1:200)#
+#
+randfun <- function() {#
+  teststat <- -1#
+	while (teststat < 0.05) {#
+		Zri <- sample(c(rep(0,180),rep(1,20))) # imbalanced design#
+		fstat <- summary(lm(Zri~X))$fstatistic#
+		teststat <- pf(fstat[1],fstat[2],fstat[3],lower.tail=FALSE)  # extract F-test p-value#
+			}#
+	return(Zri)#
+}#
+perms <- genperms.custom(numiter=10000, randfun=randfun) # generate permutations#
+probs <- genprob(perms) # generate approximate probabilities from permutation matrix#
+#
+sd(probs)#
+cor(probs,distance) # observations with extreme X are less likely to be treated#
+distance <- (X-mean(X))^2#
+summary(lm(probs~distance))
+sd(probs)
+distance <- (X-mean(X))^2
+cor(probs,distance) # observations with extreme X are less likely to be treated
+summary(lm(probs~distance))
+sample(c(rep(0,180),rep(1,20)))
+sample(c(rep(0,180),rep(1,20)))#
+table(sample(c(rep(0,180),rep(1,20))))
+X <- c(1:200)
+Zri <- sample(c(rep(0,180),rep(1,20))) # imbalanced design
+fstat <- summary(lm(Zri~X))$fstatistic
+fstat
+teststat
+teststat <- pf(fstat[1],fstat[2],fstat[3],lower.tail=FALSE)
+teststat
+?sample
+rm(list=ls(all=TRUE))#
+library(foreign)#
+library(ri)#
+#
+setwd("/Users/al/Dropbox/Teaching 2012-2013/Experiments/Data and R Programs/Chapter 4/")#
+data <- read.dta("Iowa and Michigan phone mobilization study (Gerber and Green 2005).dta")
+head(data)
+table(data$strata)
+names(table(data$strata))
+lm(vote02 ~ treat2, data=data[data$strata==1,])
+lm(vote02 ~ treat2, data=data[data$strata==2,])
+lm(vote02 ~ treat2, data=data[data$strata==3,])
+lm(vote02 ~ treat2, data=data[data$strata==4,])
+Z <- data$treat2#
+blockvar <- data$strata
+data$treat2
+rm(list=ls(all=TRUE))#
+library(foreign)#
+library(ri)#
+#
+setwd("/Users/al/Dropbox/Teaching 2012-2013/Experiments/Data and R Programs/Chapter 4/")#
+data <- read.dta("Iowa and Michigan phone mobilization study (Gerber and Green 2005).dta")#
+#
+head(data)#
+#
+## (a) within each block#
+#
+lm(vote02 ~ treat2, data=data[data$strata==1,])#
+lm(vote02 ~ treat2, data=data[data$strata==2,])#
+lm(vote02 ~ treat2, data=data[data$strata==3,])#
+lm(vote02 ~ treat2, data=data[data$strata==4,])#
+#
+## (b) pooled#
+#
+lm(vote02 ~ treat2, data=data)#
+#
+## (c) weighted estimator#
+#
+Z <- data$treat2#
+blockvar <- data$strata#
+probs <- genprobexact(Z,blockvar)
+data$vote02
+Y <- data$vote02
+ate <- estate(Y, Z, prob=probs)
+ate
+lm(vote02 ~ -1 + treat2 + I(strata), data=data)
+lm(vote02 ~ -1 + treat2 + as.factor(strata), data=data)
+table(probs)
+rm(list=ls(all=T))#
+Y <- sample(0:1, 500, replace=T)
+Y
+rm(list=ls(all=T))#
+Y <- sample(0:1, 500, replace=T)#
+Z <- sample(0:1, 500, replace=T)
+rm(list=ls(all=T))#
+Y <- sample(0:1, 500, replace=T)#
+Z <- sample(0:1, 500, replace=T)#
+blockvar <- c(rep(1,250), rep(2,250))#
+# inverse probability weights
+cbind(Y,Z,blockvar)
+table(blockvar,Z)
+prop.table(table(blockvar,Z), 2)
+?prop.table
+m <- matrix(1:4,2)#
+m#
+prop.table(m,1)
+m
+rm(list=ls(all=T))#
+#
+# GENERATE DATA#
+#
+Y <- sample(0:1, 500, replace=T)#
+Z <- sample(0:1, 500, replace=T)#
+blockvar <- c(rep(1,250), rep(2,250))#
+#
+# INVERSE PROBABILITY WEIGHTS#
+# use prop.table() to generate pobability of treatment or control, by block#
+#
+# basic example#
+#
+m <- matrix(1:4, 2)#
+m#
+prop.table(m, 1)#
+#
+# using the experimental data#
+#
+table(blockvar,Z)#
+prop.table(table(blockvar,Z), 1)
+prob.assign <- prop.table(table(blockvar,Z), 1)
+prob.assign
+Analysis of Teacher Incentives experiment (subset of cases with T1 outcomes): #
+# Muralidharan, Karthik, and Venkatesh Sundararaman. 2011. #
+# “Teacher Performance Pay: Experimental Evidence from India.” #
+# Journal of Political Economy 119: 39-77.#
+#
+rm(list=ls())       # clear objects in memory#
+set.seed(1234567)   # random number seed, so that results are reproducible#
+#
+library(foreign)    # package allows R to read Stata datasets#
+library(ri)			# load RI package#
+setwd("/Users/al/Dropbox/Teaching 2012-2013/Experiments/Data and R Programs/Chapter 4/")
+install.packages("ri", dependencies=TRUE)
+library(ri)			# load RI package
+setwd("/Users/al/Dropbox/Teaching 2012-2013/Experiments/Data and R Programs/Chapter 4/")
+teach <- read.dta("Teacher incentives 2011 -- subset.dta")
+Z <-  teach$incentive#
+Y <- teach$y1_nts#
+clust <- teach$apfschoolcode
+covs <- as.matrix(teach[,5:8])  # covariates
+probs <- genprobexact(Z,clustvar=clust)  # subjects are clustered by precinct
+numiter <- 1000
+perms <- genperms(Z,maxiter=numiter,clustvar=clust)    # clustered assignment
+numiter <- ncol(perms)  # reset numiter so that it is no larger than the maximum number of possible randomizations
+Fstat <- summary(lm(Z~covs))$fstatistic[1]   # F-statistic from actual data
+Fstat
+Fstatstore <- rep(NA,numiter)
+for (i in 1:numiter) {#
+	Fstatstore[i] <- summary(lm(perms[,i]~covs))$fstatistic[1]   # F-statistic under the null of random assignment of Z#
+	}
+Fstatstore
+mean(Fstatstore >= Fstat)
+mean(Fstatstore >= Fstat, na.rm=TRUE)
+Analysis of Teacher Incentives experiment (subset of cases with T1 outcomes): #
+# Muralidharan, Karthik, and Venkatesh Sundararaman. 2011. #
+# “Teacher Performance Pay: Experimental Evidence from India.” #
+# Journal of Political Economy 119: 39-77.#
+#
+# install.packages("ri", dependencies=TRUE)#
+#
+rm(list=ls())       # clear objects in memory#
+set.seed(1234567)   # random number seed, so that results are reproducible#
+#
+library(foreign)    # package allows R to read Stata datasets#
+library(ri)			# load RI package#
+#
+setwd("/Users/al/Dropbox/Teaching 2012-2013/Experiments/Data and R Programs/Chapter 4/")
+install.packages("ri", dependencies=TRUE)
+read.dta("Teacher incentives 2011 -- subset.dta")
+teach <- read.dta("Teacher incentives 2011 -- subset.dta")
+names(teach)		# look at var names#
+head(teach)			# look at first 6 or so rows
+Z <-  teach$incentive			## notation: referencing a variable in a data frame follows the syntax#
+								##   df$varname
+Z
+teach$incentive
+teach$apfschoolcode
+clust <- teach$apfschoolcode
+covs <- as.matrix(teach[,5:8])  # covariates
+head(covs)
+covlist <- c("pretest","pretest_miss","parent_literacy","parent_miss")
+covlist <- c("pretest","pretest_miss","parent_literacy","parent_miss")#
+covs2 <- as.matrix(teach[ , names(teach) %in% covlist])
+head(covs2)
+probs <- genprobexact(Z,clustvar=clust)  # subjects are clustered by precinct
+probs
+numiter <- 1000			## set number of iterations for permutations
+perms <- genperms(Z,maxiter=numiter,clustvar=clust)    # clustered assignment
+perms[,1:5]
+numiter <- ncol(perms)  # reset numiter so that it is no larger than the maximum number of possible randomizations
+lm(Z~covs)
+summary(lm(Z~covs))
+summary(lm(Z~covs))$fstatistic
+Fstat <- summary(lm(Z~covs))$fstatistic[1]
+Fstat
+Fstatstore <- rep(NA,numiter)
+Fstatstore
+1:numiter
+for (i in 1:numiter) {#
+	Fstatstore[i] <- summary(lm(perms[,i]~covs))$fstatistic[1]   # F-statistic under the null of random assignment of Z#
+	}
+Fstatstore
+Fstatstore >= Fstat
+mean(Fstatstore >= Fstat)
+mean(Fstatstore >= Fstat, na.rm=TRUE)

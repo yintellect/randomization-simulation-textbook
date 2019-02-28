@@ -1,0 +1,74 @@
+{smcl}
+{com}{sf}{ul off}{txt}{.-}
+      name:  {res}<unnamed>
+       {txt}log:  {res}/Users/yy2633/MA/2019Spring/RA/FEDAI code STATA/11_9.smcl
+  {txt}log type:  {res}smcl
+ {txt}opened on:  {res}21 Feb 2019, 21:12:58
+{txt}
+{com}. 
+. clear 
+{txt}
+{com}. import delimited using "/Users/yy2633/MA/2019Spring/RA/FEDAI code STATA/dupas.csv"
+{res}{text}(3 vars, 1120 obs)
+
+{com}. 
+. *part b
+.         
+.         gen purchased =.
+{txt}(1,120 missing values generated)
+
+{com}.         replace purchased = 1 if purchasednet=="yes"
+{txt}(509 real changes made)
+
+{com}.         replace purchased = 0 if purchasednet=="no"
+{txt}(611 real changes made)
+
+{com}. 
+.         rename cfw_id region            
+{res}{txt}
+{com}.         
+. 
+. matrix t=J(100, 2, .)
+{txt}
+{com}. matrix colnames t=gammas lls
+{txt}
+{com}. 
+. 
+. forvalues i = 1/100 {c -(}
+{txt}  2{com}.                 
+.                 gen log_price_star_`i' = log(price + `i')
+{txt}  3{com}.                 qui glm purchased log_price_star_`i' i.region, family(binomial) link(logit)
+{txt}  4{com}.                 
+.                 matrix t[`i', 1] = `i'
+{txt}  5{com}.                 matrix t[`i', 2] = `e(ll)'
+{txt}  6{com}. 
+. {c )-}
+{txt}
+{com}. 
+. 
+. svmat double t, names(col)
+{txt}
+{com}. 
+. qui sum lls
+{txt}
+{com}. list gammas if lls==r(max)
+{txt}
+      {c TLC}{hline 8}{c TRC}
+      {c |} {res}gammas {txt}{c |}
+      {c LT}{hline 8}{c RT}
+  19. {c |} {res}    19 {txt}{c |}
+      {c BLC}{hline 8}{c BRC}
+
+{com}. 
+. 
+. scatter lls gammas, xline(19)
+{res}{txt}
+{com}. 
+. log close
+      {txt}name:  {res}<unnamed>
+       {txt}log:  {res}/Users/yy2633/MA/2019Spring/RA/FEDAI code STATA/11_9.smcl
+  {txt}log type:  {res}smcl
+ {txt}closed on:  {res}21 Feb 2019, 21:13:05
+{txt}{.-}
+{smcl}
+{txt}{sf}{ul off}

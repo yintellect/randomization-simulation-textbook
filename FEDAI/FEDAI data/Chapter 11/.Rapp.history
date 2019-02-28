@@ -1,0 +1,5045 @@
+nrow(testmat)
+ncol(testmat)
+testmat[1,1]
+testmat[2,1]
+ethnicity[treatment ==1]
+ethnicity[treatment ==0]
+random_draw
+mean(random_draw)
+table(random_draw)
+mean(villages)
+mean(villages)*length(villages)
+mean(random_draw)*length(villages)/2
+# program to illustrate how sample size improves balance#
+# (and, by implication) the gains from blocking diminish)#
+#
+# case 1: 75 Hindu villages and 25 non-Hindu villages#
+villages <- c(rep(0,25),rep(1,75))#
+#
+# case 2: 750 Hindu villages and 250 non-Hindu villages#
+# villages <- rep(villages,10)#
+ treatment <- c(rep(1,length(villages)/2),rep(0,length(villages)/2))#
+#
+# seed <- 1337#
+# rand_sort=rnorm(length(villages))#
+#
+numiter <- 100000#
+#
+storecorr <- storemean <- rep(NA,numiter)#
+#
+for (iter in 1:numiter)#
+                       {#
+						random_draw <- sample(villages,length(villages)/2,replace=FALSE)#
+                        storemean[iter] <- mean(random_draw)#
+                        #
+                        # generate the control group, which is the rest of the villages#
+   control_ones  <- rep(1,mean(villages)*length(villages) - mean(random_draw)*length(villages)/2)#
+   control_zeros <- rep(0,length(random_draw) - length(control_ones)#
+                        control_draw <- c(control_ones,control_zeros)#
+                        ethnicity <- c(random_draw,control_draw)#
+                        storecorr[iter] <- corr(cbind(ethnicity,treatment))#
+                        }#
+#
+storemean <- sort(storemean)#
+# find 2.5th and 97.5th percentiles#
+#
+lower <- round(numiter/40,0)#
+upper <- round(numiter - numiter/40,0)#
+#
+lower_result <- storemean[lower]#
+upper_result <- storemean[upper]#
+#
+lower_result#
+upper_result
+# program to illustrate how sample size improves balance#
+# (and, by implication) the gains from blocking diminish)#
+#
+# case 1: 75 Hindu villages and 25 non-Hindu villages#
+villages <- c(rep(0,25),rep(1,75))#
+#
+# case 2: 750 Hindu villages and 250 non-Hindu villages#
+# villages <- rep(villages,10)#
+ treatment <- c(rep(1,length(villages)/2),rep(0,length(villages)/2))#
+#
+# seed <- 1337#
+# rand_sort=rnorm(length(villages))#
+#
+numiter <- 100000#
+#
+storecorr <- storemean <- rep(NA,numiter)#
+#
+for (iter in 1:numiter)#
+                       {#
+						random_draw <- sample(villages,length(villages)/2,replace=FALSE)#
+                        storemean[iter] <- mean(random_draw)#
+                        #
+                        # generate the control group, which is the rest of the villages#
+   control_ones  <- rep(1,mean(villages)*length(villages) - mean(random_draw)*length(villages)/2)#
+   control_zeros <- rep(0,length(random_draw) - length(control_ones))å#
+                        control_draw <- c(control_ones,control_zeros)#
+                        ethnicity <- c(random_draw,control_draw)#
+                        storecorr[iter] <- corr(cbind(ethnicity,treatment))#
+                        }#
+#
+storemean <- sort(storemean)#
+# find 2.5th and 97.5th percentiles#
+#
+lower <- round(numiter/40,0)#
+upper <- round(numiter - numiter/40,0)#
+#
+lower_result <- storemean[lower]#
+upper_result <- storemean[upper]#
+#
+lower_result#
+upper_result
+control_ones
+# program to illustrate how sample size improves balance#
+# (and, by implication) the gains from blocking diminish)#
+#
+# case 1: 75 Hindu villages and 25 non-Hindu villages#
+villages <- c(rep(0,25),rep(1,75))#
+#
+# case 2: 750 Hindu villages and 250 non-Hindu villages#
+# villages <- rep(villages,10)#
+ treatment <- c(rep(1,length(villages)/2),rep(0,length(villages)/2))#
+#
+# seed <- 1337#
+# rand_sort=rnorm(length(villages))#
+#
+numiter <- 100000#
+#
+storecorr <- storemean <- rep(NA,numiter)#
+#
+for (iter in 1:numiter)#
+                       {#
+						random_draw <- sample(villages,length(villages)/2,replace=FALSE)#
+                        storemean[iter] <- mean(random_draw)#
+                        #
+                        # generate the control group, which is the rest of the villages#
+   control_ones  <- rep(1,mean(villages)*length(villages) - mean(random_draw)*length(villages)/2)#
+   control_zeros <- rep(0,length(random_draw) - length(control_ones))#
+                        control_draw <- c(control_ones,control_zeros)#
+                        ethnicity <- c(random_draw,control_draw)#
+                        storecorr[iter] <- corr(cbind(ethnicity,treatment))#
+                        }#
+#
+storemean <- sort(storemean)#
+# find 2.5th and 97.5th percentiles#
+#
+lower <- round(numiter/40,0)#
+upper <- round(numiter - numiter/40,0)#
+#
+lower_result <- storemean[lower]#
+upper_result <- storemean[upper]#
+#
+lower_result#
+upper_result
+mean(storecorr)
+# program to illustrate how sample size improves balance#
+# (and, by implication) the gains from blocking diminish)#
+#
+# case 1: 75 Hindu villages and 25 non-Hindu villages#
+villages <- c(rep(0,25),rep(1,75))#
+#
+# case 2: 750 Hindu villages and 250 non-Hindu villages#
+# villages <- rep(villages,10)#
+ treatment <- c(rep(1,length(villages)/2),rep(0,length(villages)/2))#
+#
+# seed <- 1337#
+# rand_sort=rnorm(length(villages))#
+#
+numiter <- 100000#
+#
+storecorr2 <- storemean <- rep(NA,numiter)#
+#
+for (iter in 1:numiter)#
+                       {#
+						random_draw <- sample(villages,length(villages)/2,replace=FALSE)#
+                        storemean[iter] <- mean(random_draw)#
+                        #
+                        # generate the control group, which is the rest of the villages#
+   control_ones  <- rep(1,mean(villages)*length(villages) - mean(random_draw)*length(villages)/2)#
+   control_zeros <- rep(0,length(random_draw) - length(control_ones))#
+                        control_draw <- c(control_ones,control_zeros)#
+                        ethnicity <- c(random_draw,control_draw)#
+                        storecorr2[iter] <- (corr(cbind(ethnicity,treatment)))^0.5#
+                        }#
+#
+storemean <- sort(storemean)#
+# find 2.5th and 97.5th percentiles#
+#
+lower <- round(numiter/40,0)#
+upper <- round(numiter - numiter/40,0)#
+#
+lower_result <- storemean[lower]#
+upper_result <- storemean[upper]#
+#
+lower_result#
+upper_result
+mean(storecorr2)
+# program to illustrate how sample size improves balance#
+# (and, by implication) the gains from blocking diminish)#
+#
+# case 1: 75 Hindu villages and 25 non-Hindu villages#
+villages <- c(rep(0,25),rep(1,75))#
+#
+# case 2: 750 Hindu villages and 250 non-Hindu villages#
+# villages <- rep(villages,10)#
+ treatment <- c(rep(1,length(villages)/2),rep(0,length(villages)/2))#
+#
+# seed <- 1337#
+# rand_sort=rnorm(length(villages))#
+#
+numiter <- 1000#
+#
+storecorr2 <- storemean <- rep(NA,numiter)#
+#
+for (iter in 1:numiter)#
+                       {#
+						random_draw <- sample(villages,length(villages)/2,replace=FALSE)#
+                        storemean[iter] <- mean(random_draw)#
+                        #
+                        # generate the control group, which is the rest of the villages#
+   control_ones  <- rep(1,mean(villages)*length(villages) - mean(random_draw)*length(villages)/2)#
+   control_zeros <- rep(0,length(random_draw) - length(control_ones))#
+                        control_draw <- c(control_ones,control_zeros)#
+                        ethnicity <- c(random_draw,control_draw)#
+                        storecorr2[iter] <- (corr(cbind(ethnicity,treatment)))^0.5#
+                        }#
+#
+storemean <- sort(storemean)#
+# find 2.5th and 97.5th percentiles#
+#
+lower <- round(numiter/40,0)#
+upper <- round(numiter - numiter/40,0)#
+#
+lower_result <- storemean[lower]#
+upper_result <- storemean[upper]#
+#
+lower_result#
+upper_result
+storecorr
+storecorr2
+ethnicity
+mean(random_draw)
+mean(control_draw)
+length(random_draw)
+length(control_draw)
+# program to illustrate how sample size improves balance#
+# (and, by implication) the gains from blocking diminish)#
+#
+# case 1: 75 Hindu villages and 25 non-Hindu villages#
+villages <- c(rep(0,25),rep(1,75))#
+#
+# case 2: 750 Hindu villages and 250 non-Hindu villages#
+# villages <- rep(villages,10)#
+ treatment <- c(rep(1,length(villages)/2),rep(0,length(villages)/2))#
+#
+# seed <- 1337#
+# rand_sort=rnorm(length(villages))#
+#
+numiter <- 1000#
+#
+storecorr2 <- storemean <- rep(NA,numiter)#
+#
+for (iter in 1:numiter)#
+                       {#
+						random_draw <- sample(villages,length(villages)/2,replace=FALSE)#
+                        storemean[iter] <- mean(random_draw)#
+                        #
+                        # generate the control group, which is the rest of the villages#
+   control_ones  <- rep(1,mean(villages)*length(villages) - mean(random_draw)*length(villages)/2)#
+   control_zeros <- rep(0,length(random_draw) - length(control_ones))#
+                        control_draw <- c(control_ones,control_zeros)#
+                        ethnicity <- c(random_draw,control_draw)#
+                        storecorr2[iter] <- (corr(cbind(ethnicity,treatment)))^2#
+                        }#
+#
+storemean <- sort(storemean)#
+# find 2.5th and 97.5th percentiles#
+#
+lower <- round(numiter/40,0)#
+upper <- round(numiter - numiter/40,0)#
+#
+lower_result <- storemean[lower]#
+upper_result <- storemean[upper]#
+#
+lower_result#
+upper_result
+# program to illustrate how sample size improves balance#
+# (and, by implication) the gains from blocking diminish)#
+#
+# case 1: 75 Hindu villages and 25 non-Hindu villages#
+villages <- c(rep(0,25),rep(1,75))#
+#
+# case 2: 750 Hindu villages and 250 non-Hindu villages#
+# villages <- rep(villages,10)#
+ treatment <- c(rep(1,length(villages)/2),rep(0,length(villages)/2))#
+#
+# seed <- 1337#
+# rand_sort=rnorm(length(villages))#
+#
+numiter <- 1000#
+#
+storecorr2 <- storemean <- rep(NA,numiter)#
+#
+for (iter in 1:numiter)#
+                       {#
+						random_draw <- sample(villages,length(villages)/2,replace=FALSE)#
+                        storemean[iter] <- mean(random_draw)#
+                        #
+                        # generate the control group, which is the rest of the villages#
+   control_ones  <- rep(1,mean(villages)*length(villages) - mean(random_draw)*length(villages)/2)#
+   control_zeros <- rep(0,length(random_draw) - length(control_ones))#
+                        control_draw <- c(control_ones,control_zeros)#
+                        ethnicity <- c(random_draw,control_draw)#
+                        storecorr2[iter] <- (corr(cbind(ethnicity,treatment)))^2#
+                        }#
+#
+storemean <- sort(storemean)#
+# find 2.5th and 97.5th percentiles#
+#
+lower <- round(numiter/40,0)#
+upper <- round(numiter - numiter/40,0)#
+#
+lower_result <- storemean[lower]#
+upper_result <- storemean[upper]#
+#
+lower_result#
+upper_result#
+#
+mean(storecorr2)
+# program to illustrate how sample size improves balance#
+# (and, by implication) the gains from blocking diminish)#
+#
+# case 1: 75 Hindu villages and 25 non-Hindu villages#
+villages <- c(rep(0,25),rep(1,75))#
+#
+# case 2: 750 Hindu villages and 250 non-Hindu villages#
+# villages <- rep(villages,10)#
+ treatment <- c(rep(1,length(villages)/2),rep(0,length(villages)/2))#
+#
+# seed <- 1337#
+# rand_sort=rnorm(length(villages))#
+#
+numiter <- 100000#
+#
+storecorr2 <- storemean <- rep(NA,numiter)#
+#
+for (iter in 1:numiter)#
+                       {#
+						random_draw <- sample(villages,length(villages)/2,replace=FALSE)#
+                        storemean[iter] <- mean(random_draw)#
+                        #
+                        # generate the control group, which is the rest of the villages#
+   control_ones  <- rep(1,mean(villages)*length(villages) - mean(random_draw)*length(villages)/2)#
+   control_zeros <- rep(0,length(random_draw) - length(control_ones))#
+                        control_draw <- c(control_ones,control_zeros)#
+                        ethnicity <- c(random_draw,control_draw)#
+                        storecorr2[iter] <- (corr(cbind(ethnicity,treatment)))^2#
+                        }#
+#
+storemean <- sort(storemean)#
+# find 2.5th and 97.5th percentiles#
+#
+lower <- round(numiter/40,0)#
+upper <- round(numiter - numiter/40,0)#
+#
+lower_result <- storemean[lower]#
+upper_result <- storemean[upper]#
+#
+lower_result#
+upper_result#
+#
+mean(storecorr2)
+# program to illustrate how sample size improves balance#
+# (and, by implication) the gains from blocking diminish)#
+#
+# case 1: 75 Hindu villages and 25 non-Hindu villages#
+villages <- c(rep(0,25),rep(1,75))#
+#
+# case 2: 750 Hindu villages and 250 non-Hindu villages#
+ villages <- rep(villages,10)#
+ treatment <- c(rep(1,length(villages)/2),rep(0,length(villages)/2))#
+#
+# seed <- 1337#
+# rand_sort=rnorm(length(villages))#
+#
+numiter <- 100000#
+#
+storecorr2 <- storemean <- rep(NA,numiter)#
+#
+for (iter in 1:numiter)#
+                       {#
+						random_draw <- sample(villages,length(villages)/2,replace=FALSE)#
+                        storemean[iter] <- mean(random_draw)#
+                        #
+                        # generate the control group, which is the rest of the villages#
+   control_ones  <- rep(1,mean(villages)*length(villages) - mean(random_draw)*length(villages)/2)#
+   control_zeros <- rep(0,length(random_draw) - length(control_ones))#
+                        control_draw <- c(control_ones,control_zeros)#
+                        ethnicity <- c(random_draw,control_draw)#
+                        storecorr2[iter] <- (corr(cbind(ethnicity,treatment)))^2#
+                        }#
+#
+storemean <- sort(storemean)#
+# find 2.5th and 97.5th percentiles#
+#
+lower <- round(numiter/40,0)#
+upper <- round(numiter - numiter/40,0)#
+#
+lower_result <- storemean[lower]#
+upper_result <- storemean[upper]#
+#
+# number of villages in simulation#
+length(villages)#
+lower_result#
+upper_result#
+#
+mean(storecorr2)
+hist(storecorr2)
+# program to illustrate how sample size improves balance#
+# (and, by implication) the gains from blocking diminish)#
+#
+# case 1: 75 Hindu villages and 25 non-Hindu villages#
+villages <- c(rep(0,25),rep(1,75))#
+#
+# case 2: 750 Hindu villages and 250 non-Hindu villages#
+ villages <- rep(villages,10)#
+ treatment <- c(rep(1,length(villages)/2),rep(0,length(villages)/2))#
+#
+# seed <- 1337#
+# rand_sort=rnorm(length(villages))#
+#
+numiter <- 100000#
+#
+storecorr2 <- storemean <- rep(NA,numiter)#
+#
+for (iter in 1:numiter)#
+                       {#
+						random_draw <- sample(villages,length(villages)/2,replace=FALSE)#
+                        storemean[iter] <- mean(random_draw)#
+                        #
+                        # generate the control group, which is the rest of the villages#
+   control_ones  <- rep(1,mean(villages)*length(villages) - mean(random_draw)*length(villages)/2)#
+   control_zeros <- rep(0,length(random_draw) - length(control_ones))#
+                        control_draw <- c(control_ones,control_zeros)#
+                        ethnicity <- c(random_draw,control_draw)#
+                        storecorr2[iter] <- (corr(cbind(ethnicity,treatment)))^2#
+                        }#
+#
+storemean <- sort(storemean)#
+# find 2.5th and 97.5th percentiles#
+#
+lower <- round(numiter/40,0)#
+upper <- round(numiter - numiter/40,0)#
+#
+lower_result <- storemean[lower]#
+upper_result <- storemean[upper]#
+#
+# number of villages in simulation#
+length(villages)#
+lower_result#
+upper_result#
+#
+storecorr2 <- sort(storecorr2)#
+mean(storecorr2)
+storecorr2[2500]
+storecorr2[97500]
+storecorr2[99990]
+storecorr2[99999]
+# program to illustrate how sample size improves balance#
+# (and, by implication) the gains from blocking diminish)#
+#
+# case 1: 75 Hindu villages and 25 non-Hindu villages#
+villages <- c(rep(0,25),rep(1,75))#
+#
+# case 2: 750 Hindu villages and 250 non-Hindu villages#
+# villages <- rep(villages,10)#
+ treatment <- c(rep(1,length(villages)/2),rep(0,length(villages)/2))#
+#
+#
+numiter <- 100000#
+#
+storecorr2 <- storemean <- rep(NA,numiter)#
+#
+for (iter in 1:numiter)#
+                       {#
+						random_draw <- sample(villages,length(villages)/2,replace=FALSE)#
+                        storemean[iter] <- mean(random_draw)#
+                        #
+                        # generate the control group, which is the rest of the villages#
+   control_ones  <- rep(1,mean(villages)*length(villages) - mean(random_draw)*length(villages)/2)#
+   control_zeros <- rep(0,length(random_draw) - length(control_ones))#
+                        control_draw <- c(control_ones,control_zeros)#
+                        ethnicity <- c(random_draw,control_draw)#
+                        storecorr2[iter] <- (corr(cbind(ethnicity,treatment)))^2#
+                        }#
+#
+storemean <- sort(storemean)#
+# find 2.5th and 97.5th percentiles#
+#
+lower <- round(numiter/40,0)#
+upper <- round(numiter - numiter/40,0)#
+#
+lower_result <- storemean[lower]#
+upper_result <- storemean[upper]#
+#
+# number of replications#
+numiter#
+# number of villages in simulation#
+length(villages)#
+lower_result#
+upper_result#
+#
+storecorr2 <- sort(storecorr2)#
+mean(storecorr2)
+storecorr2[97500]
+storecorr2[99900]
+hist(storecorr2)
+?logit
+??logit
+?logit
+?"logistic regression"
+??"logistic regression"
+??"robust cluster"
+??"cluster"
+Z <- dshort_term=="4 years"
+ibrary(foreign)#
+#
+#
+Term <- read.dta("Chapter 13_Titiunik (2010) Dataset.dta")#
+#
+attach(Term)#
+#
+Z_alpha <- dshort_term
+set.seed(1234567)#
+#
+library(ri)#
+library(foreign)#
+#
+hough <- read.dta("/Users/donaldgreen/Dropbox/Field Experimentation Book/Datasets for Website/Chapter 8_Leslie Hough self-experiment data.dta")#
+#
+# Part (b)#
+#
+Y <- hough$tetris#
+Z <- hough$run#
+#
+N <- length(Z)#
+#
+Zlag <- c(NA,Z[2:N-1]) # exclude day 1 from analysis#
+Ylag <- c(NA,Y[2:N-1])#
+#
+randfun <- function() rbinom(N,1,.5)#
+#
+numiter <- 10000#
+perms <- genperms.custom(numiter=numiter,randfun=randfun)#
+#
+test1 <- lm(Y~Z)$coefficients["Z"]#
+test2 <- summary(lm(Y~Z+Zlag))$fstatistic[1]#
+test3 <- lm(Ylag~Z)$coefficients["Z"]#
+test4 <- lm(hough$energy~Z)$coefficients["Z"]#
+test5 <- lm(hough$gre~Z)$coefficients["Z"]#
+#
+testdist1 <- testdist2 <- testdist3 <- testdist4 <- testdist5 <- rep(NA,numiter)#
+#
+for (i in 1:numiter) {#
+	#
+	Zri <- perms[,i]#
+	Zlagri <- c(NA,Zri[2:N-1]) # exclude day 1 from analysis#
+#
+testdist1[i] <- lm(Y~Zri)$coefficients["Zri"]#
+testdist2[i] <- summary(lm(Y~Zri+Zlagri))$fstatistic[1]#
+testdist3[i] <- lm(Ylag~Zri)$coefficients["Zri"]#
+testdist4[i] <- lm(hough$energy~Zri)$coefficients["Zri"]#
+testdist5[i] <- lm(hough$gre~Zri)$coefficients["Zri"]#
+	#
+	}#
+	#
+mean(testdist1 >= test1)#
+mean(testdist2 >= test2)#
+mean(abs(testdist3) >= abs(test3))#
+mean(testdist4 >= test4)#
+mean(testdist5 >= test5)
+library(ri)#
+#
+set.seed(1)#
+#
+Y1 <- c(5,15,12,19,17,18,24,11,16,25,18,21,17,24,27,26,30,37,43,39,36,27,33,37,48,39,42,37,53,50,51,43,55,49,48,52,59,52,55,63)#
+Y0 <- c(5,5,6,9,10,11,12,13,14,19,20,20,20,21,24,25,27,27,30,32,32,32,32,35,35,37,38,38,41,42,43,44,45,47,48,51,52,52,57,62)#
+X <- c(6,8,5,13,9,15,16,17,19,23,28,28,9,16,23,15,23,33,42,31,29,28,35,28,41,37,32,37,36,44,48,43,55,53,51,43,57,51,49,55)#
+#
+mean(Y1-Y0)#
+#
+### DGP.#
+#
+Z <- c(0,1,1,0,0,0,0,0,0,1,1,0,0,1,1,0,1,0,1,0,0,0,1,1,0,1,1,1,0,1,1,1,1,0,0,1,0,0,1,1)#
+Y <- Y0*(1-Z) + Y1*(Z)#
+N <- length(Z)#
+#
+# Part (a)#
+#
+lm(Y~Z)#
+mean(Y[Z==1])-mean(Y[Z==0])#
+#
+# Part (b)#
+#
+lm(Y~X,subset=Z==1)#
+lm(Y~X,subset=Z==0)#
+#
+# Part (c)#
+#
+lm(Y~Z+X)#
+#
+# Part (d)#
+#
+perms <- genperms(Z,maxiter=100000)#
+#
+probs <- genprobexact(Z)#
+#
+ate <- estate(Y,Z,prob=probs)#
+#
+Ys <- genouts(Y,Z,ate=0)#
+#
+distout <- gendist(Ys,perms,prob=probs)#
+#
+ate#
+#
+dispdist(distout,ate)#
+#
+# Part (e)#
+#
+ateX <- estate(Y,Z,X,prob=probs)#
+#
+distoutX <- gendist(Ys,perms,X,prob=probs)#
+#
+ateX#
+#
+dispdist(distoutX,ateX)#
+#
+# Part (f)#
+#
+Ys2 <- genouts(Y,Z,ate=ate)#
+#
+distout2 <- gendist(Ys2,perms,prob=probs)#
+#
+ate#
+#
+dispdist(distout2,ate)#
+#
+# Part (g)#
+#
+YsX <- genouts(Y,Z,ate=ateX)#
+#
+distoutX2 <- gendist(YsX,perms,X,prob=probs)#
+#
+ateX#
+#
+dispdist(distoutX2,ateX)
+library(ri)#
+#
+# Small bugfix for invert.ci code -- will make it into next version of the package#
+#
+invert.ci <- function(Y,Z,prob,perms,targetp) {#
+#
+	ate <- estate(Y,Z,prob=prob)#
+	Ys <- genouts(Y,Z,ate)#
+	distro <- gendist(Ys,perms,prob=prob)#
+	#
+	mindistro <- quantile(distro,mean(c(targetp,0)))#
+	maxdistro <- quantile(distro,mean(c(targetp,1)))#
+		#
+	ATEg <- ATEgorig <- quantile(distro,targetp)#
+	bw <- min(abs(mindistro-ATEg),abs(maxdistro-ATEg))#
+	#
+	Ys1 <- genouts(Y-ATEg*Z,Z,0)#
+	testS <- estate(Y-ATEg*Z,Z,prob=prob)#
+	dist1 <- gendist(Ys1,perms,prob=prob)#
+	pguess <- mean(dist1 >= testS)#
+#
+if (pguess >= targetp) bound <- ATEg - bw#
+if (pguess < targetp) bound <- ATEg + bw#
+#
+#
+# see if bound is good enough; might need to go farther#
+#
+	YsM <- genouts(Y-bound*Z,Z,0)#
+	testM <- estate(Y-bound*Z,Z,prob=prob)#
+	distM <- gendist(YsM,perms,prob=prob)#
+	pguessM <- mean(distM >= testM)#
+#
+counter.max <- 5#
+counter <- 0#
+#
+while (pguess > targetp & pguessM > targetp) {#
+	temp <- ATEg#
+	ATEg <- bound#
+	bound <- ATEg - bw#
+#
+	YsM <- genouts(Y-bound*Z,Z,0)#
+	testM <- estate(Y-bound*Z,Z,prob=prob)#
+	distM <- gendist(YsM,perms,prob=prob)#
+	pguessM <- mean(distM >= testM)	#
+	counter <- counter + 1#
+	if (counter >= counter.max) stop("Cannot Reach p.")#
+	}#
+	#
+#
+while (pguess < targetp & pguessM < targetp) {#
+	temp <- ATEg#
+	ATEg <- bound#
+	bound <- ATEg + bw#
+#
+	YsM <- genouts(Y-bound*Z,Z,0)#
+	testM <- estate(Y-bound*Z,Z,prob=prob)#
+	distM <- gendist(YsM,perms,prob=prob)#
+	pguessM <- mean(distM >= testM)#
+	counter <- counter + 1#
+	if (counter >= counter.max) stop("Cannot Reach p.")#
+}#
+#
+#
+findroot <- function(ATEg,targetp) {#
+	Ys1 <- genouts(Y-ATEg*Z,Z,0)#
+	testS <- estate(Y-ATEg*Z,Z,prob=prob)#
+	dist1 <- gendist(Ys1,perms,prob=prob)#
+	return(mean(dist1 >= testS) - targetp)#
+	}#
+	#
+if (pguessM == targetp) {#
+	ATEg <- bound#
+	pguess <- targetp#
+	}#
+	#
+if (pguess != targetp) {#
+	lowint <- uniroot(findroot,c(bound,ATEg),targetp=targetp)#
+	lowintM <- lowint$root#
+} else lowintM <- ATEg#
+#
+return(lowintM)#
+}#
+#
+##### Code begins -- parameters#
+#
+ntreat <- 50#
+ncontrol <- 350#
+N <- ntreat+ncontrol#
+#
+# ratio of treatment to control variance#
+ratio <- 2#
+#
+Y0 <- rnorm(N)#
+Y0 <- Y0 - mean(Y0)#
+Y1 <- rnorm(N)*ratio#
+Y1 <- Y1 - mean(Y1)#
+#
+# True ATE is Zero.#
+#
+Z <- c(rep(1,ntreat),rep(0,ncontrol))#
+#
+perms <- genperms(Z,maxiter=200)#
+#
+upperci <- lowerci <- rep(NA,ncol(perms))#
+Nupperci <- Nlowerci <- rep(NA,ncol(perms))#
+Pupperci <- Plowerci <- rep(NA,ncol(perms))#
+#
+for (i in 1:ncol(perms)) {#
+	Zri <- perms[,i]#
+	Y <- Y0*(1-Zri) + Y1*Zri#
+	upperci[i] <- invert.ci(Y,Zri,prob=rep(mean(Zri),N),perms=perms,targetp=0.975)#
+	lowerci[i] <- invert.ci(Y,Zri,prob=rep(mean(Zri),N),perms=perms,targetp=0.025)#
+	seest <- (var(Y[Zri==1])/sum(Zri) + var(Y[Zri==0])/sum(1-Zri))^.5#
+	ateest <- mean(Y[Zri==1]) - mean(Y[Zri==0])#
+	Nupperci[i] <- ateest + 1.96*seest#
+	Nlowerci[i] <- ateest - 1.96*seest#
+	Ys <- genouts(Y,Zri,ate=ateest)#
+	cis <- quantile(gendist(Ys,perms,prob=rep(mean(Zri),N)),c(0.025,0.975))#
+	Plowerci[i] <- cis[1]#
+	Pupperci[i] <- cis[2]#
+	cat(i,"")#
+}#
+#
+# Coverage of Neyman + normal approx#
+mean(Nupperci >= 0 & Nlowerci <= 0,na.rm=TRUE)#
+# Coverage of Rosenbaum method#
+mean(upperci >= 0 & lowerci <= 0,na.rm=TRUE)#
+# Coverage of Aronow method#
+mean(Pupperci >= 0 & Plowerci <= 0,na.rm=TRUE)#
+#
+# Summarizing intervals#
+summary(Nupperci)#
+summary(upperci)#
+summary(Pupperci)#
+#
+summary(Nlowerci)#
+summary(lowerci)#
+summary(Plowerci)
+ate
+mean(Y0)
+mean(Y1)
+library(ri)#
+#
+# Small bugfix for invert.ci code -- will make it into next version of the package#
+#
+invert.ci <- function(Y,Z,prob,perms,targetp) {#
+#
+	ate <- estate(Y,Z,prob=prob)#
+	Ys <- genouts(Y,Z,ate)#
+	distro <- gendist(Ys,perms,prob=prob)#
+	#
+	mindistro <- quantile(distro,mean(c(targetp,0)))#
+	maxdistro <- quantile(distro,mean(c(targetp,1)))#
+		#
+	ATEg <- ATEgorig <- quantile(distro,targetp)#
+	bw <- min(abs(mindistro-ATEg),abs(maxdistro-ATEg))#
+	#
+	Ys1 <- genouts(Y-ATEg*Z,Z,0)#
+	testS <- estate(Y-ATEg*Z,Z,prob=prob)#
+	dist1 <- gendist(Ys1,perms,prob=prob)#
+	pguess <- mean(dist1 >= testS)#
+#
+if (pguess >= targetp) bound <- ATEg - bw#
+if (pguess < targetp) bound <- ATEg + bw#
+#
+#
+# see if bound is good enough; might need to go farther#
+#
+	YsM <- genouts(Y-bound*Z,Z,0)#
+	testM <- estate(Y-bound*Z,Z,prob=prob)#
+	distM <- gendist(YsM,perms,prob=prob)#
+	pguessM <- mean(distM >= testM)#
+#
+counter.max <- 5#
+counter <- 0#
+#
+while (pguess > targetp & pguessM > targetp) {#
+	temp <- ATEg#
+	ATEg <- bound#
+	bound <- ATEg - bw#
+#
+	YsM <- genouts(Y-bound*Z,Z,0)#
+	testM <- estate(Y-bound*Z,Z,prob=prob)#
+	distM <- gendist(YsM,perms,prob=prob)#
+	pguessM <- mean(distM >= testM)	#
+	counter <- counter + 1#
+	if (counter >= counter.max) stop("Cannot Reach p.")#
+	}#
+	#
+#
+while (pguess < targetp & pguessM < targetp) {#
+	temp <- ATEg#
+	ATEg <- bound#
+	bound <- ATEg + bw#
+#
+	YsM <- genouts(Y-bound*Z,Z,0)#
+	testM <- estate(Y-bound*Z,Z,prob=prob)#
+	distM <- gendist(YsM,perms,prob=prob)#
+	pguessM <- mean(distM >= testM)#
+	counter <- counter + 1#
+	if (counter >= counter.max) stop("Cannot Reach p.")#
+}#
+#
+#
+findroot <- function(ATEg,targetp) {#
+	Ys1 <- genouts(Y-ATEg*Z,Z,0)#
+	testS <- estate(Y-ATEg*Z,Z,prob=prob)#
+	dist1 <- gendist(Ys1,perms,prob=prob)#
+	return(mean(dist1 >= testS) - targetp)#
+	}#
+	#
+if (pguessM == targetp) {#
+	ATEg <- bound#
+	pguess <- targetp#
+	}#
+	#
+if (pguess != targetp) {#
+	lowint <- uniroot(findroot,c(bound,ATEg),targetp=targetp)#
+	lowintM <- lowint$root#
+} else lowintM <- ATEg#
+#
+return(lowintM)#
+}#
+#
+##### Code begins -- parameters#
+#
+ntreat <- 5#
+ncontrol <- 15#
+N <- ntreat+ncontrol#
+#
+# ratio of treatment to control variance#
+ratio <- 2#
+#
+Y0 <- rnorm(N)#
+Y0 <- Y0 - mean(Y0)#
+Y1 <- rnorm(N)*ratio#
+Y1 <- Y1 - mean(Y1)#
+#
+# True ATE is Zero.#
+#
+Z <- c(rep(1,ntreat),rep(0,ncontrol))#
+#
+perms <- genperms(Z,maxiter=200)#
+#
+upperci <- lowerci <- rep(NA,ncol(perms))#
+Nupperci <- Nlowerci <- rep(NA,ncol(perms))#
+Pupperci <- Plowerci <- rep(NA,ncol(perms))#
+#
+for (i in 1:ncol(perms)) {#
+	Zri <- perms[,i]#
+	Y <- Y0*(1-Zri) + Y1*Zri#
+	upperci[i] <- invert.ci(Y,Zri,prob=rep(mean(Zri),N),perms=perms,targetp=0.975)#
+	lowerci[i] <- invert.ci(Y,Zri,prob=rep(mean(Zri),N),perms=perms,targetp=0.025)#
+	seest <- (var(Y[Zri==1])/sum(Zri) + var(Y[Zri==0])/sum(1-Zri))^.5#
+	ateest <- mean(Y[Zri==1]) - mean(Y[Zri==0])#
+	Nupperci[i] <- ateest + 1.96*seest#
+	Nlowerci[i] <- ateest - 1.96*seest#
+	Ys <- genouts(Y,Zri,ate=ateest)#
+	cis <- quantile(gendist(Ys,perms,prob=rep(mean(Zri),N)),c(0.025,0.975))#
+	Plowerci[i] <- cis[1]#
+	Pupperci[i] <- cis[2]#
+	cat(i,"")#
+}#
+#
+# Coverage of Neyman + normal approx#
+mean(Nupperci >= 0 & Nlowerci <= 0,na.rm=TRUE)#
+# Coverage of Rosenbaum method#
+mean(upperci >= 0 & lowerci <= 0,na.rm=TRUE)#
+# Coverage of Aronow method#
+mean(Pupperci >= 0 & Plowerci <= 0,na.rm=TRUE)#
+#
+# Summarizing intervals#
+summary(Nupperci)#
+summary(upperci)#
+summary(Pupperci)#
+#
+summary(Nlowerci)#
+summary(lowerci)#
+summary(Plowerci)
+library(ri)#
+#
+# Small bugfix for invert.ci code -- will make it into next version of the package#
+#
+invert.ci <- function(Y,Z,prob,perms,targetp) {#
+#
+	ate <- estate(Y,Z,prob=prob)#
+	Ys <- genouts(Y,Z,ate)#
+	distro <- gendist(Ys,perms,prob=prob)#
+	#
+	mindistro <- quantile(distro,mean(c(targetp,0)))#
+	maxdistro <- quantile(distro,mean(c(targetp,1)))#
+		#
+	ATEg <- ATEgorig <- quantile(distro,targetp)#
+	bw <- min(abs(mindistro-ATEg),abs(maxdistro-ATEg))#
+	#
+	Ys1 <- genouts(Y-ATEg*Z,Z,0)#
+	testS <- estate(Y-ATEg*Z,Z,prob=prob)#
+	dist1 <- gendist(Ys1,perms,prob=prob)#
+	pguess <- mean(dist1 >= testS)#
+#
+if (pguess >= targetp) bound <- ATEg - bw#
+if (pguess < targetp) bound <- ATEg + bw#
+#
+#
+# see if bound is good enough; might need to go farther#
+#
+	YsM <- genouts(Y-bound*Z,Z,0)#
+	testM <- estate(Y-bound*Z,Z,prob=prob)#
+	distM <- gendist(YsM,perms,prob=prob)#
+	pguessM <- mean(distM >= testM)#
+#
+counter.max <- 10#
+counter <- 0#
+#
+while (pguess > targetp & pguessM > targetp) {#
+	temp <- ATEg#
+	ATEg <- bound#
+	bound <- ATEg - bw#
+#
+	YsM <- genouts(Y-bound*Z,Z,0)#
+	testM <- estate(Y-bound*Z,Z,prob=prob)#
+	distM <- gendist(YsM,perms,prob=prob)#
+	pguessM <- mean(distM >= testM)	#
+	counter <- counter + 1#
+	if (counter >= counter.max) stop("Cannot Reach p.")#
+	}#
+	#
+#
+while (pguess < targetp & pguessM < targetp) {#
+	temp <- ATEg#
+	ATEg <- bound#
+	bound <- ATEg + bw#
+#
+	YsM <- genouts(Y-bound*Z,Z,0)#
+	testM <- estate(Y-bound*Z,Z,prob=prob)#
+	distM <- gendist(YsM,perms,prob=prob)#
+	pguessM <- mean(distM >= testM)#
+	counter <- counter + 1#
+	if (counter >= counter.max) stop("Cannot Reach p.")#
+}#
+#
+#
+findroot <- function(ATEg,targetp) {#
+	Ys1 <- genouts(Y-ATEg*Z,Z,0)#
+	testS <- estate(Y-ATEg*Z,Z,prob=prob)#
+	dist1 <- gendist(Ys1,perms,prob=prob)#
+	return(mean(dist1 >= testS) - targetp)#
+	}#
+	#
+if (pguessM == targetp) {#
+	ATEg <- bound#
+	pguess <- targetp#
+	}#
+	#
+if (pguess != targetp) {#
+	lowint <- uniroot(findroot,c(bound,ATEg),targetp=targetp)#
+	lowintM <- lowint$root#
+} else lowintM <- ATEg#
+#
+return(lowintM)#
+}#
+#
+##### Code begins -- parameters#
+#
+ntreat <- 5#
+ncontrol <- 15#
+N <- ntreat+ncontrol#
+#
+# ratio of treatment to control variance#
+ratio <- 2#
+#
+Y0 <- rnorm(N)#
+Y0 <- Y0 - mean(Y0)#
+Y1 <- rnorm(N)*ratio#
+Y1 <- Y1 - mean(Y1)#
+#
+# True ATE is Zero.#
+#
+Z <- c(rep(1,ntreat),rep(0,ncontrol))#
+#
+perms <- genperms(Z,maxiter=200)#
+#
+upperci <- lowerci <- rep(NA,ncol(perms))#
+Nupperci <- Nlowerci <- rep(NA,ncol(perms))#
+Pupperci <- Plowerci <- rep(NA,ncol(perms))#
+#
+for (i in 1:ncol(perms)) {#
+	Zri <- perms[,i]#
+	Y <- Y0*(1-Zri) + Y1*Zri#
+	upperci[i] <- invert.ci(Y,Zri,prob=rep(mean(Zri),N),perms=perms,targetp=0.975)#
+	lowerci[i] <- invert.ci(Y,Zri,prob=rep(mean(Zri),N),perms=perms,targetp=0.025)#
+	seest <- (var(Y[Zri==1])/sum(Zri) + var(Y[Zri==0])/sum(1-Zri))^.5#
+	ateest <- mean(Y[Zri==1]) - mean(Y[Zri==0])#
+	Nupperci[i] <- ateest + 1.96*seest#
+	Nlowerci[i] <- ateest - 1.96*seest#
+	Ys <- genouts(Y,Zri,ate=ateest)#
+	cis <- quantile(gendist(Ys,perms,prob=rep(mean(Zri),N)),c(0.025,0.975))#
+	Plowerci[i] <- cis[1]#
+	Pupperci[i] <- cis[2]#
+	cat(i,"")#
+}#
+#
+# Coverage of Neyman + normal approx#
+mean(Nupperci >= 0 & Nlowerci <= 0,na.rm=TRUE)#
+# Coverage of Rosenbaum method#
+mean(upperci >= 0 & lowerci <= 0,na.rm=TRUE)#
+# Coverage of Aronow method#
+mean(Pupperci >= 0 & Plowerci <= 0,na.rm=TRUE)#
+#
+# Summarizing intervals#
+summary(Nupperci)#
+summary(upperci)#
+summary(Pupperci)#
+#
+summary(Nlowerci)#
+summary(lowerci)#
+summary(Plowerci)
+library(ri)#
+#
+# Small bugfix for invert.ci code -- will make it into next version of the package#
+#
+invert.ci <- function(Y,Z,prob,perms,targetp) {#
+#
+	ate <- estate(Y,Z,prob=prob)#
+	Ys <- genouts(Y,Z,ate)#
+	distro <- gendist(Ys,perms,prob=prob)#
+	#
+	mindistro <- quantile(distro,mean(c(targetp,0)))#
+	maxdistro <- quantile(distro,mean(c(targetp,1)))#
+		#
+	ATEg <- ATEgorig <- quantile(distro,targetp)#
+	bw <- min(abs(mindistro-ATEg),abs(maxdistro-ATEg))#
+	#
+	Ys1 <- genouts(Y-ATEg*Z,Z,0)#
+	testS <- estate(Y-ATEg*Z,Z,prob=prob)#
+	dist1 <- gendist(Ys1,perms,prob=prob)#
+	pguess <- mean(dist1 >= testS)#
+#
+if (pguess >= targetp) bound <- ATEg - bw#
+if (pguess < targetp) bound <- ATEg + bw#
+#
+#
+# see if bound is good enough; might need to go farther#
+#
+	YsM <- genouts(Y-bound*Z,Z,0)#
+	testM <- estate(Y-bound*Z,Z,prob=prob)#
+	distM <- gendist(YsM,perms,prob=prob)#
+	pguessM <- mean(distM >= testM)#
+#
+counter.max <- 100#
+counter <- 0#
+#
+while (pguess > targetp & pguessM > targetp) {#
+	temp <- ATEg#
+	ATEg <- bound#
+	bound <- ATEg - bw#
+#
+	YsM <- genouts(Y-bound*Z,Z,0)#
+	testM <- estate(Y-bound*Z,Z,prob=prob)#
+	distM <- gendist(YsM,perms,prob=prob)#
+	pguessM <- mean(distM >= testM)	#
+	counter <- counter + 1#
+	if (counter >= counter.max) stop("Cannot Reach p.")#
+	}#
+	#
+#
+while (pguess < targetp & pguessM < targetp) {#
+	temp <- ATEg#
+	ATEg <- bound#
+	bound <- ATEg + bw#
+#
+	YsM <- genouts(Y-bound*Z,Z,0)#
+	testM <- estate(Y-bound*Z,Z,prob=prob)#
+	distM <- gendist(YsM,perms,prob=prob)#
+	pguessM <- mean(distM >= testM)#
+	counter <- counter + 1#
+	if (counter >= counter.max) stop("Cannot Reach p.")#
+}#
+#
+#
+findroot <- function(ATEg,targetp) {#
+	Ys1 <- genouts(Y-ATEg*Z,Z,0)#
+	testS <- estate(Y-ATEg*Z,Z,prob=prob)#
+	dist1 <- gendist(Ys1,perms,prob=prob)#
+	return(mean(dist1 >= testS) - targetp)#
+	}#
+	#
+if (pguessM == targetp) {#
+	ATEg <- bound#
+	pguess <- targetp#
+	}#
+	#
+if (pguess != targetp) {#
+	lowint <- uniroot(findroot,c(bound,ATEg),targetp=targetp)#
+	lowintM <- lowint$root#
+} else lowintM <- ATEg#
+#
+return(lowintM)#
+}#
+#
+##### Code begins -- parameters#
+#
+ntreat <- 5#
+ncontrol <- 35#
+N <- ntreat+ncontrol#
+#
+# ratio of treatment to control variance#
+ratio <- 2#
+#
+Y0 <- rnorm(N)#
+Y0 <- Y0 - mean(Y0)#
+Y1 <- rnorm(N)*ratio#
+Y1 <- Y1 - mean(Y1)#
+#
+# True ATE is Zero.#
+#
+Z <- c(rep(1,ntreat),rep(0,ncontrol))#
+#
+perms <- genperms(Z,maxiter=200)#
+#
+upperci <- lowerci <- rep(NA,ncol(perms))#
+Nupperci <- Nlowerci <- rep(NA,ncol(perms))#
+Pupperci <- Plowerci <- rep(NA,ncol(perms))#
+#
+for (i in 1:ncol(perms)) {#
+	Zri <- perms[,i]#
+	Y <- Y0*(1-Zri) + Y1*Zri#
+	upperci[i] <- invert.ci(Y,Zri,prob=rep(mean(Zri),N),perms=perms,targetp=0.975)#
+	lowerci[i] <- invert.ci(Y,Zri,prob=rep(mean(Zri),N),perms=perms,targetp=0.025)#
+	seest <- (var(Y[Zri==1])/sum(Zri) + var(Y[Zri==0])/sum(1-Zri))^.5#
+	ateest <- mean(Y[Zri==1]) - mean(Y[Zri==0])#
+	Nupperci[i] <- ateest + 1.96*seest#
+	Nlowerci[i] <- ateest - 1.96*seest#
+	Ys <- genouts(Y,Zri,ate=ateest)#
+	cis <- quantile(gendist(Ys,perms,prob=rep(mean(Zri),N)),c(0.025,0.975))#
+	Plowerci[i] <- cis[1]#
+	Pupperci[i] <- cis[2]#
+	cat(i,"")#
+}#
+#
+# Coverage of Neyman + normal approx#
+mean(Nupperci >= 0 & Nlowerci <= 0,na.rm=TRUE)#
+# Coverage of Rosenbaum method#
+mean(upperci >= 0 & lowerci <= 0,na.rm=TRUE)#
+# Coverage of Aronow method#
+mean(Pupperci >= 0 & Plowerci <= 0,na.rm=TRUE)#
+#
+# Summarizing intervals#
+summary(Nupperci)#
+summary(upperci)#
+summary(Pupperci)#
+#
+summary(Nlowerci)#
+summary(lowerci)#
+summary(Plowerci)
+library(ri)#
+#
+# Small bugfix for invert.ci code -- will make it into next version of the package#
+#
+invert.ci <- function(Y,Z,prob,perms,targetp) {#
+#
+	ate <- estate(Y,Z,prob=prob)#
+	Ys <- genouts(Y,Z,ate)#
+	distro <- gendist(Ys,perms,prob=prob)#
+	#
+	mindistro <- quantile(distro,mean(c(targetp,0)))#
+	maxdistro <- quantile(distro,mean(c(targetp,1)))#
+		#
+	ATEg <- ATEgorig <- quantile(distro,targetp)#
+	bw <- min(abs(mindistro-ATEg),abs(maxdistro-ATEg))#
+	#
+	Ys1 <- genouts(Y-ATEg*Z,Z,0)#
+	testS <- estate(Y-ATEg*Z,Z,prob=prob)#
+	dist1 <- gendist(Ys1,perms,prob=prob)#
+	pguess <- mean(dist1 >= testS)#
+#
+if (pguess >= targetp) bound <- ATEg - bw#
+if (pguess < targetp) bound <- ATEg + bw#
+#
+#
+# see if bound is good enough; might need to go farther#
+#
+	YsM <- genouts(Y-bound*Z,Z,0)#
+	testM <- estate(Y-bound*Z,Z,prob=prob)#
+	distM <- gendist(YsM,perms,prob=prob)#
+	pguessM <- mean(distM >= testM)#
+#
+counter.max <- 100#
+counter <- 0#
+#
+while (pguess > targetp & pguessM > targetp) {#
+	temp <- ATEg#
+	ATEg <- bound#
+	bound <- ATEg - bw#
+#
+	YsM <- genouts(Y-bound*Z,Z,0)#
+	testM <- estate(Y-bound*Z,Z,prob=prob)#
+	distM <- gendist(YsM,perms,prob=prob)#
+	pguessM <- mean(distM >= testM)	#
+	counter <- counter + 1#
+	if (counter >= counter.max) stop("Cannot Reach p.")#
+	}#
+	#
+#
+while (pguess < targetp & pguessM < targetp) {#
+	temp <- ATEg#
+	ATEg <- bound#
+	bound <- ATEg + bw#
+#
+	YsM <- genouts(Y-bound*Z,Z,0)#
+	testM <- estate(Y-bound*Z,Z,prob=prob)#
+	distM <- gendist(YsM,perms,prob=prob)#
+	pguessM <- mean(distM >= testM)#
+	counter <- counter + 1#
+	if (counter >= counter.max) stop("Cannot Reach p.")#
+}#
+#
+#
+findroot <- function(ATEg,targetp) {#
+	Ys1 <- genouts(Y-ATEg*Z,Z,0)#
+	testS <- estate(Y-ATEg*Z,Z,prob=prob)#
+	dist1 <- gendist(Ys1,perms,prob=prob)#
+	return(mean(dist1 >= testS) - targetp)#
+	}#
+	#
+if (pguessM == targetp) {#
+	ATEg <- bound#
+	pguess <- targetp#
+	}#
+	#
+if (pguess != targetp) {#
+	lowint <- uniroot(findroot,c(bound,ATEg),targetp=targetp)#
+	lowintM <- lowint$root#
+} else lowintM <- ATEg#
+#
+return(lowintM)#
+}#
+#
+##### Code begins -- parameters#
+#
+ntreat <- 5#
+ncontrol <- 10#
+N <- ntreat+ncontrol#
+#
+# ratio of treatment to control variance#
+ratio <- 2#
+#
+Y0 <- rnorm(N)#
+Y0 <- Y0 - mean(Y0)#
+Y1 <- rnorm(N)*ratio#
+Y1 <- Y1 - mean(Y1)#
+#
+# True ATE is Zero.#
+#
+Z <- c(rep(1,ntreat),rep(0,ncontrol))#
+#
+perms <- genperms(Z,maxiter=200)#
+#
+upperci <- lowerci <- rep(NA,ncol(perms))#
+Nupperci <- Nlowerci <- rep(NA,ncol(perms))#
+Pupperci <- Plowerci <- rep(NA,ncol(perms))#
+#
+for (i in 1:ncol(perms)) {#
+	Zri <- perms[,i]#
+	Y <- Y0*(1-Zri) + Y1*Zri#
+	upperci[i] <- invert.ci(Y,Zri,prob=rep(mean(Zri),N),perms=perms,targetp=0.975)#
+	lowerci[i] <- invert.ci(Y,Zri,prob=rep(mean(Zri),N),perms=perms,targetp=0.025)#
+	seest <- (var(Y[Zri==1])/sum(Zri) + var(Y[Zri==0])/sum(1-Zri))^.5#
+	ateest <- mean(Y[Zri==1]) - mean(Y[Zri==0])#
+	Nupperci[i] <- ateest + 1.96*seest#
+	Nlowerci[i] <- ateest - 1.96*seest#
+	Ys <- genouts(Y,Zri,ate=ateest)#
+	cis <- quantile(gendist(Ys,perms,prob=rep(mean(Zri),N)),c(0.025,0.975))#
+	Plowerci[i] <- cis[1]#
+	Pupperci[i] <- cis[2]#
+	cat(i,"")#
+}#
+#
+# Coverage of Neyman + normal approx#
+mean(Nupperci >= 0 & Nlowerci <= 0,na.rm=TRUE)#
+# Coverage of Rosenbaum method#
+mean(upperci >= 0 & lowerci <= 0,na.rm=TRUE)#
+# Coverage of Aronow method#
+mean(Pupperci >= 0 & Plowerci <= 0,na.rm=TRUE)#
+#
+# Summarizing intervals#
+summary(Nupperci)#
+summary(upperci)#
+summary(Pupperci)#
+#
+summary(Nlowerci)#
+summary(lowerci)#
+summary(Plowerci)
+library(ri)#
+#
+# Small bugfix for invert.ci code -- will make it into next version of the package#
+#
+invert.ci <- function(Y,Z,prob,perms,targetp) {#
+#
+	ate <- estate(Y,Z,prob=prob)#
+	Ys <- genouts(Y,Z,ate)#
+	distro <- gendist(Ys,perms,prob=prob)#
+	#
+	mindistro <- quantile(distro,mean(c(targetp,0)))#
+	maxdistro <- quantile(distro,mean(c(targetp,1)))#
+		#
+	ATEg <- ATEgorig <- quantile(distro,targetp)#
+	bw <- min(abs(mindistro-ATEg),abs(maxdistro-ATEg))#
+	#
+	Ys1 <- genouts(Y-ATEg*Z,Z,0)#
+	testS <- estate(Y-ATEg*Z,Z,prob=prob)#
+	dist1 <- gendist(Ys1,perms,prob=prob)#
+	pguess <- mean(dist1 >= testS)#
+#
+if (pguess >= targetp) bound <- ATEg - bw#
+if (pguess < targetp) bound <- ATEg + bw#
+#
+#
+# see if bound is good enough; might need to go farther#
+#
+	YsM <- genouts(Y-bound*Z,Z,0)#
+	testM <- estate(Y-bound*Z,Z,prob=prob)#
+	distM <- gendist(YsM,perms,prob=prob)#
+	pguessM <- mean(distM >= testM)#
+#
+counter.max <- 100#
+counter <- 0#
+#
+while (pguess > targetp & pguessM > targetp) {#
+	temp <- ATEg#
+	ATEg <- bound#
+	bound <- ATEg - bw#
+#
+	YsM <- genouts(Y-bound*Z,Z,0)#
+	testM <- estate(Y-bound*Z,Z,prob=prob)#
+	distM <- gendist(YsM,perms,prob=prob)#
+	pguessM <- mean(distM >= testM)	#
+	counter <- counter + 1#
+	if (counter >= counter.max) stop("Cannot Reach p.")#
+	}#
+	#
+#
+while (pguess < targetp & pguessM < targetp) {#
+	temp <- ATEg#
+	ATEg <- bound#
+	bound <- ATEg + bw#
+#
+	YsM <- genouts(Y-bound*Z,Z,0)#
+	testM <- estate(Y-bound*Z,Z,prob=prob)#
+	distM <- gendist(YsM,perms,prob=prob)#
+	pguessM <- mean(distM >= testM)#
+	counter <- counter + 1#
+	if (counter >= counter.max) stop("Cannot Reach p.")#
+}#
+#
+#
+findroot <- function(ATEg,targetp) {#
+	Ys1 <- genouts(Y-ATEg*Z,Z,0)#
+	testS <- estate(Y-ATEg*Z,Z,prob=prob)#
+	dist1 <- gendist(Ys1,perms,prob=prob)#
+	return(mean(dist1 >= testS) - targetp)#
+	}#
+	#
+if (pguessM == targetp) {#
+	ATEg <- bound#
+	pguess <- targetp#
+	}#
+	#
+if (pguess != targetp) {#
+	lowint <- uniroot(findroot,c(bound,ATEg),targetp=targetp)#
+	lowintM <- lowint$root#
+} else lowintM <- ATEg#
+#
+return(lowintM)#
+}#
+#
+##### Code begins -- parameters#
+#
+ntreat <- 10#
+ncontrol <- 20#
+N <- ntreat+ncontrol#
+#
+# ratio of treatment to control variance#
+ratio <- 2#
+#
+Y0 <- rnorm(N)#
+Y0 <- Y0 - mean(Y0)#
+Y1 <- rnorm(N)*ratio#
+Y1 <- Y1 - mean(Y1)#
+#
+# True ATE is Zero.#
+#
+Z <- c(rep(1,ntreat),rep(0,ncontrol))#
+#
+perms <- genperms(Z,maxiter=200)#
+#
+upperci <- lowerci <- rep(NA,ncol(perms))#
+Nupperci <- Nlowerci <- rep(NA,ncol(perms))#
+Pupperci <- Plowerci <- rep(NA,ncol(perms))#
+#
+for (i in 1:ncol(perms)) {#
+	Zri <- perms[,i]#
+	Y <- Y0*(1-Zri) + Y1*Zri#
+	upperci[i] <- invert.ci(Y,Zri,prob=rep(mean(Zri),N),perms=perms,targetp=0.975)#
+	lowerci[i] <- invert.ci(Y,Zri,prob=rep(mean(Zri),N),perms=perms,targetp=0.025)#
+	seest <- (var(Y[Zri==1])/sum(Zri) + var(Y[Zri==0])/sum(1-Zri))^.5#
+	ateest <- mean(Y[Zri==1]) - mean(Y[Zri==0])#
+	Nupperci[i] <- ateest + 1.96*seest#
+	Nlowerci[i] <- ateest - 1.96*seest#
+	Ys <- genouts(Y,Zri,ate=ateest)#
+	cis <- quantile(gendist(Ys,perms,prob=rep(mean(Zri),N)),c(0.025,0.975))#
+	Plowerci[i] <- cis[1]#
+	Pupperci[i] <- cis[2]#
+	cat(i,"")#
+}#
+#
+# Coverage of Neyman + normal approx#
+mean(Nupperci >= 0 & Nlowerci <= 0,na.rm=TRUE)#
+# Coverage of Rosenbaum method#
+mean(upperci >= 0 & lowerci <= 0,na.rm=TRUE)#
+# Coverage of Aronow method#
+mean(Pupperci >= 0 & Plowerci <= 0,na.rm=TRUE)#
+#
+# Summarizing intervals#
+summary(Nupperci)#
+summary(upperci)#
+summary(Pupperci)#
+#
+summary(Nlowerci)#
+summary(lowerci)#
+summary(Plowerci)
+dim(Pupperci)
+length(Pupperci)
+library(ri)#
+#
+# Small bugfix for invert.ci code -- will make it into next version of the package#
+#
+invert.ci <- function(Y,Z,prob,perms,targetp) {#
+#
+	ate <- estate(Y,Z,prob=prob)#
+	Ys <- genouts(Y,Z,ate)#
+	distro <- gendist(Ys,perms,prob=prob)#
+	#
+	mindistro <- quantile(distro,mean(c(targetp,0)))#
+	maxdistro <- quantile(distro,mean(c(targetp,1)))#
+		#
+	ATEg <- ATEgorig <- quantile(distro,targetp)#
+	bw <- min(abs(mindistro-ATEg),abs(maxdistro-ATEg))#
+	#
+	Ys1 <- genouts(Y-ATEg*Z,Z,0)#
+	testS <- estate(Y-ATEg*Z,Z,prob=prob)#
+	dist1 <- gendist(Ys1,perms,prob=prob)#
+	pguess <- mean(dist1 >= testS)#
+#
+if (pguess >= targetp) bound <- ATEg - bw#
+if (pguess < targetp) bound <- ATEg + bw#
+#
+#
+# see if bound is good enough; might need to go farther#
+#
+	YsM <- genouts(Y-bound*Z,Z,0)#
+	testM <- estate(Y-bound*Z,Z,prob=prob)#
+	distM <- gendist(YsM,perms,prob=prob)#
+	pguessM <- mean(distM >= testM)#
+#
+counter.max <- 500#
+counter <- 0#
+#
+while (pguess > targetp & pguessM > targetp) {#
+	temp <- ATEg#
+	ATEg <- bound#
+	bound <- ATEg - bw#
+#
+	YsM <- genouts(Y-bound*Z,Z,0)#
+	testM <- estate(Y-bound*Z,Z,prob=prob)#
+	distM <- gendist(YsM,perms,prob=prob)#
+	pguessM <- mean(distM >= testM)	#
+	counter <- counter + 1#
+	if (counter >= counter.max) stop("Cannot Reach p.")#
+	}#
+	#
+#
+while (pguess < targetp & pguessM < targetp) {#
+	temp <- ATEg#
+	ATEg <- bound#
+	bound <- ATEg + bw#
+#
+	YsM <- genouts(Y-bound*Z,Z,0)#
+	testM <- estate(Y-bound*Z,Z,prob=prob)#
+	distM <- gendist(YsM,perms,prob=prob)#
+	pguessM <- mean(distM >= testM)#
+	counter <- counter + 1#
+	if (counter >= counter.max) stop("Cannot Reach p.")#
+}#
+#
+#
+findroot <- function(ATEg,targetp) {#
+	Ys1 <- genouts(Y-ATEg*Z,Z,0)#
+	testS <- estate(Y-ATEg*Z,Z,prob=prob)#
+	dist1 <- gendist(Ys1,perms,prob=prob)#
+	return(mean(dist1 >= testS) - targetp)#
+	}#
+	#
+if (pguessM == targetp) {#
+	ATEg <- bound#
+	pguess <- targetp#
+	}#
+	#
+if (pguess != targetp) {#
+	lowint <- uniroot(findroot,c(bound,ATEg),targetp=targetp)#
+	lowintM <- lowint$root#
+} else lowintM <- ATEg#
+#
+return(lowintM)#
+}#
+#
+##### Code begins -- parameters#
+#
+ntreat <- 10#
+ncontrol <- 20#
+N <- ntreat+ncontrol#
+#
+# ratio of treatment to control variance#
+ratio <- 2#
+#
+Y0 <- rnorm(N)#
+Y0 <- Y0 - mean(Y0)#
+Y1 <- rnorm(N)*ratio#
+Y1 <- Y1 - mean(Y1)#
+#
+# True ATE is Zero.#
+#
+Z <- c(rep(1,ntreat),rep(0,ncontrol))#
+#
+perms <- genperms(Z,maxiter=200)#
+#
+upperci <- lowerci <- rep(NA,ncol(perms))#
+Nupperci <- Nlowerci <- rep(NA,ncol(perms))#
+Pupperci <- Plowerci <- rep(NA,ncol(perms))#
+#
+for (i in 1:ncol(perms)) {#
+	Zri <- perms[,i]#
+	Y <- Y0*(1-Zri) + Y1*Zri#
+	upperci[i] <- invert.ci(Y,Zri,prob=rep(mean(Zri),N),perms=perms,targetp=0.975)#
+	lowerci[i] <- invert.ci(Y,Zri,prob=rep(mean(Zri),N),perms=perms,targetp=0.025)#
+	seest <- (var(Y[Zri==1])/sum(Zri) + var(Y[Zri==0])/sum(1-Zri))^.5#
+	ateest <- mean(Y[Zri==1]) - mean(Y[Zri==0])#
+	Nupperci[i] <- ateest + 1.96*seest#
+	Nlowerci[i] <- ateest - 1.96*seest#
+	Ys <- genouts(Y,Zri,ate=ateest)#
+	cis <- quantile(gendist(Ys,perms,prob=rep(mean(Zri),N)),c(0.025,0.975))#
+	Plowerci[i] <- cis[1]#
+	Pupperci[i] <- cis[2]#
+	cat(i,"")#
+}#
+#
+# Coverage of Neyman + normal approx#
+mean(Nupperci >= 0 & Nlowerci <= 0,na.rm=TRUE)#
+# Coverage of Rosenbaum method#
+mean(upperci >= 0 & lowerci <= 0,na.rm=TRUE)#
+# Coverage of Aronow method#
+mean(Pupperci >= 0 & Plowerci <= 0,na.rm=TRUE)#
+#
+# Summarizing intervals#
+summary(Nupperci)#
+summary(upperci)#
+summary(Pupperci)#
+#
+summary(Nlowerci)#
+summary(lowerci)#
+summary(Plowerci)
+library(ri)#
+#
+# Small bugfix for invert.ci code -- will make it into next version of the package#
+#
+invert.ci <- function(Y,Z,prob,perms,targetp) {#
+#
+	ate <- estate(Y,Z,prob=prob)#
+	Ys <- genouts(Y,Z,ate)#
+	distro <- gendist(Ys,perms,prob=prob)#
+	#
+	mindistro <- quantile(distro,mean(c(targetp,0)))#
+	maxdistro <- quantile(distro,mean(c(targetp,1)))#
+		#
+	ATEg <- ATEgorig <- quantile(distro,targetp)#
+	bw <- min(abs(mindistro-ATEg),abs(maxdistro-ATEg))#
+	#
+	Ys1 <- genouts(Y-ATEg*Z,Z,0)#
+	testS <- estate(Y-ATEg*Z,Z,prob=prob)#
+	dist1 <- gendist(Ys1,perms,prob=prob)#
+	pguess <- mean(dist1 >= testS)#
+#
+if (pguess >= targetp) bound <- ATEg - bw#
+if (pguess < targetp) bound <- ATEg + bw#
+#
+#
+# see if bound is good enough; might need to go farther#
+#
+	YsM <- genouts(Y-bound*Z,Z,0)#
+	testM <- estate(Y-bound*Z,Z,prob=prob)#
+	distM <- gendist(YsM,perms,prob=prob)#
+	pguessM <- mean(distM >= testM)#
+#
+counter.max <- 200#
+counter <- 0#
+#
+while (pguess > targetp & pguessM > targetp) {#
+	temp <- ATEg#
+	ATEg <- bound#
+	bound <- ATEg - bw#
+#
+	YsM <- genouts(Y-bound*Z,Z,0)#
+	testM <- estate(Y-bound*Z,Z,prob=prob)#
+	distM <- gendist(YsM,perms,prob=prob)#
+	pguessM <- mean(distM >= testM)	#
+	counter <- counter + 1#
+	if (counter >= counter.max) stop("Cannot Reach p.")#
+	}#
+	#
+#
+while (pguess < targetp & pguessM < targetp) {#
+	temp <- ATEg#
+	ATEg <- bound#
+	bound <- ATEg + bw#
+#
+	YsM <- genouts(Y-bound*Z,Z,0)#
+	testM <- estate(Y-bound*Z,Z,prob=prob)#
+	distM <- gendist(YsM,perms,prob=prob)#
+	pguessM <- mean(distM >= testM)#
+	counter <- counter + 1#
+	if (counter >= counter.max) stop("Cannot Reach p.")#
+}#
+#
+#
+findroot <- function(ATEg,targetp) {#
+	Ys1 <- genouts(Y-ATEg*Z,Z,0)#
+	testS <- estate(Y-ATEg*Z,Z,prob=prob)#
+	dist1 <- gendist(Ys1,perms,prob=prob)#
+	return(mean(dist1 >= testS) - targetp)#
+	}#
+	#
+if (pguessM == targetp) {#
+	ATEg <- bound#
+	pguess <- targetp#
+	}#
+	#
+if (pguess != targetp) {#
+	lowint <- uniroot(findroot,c(bound,ATEg),targetp=targetp)#
+	lowintM <- lowint$root#
+} else lowintM <- ATEg#
+#
+return(lowintM)#
+}#
+#
+##### Code begins -- parameters#
+#
+ntreat <- 10#
+ncontrol <- 20#
+N <- ntreat+ncontrol#
+#
+# ratio of treatment to control variance#
+ratio <- 5#
+#
+Y0 <- rnorm(N)#
+Y0 <- Y0 - mean(Y0)#
+Y1 <- rnorm(N)*ratio#
+Y1 <- Y1 - mean(Y1)#
+#
+# True ATE is Zero.#
+#
+Z <- c(rep(1,ntreat),rep(0,ncontrol))#
+#
+perms <- genperms(Z,maxiter=200)#
+#
+upperci <- lowerci <- rep(NA,ncol(perms))#
+Nupperci <- Nlowerci <- rep(NA,ncol(perms))#
+Pupperci <- Plowerci <- rep(NA,ncol(perms))#
+#
+for (i in 1:ncol(perms)) {#
+	Zri <- perms[,i]#
+	Y <- Y0*(1-Zri) + Y1*Zri#
+	upperci[i] <- invert.ci(Y,Zri,prob=rep(mean(Zri),N),perms=perms,targetp=0.975)#
+	lowerci[i] <- invert.ci(Y,Zri,prob=rep(mean(Zri),N),perms=perms,targetp=0.025)#
+	seest <- (var(Y[Zri==1])/sum(Zri) + var(Y[Zri==0])/sum(1-Zri))^.5#
+	ateest <- mean(Y[Zri==1]) - mean(Y[Zri==0])#
+	Nupperci[i] <- ateest + 1.96*seest#
+	Nlowerci[i] <- ateest - 1.96*seest#
+	Ys <- genouts(Y,Zri,ate=ateest)#
+	cis <- quantile(gendist(Ys,perms,prob=rep(mean(Zri),N)),c(0.025,0.975))#
+	Plowerci[i] <- cis[1]#
+	Pupperci[i] <- cis[2]#
+	cat(i,"")#
+}#
+#
+# Coverage of Neyman + normal approx#
+mean(Nupperci >= 0 & Nlowerci <= 0,na.rm=TRUE)#
+# Coverage of Rosenbaum method#
+mean(upperci >= 0 & lowerci <= 0,na.rm=TRUE)#
+# Coverage of Aronow method#
+mean(Pupperci >= 0 & Plowerci <= 0,na.rm=TRUE)#
+#
+# Summarizing intervals#
+summary(Nupperci)#
+summary(upperci)#
+summary(Pupperci)#
+#
+summary(Nlowerci)#
+summary(lowerci)#
+summary(Plowerci)
+library(ri)#
+#
+# Small bugfix for invert.ci code -- will make it into next version of the package#
+#
+invert.ci <- function(Y,Z,prob,perms,targetp) {#
+#
+	ate <- estate(Y,Z,prob=prob)#
+	Ys <- genouts(Y,Z,ate)#
+	distro <- gendist(Ys,perms,prob=prob)#
+	#
+	mindistro <- quantile(distro,mean(c(targetp,0)))#
+	maxdistro <- quantile(distro,mean(c(targetp,1)))#
+		#
+	ATEg <- ATEgorig <- quantile(distro,targetp)#
+	bw <- min(abs(mindistro-ATEg),abs(maxdistro-ATEg))#
+	#
+	Ys1 <- genouts(Y-ATEg*Z,Z,0)#
+	testS <- estate(Y-ATEg*Z,Z,prob=prob)#
+	dist1 <- gendist(Ys1,perms,prob=prob)#
+	pguess <- mean(dist1 >= testS)#
+#
+if (pguess >= targetp) bound <- ATEg - bw#
+if (pguess < targetp) bound <- ATEg + bw#
+#
+#
+# see if bound is good enough; might need to go farther#
+#
+	YsM <- genouts(Y-bound*Z,Z,0)#
+	testM <- estate(Y-bound*Z,Z,prob=prob)#
+	distM <- gendist(YsM,perms,prob=prob)#
+	pguessM <- mean(distM >= testM)#
+#
+counter.max <- 200#
+counter <- 0#
+#
+while (pguess > targetp & pguessM > targetp) {#
+	temp <- ATEg#
+	ATEg <- bound#
+	bound <- ATEg - bw#
+#
+	YsM <- genouts(Y-bound*Z,Z,0)#
+	testM <- estate(Y-bound*Z,Z,prob=prob)#
+	distM <- gendist(YsM,perms,prob=prob)#
+	pguessM <- mean(distM >= testM)	#
+	counter <- counter + 1#
+	if (counter >= counter.max) stop("Cannot Reach p.")#
+	}#
+	#
+#
+while (pguess < targetp & pguessM < targetp) {#
+	temp <- ATEg#
+	ATEg <- bound#
+	bound <- ATEg + bw#
+#
+	YsM <- genouts(Y-bound*Z,Z,0)#
+	testM <- estate(Y-bound*Z,Z,prob=prob)#
+	distM <- gendist(YsM,perms,prob=prob)#
+	pguessM <- mean(distM >= testM)#
+	counter <- counter + 1#
+	if (counter >= counter.max) stop("Cannot Reach p.")#
+}#
+#
+#
+findroot <- function(ATEg,targetp) {#
+	Ys1 <- genouts(Y-ATEg*Z,Z,0)#
+	testS <- estate(Y-ATEg*Z,Z,prob=prob)#
+	dist1 <- gendist(Ys1,perms,prob=prob)#
+	return(mean(dist1 >= testS) - targetp)#
+	}#
+	#
+if (pguessM == targetp) {#
+	ATEg <- bound#
+	pguess <- targetp#
+	}#
+	#
+if (pguess != targetp) {#
+	lowint <- uniroot(findroot,c(bound,ATEg),targetp=targetp)#
+	lowintM <- lowint$root#
+} else lowintM <- ATEg#
+#
+return(lowintM)#
+}#
+#
+##### Code begins -- parameters#
+#
+ntreat <- 20#
+ncontrol <- 10#
+N <- ntreat+ncontrol#
+#
+# ratio of treatment to control variance#
+ratio <- 5#
+#
+Y0 <- rnorm(N)#
+Y0 <- Y0 - mean(Y0)#
+Y1 <- rnorm(N)*ratio#
+Y1 <- Y1 - mean(Y1)#
+#
+# True ATE is Zero.#
+#
+Z <- c(rep(1,ntreat),rep(0,ncontrol))#
+#
+perms <- genperms(Z,maxiter=200)#
+#
+upperci <- lowerci <- rep(NA,ncol(perms))#
+Nupperci <- Nlowerci <- rep(NA,ncol(perms))#
+Pupperci <- Plowerci <- rep(NA,ncol(perms))#
+#
+for (i in 1:ncol(perms)) {#
+	Zri <- perms[,i]#
+	Y <- Y0*(1-Zri) + Y1*Zri#
+	upperci[i] <- invert.ci(Y,Zri,prob=rep(mean(Zri),N),perms=perms,targetp=0.975)#
+	lowerci[i] <- invert.ci(Y,Zri,prob=rep(mean(Zri),N),perms=perms,targetp=0.025)#
+	seest <- (var(Y[Zri==1])/sum(Zri) + var(Y[Zri==0])/sum(1-Zri))^.5#
+	ateest <- mean(Y[Zri==1]) - mean(Y[Zri==0])#
+	Nupperci[i] <- ateest + 1.96*seest#
+	Nlowerci[i] <- ateest - 1.96*seest#
+	Ys <- genouts(Y,Zri,ate=ateest)#
+	cis <- quantile(gendist(Ys,perms,prob=rep(mean(Zri),N)),c(0.025,0.975))#
+	Plowerci[i] <- cis[1]#
+	Pupperci[i] <- cis[2]#
+	cat(i,"")#
+}#
+#
+# Coverage of Neyman + normal approx#
+mean(Nupperci >= 0 & Nlowerci <= 0,na.rm=TRUE)#
+# Coverage of Rosenbaum method#
+mean(upperci >= 0 & lowerci <= 0,na.rm=TRUE)#
+# Coverage of Aronow method#
+mean(Pupperci >= 0 & Plowerci <= 0,na.rm=TRUE)#
+#
+# Summarizing intervals#
+summary(Nupperci)#
+summary(upperci)#
+summary(Pupperci)#
+#
+summary(Nlowerci)#
+summary(lowerci)#
+summary(Plowerci)
+library(ri)#
+#
+# Small bugfix for invert.ci code -- will make it into next version of the package#
+#
+invert.ci <- function(Y,Z,prob,perms,targetp) {#
+#
+	ate <- estate(Y,Z,prob=prob)#
+	Ys <- genouts(Y,Z,ate)#
+	distro <- gendist(Ys,perms,prob=prob)#
+	#
+	mindistro <- quantile(distro,mean(c(targetp,0)))#
+	maxdistro <- quantile(distro,mean(c(targetp,1)))#
+		#
+	ATEg <- ATEgorig <- quantile(distro,targetp)#
+	bw <- min(abs(mindistro-ATEg),abs(maxdistro-ATEg))#
+	#
+	Ys1 <- genouts(Y-ATEg*Z,Z,0)#
+	testS <- estate(Y-ATEg*Z,Z,prob=prob)#
+	dist1 <- gendist(Ys1,perms,prob=prob)#
+	pguess <- mean(dist1 >= testS)#
+#
+if (pguess >= targetp) bound <- ATEg - bw#
+if (pguess < targetp) bound <- ATEg + bw#
+#
+#
+# see if bound is good enough; might need to go farther#
+#
+	YsM <- genouts(Y-bound*Z,Z,0)#
+	testM <- estate(Y-bound*Z,Z,prob=prob)#
+	distM <- gendist(YsM,perms,prob=prob)#
+	pguessM <- mean(distM >= testM)#
+#
+counter.max <- 200#
+counter <- 0#
+#
+while (pguess > targetp & pguessM > targetp) {#
+	temp <- ATEg#
+	ATEg <- bound#
+	bound <- ATEg - bw#
+#
+	YsM <- genouts(Y-bound*Z,Z,0)#
+	testM <- estate(Y-bound*Z,Z,prob=prob)#
+	distM <- gendist(YsM,perms,prob=prob)#
+	pguessM <- mean(distM >= testM)	#
+	counter <- counter + 1#
+	if (counter >= counter.max) stop("Cannot Reach p.")#
+	}#
+	#
+#
+while (pguess < targetp & pguessM < targetp) {#
+	temp <- ATEg#
+	ATEg <- bound#
+	bound <- ATEg + bw#
+#
+	YsM <- genouts(Y-bound*Z,Z,0)#
+	testM <- estate(Y-bound*Z,Z,prob=prob)#
+	distM <- gendist(YsM,perms,prob=prob)#
+	pguessM <- mean(distM >= testM)#
+	counter <- counter + 1#
+	if (counter >= counter.max) stop("Cannot Reach p.")#
+}#
+#
+#
+findroot <- function(ATEg,targetp) {#
+	Ys1 <- genouts(Y-ATEg*Z,Z,0)#
+	testS <- estate(Y-ATEg*Z,Z,prob=prob)#
+	dist1 <- gendist(Ys1,perms,prob=prob)#
+	return(mean(dist1 >= testS) - targetp)#
+	}#
+	#
+if (pguessM == targetp) {#
+	ATEg <- bound#
+	pguess <- targetp#
+	}#
+	#
+if (pguess != targetp) {#
+	lowint <- uniroot(findroot,c(bound,ATEg),targetp=targetp)#
+	lowintM <- lowint$root#
+} else lowintM <- ATEg#
+#
+return(lowintM)#
+}#
+#
+##### Code begins -- parameters#
+#
+ntreat <- 20#
+ncontrol <- 10#
+N <- ntreat+ncontrol#
+#
+# ratio of treatment to control variance#
+ratio <- 2#
+#
+Y0 <- rnorm(N)#
+Y0 <- Y0 - mean(Y0)#
+Y1 <- rnorm(N)*ratio#
+Y1 <- Y1 - mean(Y1)#
+#
+# True ATE is Zero.#
+#
+Z <- c(rep(1,ntreat),rep(0,ncontrol))#
+#
+perms <- genperms(Z,maxiter=200)#
+#
+upperci <- lowerci <- rep(NA,ncol(perms))#
+Nupperci <- Nlowerci <- rep(NA,ncol(perms))#
+Pupperci <- Plowerci <- rep(NA,ncol(perms))#
+#
+for (i in 1:ncol(perms)) {#
+	Zri <- perms[,i]#
+	Y <- Y0*(1-Zri) + Y1*Zri#
+	upperci[i] <- invert.ci(Y,Zri,prob=rep(mean(Zri),N),perms=perms,targetp=0.975)#
+	lowerci[i] <- invert.ci(Y,Zri,prob=rep(mean(Zri),N),perms=perms,targetp=0.025)#
+	seest <- (var(Y[Zri==1])/sum(Zri) + var(Y[Zri==0])/sum(1-Zri))^.5#
+	ateest <- mean(Y[Zri==1]) - mean(Y[Zri==0])#
+	Nupperci[i] <- ateest + 1.96*seest#
+	Nlowerci[i] <- ateest - 1.96*seest#
+	Ys <- genouts(Y,Zri,ate=ateest)#
+	cis <- quantile(gendist(Ys,perms,prob=rep(mean(Zri),N)),c(0.025,0.975))#
+	Plowerci[i] <- cis[1]#
+	Pupperci[i] <- cis[2]#
+	cat(i,"")#
+}#
+#
+# Coverage of Neyman + normal approx#
+mean(Nupperci >= 0 & Nlowerci <= 0,na.rm=TRUE)#
+# Coverage of Rosenbaum method#
+mean(upperci >= 0 & lowerci <= 0,na.rm=TRUE)#
+# Coverage of Aronow method#
+mean(Pupperci >= 0 & Plowerci <= 0,na.rm=TRUE)#
+#
+# Summarizing intervals#
+summary(Nupperci)#
+summary(upperci)#
+summary(Pupperci)#
+#
+summary(Nlowerci)#
+summary(lowerci)#
+summary(Plowerci)
+library(ri)#
+#
+# Small bugfix for invert.ci code -- will make it into next version of the package#
+#
+invert.ci <- function(Y,Z,prob,perms,targetp) {#
+#
+	ate <- estate(Y,Z,prob=prob)#
+	Ys <- genouts(Y,Z,ate)#
+	distro <- gendist(Ys,perms,prob=prob)#
+	#
+	mindistro <- quantile(distro,mean(c(targetp,0)))#
+	maxdistro <- quantile(distro,mean(c(targetp,1)))#
+		#
+	ATEg <- ATEgorig <- quantile(distro,targetp)#
+	bw <- min(abs(mindistro-ATEg),abs(maxdistro-ATEg))#
+	#
+	Ys1 <- genouts(Y-ATEg*Z,Z,0)#
+	testS <- estate(Y-ATEg*Z,Z,prob=prob)#
+	dist1 <- gendist(Ys1,perms,prob=prob)#
+	pguess <- mean(dist1 >= testS)#
+#
+if (pguess >= targetp) bound <- ATEg - bw#
+if (pguess < targetp) bound <- ATEg + bw#
+#
+#
+# see if bound is good enough; might need to go farther#
+#
+	YsM <- genouts(Y-bound*Z,Z,0)#
+	testM <- estate(Y-bound*Z,Z,prob=prob)#
+	distM <- gendist(YsM,perms,prob=prob)#
+	pguessM <- mean(distM >= testM)#
+#
+counter.max <- 200#
+counter <- 0#
+#
+while (pguess > targetp & pguessM > targetp) {#
+	temp <- ATEg#
+	ATEg <- bound#
+	bound <- ATEg - bw#
+#
+	YsM <- genouts(Y-bound*Z,Z,0)#
+	testM <- estate(Y-bound*Z,Z,prob=prob)#
+	distM <- gendist(YsM,perms,prob=prob)#
+	pguessM <- mean(distM >= testM)	#
+	counter <- counter + 1#
+	if (counter >= counter.max) stop("Cannot Reach p.")#
+	}#
+	#
+#
+while (pguess < targetp & pguessM < targetp) {#
+	temp <- ATEg#
+	ATEg <- bound#
+	bound <- ATEg + bw#
+#
+	YsM <- genouts(Y-bound*Z,Z,0)#
+	testM <- estate(Y-bound*Z,Z,prob=prob)#
+	distM <- gendist(YsM,perms,prob=prob)#
+	pguessM <- mean(distM >= testM)#
+	counter <- counter + 1#
+	if (counter >= counter.max) stop("Cannot Reach p.")#
+}#
+#
+#
+findroot <- function(ATEg,targetp) {#
+	Ys1 <- genouts(Y-ATEg*Z,Z,0)#
+	testS <- estate(Y-ATEg*Z,Z,prob=prob)#
+	dist1 <- gendist(Ys1,perms,prob=prob)#
+	return(mean(dist1 >= testS) - targetp)#
+	}#
+	#
+if (pguessM == targetp) {#
+	ATEg <- bound#
+	pguess <- targetp#
+	}#
+	#
+if (pguess != targetp) {#
+	lowint <- uniroot(findroot,c(bound,ATEg),targetp=targetp)#
+	lowintM <- lowint$root#
+} else lowintM <- ATEg#
+#
+return(lowintM)#
+}#
+#
+##### Code begins -- parameters#
+#
+ntreat <- 20#
+ncontrol <- 10#
+N <- ntreat+ncontrol#
+#
+# ratio of treatment to control variance#
+ratio <- 1.2#
+#
+Y0 <- rnorm(N)#
+Y0 <- Y0 - mean(Y0)#
+Y1 <- rnorm(N)*ratio#
+Y1 <- Y1 - mean(Y1)#
+#
+# True ATE is Zero.#
+#
+Z <- c(rep(1,ntreat),rep(0,ncontrol))#
+#
+perms <- genperms(Z,maxiter=200)#
+#
+upperci <- lowerci <- rep(NA,ncol(perms))#
+Nupperci <- Nlowerci <- rep(NA,ncol(perms))#
+Pupperci <- Plowerci <- rep(NA,ncol(perms))#
+#
+for (i in 1:ncol(perms)) {#
+	Zri <- perms[,i]#
+	Y <- Y0*(1-Zri) + Y1*Zri#
+	upperci[i] <- invert.ci(Y,Zri,prob=rep(mean(Zri),N),perms=perms,targetp=0.975)#
+	lowerci[i] <- invert.ci(Y,Zri,prob=rep(mean(Zri),N),perms=perms,targetp=0.025)#
+	seest <- (var(Y[Zri==1])/sum(Zri) + var(Y[Zri==0])/sum(1-Zri))^.5#
+	ateest <- mean(Y[Zri==1]) - mean(Y[Zri==0])#
+	Nupperci[i] <- ateest + 1.96*seest#
+	Nlowerci[i] <- ateest - 1.96*seest#
+	Ys <- genouts(Y,Zri,ate=ateest)#
+	cis <- quantile(gendist(Ys,perms,prob=rep(mean(Zri),N)),c(0.025,0.975))#
+	Plowerci[i] <- cis[1]#
+	Pupperci[i] <- cis[2]#
+	cat(i,"")#
+}#
+#
+# Coverage of Neyman + normal approx#
+mean(Nupperci >= 0 & Nlowerci <= 0,na.rm=TRUE)#
+# Coverage of Rosenbaum method#
+mean(upperci >= 0 & lowerci <= 0,na.rm=TRUE)#
+# Coverage of Aronow method#
+mean(Pupperci >= 0 & Plowerci <= 0,na.rm=TRUE)#
+#
+# Summarizing intervals#
+summary(Nupperci)#
+summary(upperci)#
+summary(Pupperci)#
+#
+summary(Nlowerci)#
+summary(lowerci)#
+summary(Plowerci)
+library(ri)#
+#
+# Small bugfix for invert.ci code -- will make it into next version of the package#
+#
+invert.ci <- function(Y,Z,prob,perms,targetp) {#
+#
+	ate <- estate(Y,Z,prob=prob)#
+	Ys <- genouts(Y,Z,ate)#
+	distro <- gendist(Ys,perms,prob=prob)#
+	#
+	mindistro <- quantile(distro,mean(c(targetp,0)))#
+	maxdistro <- quantile(distro,mean(c(targetp,1)))#
+		#
+	ATEg <- ATEgorig <- quantile(distro,targetp)#
+	bw <- min(abs(mindistro-ATEg),abs(maxdistro-ATEg))#
+	#
+	Ys1 <- genouts(Y-ATEg*Z,Z,0)#
+	testS <- estate(Y-ATEg*Z,Z,prob=prob)#
+	dist1 <- gendist(Ys1,perms,prob=prob)#
+	pguess <- mean(dist1 >= testS)#
+#
+if (pguess >= targetp) bound <- ATEg - bw#
+if (pguess < targetp) bound <- ATEg + bw#
+#
+#
+# see if bound is good enough; might need to go farther#
+#
+	YsM <- genouts(Y-bound*Z,Z,0)#
+	testM <- estate(Y-bound*Z,Z,prob=prob)#
+	distM <- gendist(YsM,perms,prob=prob)#
+	pguessM <- mean(distM >= testM)#
+#
+counter.max <- 200#
+counter <- 0#
+#
+while (pguess > targetp & pguessM > targetp) {#
+	temp <- ATEg#
+	ATEg <- bound#
+	bound <- ATEg - bw#
+#
+	YsM <- genouts(Y-bound*Z,Z,0)#
+	testM <- estate(Y-bound*Z,Z,prob=prob)#
+	distM <- gendist(YsM,perms,prob=prob)#
+	pguessM <- mean(distM >= testM)	#
+	counter <- counter + 1#
+	if (counter >= counter.max) stop("Cannot Reach p.")#
+	}#
+	#
+#
+while (pguess < targetp & pguessM < targetp) {#
+	temp <- ATEg#
+	ATEg <- bound#
+	bound <- ATEg + bw#
+#
+	YsM <- genouts(Y-bound*Z,Z,0)#
+	testM <- estate(Y-bound*Z,Z,prob=prob)#
+	distM <- gendist(YsM,perms,prob=prob)#
+	pguessM <- mean(distM >= testM)#
+	counter <- counter + 1#
+	if (counter >= counter.max) stop("Cannot Reach p.")#
+}#
+#
+#
+findroot <- function(ATEg,targetp) {#
+	Ys1 <- genouts(Y-ATEg*Z,Z,0)#
+	testS <- estate(Y-ATEg*Z,Z,prob=prob)#
+	dist1 <- gendist(Ys1,perms,prob=prob)#
+	return(mean(dist1 >= testS) - targetp)#
+	}#
+	#
+if (pguessM == targetp) {#
+	ATEg <- bound#
+	pguess <- targetp#
+	}#
+	#
+if (pguess != targetp) {#
+	lowint <- uniroot(findroot,c(bound,ATEg),targetp=targetp)#
+	lowintM <- lowint$root#
+} else lowintM <- ATEg#
+#
+return(lowintM)#
+}#
+#
+##### Code begins -- parameters#
+#
+ntreat <- 20#
+ncontrol <- 10#
+N <- ntreat+ncontrol#
+#
+# ratio of treatment to control variance#
+ratio <- 1#
+#
+Y0 <- rnorm(N)#
+Y0 <- Y0 - mean(Y0)#
+Y1 <- rnorm(N)*ratio#
+Y1 <- Y1 - mean(Y1)#
+#
+# True ATE is Zero.#
+#
+Z <- c(rep(1,ntreat),rep(0,ncontrol))#
+#
+perms <- genperms(Z,maxiter=200)#
+#
+upperci <- lowerci <- rep(NA,ncol(perms))#
+Nupperci <- Nlowerci <- rep(NA,ncol(perms))#
+Pupperci <- Plowerci <- rep(NA,ncol(perms))#
+#
+for (i in 1:ncol(perms)) {#
+	Zri <- perms[,i]#
+	Y <- Y0*(1-Zri) + Y1*Zri#
+	upperci[i] <- invert.ci(Y,Zri,prob=rep(mean(Zri),N),perms=perms,targetp=0.975)#
+	lowerci[i] <- invert.ci(Y,Zri,prob=rep(mean(Zri),N),perms=perms,targetp=0.025)#
+	seest <- (var(Y[Zri==1])/sum(Zri) + var(Y[Zri==0])/sum(1-Zri))^.5#
+	ateest <- mean(Y[Zri==1]) - mean(Y[Zri==0])#
+	Nupperci[i] <- ateest + 1.96*seest#
+	Nlowerci[i] <- ateest - 1.96*seest#
+	Ys <- genouts(Y,Zri,ate=ateest)#
+	cis <- quantile(gendist(Ys,perms,prob=rep(mean(Zri),N)),c(0.025,0.975))#
+	Plowerci[i] <- cis[1]#
+	Pupperci[i] <- cis[2]#
+	cat(i,"")#
+}#
+#
+# Coverage of Neyman + normal approx#
+mean(Nupperci >= 0 & Nlowerci <= 0,na.rm=TRUE)#
+# Coverage of Rosenbaum method#
+mean(upperci >= 0 & lowerci <= 0,na.rm=TRUE)#
+# Coverage of Aronow method#
+mean(Pupperci >= 0 & Plowerci <= 0,na.rm=TRUE)#
+#
+# Summarizing intervals#
+summary(Nupperci)#
+summary(upperci)#
+summary(Pupperci)#
+#
+summary(Nlowerci)#
+summary(lowerci)#
+summary(Plowerci)
+library(ri)#
+#
+# Small bugfix for invert.ci code -- will make it into next version of the package#
+#
+invert.ci <- function(Y,Z,prob,perms,targetp) {#
+#
+	ate <- estate(Y,Z,prob=prob)#
+	Ys <- genouts(Y,Z,ate)#
+	distro <- gendist(Ys,perms,prob=prob)#
+	#
+	mindistro <- quantile(distro,mean(c(targetp,0)))#
+	maxdistro <- quantile(distro,mean(c(targetp,1)))#
+		#
+	ATEg <- ATEgorig <- quantile(distro,targetp)#
+	bw <- min(abs(mindistro-ATEg),abs(maxdistro-ATEg))#
+	#
+	Ys1 <- genouts(Y-ATEg*Z,Z,0)#
+	testS <- estate(Y-ATEg*Z,Z,prob=prob)#
+	dist1 <- gendist(Ys1,perms,prob=prob)#
+	pguess <- mean(dist1 >= testS)#
+#
+if (pguess >= targetp) bound <- ATEg - bw#
+if (pguess < targetp) bound <- ATEg + bw#
+#
+#
+# see if bound is good enough; might need to go farther#
+#
+	YsM <- genouts(Y-bound*Z,Z,0)#
+	testM <- estate(Y-bound*Z,Z,prob=prob)#
+	distM <- gendist(YsM,perms,prob=prob)#
+	pguessM <- mean(distM >= testM)#
+#
+counter.max <- 200#
+counter <- 0#
+#
+while (pguess > targetp & pguessM > targetp) {#
+	temp <- ATEg#
+	ATEg <- bound#
+	bound <- ATEg - bw#
+#
+	YsM <- genouts(Y-bound*Z,Z,0)#
+	testM <- estate(Y-bound*Z,Z,prob=prob)#
+	distM <- gendist(YsM,perms,prob=prob)#
+	pguessM <- mean(distM >= testM)	#
+	counter <- counter + 1#
+	if (counter >= counter.max) stop("Cannot Reach p.")#
+	}#
+	#
+#
+while (pguess < targetp & pguessM < targetp) {#
+	temp <- ATEg#
+	ATEg <- bound#
+	bound <- ATEg + bw#
+#
+	YsM <- genouts(Y-bound*Z,Z,0)#
+	testM <- estate(Y-bound*Z,Z,prob=prob)#
+	distM <- gendist(YsM,perms,prob=prob)#
+	pguessM <- mean(distM >= testM)#
+	counter <- counter + 1#
+	if (counter >= counter.max) stop("Cannot Reach p.")#
+}#
+#
+#
+findroot <- function(ATEg,targetp) {#
+	Ys1 <- genouts(Y-ATEg*Z,Z,0)#
+	testS <- estate(Y-ATEg*Z,Z,prob=prob)#
+	dist1 <- gendist(Ys1,perms,prob=prob)#
+	return(mean(dist1 >= testS) - targetp)#
+	}#
+	#
+if (pguessM == targetp) {#
+	ATEg <- bound#
+	pguess <- targetp#
+	}#
+	#
+if (pguess != targetp) {#
+	lowint <- uniroot(findroot,c(bound,ATEg),targetp=targetp)#
+	lowintM <- lowint$root#
+} else lowintM <- ATEg#
+#
+return(lowintM)#
+}#
+#
+##### Code begins -- parameters#
+#
+ntreat <- 20#
+ncontrol <- 20#
+N <- ntreat+ncontrol#
+#
+# ratio of treatment to control variance#
+ratio <- 1#
+#
+Y0 <- rnorm(N)#
+Y0 <- Y0 - mean(Y0)#
+Y1 <- rnorm(N)*ratio#
+Y1 <- Y1 - mean(Y1)#
+#
+# True ATE is Zero.#
+#
+Z <- c(rep(1,ntreat),rep(0,ncontrol))#
+#
+perms <- genperms(Z,maxiter=200)#
+#
+upperci <- lowerci <- rep(NA,ncol(perms))#
+Nupperci <- Nlowerci <- rep(NA,ncol(perms))#
+Pupperci <- Plowerci <- rep(NA,ncol(perms))#
+#
+for (i in 1:ncol(perms)) {#
+	Zri <- perms[,i]#
+	Y <- Y0*(1-Zri) + Y1*Zri#
+	upperci[i] <- invert.ci(Y,Zri,prob=rep(mean(Zri),N),perms=perms,targetp=0.975)#
+	lowerci[i] <- invert.ci(Y,Zri,prob=rep(mean(Zri),N),perms=perms,targetp=0.025)#
+	seest <- (var(Y[Zri==1])/sum(Zri) + var(Y[Zri==0])/sum(1-Zri))^.5#
+	ateest <- mean(Y[Zri==1]) - mean(Y[Zri==0])#
+	Nupperci[i] <- ateest + 1.96*seest#
+	Nlowerci[i] <- ateest - 1.96*seest#
+	Ys <- genouts(Y,Zri,ate=ateest)#
+	cis <- quantile(gendist(Ys,perms,prob=rep(mean(Zri),N)),c(0.025,0.975))#
+	Plowerci[i] <- cis[1]#
+	Pupperci[i] <- cis[2]#
+	cat(i,"")#
+}#
+#
+# Coverage of Neyman + normal approx#
+mean(Nupperci >= 0 & Nlowerci <= 0,na.rm=TRUE)#
+# Coverage of Rosenbaum method#
+mean(upperci >= 0 & lowerci <= 0,na.rm=TRUE)#
+# Coverage of Aronow method#
+mean(Pupperci >= 0 & Plowerci <= 0,na.rm=TRUE)#
+#
+# Summarizing intervals#
+summary(Nupperci)#
+summary(upperci)#
+summary(Pupperci)#
+#
+summary(Nlowerci)#
+summary(lowerci)#
+summary(Plowerci)
+library(ri)#
+#
+# Small bugfix for invert.ci code -- will make it into next version of the package#
+#
+invert.ci <- function(Y,Z,prob,perms,targetp) {#
+#
+	ate <- estate(Y,Z,prob=prob)#
+	Ys <- genouts(Y,Z,ate)#
+	distro <- gendist(Ys,perms,prob=prob)#
+	#
+	mindistro <- quantile(distro,mean(c(targetp,0)))#
+	maxdistro <- quantile(distro,mean(c(targetp,1)))#
+		#
+	ATEg <- ATEgorig <- quantile(distro,targetp)#
+	bw <- min(abs(mindistro-ATEg),abs(maxdistro-ATEg))#
+	#
+	Ys1 <- genouts(Y-ATEg*Z,Z,0)#
+	testS <- estate(Y-ATEg*Z,Z,prob=prob)#
+	dist1 <- gendist(Ys1,perms,prob=prob)#
+	pguess <- mean(dist1 >= testS)#
+#
+if (pguess >= targetp) bound <- ATEg - bw#
+if (pguess < targetp) bound <- ATEg + bw#
+#
+#
+# see if bound is good enough; might need to go farther#
+#
+	YsM <- genouts(Y-bound*Z,Z,0)#
+	testM <- estate(Y-bound*Z,Z,prob=prob)#
+	distM <- gendist(YsM,perms,prob=prob)#
+	pguessM <- mean(distM >= testM)#
+#
+counter.max <- 200#
+counter <- 0#
+#
+while (pguess > targetp & pguessM > targetp) {#
+	temp <- ATEg#
+	ATEg <- bound#
+	bound <- ATEg - bw#
+#
+	YsM <- genouts(Y-bound*Z,Z,0)#
+	testM <- estate(Y-bound*Z,Z,prob=prob)#
+	distM <- gendist(YsM,perms,prob=prob)#
+	pguessM <- mean(distM >= testM)	#
+	counter <- counter + 1#
+	if (counter >= counter.max) stop("Cannot Reach p.")#
+	}#
+	#
+#
+while (pguess < targetp & pguessM < targetp) {#
+	temp <- ATEg#
+	ATEg <- bound#
+	bound <- ATEg + bw#
+#
+	YsM <- genouts(Y-bound*Z,Z,0)#
+	testM <- estate(Y-bound*Z,Z,prob=prob)#
+	distM <- gendist(YsM,perms,prob=prob)#
+	pguessM <- mean(distM >= testM)#
+	counter <- counter + 1#
+	if (counter >= counter.max) stop("Cannot Reach p.")#
+}#
+#
+#
+findroot <- function(ATEg,targetp) {#
+	Ys1 <- genouts(Y-ATEg*Z,Z,0)#
+	testS <- estate(Y-ATEg*Z,Z,prob=prob)#
+	dist1 <- gendist(Ys1,perms,prob=prob)#
+	return(mean(dist1 >= testS) - targetp)#
+	}#
+	#
+if (pguessM == targetp) {#
+	ATEg <- bound#
+	pguess <- targetp#
+	}#
+	#
+if (pguess != targetp) {#
+	lowint <- uniroot(findroot,c(bound,ATEg),targetp=targetp)#
+	lowintM <- lowint$root#
+} else lowintM <- ATEg#
+#
+return(lowintM)#
+}#
+#
+##### Code begins -- parameters#
+#
+ntreat <- 5#
+ncontrol <- 10#
+N <- ntreat+ncontrol#
+#
+# ratio of treatment to control variance#
+ratio <- 2#
+#
+Y0 <- rnorm(N)#
+Y0 <- Y0 - mean(Y0)#
+Y1 <- rnorm(N)*ratio#
+Y1 <- Y1 - mean(Y1)#
+#
+# True ATE is Zero.#
+#
+Z <- c(rep(1,ntreat),rep(0,ncontrol))#
+#
+perms <- genperms(Z,maxiter=200)#
+#
+upperci <- lowerci <- rep(NA,ncol(perms))#
+Nupperci <- Nlowerci <- rep(NA,ncol(perms))#
+Pupperci <- Plowerci <- rep(NA,ncol(perms))#
+#
+for (i in 1:ncol(perms)) {#
+	Zri <- perms[,i]#
+	Y <- Y0*(1-Zri) + Y1*Zri#
+	upperci[i] <- invert.ci(Y,Zri,prob=rep(mean(Zri),N),perms=perms,targetp=0.975)#
+	lowerci[i] <- invert.ci(Y,Zri,prob=rep(mean(Zri),N),perms=perms,targetp=0.025)#
+	seest <- (var(Y[Zri==1])/sum(Zri) + var(Y[Zri==0])/sum(1-Zri))^.5#
+	ateest <- mean(Y[Zri==1]) - mean(Y[Zri==0])#
+	Nupperci[i] <- ateest + 1.96*seest#
+	Nlowerci[i] <- ateest - 1.96*seest#
+	Ys <- genouts(Y,Zri,ate=ateest)#
+	cis <- quantile(gendist(Ys,perms,prob=rep(mean(Zri),N)),c(0.025,0.975))#
+	Plowerci[i] <- cis[1]#
+	Pupperci[i] <- cis[2]#
+	cat(i,"")#
+}#
+#
+# Coverage of Neyman + normal approx#
+mean(Nupperci >= 0 & Nlowerci <= 0,na.rm=TRUE)#
+# Coverage of Rosenbaum method#
+mean(upperci >= 0 & lowerci <= 0,na.rm=TRUE)#
+# Coverage of Aronow method#
+mean(Pupperci >= 0 & Plowerci <= 0,na.rm=TRUE)#
+#
+# Summarizing intervals#
+summary(Nupperci)#
+summary(upperci)#
+summary(Pupperci)#
+#
+summary(Nlowerci)#
+summary(lowerci)#
+summary(Plowerci)
+library(ri)#
+set.seed(1234567)#
+Y0 <- c(0,1,2,4,4,6,6,9,14,15,16,16,17,18)#
+Y1 <- c(0,0,1,2,0,0,2,3,12,9,8,15,5,17)#
+#
+Z <- c(1,1,0,0,0,0,0,0,0,0,0,0,1,1)#
+#
+compperms <- genperms(Z)#
+numperms <- ncol(compperms)#
+#
+compmeans <- rep(NA,numperms)#
+#
+for (i in 1:numperms) compmeans[i] <- mean(Y1[compperms[,i]==1]) - mean(Y0[compperms[,i]==0])#
+#
+block <- c(1,1,1,1,1,1,1,1,2,2,2,2,2,2)#
+#
+blockperms <- genperms(Z,block)#
+numperms <- ncol(blockperms)#
+#
+blockmeans <- rep(NA,numperms)#
+#
+for (i in 1:numperms) blockmeans[i] <- weighted.mean(Y1[blockperms[,i]==1],c(8/2,8/2,6/2,6/2)) - weighted.mean(Y0[blockperms[,i]==0],c(8/6,8/6,8/6,8/6,8/6,8/6,6/4,6/4,6/4,6/4))#
+#
+save(compmeans,blockmeans,file="figure3.1.Rdata")#
+#
+par(mfrow=c(2,1))#
+hist(compmeans,main="Sampling Distribution under Complete Randomization",xlim=c(-15,10),xlab="ATE Estimates",freq=FALSE,ylim=c(0,.3))#
+hist(blockmeans,main="Sampling Distribution under Blocked Randomization",xlim=c(-15,10),xlab="ATE Estimates",freq=FALSE,ylim=c(0,.3))#
+#
+# calculate the proportion of esitmates that are above zero#
+#
+length(compmeans[compmeans > 0])#
+length(compmeans[compmeans > 0])/length(compmeans)#
+#
+length(blockmeans[blockmeans > 0])#
+length(blockmeans[blockmeans > 0])/length(blockmeans)
+rm(list = ls())#
+#
+set.seed(1337)#
+#
+NS <- 30#
+ntreatedS <- 10#
+radius <- .5#
+radiusW <- .25#
+radiusB <- .75#
+#
+numrands <- 10000#
+#
+ax <- rnorm(NS*2)#
+#
+coordsS <- cbind(ax[1:(NS)],ax[(NS+1):(2*NS)])#
+#
+numrepeater <- 1#
+#
+N <- NS*numrepeater#
+ntreated <- ntreatedS*numrepeater#
+coords <- coordsS[rep(c(1:NS),numrepeater),] + cbind(2*(max(coordsS[,1])-min(coordsS[,1])+radius)*sort(rep(c(0:(numrepeater-1)),NS)),0)#
+#
+NnonexpS <- 100#
+coordsNonS <- cbind(rnorm(NnonexpS),rnorm(NnonexpS))#
+#
+Nnonexp <- NnonexpS*numrepeater#
+#
+coordsNon <- coordsNonS[rep(c(1:NnonexpS),numrepeater),] + cbind(2*(max(coordsS[,1])-min(coordsS[,1])+radius)*sort(rep(c(0:(numrepeater-1)),NnonexpS)),0)
+distmat <- as.matrix(dist(coords))#
+#
+# non-experimental distances to experimental units#
+distmatNon <- as.matrix(dist(rbind(coords,coordsNon)))[1:N,(N+1):(N+Nnonexp)]#
+#
+numnear <- apply(distmat,1,function(x) sum(x < radius)) - 1#
+numnearW <- apply(distmat,1,function(x) sum(x < radiusW)) - 1#
+numnearB <- apply(distmat,1,function(x) sum(x < radiusB)) - 1#
+#
+numnearNon <- apply(distmatNon,2,function(x) sum(x < radius))#
+numnearNonW <- apply(distmatNon,2,function(x) sum(x < radiusW))#
+numnearNonB <- apply(distmatNon,2,function(x) sum(x < radiusB))#
+#
+Y00 <- 10 + numnearB*10#
+#
+t01 <- -5#
+t10 <- 5#
+t11 <- -7#
+#
+Y01 <- Y00 + t01#
+Y10 <- Y00 + t10#
+Y11 <- Y00 + t11#
+#
+treat <- sample(c(rep(0,N-ntreated),rep(1,ntreated)))#
+#sample(sample(sample(c(rep(1,ntreated),rep(0,N-ntreated)))))#
+#
+mean(Y00[numnear>0])#
+mean(Y10[numnear>0])#
+mean(Y01[numnear>0])#
+mean(Y11[numnear>0])
+mean(Y00)
+Y00Non <- 0 + numnearNonB#
+Y10Non <- Y00Non + t10#
+#
+distmattreat <- distmat + (1-treat)*100#
+numtreat <- apply(distmattreat,2,function(x) sum(x < radius)) - treat#
+cond <- 10*(numtreat > 0) + treat#
+#
+numtreatW <- apply(distmattreat,2,function(x) sum(x < radiusW)) - treat#
+condW <- 10*(numtreatW > 0) + treat#
+#
+distmatNontreat <- distmatNon + (1-treat)*100#
+numtreatNon <- apply(distmatNontreat,2,function(x) sum(x < radius))#
+condNon <- 10*(numtreatNon > 0)#
+#
+cond[numnear>0]#
+table(numnear,treat)#
+#
+Y <- Y00#
+Y[cond==1] <- Y01[cond==1]#
+Y[cond==11] <- Y11[cond==11]#
+Y[cond==10] <- Y10[cond==10]#
+#
+mean(Y[treat==1]) - mean(Y[treat==0])#
+#
+#rands <- combn(N,ntreated)#
+#
+# 00, 01, 10, 11#
+pmat <- pmatW <- matrix(0,N,4)#
+#
+# 10#
+pNon <- rep(0,Nnonexp)#
+#
+for (i in 1:numrands) {#
+	treatri <- sample(treat)#
+	distmattreat <- distmat + (1-treatri)*100#
+	numtreat <- apply(distmattreat,2,function(x) sum(x < radius)) - treatri#
+	condri <- 2*(numtreat > 0) + treatri + 1#
+	for (j in 1:N) pmat[j,condri[j]] <- pmat[j,condri[j]] + 1#
+	#
+	# wrong radius#
+	numtreat <- apply(distmattreat,2,function(x) sum(x < radiusW)) - treatri#
+	condri <- 2*(numtreat > 0) + treatri + 1#
+	for (j in 1:N) pmatW[j,condri[j]] <- pmatW[j,condri[j]] + 1#
+	#
+	# non-experimental units#
+	distmatNontreat <- distmatNon + (1-treatri)*100#
+	numtreatNon <- apply(distmatNontreat,2,function(x) sum(x < radius))#
+	pNon <- pNon +  (numtreatNon > 0)#
+	#
+	if (i %% 1000 == 0) cat(i,"")#
+	}
+summary(lm(Y[numnear == 0]~treat[numnear==0]))
+#
+######## Someone near#
+#
+pscoremat <- pmat/numrands#
+pscorematW <- pmatW/numrands#
+pscoreNon <- pNon/numrands#
+#
+#weight <- rep(NA,0)#
+#
+weight <- 1/pscoremat[,1]#
+#
+for (j in 1:N) {#
+	if (cond[j] == 01) weight[j] <- 1/pscoremat[j,2]#
+	if (cond[j] == 10) weight[j] <- 1/pscoremat[j,3]#
+	if (cond[j] == 11) weight[j] <- 1/pscoremat[j,4]#
+	}#
+#
+######### Get Distribution#
+#
+Y00mean <- Y10mean <- Y01mean <- Y11mean <- Y0meanN <- Y1meanN <- rep(NA,numrands)#
+#
+Y00meanW <- Y10meanW <- Y01meanW <- Y11meanW <- Y0meanNW <- Y1meanNW <- rep(NA,numrands)#
+#
+#
+Y00meanna <- Y10meanna <- Y01meanna <- Y11meanna <- rep(NA,numrands)#
+Y00meanT <- Y10meanT <- Y01meanT <- Y11meanT <- Y0meanNT <- Y1meanNT <- rep(NA,numrands)#
+tauS <- tauNon <- rep(NA,numrands)
+Nright <- sum(numnear >0)#
+#
+for (i in 1:numrands) {#
+	treatri <- sample(treat)#
+	distmattreat <- distmat + (1-treatri)*100#
+	numtreat <- apply(distmattreat,2,function(x) sum(x < radius)) - treatri#
+	condri <- 10*(numtreat > 0) + treatri#
+#
+#
+	Yri <- Y00#
+	Yri[condri==1] <- Y01[condri==1]#
+	Yri[condri==11] <- Y11[condri==11]#
+	Yri[condri==10] <- Y10[condri==10]#
+#
+	Y1meanN[i] <- mean(Yri[numnear == 0 & treatri == 1])#
+	Y0meanN[i] <- mean(Yri[numnear == 0 & treatri == 0])#
+#
+	weightri <- 1/pscoremat[,1]#
+#
+	for (j in 1:N) {#
+		if (condri[j] == 01) weightri[j] <- 1/pscoremat[j,2]#
+		if (condri[j] == 10) weightri[j] <- 1/pscoremat[j,3]#
+		if (condri[j] == 11) weightri[j] <- 1/pscoremat[j,4]#
+	}#
+	#
+#
+	Y00meanT[i] <- sum(Yri[numnear > 0 & condri == 00]*weightri[numnear > 0 & condri == 00])/Nright#
+	Y00mean[i] <- weighted.mean(Yri[numnear > 0 & condri == 00],weightri[numnear > 0 & condri == 00])#
+	Y10meanT[i] <- sum(Yri[numnear > 0 & condri == 10]*weightri[numnear > 0 & condri == 10])/Nright#
+	Y10mean[i] <- weighted.mean(Yri[numnear > 0 & condri == 10],weightri[numnear > 0 & condri == 10])#
+	Y01meanT[i] <- sum(Yri[numnear > 0 & condri == 01]*weightri[numnear > 0 & condri == 01])/Nright#
+	Y01mean[i] <- weighted.mean(Yri[numnear > 0 & condri == 01],weightri[numnear > 0 & condri == 01])#
+	Y11meanT[i] <- sum(Yri[numnear > 0 & condri == 11]*weightri[numnear > 0 & condri == 11])/Nright#
+	Y11mean[i] <- weighted.mean(Yri[numnear > 0 & condri == 11],weightri[numnear > 0 & condri == 11])#
+#
+	Y00meanna[i] <- mean(Yri[condri==00])#
+	Y01meanna[i] <- mean(Yri[condri==01])#
+	Y10meanna[i] <- mean(Yri[condri==10])#
+	Y11meanna[i] <- mean(Yri[condri==11])#
+#
+	tauS[i] <- mean(Yri[treatri==1]) - mean(Yri[treatri==0])
+	numtreatW <- apply(distmattreat,2,function(x) sum(x < radiusW)) - treatri#
+	condriW <- 10*(numtreatW > 0) + treatri#
+#
+	weightriW <- 1/pscorematW[,1]#
+#
+	for (j in 1:N) {#
+		if (condriW[j] == 01) weightriW[j] <- 1/pscorematW[j,2]#
+		if (condriW[j] == 10) weightriW[j] <- 1/pscorematW[j,3]#
+		if (condriW[j] == 11) weightriW[j] <- 1/pscorematW[j,4]#
+	}#
+#
+#
+	Y1meanNW[i] <- mean(Yri[numnearW == 0 & treatri == 1])#
+	Y0meanNW[i] <- mean(Yri[numnearW == 0 & treatri == 0])#
+	Y00meanW[i] <- weighted.mean(Yri[numnearW > 0 & condriW == 00],weightriW[numnearW > 0 & condriW == 00])#
+	Y10meanW[i] <- weighted.mean(Yri[numnearW > 0 & condriW == 10],weightriW[numnearW > 0 & condriW == 10])#
+	Y01meanW[i] <- weighted.mean(Yri[numnearW > 0 & condriW == 01],weightriW[numnearW > 0 & condriW == 01])#
+	Y11meanW[i] <- weighted.mean(Yri[numnearW > 0 & condriW == 11],weightriW[numnearW > 0 & condriW == 11])
+# non-experimental#
+#
+	distmatNontreat <- distmatNon + (1-treatri)*100#
+	numtreatNon <- apply(distmatNontreat,2,function(x) sum(x < radius))#
+	condriNon <- 10*(numtreatNon > 0)#
+#
+	tauNon[i] <- weighted.mean(Y10Non[numnearNon > 0 & condriNon == 10],1/pscoreNon[numnearNon > 0 & condriNon == 10]) - weighted.mean(Y00Non[numnearNon > 0 & condriNon == 00],1/(1-pscoreNon)[numnearNon > 0 & condriNon == 00])#
+#
+	if (i %% 1000 == 0) cat(i,"")#
+	}#
+#
+######### True#
+#
+mean(Y00[numnear>0])#
+summary(Y00mean)#
+summary(Y00meanT)#
+#
+mean(Y10[numnear>0])#
+summary(Y10mean)#
+summary(Y10meanT)#
+#
+mean(Y01[numnear>0])#
+summary(Y01mean)#
+summary(Y01meanT)#
+#
+mean(Y11[numnear>0])#
+summary(Y11mean)#
+summary(Y11meanT)
+rm(list=ls())#
+#
+n <- 5000#
+x <- rnorm(n)#
+y0 <- x + rnorm(n, sd=.5)#
+y1 <- x + 1.25 + rnorm(n, sd=.5)#
+t <- rep(0,n)#
+t[sample(1:n,n/2)] <- 1#
+y <- t*y1 + (1-t)*y0#
+par(mfrow=c(1,1))#
+plot(x,y, type="n")#
+points(x[t==1],y[t==1], col="red")#
+points(x[t==0],y[t==0], col="blue")#
+#
+# Missingness#
+r <- rep(1,n)#
+r[y<0] <- 0#
+points(x[r==0],y[r==0], col="gray", lwd=1.5)#
+#
+x2 <- x#
+x2[r==0] <- 0#
+#
+points(jitter(x2[r==0&t==0]),y[r==0&t==0], col="red", pch=19, cex=.5)#
+points(jitter(x2[r==0&t==1]),y[r==0&t==1], col="blue", pch=19, cex=.5)#
+#
+tr  <- lm(y~t)#
+trx <- lm(y~t+x)#
+dva <- lm(y~t+x2+I(1-r))#
+#
+abline(coef(trx)[1], coef(trx)[3], col="black")#
+abline(sum(coef(trx)[1:2]), coef(trx)[3], col="black")#
+#
+abline(coef(dva)[1], coef(dva)[3], col="black", lty="dashed")#
+abline(coef(dva)[1]+coef(dva)[2], coef(dva)[3], col="black", lty="dashed")#
+trx#
+dva
+r
+r[y0<0 | y1<0] <- 0
+mean(r)
+rm(list=ls())#
+#
+n <- 5000#
+x <- rnorm(n)#
+y0 <- x + rnorm(n, sd=.5)#
+y1 <- x + 1.25 + rnorm(n, sd=.5)#
+t <- rep(0,n)#
+t[sample(1:n,n/2)] <- 1#
+y <- t*y1 + (1-t)*y0#
+par(mfrow=c(1,1))#
+plot(x,y, type="n")#
+points(x[t==1],y[t==1], col="red")#
+points(x[t==0],y[t==0], col="blue")#
+#
+# Missingness#
+r <- rep(1,n)#
+#r[y<0] <- 0#
+r[y0<0 | y1<0] <- 0#
+points(x[r==0],y[r==0], col="gray", lwd=1.5)#
+#
+x2 <- x#
+x2[r==0] <- 0#
+#
+points(jitter(x2[r==0&t==0]),y[r==0&t==0], col="red", pch=19, cex=.5)#
+points(jitter(x2[r==0&t==1]),y[r==0&t==1], col="blue", pch=19, cex=.5)#
+#
+tr  <- lm(y~t)#
+trx <- lm(y~t+x)#
+dva <- lm(y~t+x2+I(1-r))#
+#
+abline(coef(trx)[1], coef(trx)[3], col="black")#
+abline(sum(coef(trx)[1:2]), coef(trx)[3], col="black")#
+#
+abline(coef(dva)[1], coef(dva)[3], col="black", lty="dashed")#
+abline(coef(dva)[1]+coef(dva)[2], coef(dva)[3], col="black", lty="dashed")#
+trx#
+dva
+rm(list=ls())#
+#
+n <- 5000#
+x <- rnorm(n)#
+y0 <- x + rnorm(n, sd=.5)#
+y1 <- x + 1.25 + rnorm(n, sd=.5)#
+t <- rep(0,n)#
+t[sample(1:n,n/2)] <- 1#
+y <- t*y1 + (1-t)*y0#
+par(mfrow=c(1,1))#
+plot(x,y, type="n")#
+points(x[t==1],y[t==1], col="red")#
+points(x[t==0],y[t==0], col="blue")#
+#
+# Missingness#
+r <- rep(1,n)#
+r[y<0] <- 0#
+#r[y0<0 | y1<0] <- 0#
+points(x[r==0],y[r==0], col="gray", lwd=1.5)#
+#
+x2 <- x#
+x2[r==0] <- 0#
+#
+points(jitter(x2[r==0&t==0]),y[r==0&t==0], col="red", pch=19, cex=.5)#
+points(jitter(x2[r==0&t==1]),y[r==0&t==1], col="blue", pch=19, cex=.5)#
+#
+tr  <- lm(y~t)#
+trx <- lm(y~t+x)#
+dva <- lm(y~t+x2+I(1-r))#
+#
+abline(coef(trx)[1], coef(trx)[3], col="black")#
+abline(sum(coef(trx)[1:2]), coef(trx)[3], col="black")#
+#
+abline(coef(dva)[1], coef(dva)[3], col="black", lty="dashed")#
+abline(coef(dva)[1]+coef(dva)[2], coef(dva)[3], col="black", lty="dashed")#
+trx#
+dva
+rm(list=ls())#
+#
+n <- 5000#
+x <- rnorm(n)#
+y0 <- x + rnorm(n, sd=.5)#
+y1 <- x + 1.25 + rnorm(n, sd=.5)#
+t <- rep(0,n)#
+t[sample(1:n,n/2)] <- 1#
+y <- t*y1 + (1-t)*y0#
+par(mfrow=c(1,1))#
+plot(x,y, type="n")#
+points(x[t==1],y[t==1], col="red")#
+points(x[t==0],y[t==0], col="blue")#
+#
+# Missingness#
+r <- rep(1,n)#
+r[y<0] <- 0   # Cyrus's version of missingness based on realized outcomes#
+#r[y0<0 | y1<0] <- 0   # Don's version of missingness based on potential outcomes#
+points(x[r==0],y[r==0], col="gray", lwd=1.5)#
+#
+x2 <- x#
+x2[r==0] <- 0#
+#
+points(jitter(x2[r==0&t==0]),y[r==0&t==0], col="red", pch=19, cex=.5)#
+points(jitter(x2[r==0&t==1]),y[r==0&t==1], col="blue", pch=19, cex=.5)#
+#
+tr  <- lm(y~t)#
+trx <- lm(y~t+x)#
+dva <- lm(y~t+x2+I(1-r))#
+#
+abline(coef(trx)[1], coef(trx)[3], col="black")#
+abline(sum(coef(trx)[1:2]), coef(trx)[3], col="black")#
+#
+abline(coef(dva)[1], coef(dva)[3], col="black", lty="dashed")#
+abline(coef(dva)[1]+coef(dva)[2], coef(dva)[3], col="black", lty="dashed")#
+trx#
+dva
+rm(list=ls())#
+#
+n <- 5000#
+x <- rnorm(n)#
+y0 <- x + rnorm(n, sd=.5)#
+y1 <- x + 1.25 + rnorm(n, sd=.5)#
+t <- rep(0,n)#
+t[sample(1:n,n/2)] <- 1#
+y <- t*y1 + (1-t)*y0#
+par(mfrow=c(1,1))#
+plot(x,y, type="n")#
+points(x[t==1],y[t==1], col="red")#
+points(x[t==0],y[t==0], col="blue")#
+#
+# Missingness#
+r <- rep(1,n)#
+#r[y<0] <- 0   # Cyrus's version of missingness based on realized outcomes#
+r[y0<0 | y1<0] <- 0   # Don's version of missingness based on potential outcomes#
+points(x[r==0],y[r==0], col="gray", lwd=1.5)#
+#
+x2 <- x#
+x2[r==0] <- 0#
+#
+points(jitter(x2[r==0&t==0]),y[r==0&t==0], col="red", pch=19, cex=.5)#
+points(jitter(x2[r==0&t==1]),y[r==0&t==1], col="blue", pch=19, cex=.5)#
+#
+tr  <- lm(y~t)#
+trx <- lm(y~t+x)#
+dva <- lm(y~t+x2+I(1-r))#
+#
+abline(coef(trx)[1], coef(trx)[3], col="black")#
+abline(sum(coef(trx)[1:2]), coef(trx)[3], col="black")#
+#
+abline(coef(dva)[1], coef(dva)[3], col="black", lty="dashed")#
+abline(coef(dva)[1]+coef(dva)[2], coef(dva)[3], col="black", lty="dashed")#
+trx#
+dva
+dva
+tr
+trx
+?I
+rm(list=ls())#
+#
+n <- 5000#
+x <- rnorm(n)#
+y0 <- x + rnorm(n, sd=.5)#
+y1 <- x + 1.25 + rnorm(n, sd=.5)#
+t <- rep(0,n)#
+t[sample(1:n,n/2)] <- 1#
+y <- t*y1 + (1-t)*y0#
+par(mfrow=c(1,1))#
+plot(x,y, type="n")#
+points(x[t==1],y[t==1], col="red")#
+points(x[t==0],y[t==0], col="blue")#
+#
+# Missingness#
+r <- rep(1,n)#
+#r[y<0] <- 0   # Cyrus's version of missingness based on realized outcomes#
+r[y0<0 | y1<0] <- 0   # Don's version of missingness based on potential outcomes#
+points(x[r==0],y[r==0], col="gray", lwd=1.5)#
+#
+x2 <- x#
+x2[r==0] <- 0#
+#
+points(jitter(x2[r==0&t==0]),y[r==0&t==0], col="red", pch=19, cex=.5)#
+points(jitter(x2[r==0&t==1]),y[r==0&t==1], col="blue", pch=19, cex=.5)#
+#
+tr  <- lm(y~t)#
+trx <- lm(y~t+x)#
+dva <- lm(y~t+x2+I(1-r))#
+#
+abline(coef(trx)[1], coef(trx)[3], col="black")#
+abline(sum(coef(trx)[1:2]), coef(trx)[3], col="black")#
+#
+abline(coef(dva)[1], coef(dva)[3], col="black", lty="dashed")#
+abline(coef(dva)[1]+coef(dva)[2], coef(dva)[3], col="black", lty="dashed")#
+trx#
+dva
+?par
+I(r)
+I(1-r)
+test <- 1 1 1 1
+test <- c(1,1,1,1)
+I(test)
+test <- c(1,1,1,0)
+I(test)
+test <- c(1,1,2,0)
+I(test)
+1-r
+trx
+dva
+rm(list=ls())#
+#
+n <- 1000#
+x <- rnorm(n)#
+#
+y0 <- x + rnorm(n)#
+y1 <- x+1.25  + rnorm(n)#
+#
+# x response indicator#
+r0 <- as.numeric(y0>=0) #
+r1 <- as.numeric(y1>=0) #
+#
+# Imputing 0 for missing x#
+x0.m <- r0*x#
+x1.m <- r1*x#
+#
+# estimation data#
+y.all <- c(y0,y1)#
+d <- c(rep(0,length(y0)),rep(1,length(y1)))#
+x.all <- rep(x,2)#
+x.m.all <- c(x0.m,x1.m)#
+r.all <- c(r0,r1)#
+#
+# Fit with complete data#
+b.true <- coef(lm(y.all~d+x.all))#
+#
+# Dummy variable adjustment fit #
+b.dva <- coef(lm(y.all~d+x.m.all+r.all))
+b.true
+b.dva
+r.all
+rm(list=ls())#
+#
+n <- 1000#
+x <- rnorm(n)#
+#
+y0 <- x + rnorm(n)#
+y1 <- x+1.25  + rnorm(n)#
+#
+# x response indicator#
+r0 <- as.numeric(y0>=0) #
+r1 <- as.numeric(y1>=0) #
+#
+# Imputing 0 for missing x#
+x0.m <- r0*x#
+x1.m <- r1*x#
+#
+# estimation data#
+y.all <- c(y0,y1)#
+d <- c(rep(0,length(y0)),rep(1,length(y1)))#
+x.all <- rep(x,2)#
+x.m.all <- c(x0.m,x1.m)#
+r.all <- c(r0,r1)#
+#
+# Fit with complete data#
+b.true <- coef(lm(y.all~d+x.all))#
+#
+# Dummy variable adjustment fit #
+b.dva <- coef(lm(y.all~d+x.m.all+r.all))#
+#
+# Graphical demonstration#
+par(mfrow=c(1,3))#
+plot(rep(x,2),c(y0,y1),type="n", main=c("Full data (y0 blue, y1 red)",paste("b.hat=",round(b.true[2], digits=2),sep="")),xlab="x",ylab="y")#
+points(x,y1, col="red", pch=19)#
+points(x,y0, col="blue", pch=19)#
+abline(b.true[1],b.true[3],col="gray")#
+abline(b.true[1]+b.true[2],b.true[3],col="gray")#
+#
+plot(rep(x,2),c(y0,y1),type="n", main="Missing if y<0",xlab="x",ylab="y")#
+points(x,y1, col="red", pch=19)#
+points(x,y0, col="blue", pch=19)#
+points(x[y1<0], y1[y1<0], pch="X", col="gray", cex=1.5)#
+points(x[y0<0], y0[y0<0], pch="X", col="gray", cex=1.5)#
+#
+plot(rep(x,2),c(y0,y1),type="n", main=c("Imputation-completed data",paste("b.hat=",round(b.dva[2], digits=2),sep="")),xlab="x",ylab="y")#
+points(x0.m,y0, col="blue", pch=19)#
+points(x1.m, y1, col="red", pch=19)#
+abline(b.dva[1]+b.dva[4],b.dva[3],col="blue",lty="dashed")#
+abline(b.dva[1]+b.dva[2]+b.dva[4],b.dva[3],col="red",lty="dashed")#
+abline(b.true[1],b.true[3],col="gray")#
+abline(b.true[1]+b.true[2],b.true[3],col="gray")
+mean(t)
+t
+rm(list=ls())#
+#
+n <- 5000#
+x <- rnorm(n)#
+y0 <- x + rnorm(n, sd=.5)#
+y1 <- x + 1.25 + rnorm(n, sd=.5)#
+t <- rep(0,n)#
+t[sample(1:n,n/2)] <- 1#
+y <- t*y1 + (1-t)*y0#
+par(mfrow=c(1,1))#
+plot(x,y, type="n")#
+points(x[t==1],y[t==1], col="red")#
+points(x[t==0],y[t==0], col="blue")#
+#
+# Missingness#
+r <- rep(1,n)#
+#r[y<0] <- 0   # Cyrus's version of missingness based on realized outcomes#
+r[y0<0 | y1<0] <- 0   # Don's version of missingness based on potential outcomes#
+#
+points(x[r==0],y[r==0], col="gray", lwd=1.5)#
+#
+x2 <- x#
+x2[r==0] <- 0#
+#
+points(jitter(x2[r==0&t==0]),y[r==0&t==0], col="red", pch=19, cex=.5)#
+points(jitter(x2[r==0&t==1]),y[r==0&t==1], col="blue", pch=19, cex=.5)#
+#
+tr  <- lm(y~t)#
+trx <- lm(y~t+x)#
+dva <- lm(y~t+x2+I(1-r))#
+#
+abline(coef(trx)[1], coef(trx)[3], col="black")#
+abline(sum(coef(trx)[1:2]), coef(trx)[3], col="black")#
+#
+abline(coef(dva)[1], coef(dva)[3], col="black", lty="dashed")#
+abline(coef(dva)[1]+coef(dva)[2], coef(dva)[3], col="black", lty="dashed")#
+trx#
+dva
+mean(d)
+mean(t)
+rm(list=ls())#
+#
+n <- 5000#
+x <- rnorm(n)#
+y0 <- x + rnorm(n, sd=.5)#
+y1 <- x + 1.25 + rnorm(n, sd=.5)#
+t <- rep(0,n)#
+t[sample(1:n,n/2)] <- 1#
+y <- t*y1 + (1-t)*y0#
+par(mfrow=c(1,1))#
+plot(x,y, type="n")#
+points(x[t==1],y[t==1], col="red")#
+points(x[t==0],y[t==0], col="blue")#
+#
+# Missingness#
+r <- rep(1,n)#
+#r[y<0] <- 0   # Cyrus's version of missingness based on realized outcomes#
+# r[y0<0 | y1<0] <- 0   # Don's version of missingness based on potential outcomes#
+r[y0*(t+.3)<0 | y1<0] <- 0   # asymmetrical missingness based on potential outcomes#
+points(x[r==0],y[r==0], col="gray", lwd=1.5)#
+#
+x2 <- x#
+x2[r==0] <- 0#
+#
+points(jitter(x2[r==0&t==0]),y[r==0&t==0], col="red", pch=19, cex=.5)#
+points(jitter(x2[r==0&t==1]),y[r==0&t==1], col="blue", pch=19, cex=.5)#
+#
+tr  <- lm(y~t)#
+trx <- lm(y~t+x)#
+dva <- lm(y~t+x2+I(1-r))#
+#
+abline(coef(trx)[1], coef(trx)[3], col="black")#
+abline(sum(coef(trx)[1:2]), coef(trx)[3], col="black")#
+#
+abline(coef(dva)[1], coef(dva)[3], col="black", lty="dashed")#
+abline(coef(dva)[1]+coef(dva)[2], coef(dva)[3], col="black", lty="dashed")#
+trx#
+dva
+lm(r ~ t)
+rm(list=ls())#
+#
+n <- 5000#
+x <- rnorm(n)#
+y0 <- x + rnorm(n, sd=.5)#
+y1 <- x + 1.25 + rnorm(n, sd=.5)#
+t <- rep(0,n)#
+t[sample(1:n,n/2)] <- 1#
+y <- t*y1 + (1-t)*y0#
+par(mfrow=c(1,1))#
+plot(x,y, type="n")#
+points(x[t==1],y[t==1], col="red")#
+points(x[t==0],y[t==0], col="blue")#
+#
+# Missingness#
+r <- rep(1,n)#
+#r[y<0] <- 0   # Cyrus's version of missingness based on realized outcomes#
+# r[y0<0 | y1<0] <- 0   # Don's version of missingness based on potential outcomes#
+r[y0*t<0 | y1<0] <- 0   # asymmetrical missingness based on potential outcomes#
+points(x[r==0],y[r==0], col="gray", lwd=1.5)#
+#
+x2 <- x#
+x2[r==0] <- 0#
+#
+points(jitter(x2[r==0&t==0]),y[r==0&t==0], col="red", pch=19, cex=.5)#
+points(jitter(x2[r==0&t==1]),y[r==0&t==1], col="blue", pch=19, cex=.5)#
+#
+tr  <- lm(y~t)#
+trx <- lm(y~t+x)#
+dva <- lm(y~t+x2+I(1-r))#
+#
+abline(coef(trx)[1], coef(trx)[3], col="black")#
+abline(sum(coef(trx)[1:2]), coef(trx)[3], col="black")#
+#
+abline(coef(dva)[1], coef(dva)[3], col="black", lty="dashed")#
+abline(coef(dva)[1]+coef(dva)[2], coef(dva)[3], col="black", lty="dashed")#
+trx#
+dva
+histogram(y0)
+hist(y0)
+plot(y0,r)
+?sequence
+seq(from=1,to=10,by=1)
+#
+N <- seq(from=2,to=20,by=2)#
+m <- N/2#
+#
+perms <- N!/(m!(N-m)!)
+perms <- N!/(m!*(N-m)!)
+N
+m
+m!
+fact(m)
+factorial(m)
+perms <- factorial(N)/(factorial(m)*factorial(N-m))
+perms
+data.frame(N,m,perms)
+#
+maxN <- 30#
+#
+N <- seq(from=2,to=maxN,by=2)#
+m <- N/2#
+#
+#
+perms <- factorial(N)/(factorial(m)*factorial(N-m))#
+#
+data.frame(N,m,perms)
+m <- 2#
+perms <- factorial(N)/(factorial(m)*factorial(N-m))#
+data.frame(N,m,perms)
+#
+maxN <- 30#
+#
+N <- seq(from=4,to=maxN,by=2)#
+#
+# first consider the case in which m = N#
+m <- N/2#
+perms <- factorial(N)/(factorial(m)*factorial(N-m))#
+data.frame(N,m,perms)#
+#
+# next consider the case in which m = 4#
+m <- 2#
+perms <- factorial(N)/(factorial(m)*factorial(N-m))#
+data.frame(N,m,perms)
+# illustrate how the number of possible random assignments grows#
+#
+maxN <- 30#
+#
+N <- seq(from=4,to=maxN,by=2)#
+#
+# first consider the case in which m = N#
+m <- N/2#
+perms <- factorial(N)/(factorial(m)*factorial(N-m))#
+data.frame(N,m,perms)#
+#
+# next consider the case in which m = 4#
+m <- 4#
+perms <- factorial(N)/(factorial(m)*factorial(N-m))#
+data.frame(N,m,perms)
+maxN <- 30#
+#
+N <- seq(from=4,to=maxN,by=2)#
+#
+# first consider the case in which m = N/2#
+m <- N/2#
+perms <- factorial(N)/(factorial(m)*factorial(N-m))#
+#
+# consider the alternative of simple random assignment#
+simple <- N^2
+simple
+perms
+data.frame(N,m,perms)
+data.frame(N,m,perms,simple)
+exp(N)
+exp(2)
+ln(exp(2))
+log(exp(2))
+log(.69)
+log(3.7)
+exp(1)
+log(2.7)
+log(N)
+3^2
+4^3
+maxN <- 20#
+#
+N <- seq(from=4,to=maxN,by=2)#
+#
+# first consider the case in which m = N/2#
+m <- N/2#
+perms <- factorial(N)/(factorial(m)*factorial(N-m))#
+#
+# consider the alternative of simple random assignment#
+simple <- N^2#
+#
+data.frame(N,m,perms,simple)
+maxN <- 20#
+#
+N <- seq(from=4,to=maxN,by=2)#
+#
+# first consider the case in which m = N/2#
+m <- N/2#
+perms <- factorial(N)/(factorial(m)*factorial(N-m))#
+#
+# consider the alternative of simple random assignment#
+simple <- 2^N#
+#
+data.frame(N,m,perms,simple)
+# next consider the case in which m = 4 but varying N#
+m <- 4#
+perms4 <- factorial(N)/(factorial(m)*factorial(N-m))#
+data.frame(N,m,perms4)
+c(1.581, 1.871, 1.871, 1.871, 1.871, 1.871, 2.236, 2.784, 2.958, 3.122, 3.122, 5.244, 5.339, 7.599, 7.665, 7.730, 7.730, 7.730, 7.730, 7.826, 7.826)
+se <- c(1.581, 1.871, 1.871, 1.871, 1.871, 1.871, 2.236, 2.784, 2.958, 3.122, 3.122, 5.244, 5.339, 7.599, 7.665, 7.730, 7.730, 7.730, 7.730, 7.826, 7.826)
+mean(se)
+sd(se)
+sd(se)*sqrt(20/21)
+mean(se^2)
+sqrt(mean(se^2))
+# illustrate how the number of possible COMPLETE random assignments grows with N#
+#
+maxN <- 20#
+#
+N <- seq(from=4,to=maxN,by=2)#
+#
+# first consider the case in which m = N/2#
+m <- N/2#
+perms <- factorial(N)/(factorial(m)*factorial(N-m))#
+#
+# consider the alternative of simple random assignment#
+simple <- 2^N#
+#
+# compare permutations#
+data.frame(N,m,perms,simple)#
+#
+# next consider the case in which m = 4 but varying N#
+m <- 4#
+perms4 <- factorial(N)/(factorial(m)*factorial(N-m))#
+data.frame(N,m,perms4)
+rm(list=ls())
+ls()
+maxN <- 20#
+#
+N <- seq(from=4,to=maxN,by=2)#
+#
+# first consider the case in which m = N/2#
+m <- N/2#
+perms <- factorial(N)/(factorial(m)*factorial(N-m))#
+#
+# consider the alternative of simple random assignment#
+simple <- 2^N#
+#
+# compare permutations#
+data.frame(N,m,perms,simple)#
+#
+# next consider the case in which m = 4 but varying N#
+m <- 4#
+perms4 <- factorial(N)/(factorial(m)*factorial(N-m))#
+data.frame(N,m,perms4)
+ls()
+maxN <- 20#
+#
+N <- seq(from=4,to=maxN,by=2)#
+#
+# first consider the case in which m = N/2#
+m <- N/2#
+perms <- factorial(N)/(factorial(m)*factorial(N-m))#
+#
+# consider the alternative of simple random assignment#
+simple <- 2^N#
+#
+# compare permutations#
+data.frame(N,m,perms,simple)#
+#
+# next consider the case in which m = 4 but varying N#
+m <- 4#
+perms4 <- factorial(N)/(factorial(m)*factorial(N-m))#
+data.frame(N,m,perms4)
+library(foreign)#
+#
+teacherout <- read.dta("/Users/donaldgreen/Dropbox/Field Experimentation Book/Statistical Routines for examples/teacheroutput.dta")#
+#
+attach(teacherout)#
+#
+par(family="Gill Sans MT",font.main=1)#
+layout(matrix(c(1,2),2,1,byrow=TRUE))#
+#
+hist(diffinmean,xlim=c(-10,20),freq=FALSE,ylim=c(0,.25),main="Sampling Distributions",xlab="Difference-in-Means")#
+lines(density(diffinmean))#
+hist(diffinchangemeans,xlim=c(-10,20),freq=FALSE,ylim=c(0,.25),main=NULL,xlab="Difference-in-Differences")#
+lines(density(diffinchangemeans))#
+#
+detach(teacherout)
+teacherout <- read.dta("/Users/donaldgreen/Dropbox/Field Experimentation Book/Statistical Routines for examples/teacheroutput.dta")#
+#
+par(family="Gill Sans MT",font.main=1)#
+layout(matrix(c(1,2,3),3,1,byrow=TRUE))#
+#
+hist(teacherout$diffinmean,xlim=c(-10,20),freq=FALSE,ylim=c(0,.30),main="Sampling Distributions",xlab="Complete Randomization")#
+lines(density(teacherout$diffinmean))#
+#
+teacherout <- read.dta("/Users/donaldgreen/Dropbox/Field Experimentation Book/Statistical Routines for examples/teacheroutputblock.dta")#
+#
+hist(teacherout$diffinmean,xlim=c(-10,20),freq=FALSE,ylim=c(0,.30),main=NULL,xlab="Blocked Randomization (Strong Predictor)")#
+lines(density(teacherout$diffinmean))#
+#
+teacherout <- read.dta("/Users/donaldgreen/Dropbox/Field Experimentation Book/Statistical Routines for examples/teacheroutputblockweak.dta")#
+#
+hist(teacherout$diffinmean,xlim=c(-10,20),freq=FALSE,ylim=c(0,.30),main=NULL,xlab="Blocked Randomization (Weak Predictor)")#
+lines(density(teacherout$diffinmean))
+library(AER)#
+library(sandwich)#
+#
+numiter <- 2000#
+#
+estT <- ITT <- ITTD <- tau <- estV <- rep(NA,numiter)#
+#
+for (iter in 1:numiter) {#
+#
+N <- 250#
+#
+Z <- rbinom(N,1,.5)#
+C <- rbinom(N,1,.5)#
+D <- Z*C#
+#
+Y0 <- rnorm(N) + C*5#
+Y1 <- Y0*.1#
+#
+Y <- D*Y1 + (1-D)*Y0#
+#
+tau[iter] <- mean((Y1-Y0)[C==1])#
+estT[iter] <- cov(Y,Z)/cov(D,Z)#
+estV[iter] <- vcovHC(ivreg(Y~D,~Z))[2,2]#
+ITT[iter] <- mean(Y[Z==1]) - mean(Y[Z==0])#
+ITTD[iter] <- mean(D[Z==1]) - mean(D[Z==0])#
+cat(iter,"")#
+}#
+#
+var(estT) # true variance#
+mean(estV) # huber-white variance#
+var(ITT)/mean(ITTD)^2 # "approximate variance"#
+(var(ITT)+mean(estT)^2*var(ITTD)-2*mean(estT)*cov(ITT,ITTD))/mean(ITTD)^2 # variance of linearized statistic
+library(AER)#
+library(sandwich)#
+#
+numiter <- 2000#
+#
+estT <- ITT <- ITTD <- tau <- estV <- rep(NA,numiter)#
+#
+for (iter in 1:numiter) {#
+#
+N <- 2500#
+#
+Z <- rbinom(N,1,.5)#
+C <- rbinom(N,1,.5)#
+D <- Z*C#
+#
+Y0 <- rnorm(N) + C*5#
+Y1 <- Y0*.1#
+#
+Y <- D*Y1 + (1-D)*Y0#
+#
+tau[iter] <- mean((Y1-Y0)[C==1])#
+estT[iter] <- cov(Y,Z)/cov(D,Z)#
+estV[iter] <- vcovHC(ivreg(Y~D,~Z))[2,2]#
+ITT[iter] <- mean(Y[Z==1]) - mean(Y[Z==0])#
+ITTD[iter] <- mean(D[Z==1]) - mean(D[Z==0])#
+cat(iter,"")#
+}#
+#
+var(estT) # true variance#
+mean(estV) # huber-white variance#
+var(ITT)/mean(ITTD)^2 # "approximate variance"#
+(var(ITT)+mean(estT)^2*var(ITTD)-2*mean(estT)*cov(ITT,ITTD))/mean(ITTD)^2 # variance of linearized statistic
+library(AER)#
+library(sandwich)#
+#
+numiter <- 1000#
+#
+estT <- ITT <- ITTD <- tau <- estV <- rep(NA,numiter)#
+#
+for (iter in 1:numiter) {#
+#
+N <- 250#
+#
+Z <- rbinom(N,1,.5)#
+C <- rbinom(N,1,.5)#
+D <- Z*C#
+#
+Y0 <- rnorm(N) + C*5#
+Y1 <- Y0+rnorm(N)#
+#
+Y <- D*Y1 + (1-D)*Y0#
+#
+tau[iter] <- mean((Y1-Y0)[C==1])#
+estT[iter] <- cov(Y,Z)/cov(D,Z)#
+estV[iter] <- vcovHC(ivreg(Y~D,~Z))[2,2]#
+ITT[iter] <- mean(Y[Z==1]) - mean(Y[Z==0])#
+ITTD[iter] <- mean(D[Z==1]) - mean(D[Z==0])#
+cat(iter,"")#
+}#
+#
+var(estT) # true variance#
+mean(estV) # huber-white variance#
+var(ITT)/mean(ITTD)^2 # "approximate variance"#
+(var(ITT)+mean(estT)^2*var(ITTD)-2*mean(estT)*cov(ITT,ITTD))/mean(ITTD)^2 # variance of linearized statistic
+library(AER)#
+library(sandwich)#
+#
+numiter <- 1000#
+#
+estT <- ITT <- ITTD <- tau <- estV <- rep(NA,numiter)#
+#
+for (iter in 1:numiter) {#
+#
+N <- 250#
+#
+Z <- rbinom(N,1,.5)#
+C <- rbinom(N,1,.5)#
+D <- Z*C#
+#
+Y0 <- rnorm(N) + C*5#
+Y1 <- Y0+10+rnorm(N)#
+#
+Y <- D*Y1 + (1-D)*Y0#
+#
+tau[iter] <- mean((Y1-Y0)[C==1])#
+estT[iter] <- cov(Y,Z)/cov(D,Z)#
+estV[iter] <- vcovHC(ivreg(Y~D,~Z))[2,2]#
+ITT[iter] <- mean(Y[Z==1]) - mean(Y[Z==0])#
+ITTD[iter] <- mean(D[Z==1]) - mean(D[Z==0])#
+cat(iter,"")#
+}#
+#
+var(estT) # true variance#
+mean(estV) # huber-white variance#
+var(ITT)/mean(ITTD)^2 # "approximate variance"#
+(var(ITT)+mean(estT)^2*var(ITTD)-2*mean(estT)*cov(ITT,ITTD))/mean(ITTD)^2 # variance of linearized statistic
+library(AER)#
+library(sandwich)#
+#
+numiter <- 1000#
+#
+estT <- ITT <- ITTD <- tau <- estV <- rep(NA,numiter)#
+#
+for (iter in 1:numiter) {#
+#
+N <- 250#
+#
+Z <- rbinom(N,1,.5)#
+C <- rbinom(N,1,.5)#
+D <- Z*C#
+#
+Y0 <- rnorm(N) + C*5#
+Y1 <- Y0+2+rnorm(N)#
+#
+Y <- D*Y1 + (1-D)*Y0#
+#
+tau[iter] <- mean((Y1-Y0)[C==1])#
+estT[iter] <- cov(Y,Z)/cov(D,Z)#
+estV[iter] <- vcovHC(ivreg(Y~D,~Z))[2,2]#
+ITT[iter] <- mean(Y[Z==1]) - mean(Y[Z==0])#
+ITTD[iter] <- mean(D[Z==1]) - mean(D[Z==0])#
+cat(iter,"")#
+}#
+#
+var(estT) # true variance#
+mean(estV) # huber-white variance#
+var(ITT)/mean(ITTD)^2 # "approximate variance"#
+(var(ITT)+mean(estT)^2*var(ITTD)-2*mean(estT)*cov(ITT,ITTD))/mean(ITTD)^2 # variance of linearized statistic
+library(AER)#
+library(sandwich)#
+#
+numiter <- 1000#
+#
+estT <- ITT <- ITTD <- tau <- estV <- rep(NA,numiter)#
+#
+for (iter in 1:numiter) {#
+#
+N <- 250#
+#
+Z <- rbinom(N,1,.5)#
+C <- rbinom(N,1,.5)#
+D <- Z*C#
+#
+Y0 <- rnorm(N) + C*5#
+Y1 <- Y0+2+0*rnorm(N)#
+#
+Y <- D*Y1 + (1-D)*Y0#
+#
+tau[iter] <- mean((Y1-Y0)[C==1])#
+estT[iter] <- cov(Y,Z)/cov(D,Z)#
+estV[iter] <- vcovHC(ivreg(Y~D,~Z))[2,2]#
+ITT[iter] <- mean(Y[Z==1]) - mean(Y[Z==0])#
+ITTD[iter] <- mean(D[Z==1]) - mean(D[Z==0])#
+cat(iter,"")#
+}#
+#
+var(estT) # true variance#
+mean(estV) # huber-white variance#
+var(ITT)/mean(ITTD)^2 # "approximate variance"#
+(var(ITT)+mean(estT)^2*var(ITTD)-2*mean(estT)*cov(ITT,ITTD))/mean(ITTD)^2 # variance of linearized statistic
+library(AER)#
+library(sandwich)#
+#
+numiter <- 1000#
+#
+estT <- ITT <- ITTD <- tau <- estV <- rep(NA,numiter)#
+#
+for (iter in 1:numiter) {#
+#
+N <- 250#
+#
+Z <- rbinom(N,1,.5)#
+C <- rbinom(N,1,.5)#
+D <- Z*C#
+#
+Y0 <- rnorm(N) + C*5#
+Y1 <- Y0+10+0*rnorm(N)#
+#
+Y <- D*Y1 + (1-D)*Y0#
+#
+tau[iter] <- mean((Y1-Y0)[C==1])#
+estT[iter] <- cov(Y,Z)/cov(D,Z)#
+estV[iter] <- vcovHC(ivreg(Y~D,~Z))[2,2]#
+ITT[iter] <- mean(Y[Z==1]) - mean(Y[Z==0])#
+ITTD[iter] <- mean(D[Z==1]) - mean(D[Z==0])#
+cat(iter,"")#
+}#
+#
+var(estT) # true variance#
+mean(estV) # huber-white variance#
+var(ITT)/mean(ITTD)^2 # "approximate variance"#
+(var(ITT)+mean(estT)^2*var(ITTD)-2*mean(estT)*cov(ITT,ITTD))/mean(ITTD)^2 # variance of linearized statistic
+mean(estT)
+mean(ITT)
+mean(ITTD)
+library(AER)#
+library(sandwich)#
+#
+numiter <- 1000#
+#
+estT <- ITT <- ITTD <- tau <- estV <- rep(NA,numiter)#
+#
+for (iter in 1:numiter) {#
+#
+N <- 50#
+#
+Z <- rbinom(N,1,.5)#
+C <- rbinom(N,1,.5)#
+D <- Z*C#
+#
+Y0 <- rnorm(N) + C*5#
+Y1 <- Y0+10+0*rnorm(N)#
+#
+Y <- D*Y1 + (1-D)*Y0#
+#
+tau[iter] <- mean((Y1-Y0)[C==1])#
+estT[iter] <- cov(Y,Z)/cov(D,Z)#
+estV[iter] <- vcovHC(ivreg(Y~D,~Z))[2,2]#
+ITT[iter] <- mean(Y[Z==1]) - mean(Y[Z==0])#
+ITTD[iter] <- mean(D[Z==1]) - mean(D[Z==0])#
+cat(iter,"")#
+}#
+#
+var(estT) # true variance#
+mean(estV) # huber-white variance#
+var(ITT)/mean(ITTD)^2 # "approximate variance"#
+(var(ITT)+mean(estT)^2*var(ITTD)-2*mean(estT)*cov(ITT,ITTD))/mean(ITTD)^2 # variance of linearized statistic
+library(AER)#
+library(sandwich)#
+#
+numiter <- 1000#
+#
+estT <- ITT <- ITTD <- tau <- estV <- rep(NA,numiter)#
+#
+for (iter in 1:numiter) {#
+#
+N <- 50#
+#
+Z <- rbinom(N,1,.5)#
+C <- rbinom(N,1,.5)#
+D <- Z*C#
+#
+Y0 <- rnorm(N) + C*5#
+Y1 <- Y0+0+0*rnorm(N)#
+#
+Y <- D*Y1 + (1-D)*Y0#
+#
+tau[iter] <- mean((Y1-Y0)[C==1])#
+estT[iter] <- cov(Y,Z)/cov(D,Z)#
+estV[iter] <- vcovHC(ivreg(Y~D,~Z))[2,2]#
+ITT[iter] <- mean(Y[Z==1]) - mean(Y[Z==0])#
+ITTD[iter] <- mean(D[Z==1]) - mean(D[Z==0])#
+cat(iter,"")#
+}#
+#
+var(estT) # true variance#
+mean(estV) # huber-white variance#
+var(ITT)/mean(ITTD)^2 # "approximate variance"#
+(var(ITT)+mean(estT)^2*var(ITTD)-2*mean(estT)*cov(ITT,ITTD))/mean(ITTD)^2 # variance of linearized statistic
+library(AER)#
+library(sandwich)#
+#
+numiter <- 1000#
+#
+estT <- ITT <- ITTD <- tau <- estV <- rep(NA,numiter)#
+#
+for (iter in 1:numiter) {#
+#
+N <- 2500#
+#
+Z <- rbinom(N,1,.5)#
+C <- rbinom(N,1,.5)#
+D <- Z*C#
+#
+Y0 <- rnorm(N) + C*5#
+Y1 <- Y0+0+0*rnorm(N)#
+#
+Y <- D*Y1 + (1-D)*Y0#
+#
+tau[iter] <- mean((Y1-Y0)[C==1])#
+estT[iter] <- cov(Y,Z)/cov(D,Z)#
+estV[iter] <- vcovHC(ivreg(Y~D,~Z))[2,2]#
+ITT[iter] <- mean(Y[Z==1]) - mean(Y[Z==0])#
+ITTD[iter] <- mean(D[Z==1]) - mean(D[Z==0])#
+cat(iter,"")#
+}#
+#
+var(estT) # true variance#
+mean(estV) # huber-white variance#
+var(ITT)/mean(ITTD)^2 # "approximate variance"#
+(var(ITT)+mean(estT)^2*var(ITTD)-2*mean(estT)*cov(ITT,ITTD))/mean(ITTD)^2 # variance of linearized statistic
+# simulation to illustrate the adequacy of the approximate standard errors described in equation (5.29)#
+#
+library(AER)#
+library(sandwich)#
+#
+numiter <- 1000#
+#
+estT <- ITT <- ITTD <- tau <- estV <- rep(NA,numiter)#
+#
+for (iter in 1:numiter) {#
+#
+N <- 2500#
+#
+Z <- rbinom(N,1,.5)    # this is simple randomization; could do complete random assignment instead#
+C <- rbinom(N,1,.5)#
+D <- Z*C#
+#
+Y0 <- rnorm(N) + C*5#
+Y1 <- Y0+2+0*rnorm(N)  # change additive and random effects as desired#
+#
+Y <- D*Y1 + (1-D)*Y0#
+#
+tau[iter] <- mean((Y1-Y0)[C==1])#
+estT[iter] <- cov(Y,Z)/cov(D,Z)#
+estV[iter] <- vcovHC(ivreg(Y~D,~Z))[2,2]#
+ITT[iter] <- mean(Y[Z==1]) - mean(Y[Z==0])#
+ITTD[iter] <- mean(D[Z==1]) - mean(D[Z==0])#
+cat(iter,"")#
+}#
+#
+var(estT) # true variance#
+mean(estV) # huber-white variance#
+var(ITT)/mean(ITTD)^2 # "approximate variance"#
+(var(ITT)+mean(estT)^2*var(ITTD)-2*mean(estT)*cov(ITT,ITTD))/mean(ITTD)^2 # variance of linearized statistic
+# simulation to illustrate the adequacy of the approximate standard errors described in equation (5.29)#
+#
+library(AER)#
+library(sandwich)#
+#
+numiter <- 1000#
+#
+estT <- ITT <- ITTD <- tau <- estV <- rep(NA,numiter)#
+#
+for (iter in 1:numiter) {#
+#
+N <- 2500#
+#
+Z <- rbinom(N,1,.5)    # this is simple randomization; could do complete random assignment instead#
+C <- rbinom(N,1,.5)#
+D <- Z*C#
+#
+Y0 <- rnorm(N) + C*5#
+Y1 <- Y0-2+0*rnorm(N)  # change additive and random effects as desired#
+#
+Y <- D*Y1 + (1-D)*Y0#
+#
+tau[iter] <- mean((Y1-Y0)[C==1])#
+estT[iter] <- cov(Y,Z)/cov(D,Z)#
+estV[iter] <- vcovHC(ivreg(Y~D,~Z))[2,2]#
+ITT[iter] <- mean(Y[Z==1]) - mean(Y[Z==0])#
+ITTD[iter] <- mean(D[Z==1]) - mean(D[Z==0])#
+cat(iter,"")#
+}#
+#
+var(estT) # true variance#
+mean(estV) # huber-white variance#
+var(ITT)/mean(ITTD)^2 # "approximate variance"#
+(var(ITT)+mean(estT)^2*var(ITTD)-2*mean(estT)*cov(ITT,ITTD))/mean(ITTD)^2 # variance of linearized statistic
+# simulation to illustrate the adequacy of the approximate standard errors described in equation (5.29)#
+#
+library(AER)#
+library(sandwich)#
+#
+numiter <- 1000#
+#
+estT <- ITT <- ITTD <- tau <- estV <- rep(NA,numiter)#
+#
+for (iter in 1:numiter) {#
+#
+N <- 2500#
+#
+Z <- rbinom(N,1,.5)    # this is simple randomization; could do complete random assignment instead#
+C <- rbinom(N,1,.5)#
+D <- Z*C#
+#
+Y0 <- rnorm(N) - C*5#
+Y1 <- Y0+2+0*rnorm(N)  # change additive and random effects as desired#
+#
+Y <- D*Y1 + (1-D)*Y0#
+#
+tau[iter] <- mean((Y1-Y0)[C==1])#
+estT[iter] <- cov(Y,Z)/cov(D,Z)#
+estV[iter] <- vcovHC(ivreg(Y~D,~Z))[2,2]#
+ITT[iter] <- mean(Y[Z==1]) - mean(Y[Z==0])#
+ITTD[iter] <- mean(D[Z==1]) - mean(D[Z==0])#
+cat(iter,"")#
+}#
+#
+var(estT) # true variance#
+mean(estV) # huber-white variance#
+var(ITT)/mean(ITTD)^2 # "approximate variance"#
+(var(ITT)+mean(estT)^2*var(ITTD)-2*mean(estT)*cov(ITT,ITTD))/mean(ITTD)^2 # variance of linearized statistic
+# simulation to illustrate the adequacy of the approximate standard errors described in equation (5.29)#
+#
+library(AER)#
+library(sandwich)#
+#
+numiter <- 1000#
+#
+estT <- ITT <- ITTD <- tau <- estV <- rep(NA,numiter)#
+#
+for (iter in 1:numiter) {#
+#
+N <- 2500#
+#
+Z <- rbinom(N,1,.5)    # this is simple randomization; could do complete random assignment instead#
+C <- rbinom(N,1,.5)#
+D <- Z*C#
+#
+Y0 <- rnorm(N) + C*10#
+Y1 <- Y0+2+0*rnorm(N)  # change additive and random effects as desired#
+#
+Y <- D*Y1 + (1-D)*Y0#
+#
+tau[iter] <- mean((Y1-Y0)[C==1])#
+estT[iter] <- cov(Y,Z)/cov(D,Z)#
+estV[iter] <- vcovHC(ivreg(Y~D,~Z))[2,2]#
+ITT[iter] <- mean(Y[Z==1]) - mean(Y[Z==0])#
+ITTD[iter] <- mean(D[Z==1]) - mean(D[Z==0])#
+cat(iter,"")#
+}#
+#
+var(estT) # true variance#
+mean(estV) # huber-white variance#
+var(ITT)/mean(ITTD)^2 # "approximate variance"#
+(var(ITT)+mean(estT)^2*var(ITTD)-2*mean(estT)*cov(ITT,ITTD))/mean(ITTD)^2 # variance of linearized statistic
+sd(tau)
+mean(tau)
+sd(estT)
+plot(Y0,Y1)
+mean(Y0,Y1)
+mean(Y0)
+mean(Y1)
+# simulation to illustrate the adequacy of the approximate standard errors described in equation (5.29)#
+#
+library(AER)#
+library(sandwich)#
+#
+numiter <- 1000#
+#
+estT <- ITT <- ITTD <- tau <- estV <- rep(NA,numiter)#
+#
+for (iter in 1:numiter) {#
+#
+N <- 250#
+#
+Z <- rbinom(N,1,.5)    # this is simple randomization; could do complete random assignment instead#
+C <- rbinom(N,1,.5)#
+D <- Z*C#
+#
+Y0 <- rnorm(N) + C*5#
+Y1 <- Y0+2+2*rnorm(N)  # change additive and random effects as desired#
+#
+Y <- D*Y1 + (1-D)*Y0#
+#
+tau[iter] <- mean((Y1-Y0)[C==1])#
+estT[iter] <- cov(Y,Z)/cov(D,Z)#
+estV[iter] <- vcovHC(ivreg(Y~D,~Z))[2,2]#
+ITT[iter] <- mean(Y[Z==1]) - mean(Y[Z==0])#
+ITTD[iter] <- mean(D[Z==1]) - mean(D[Z==0])#
+cat(iter,"")#
+}#
+#
+var(estT) # true variance#
+mean(estV) # huber-white variance#
+var(ITT)/mean(ITTD)^2 # "approximate variance"#
+(var(ITT)+mean(estT)^2*var(ITTD)-2*mean(estT)*cov(ITT,ITTD))/mean(ITTD)^2 # variance of linearized statistic
+# simulation to illustrate the adequacy of the approximate standard errors described in equation (5.29)#
+#
+library(AER)#
+library(sandwich)#
+#
+numiter <- 1000#
+#
+estT <- ITT <- ITTD <- tau <- estV <- rep(NA,numiter)#
+#
+for (iter in 1:numiter) {#
+#
+N <- 250#
+#
+Z <- rbinom(N,1,.5)    # this is simple randomization; could do complete random assignment instead#
+C <- rbinom(N,1,.4)#
+D <- Z*C#
+#
+Y0 <- rnorm(N) + C*5#
+Y1 <- Y0+2+2*rnorm(N)  # change additive and random effects as desired#
+#
+Y <- D*Y1 + (1-D)*Y0#
+#
+tau[iter] <- mean((Y1-Y0)[C==1])#
+estT[iter] <- cov(Y,Z)/cov(D,Z)#
+estV[iter] <- vcovHC(ivreg(Y~D,~Z))[2,2]#
+ITT[iter] <- mean(Y[Z==1]) - mean(Y[Z==0])#
+ITTD[iter] <- mean(D[Z==1]) - mean(D[Z==0])#
+cat(iter,"")#
+}#
+#
+var(estT) # true variance#
+mean(estV) # huber-white variance#
+var(ITT)/mean(ITTD)^2 # "approximate variance"#
+(var(ITT)+mean(estT)^2*var(ITTD)-2*mean(estT)*cov(ITT,ITTD))/mean(ITTD)^2 # variance of linearized statistic
+# simulation to illustrate the adequacy of the approximate standard errors described in equation (5.29)#
+#
+library(AER)#
+library(sandwich)#
+#
+numiter <- 1000#
+#
+estT <- ITT <- ITTD <- tau <- estV <- rep(NA,numiter)#
+#
+for (iter in 1:numiter) {#
+#
+N <- 2500#
+#
+Z <- rbinom(N,1,.5)    # this is simple randomization; could do complete random assignment instead#
+C <- rbinom(N,1,.4)    # generate the compliance rate#
+D <- Z*C#
+#
+Y0 <- rnorm(N) + C*5#
+Y1 <- Y0+0+2*rnorm(N)  # change additive and random effects as desired#
+#
+Y <- D*Y1 + (1-D)*Y0#
+#
+tau[iter] <- mean((Y1-Y0)[C==1])#
+estT[iter] <- cov(Y,Z)/cov(D,Z)#
+estV[iter] <- vcovHC(ivreg(Y~D,~Z))[2,2]#
+ITT[iter] <- mean(Y[Z==1]) - mean(Y[Z==0])#
+ITTD[iter] <- mean(D[Z==1]) - mean(D[Z==0])#
+cat(iter,"")#
+}#
+#
+var(estT) # true variance#
+mean(estV) # huber-white variance#
+var(ITT)/mean(ITTD)^2 # "approximate variance"#
+(var(ITT)+mean(estT)^2*var(ITTD)-2*mean(estT)*cov(ITT,ITTD))/mean(ITTD)^2 # variance of linearized statistic
+library(ri)#
+#
+outeriter <- 100#
+#
+reject <- rep(NA,outeriter)#
+#
+for (iter in 1:outeriter) {#
+#
+N <- 100#
+#
+Z <- sample(c(rep(1,N/2),rep(0,N/2)))#
+#
+X1 <- c(rep(1,N/4),rep(0,3*N/4))#
+X2 <- c(rep(0,3*N/4),rep(1,N/4))#
+#
+Y <- runif(N) + 100*Z + 100*X1 #+ Z*X1#
+#
+numiter <- 100#
+#
+#perms <- genperms(Z,maxiter=numiter)#
+#
+#
+Yr <- Y - (mean(Y[Z==1])-mean(Y[Z==0]))*Z#
+#
+storeP <- rep(NA,numiter)#
+#
+for (i in 1:numiter) {#
+	Zri <- sample(Z)#
+	#perms[,i]#
+	storeP[i] <- min(summary(lm(Yr~Zri*X1+Zri*X2))$coefficients[5:6,4])#
+}#
+#
+targetP <- sort(storeP)[round(numiter*.05)]#
+#
+#
+reject[iter] <- (min(summary(lm(Y~Z*X1+Z*X2))$coefficients[5:6,4]) <= targetP)#
+#
+cat(iter,"")#
+}#
+#
+summary(reject)
+mean(reject)
+sum(reject)
+#
+# Simulation to assess RI procedure for conducting multiple hypothesis tests#
+# See footnote 12, Chapter 9.#
+#
+library(ri)#
+#
+outeriter <- 1000#
+#
+reject <- rep(NA,outeriter)#
+#
+for (iter in 1:outeriter) {#
+#
+N <- 100#
+#
+Z <- sample(c(rep(1,N/2),rep(0,N/2)))#
+#
+X1 <- c(rep(1,N/4),rep(0,3*N/4))#
+X2 <- c(rep(0,3*N/4),rep(1,N/4))#
+#
+Y <- runif(N) + 100*Z + 100*X1 #+ Z*X1#
+#
+numiter <- 100#
+#
+#perms <- genperms(Z,maxiter=numiter)#
+#
+#
+Yr <- Y - (mean(Y[Z==1])-mean(Y[Z==0]))*Z#
+#
+storeP <- rep(NA,numiter)#
+#
+for (i in 1:numiter) {#
+	Zri <- sample(Z)#
+	#perms[,i]#
+	storeP[i] <- min(summary(lm(Yr~Zri*X1+Zri*X2))$coefficients[5:6,4])#
+}#
+#
+targetP <- sort(storeP)[round(numiter*.05)]#
+#
+#
+reject[iter] <- (min(summary(lm(Y~Z*X1+Z*X2))$coefficients[5:6,4]) <= targetP)#
+#
+cat(iter,"")#
+}#
+#
+summary(reject)
+targetP
+sort(storeP)
+summary(lm(Yr~Zri*X1+Zri*X2))$coefficients[5:6,4]
+summary(lm(Yr~Zri*X1+Zri*X2))
+storeP
+min(summary(lm(Yr~Zri*X1+Zri*X2))$coefficients[5:6,4])
+#
+# Simulation to assess RI procedure for conducting multiple hypothesis tests#
+# See footnote 12, Chapter 9.#
+#
+library(ri)#
+#
+outeriter <- 100 # number of replications of overall procedure#
+#
+reject <- rep(NA,outeriter)#
+#
+for (iter in 1:outeriter) {#
+#
+N <- 100  # sample size of hypothetical dataset#
+#
+Z <- sample(c(rep(1,N/2),rep(0,N/2)))    # random assignment#
+#
+X1 <- c(rep(1,N/4),rep(0,3*N/4))         # create covariates#
+X2 <- c(rep(0,3*N/4),rep(1,N/4))#
+#
+Y <- runif(N) + 100*Z + 100*X1 #+ Z*X1#
+#
+numiter <- 100   # iterations for purposes of calculating p-values#
+#
+#perms <- genperms(Z,maxiter=numiter)#
+#
+#
+Yr <- Y - (mean(Y[Z==1])-mean(Y[Z==0]))*Z#
+#
+storeP <- rep(NA,numiter)#
+#
+for (i in 1:numiter) {#
+	Zri <- sample(Z)#
+	#perms[,i]#
+	storeP[i] <- min(summary(lm(Yr~Zri*X1+Zri*X2))$coefficients[5:6,4])  # store the minimum p-value#
+}#
+#
+targetP <- sort(storeP)[round(numiter*.05)]#
+#
+#
+reject[iter] <- (min(summary(lm(Y~Z*X1+Z*X2))$coefficients[5:6,4]) <= targetP)#
+#
+cat(iter,"")#
+}#
+#
+summary(reject)
+library(e1071)#
+#
+set.seed(1234)#
+#
+Nunits <- 8#
+Nperiods <- 3#
+#
+exposmat <- rbind(#
+c(1,11,11),#
+c(1,11,11),#
+c(0,1,11),#
+c(0,1,11),#
+c(0,0,1),#
+c(0,0,1),#
+c(0,0,0),#
+c(0,0,0)#
+)#
+#
+unitno <- matrix(c(1:Nunits),ncol=Nperiods,nrow=Nunits,byrow=FALSE)#
+periodno <- matrix(c(1:Nperiods),ncol=Nperiods,nrow=Nunits,byrow=TRUE)#
+#
+Y00 <- matrix(#
+c(4,5,3,#
+7,5,4,#
+1,2,4,#
+4,3,2,#
+3,3,3,#
+8,4,3,#
+2,3,4,#
+3,1,2)#
+,nrow=8,ncol=3,byrow=TRUE)#
+#
+Y01 <- matrix(#
+c(7,9,4,#
+8,7,7,#
+1,2,8,#
+4,7,10,#
+4,3,2,#
+10,6,9,#
+2,7,6,#
+5,1,2)#
+,nrow=8,ncol=3,byrow=TRUE)#
+#
+Y11 <- matrix(#
+c(-99,9,4,#
+-99,8,7,#
+-99,2,10,#
+-99,8,10,#
+-99,3,2,#
+-99,8,10,#
+-99,7,6,#
+-99,2,3)#
+,nrow=8,ncol=3,byrow=TRUE)#
+#
+mean(Y01-Y00)#
+mean(Y11[,2:3]-Y00[,2:3])#
+#
+exposmatA <- exposmat[sample(1:Nunits),]#
+#
+Y <- Y00*(exposmatA==0) + Y01*(exposmatA == 01) + Y11*(exposmatA == 11) #
+#
+## Super Naive#
+#
+mean(Y[exposmatA>0])-mean(Y[exposmatA==0])#
+#
+# No Lagged#
+#
+weighted.mean(Y[exposmatA>0],1/(1-prob00[exposmatA>0])) - weighted.mean(Y00[exposmatA==00],1/prob00[exposmatA==00])#
+#
+# Naive Lagged#
+#
+mean(Y[exposmatA == 01]) - mean(Y[exposmatA == 0])#
+mean(Y[exposmatA == 11]) - mean(Y[exposmatA == 0])#
+#
+## probmat - analytical#
+#
+prob00 <- matrix(c(.75,.5,.25),nrow=8,ncol=3,byrow=TRUE)#
+prob01 <- matrix(c(.25,.25,.25),nrow=8,ncol=3,byrow=TRUE)#
+prob11 <- matrix(c(0,.25,.5),nrow=8,ncol=3,byrow=TRUE)#
+#
+# All units can be in 00 vs. 01#
+#
+weighted.mean(Y01[exposmatA==01],1/prob01[exposmatA==01]) - weighted.mean(Y00[exposmatA==00],1/prob00[exposmatA==00])#
+#
+# Only periods 2 and 3 can be in 00 vs. 11#
+#
+weighted.mean(Y11[exposmatA==11 & periodno > 1],1/prob11[exposmatA==11 & periodno > 1]) - weighted.mean(Y00[exposmatA==00 & periodno > 1],1/prob00[exposmatA==00 & periodno > 1])#
+#
+####### compute all randomizations#
+#
+rands <- permutations(8)#
+#
+rands[rands == 2] <- 1#
+rands[rands == 4] <- 3#
+rands[rands == 6] <- 5#
+rands[rands == 8] <- 7#
+#
+rands <- unique(rands)#
+#
+# 2520 randomizations#
+#
+computedists <- function(x) {#
+	exposmatA <- exposmat[x,]#
+	#
+	output <- rep(NA,6)#
+	#
+	output[1] <- mean(Y[exposmatA>0])-mean(Y[exposmatA==0])#
+#
+	output[2] <- weighted.mean(Y[exposmatA>0],1/(1-prob00[exposmatA>0])) - weighted.mean(Y00[exposmatA==00],1/prob00[exposmatA==00])#
+#
+	output[3] <- mean(Y[exposmatA == 01]) - mean(Y[exposmatA == 0])#
+#
+	output[4] <- mean(Y[exposmatA == 11]) - mean(Y[exposmatA == 0])#
+	#
+# All units can be in 00 vs. 01	#
+	#
+	output[5] <- weighted.mean(Y01[exposmatA==01],1/prob01[exposmatA==01]) - weighted.mean(Y00[exposmatA==00],1/prob00[exposmatA==00])#
+#
+# Only periods 2 and 3 can be in 00 vs. 01 vs. 11#
+#
+	output[6] <- weighted.mean(Y11[exposmatA==11 & periodno > 1],1/prob11[exposmatA==11 & periodno > 1]) - weighted.mean(Y00[exposmatA==00 & periodno > 1],1/prob00[exposmatA==00 & periodno > 1])#
+#
+	return(output)#
+	}#
+	#
+#### True#
+	#
+outputmat <- t(apply(rands,1,computedists))#
+#
+colMeans(outputmat)#
+apply(outputmat,2,function(x) mean((x-mean(x))^2)^.5)#
+#
+#### Rosenbaum-Style Confidence Intervals#
+#
+tau01est <- weighted.mean(Y01[exposmatA==01],1/prob01[exposmatA==01]) - weighted.mean(Y00[exposmatA==00],1/prob00[exposmatA==00])#
+#
+tau11est <- weighted.mean(Y11[exposmatA==11 & periodno > 1],1/prob11[exposmatA==11 & periodno > 1]) - weighted.mean(Y00[exposmatA==00 & periodno > 1],1/prob00[exposmatA==00 & periodno > 1])#
+#
+Y00est <- Y01est <- Y11est <- Y#
+#
+Y00est[exposmatA==01] <- Y[exposmatA==01] - tau01est#
+Y00est[exposmatA==11 & periodno > 1] <- Y[exposmatA==11 & periodno > 1] - tau11est#
+#
+Y01est[exposmatA==00] <- Y[exposmatA==00] + tau01est#
+Y01est[exposmatA==11 & periodno > 1] <- Y[exposmatA==11 & periodno > 1] - tau11est + tau01est#
+#
+Y11est[periodno == 1] <- NA#
+Y11est[exposmatA==00 & periodno > 1] <- Y[exposmatA==00 & periodno > 1] + tau11est#
+Y11est[exposmatA==01 & periodno > 1] <- Y[exposmatA==01 & periodno > 1] - tau01est + tau11est#
+#
+computedistsRos <- function(x) {#
+	exposmatA <- exposmat[x,]#
+	#
+	output <- rep(NA,2)#
+	#
+# All units can be in 00 vs. 01	#
+	#
+	output[1] <- weighted.mean(Y01est[exposmatA==01],1/prob01[exposmatA==01]) - weighted.mean(Y00est[exposmatA==00],1/prob00[exposmatA==00])#
+#
+# Only periods 2 and 3 can be in 00 vs. 01 vs. 11#
+#
+	output[2] <- weighted.mean(Y11est[exposmatA==11 & periodno > 1],1/prob11[exposmatA==11 & periodno > 1]) - weighted.mean(Y00est[exposmatA==00 & periodno > 1],1/prob00[exposmatA==00 & periodno > 1])#
+#
+	return(output)#
+	}#
+	#
+outputmatRos <- t(apply(rands,1,computedistsRos))#
+#
+colMeans(outputmatRos)#
+apply(outputmatRos,2,function(x) mean((x-mean(x))^2)^.5)#
+t(apply(outputmatRos,2,function(x) quantile(x,c(0.025,0.975))))
+set.seed(1234)#
+#
+Nunits <- 8#
+Nperiods <- 3#
+#
+exposmat <- rbind(#
+c(1,11,11),#
+c(1,11,11),#
+c(0,1,11),#
+c(0,1,11),#
+c(0,0,1),#
+c(0,0,1),#
+c(0,0,0),#
+c(0,0,0)#
+)#
+#
+unitno <- matrix(c(1:Nunits),ncol=Nperiods,nrow=Nunits,byrow=FALSE)#
+periodno <- matrix(c(1:Nperiods),ncol=Nperiods,nrow=Nunits,byrow=TRUE)#
+#
+Y00 <- matrix(#
+c(4,5,3,#
+7,5,4,#
+1,2,4,#
+4,3,2,#
+3,3,3,#
+8,4,3,#
+2,3,4,#
+3,1,2)#
+,nrow=8,ncol=3,byrow=TRUE)#
+#
+Y01 <- matrix(#
+c(7,9,4,#
+8,7,7,#
+1,2,8,#
+4,7,10,#
+4,3,2,#
+10,6,9,#
+2,7,6,#
+5,1,2)#
+,nrow=8,ncol=3,byrow=TRUE)#
+#
+Y11 <- matrix(#
+c(-99,9,4,#
+-99,8,7,#
+-99,2,10,#
+-99,8,10,#
+-99,3,2,#
+-99,8,10,#
+-99,7,6,#
+-99,2,3)#
+,nrow=8,ncol=3,byrow=TRUE)#
+#
+mean(Y01-Y00)#
+mean(Y11[,2:3]-Y00[,2:3])#
+#
+exposmatA <- exposmat[sample(1:Nunits),]#
+#
+Y <- Y00*(exposmatA==0) + Y01*(exposmatA == 01) + Y11*(exposmatA == 11)
+## Super Naive#
+#
+mean(Y[exposmatA>0])-mean(Y[exposmatA==0])#
+#
+# No Lagged#
+#
+weighted.mean(Y[exposmatA>0],1/(1-prob00[exposmatA>0])) - weighted.mean(Y00[exposmatA==00],1/prob00[exposmatA==00])#
+#
+# Naive Lagged#
+#
+mean(Y[exposmatA == 01]) - mean(Y[exposmatA == 0])#
+mean(Y[exposmatA == 11]) - mean(Y[exposmatA == 0])#
+#
+## probmat - analytical#
+#
+prob00 <- matrix(c(.75,.5,.25),nrow=8,ncol=3,byrow=TRUE)#
+prob01 <- matrix(c(.25,.25,.25),nrow=8,ncol=3,byrow=TRUE)#
+prob11 <- matrix(c(0,.25,.5),nrow=8,ncol=3,byrow=TRUE)#
+#
+# All units can be in 00 vs. 01#
+#
+weighted.mean(Y01[exposmatA==01],1/prob01[exposmatA==01]) - weighted.mean(Y00[exposmatA==00],1/prob00[exposmatA==00])#
+#
+# Only periods 2 and 3 can be in 00 vs. 11#
+#
+weighted.mean(Y11[exposmatA==11 & periodno > 1],1/prob11[exposmatA==11 & periodno > 1]) - weighted.mean(Y00[exposmatA==00 & periodno > 1],1/prob00[exposmatA==00 & periodno > 1])#
+#
+####### compute all randomizations#
+#
+rands <- permutations(8)#
+#
+rands[rands == 2] <- 1#
+rands[rands == 4] <- 3#
+rands[rands == 6] <- 5#
+rands[rands == 8] <- 7#
+#
+rands <- unique(rands)#
+#
+# 2520 randomizations
+library(e1071)#
+#
+set.seed(1234)#
+#
+Nunits <- 8#
+Nperiods <- 3#
+#
+exposmat <- rbind(#
+c(1,11,11),#
+c(1,11,11),#
+c(0,1,11),#
+c(0,1,11),#
+c(0,0,1),#
+c(0,0,1),#
+c(0,0,0),#
+c(0,0,0)#
+)#
+#
+unitno <- matrix(c(1:Nunits),ncol=Nperiods,nrow=Nunits,byrow=FALSE)#
+periodno <- matrix(c(1:Nperiods),ncol=Nperiods,nrow=Nunits,byrow=TRUE)#
+#
+Y00 <- matrix(#
+c(4,5,3,#
+7,5,4,#
+1,2,4,#
+4,3,2,#
+3,3,3,#
+8,4,3,#
+2,3,4,#
+3,1,2)#
+,nrow=8,ncol=3,byrow=TRUE)#
+#
+Y01 <- matrix(#
+c(7,9,4,#
+8,7,7,#
+1,2,8,#
+4,7,10,#
+4,3,2,#
+10,6,9,#
+2,7,6,#
+5,1,2)#
+,nrow=8,ncol=3,byrow=TRUE)#
+#
+Y11 <- matrix(#
+c(-99,9,4,#
+-99,8,7,#
+-99,2,10,#
+-99,8,10,#
+-99,3,2,#
+-99,8,10,#
+-99,7,6,#
+-99,2,3)#
+,nrow=8,ncol=3,byrow=TRUE)#
+#
+mean(Y01-Y00)#
+mean(Y11[,2:3]-Y00[,2:3])#
+#
+exposmatA <- exposmat[sample(1:Nunits),]#
+#
+Y <- Y00*(exposmatA==0) + Y01*(exposmatA == 01) + Y11*(exposmatA == 11) #
+#
+## Super Naive#
+#
+mean(Y[exposmatA>0])-mean(Y[exposmatA==0])#
+#
+# No Lagged#
+#
+weighted.mean(Y[exposmatA>0],1/(1-prob00[exposmatA>0])) - weighted.mean(Y00[exposmatA==00],1/prob00[exposmatA==00])#
+#
+# Naive Lagged#
+#
+mean(Y[exposmatA == 01]) - mean(Y[exposmatA == 0])#
+mean(Y[exposmatA == 11]) - mean(Y[exposmatA == 0])#
+#
+## probmat - analytical#
+#
+prob00 <- matrix(c(.75,.5,.25),nrow=8,ncol=3,byrow=TRUE)#
+prob01 <- matrix(c(.25,.25,.25),nrow=8,ncol=3,byrow=TRUE)#
+prob11 <- matrix(c(0,.25,.5),nrow=8,ncol=3,byrow=TRUE)#
+#
+# All units can be in 00 vs. 01#
+#
+weighted.mean(Y01[exposmatA==01],1/prob01[exposmatA==01]) - weighted.mean(Y00[exposmatA==00],1/prob00[exposmatA==00])#
+#
+# Only periods 2 and 3 can be in 00 vs. 11#
+#
+weighted.mean(Y11[exposmatA==11 & periodno > 1],1/prob11[exposmatA==11 & periodno > 1]) - weighted.mean(Y00[exposmatA==00 & periodno > 1],1/prob00[exposmatA==00 & periodno > 1])#
+#
+####### compute all randomizations#
+#
+rands <- permutations(8)#
+#
+rands[rands == 2] <- 1#
+rands[rands == 4] <- 3#
+rands[rands == 6] <- 5#
+rands[rands == 8] <- 7#
+#
+rands <- unique(rands)#
+#
+# 2520 randomizations#
+#
+computedists <- function(x) {#
+	exposmatA <- exposmat[x,]#
+	#
+	output <- rep(NA,6)#
+	#
+	output[1] <- mean(Y[exposmatA>0])-mean(Y[exposmatA==0])#
+#
+	output[2] <- weighted.mean(Y[exposmatA>0],1/(1-prob00[exposmatA>0])) - weighted.mean(Y00[exposmatA==00],1/prob00[exposmatA==00])#
+#
+	output[3] <- mean(Y[exposmatA == 01]) - mean(Y[exposmatA == 0])#
+#
+	output[4] <- mean(Y[exposmatA == 11]) - mean(Y[exposmatA == 0])#
+	#
+# All units can be in 00 vs. 01	#
+	#
+	output[5] <- weighted.mean(Y01[exposmatA==01],1/prob01[exposmatA==01]) - weighted.mean(Y00[exposmatA==00],1/prob00[exposmatA==00])#
+#
+# Only periods 2 and 3 can be in 00 vs. 01 vs. 11#
+#
+	output[6] <- weighted.mean(Y11[exposmatA==11 & periodno > 1],1/prob11[exposmatA==11 & periodno > 1]) - weighted.mean(Y00[exposmatA==00 & periodno > 1],1/prob00[exposmatA==00 & periodno > 1])#
+#
+	return(output)#
+	}#
+	#
+#### True#
+	#
+outputmat <- t(apply(rands,1,computedists))#
+#
+colMeans(outputmat)#
+apply(outputmat,2,function(x) mean((x-mean(x))^2)^.5)#
+#
+#### Rosenbaum-Style Confidence Intervals#
+#
+tau01est <- weighted.mean(Y01[exposmatA==01],1/prob01[exposmatA==01]) - weighted.mean(Y00[exposmatA==00],1/prob00[exposmatA==00])#
+#
+tau11est <- weighted.mean(Y11[exposmatA==11 & periodno > 1],1/prob11[exposmatA==11 & periodno > 1]) - weighted.mean(Y00[exposmatA==00 & periodno > 1],1/prob00[exposmatA==00 & periodno > 1])#
+#
+Y00est <- Y01est <- Y11est <- Y#
+#
+Y00est[exposmatA==01] <- Y[exposmatA==01] - tau01est#
+Y00est[exposmatA==11 & periodno > 1] <- Y[exposmatA==11 & periodno > 1] - tau11est#
+#
+Y01est[exposmatA==00] <- Y[exposmatA==00] + tau01est#
+Y01est[exposmatA==11 & periodno > 1] <- Y[exposmatA==11 & periodno > 1] - tau11est + tau01est#
+#
+Y11est[periodno == 1] <- NA#
+Y11est[exposmatA==00 & periodno > 1] <- Y[exposmatA==00 & periodno > 1] + tau11est#
+Y11est[exposmatA==01 & periodno > 1] <- Y[exposmatA==01 & periodno > 1] - tau01est + tau11est#
+#
+computedistsRos <- function(x) {#
+	exposmatA <- exposmat[x,]#
+	#
+	output <- rep(NA,2)#
+	#
+# All units can be in 00 vs. 01	#
+	#
+	output[1] <- weighted.mean(Y01est[exposmatA==01],1/prob01[exposmatA==01]) - weighted.mean(Y00est[exposmatA==00],1/prob00[exposmatA==00])#
+#
+# Only periods 2 and 3 can be in 00 vs. 01 vs. 11#
+#
+	output[2] <- weighted.mean(Y11est[exposmatA==11 & periodno > 1],1/prob11[exposmatA==11 & periodno > 1]) - weighted.mean(Y00est[exposmatA==00 & periodno > 1],1/prob00[exposmatA==00 & periodno > 1])#
+#
+	return(output)#
+	}#
+	#
+outputmatRos <- t(apply(rands,1,computedistsRos))#
+#
+colMeans(outputmatRos)#
+apply(outputmatRos,2,function(x) mean((x-mean(x))^2)^.5)#
+t(apply(outputmatRos,2,function(x) quantile(x,c(0.025,0.975))))
+rands
+library(e1071)#
+#
+set.seed(1234)#
+#
+Nunits <- 8#
+Nperiods <- 3#
+#
+exposmat <- rbind(#
+c(1,11,11),#
+c(1,11,11),#
+c(0,1,11),#
+c(0,1,11),#
+c(0,0,1),#
+c(0,0,1),#
+c(0,0,0),#
+c(0,0,0)#
+)#
+#
+unitno <- matrix(c(1:Nunits),ncol=Nperiods,nrow=Nunits,byrow=FALSE)#
+periodno <- matrix(c(1:Nperiods),ncol=Nperiods,nrow=Nunits,byrow=TRUE)#
+#
+Y00 <- matrix(#
+c(4,5,3,#
+7,5,4,#
+1,2,4,#
+4,3,2,#
+3,3,3,#
+8,4,3,#
+2,3,4,#
+3,1,2)#
+,nrow=8,ncol=3,byrow=TRUE)#
+#
+Y01 <- matrix(#
+c(7,9,4,#
+8,7,7,#
+1,2,8,#
+4,7,10,#
+4,3,2,#
+10,6,9,#
+2,7,6,#
+5,1,2)#
+,nrow=8,ncol=3,byrow=TRUE)#
+#
+Y11 <- matrix(#
+c(-99,9,4,#
+-99,8,7,#
+-99,2,10,#
+-99,8,10,#
+-99,3,2,#
+-99,8,10,#
+-99,7,6,#
+-99,2,3)#
+,nrow=8,ncol=3,byrow=TRUE)#
+#
+mean(Y01-Y00)#
+mean(Y11[,2:3]-Y00[,2:3])#
+#
+exposmatA <- exposmat[sample(1:Nunits),]#
+#
+Y <- Y00*(exposmatA==0) + Y01*(exposmatA == 01) + Y11*(exposmatA == 11) #
+#
+## Super Naive#
+#
+mean(Y[exposmatA>0])-mean(Y[exposmatA==0])#
+#
+# No Lagged#
+#
+weighted.mean(Y[exposmatA>0],1/(1-prob00[exposmatA>0])) - weighted.mean(Y00[exposmatA==00],1/prob00[exposmatA==00])#
+#
+# Naive Lagged#
+#
+mean(Y[exposmatA == 01]) - mean(Y[exposmatA == 0])#
+mean(Y[exposmatA == 11]) - mean(Y[exposmatA == 0])#
+#
+## probmat - analytical#
+#
+prob00 <- matrix(c(.75,.5,.25),nrow=8,ncol=3,byrow=TRUE)#
+prob01 <- matrix(c(.25,.25,.25),nrow=8,ncol=3,byrow=TRUE)#
+prob11 <- matrix(c(0,.25,.5),nrow=8,ncol=3,byrow=TRUE)#
+#
+# All units can be in 00 vs. 01#
+#
+weighted.mean(Y01[exposmatA==01],1/prob01[exposmatA==01]) - weighted.mean(Y00[exposmatA==00],1/prob00[exposmatA==00])#
+#
+# Only periods 2 and 3 can be in 00 vs. 11#
+#
+weighted.mean(Y11[exposmatA==11 & periodno > 1],1/prob11[exposmatA==11 & periodno > 1]) - weighted.mean(Y00[exposmatA==00 & periodno > 1],1/prob00[exposmatA==00 & periodno > 1])#
+#
+####### compute all randomizations#
+#
+rands <- permutations(8)#
+#
+rands[rands == 2] <- 1#
+rands[rands == 4] <- 3#
+rands[rands == 6] <- 5#
+rands[rands == 8] <- 7#
+#
+rands <- unique(rands)#
+#
+# 2520 randomizations#
+#
+computedists <- function(x) {#
+	exposmatA <- exposmat[x,]#
+	#
+	output <- rep(NA,6)#
+	#
+	output[1] <- mean(Y[exposmatA>0])-mean(Y[exposmatA==0])#
+#
+	output[2] <- weighted.mean(Y[exposmatA>0],1/(1-prob00[exposmatA>0])) - weighted.mean(Y00[exposmatA==00],1/prob00[exposmatA==00])#
+#
+	output[3] <- mean(Y[exposmatA == 01]) - mean(Y[exposmatA == 0])#
+#
+	output[4] <- mean(Y[exposmatA == 11]) - mean(Y[exposmatA == 0])#
+	#
+# All units can be in 00 vs. 01	#
+	#
+	output[5] <- weighted.mean(Y01[exposmatA==01],1/prob01[exposmatA==01]) - weighted.mean(Y00[exposmatA==00],1/prob00[exposmatA==00])#
+#
+# Only periods 2 and 3 can be in 00 vs. 01 vs. 11#
+#
+	output[6] <- weighted.mean(Y11[exposmatA==11 & periodno > 1],1/prob11[exposmatA==11 & periodno > 1]) - weighted.mean(Y00[exposmatA==00 & periodno > 1],1/prob00[exposmatA==00 & periodno > 1])#
+#
+	return(output)#
+	}#
+	#
+#### True#
+	#
+outputmat <- t(apply(rands,1,computedists))#
+#
+colMeans(outputmat)#
+apply(outputmat,2,function(x) mean((x-mean(x))^2)^.5)#
+#
+#### Rosenbaum-Style Confidence Intervals#
+#
+tau01est <- weighted.mean(Y01[exposmatA==01],1/prob01[exposmatA==01]) - weighted.mean(Y00[exposmatA==00],1/prob00[exposmatA==00])#
+#
+tau11est <- weighted.mean(Y11[exposmatA==11 & periodno > 1],1/prob11[exposmatA==11 & periodno > 1]) - weighted.mean(Y00[exposmatA==00 & periodno > 1],1/prob00[exposmatA==00 & periodno > 1])#
+#
+Y00est <- Y01est <- Y11est <- Y#
+#
+Y00est[exposmatA==01] <- Y[exposmatA==01] - tau01est#
+Y00est[exposmatA==11 & periodno > 1] <- Y[exposmatA==11 & periodno > 1] - tau11est#
+#
+Y01est[exposmatA==00] <- Y[exposmatA==00] + tau01est#
+Y01est[exposmatA==11 & periodno > 1] <- Y[exposmatA==11 & periodno > 1] - tau11est + tau01est#
+#
+Y11est[periodno == 1] <- NA#
+Y11est[exposmatA==00 & periodno > 1] <- Y[exposmatA==00 & periodno > 1] + tau11est#
+Y11est[exposmatA==01 & periodno > 1] <- Y[exposmatA==01 & periodno > 1] - tau01est + tau11est#
+#
+computedistsRos <- function(x) {#
+	exposmatA <- exposmat[x,]#
+	#
+	output <- rep(NA,2)#
+	#
+# All units can be in 00 vs. 01	#
+	#
+	output[1] <- weighted.mean(Y01est[exposmatA==01],1/prob01[exposmatA==01]) - weighted.mean(Y00est[exposmatA==00],1/prob00[exposmatA==00])#
+#
+# Only periods 2 and 3 can be in 00 vs. 01 vs. 11#
+#
+	output[2] <- weighted.mean(Y11est[exposmatA==11 & periodno > 1],1/prob11[exposmatA==11 & periodno > 1]) - weighted.mean(Y00est[exposmatA==00 & periodno > 1],1/prob00[exposmatA==00 & periodno > 1])#
+#
+	return(output)#
+	}#
+	#
+outputmatRos <- t(apply(rands,1,computedistsRos))#
+#
+colMeans(outputmatRos)#
+apply(outputmatRos,2,function(x) mean((x-mean(x))^2)^.5)#
+t(apply(outputmatRos,2,function(x) quantile(x,c(0.025,0.975))))
+#
+prob00 <- matrix(c(.75,.5,.25),nrow=8,ncol=3,byrow=TRUE)#
+prob01 <- matrix(c(.25,.25,.25),nrow=8,ncol=3,byrow=TRUE)#
+prob11 <- matrix(c(0,.25,.5),nrow=8,ncol=3,byrow=TRUE)
+prob00
+#
+weighted.mean(Y01[exposmatA==01],1/prob01[exposmatA==01]) - weighted.mean(Y00[exposmatA==00],1/prob00[exposmatA==00])
+weighted.mean(Y11[exposmatA==11 & periodno > 1],1/prob11[exposmatA==11 & periodno > 1]) - weighted.mean(Y00[exposmatA==00 & periodno > 1],1/prob00[exposmatA==00 & periodno > 1])
+rands[rands == 2] <- 1
+rands
+rands[rands == 2] <- 1#
+rands[rands == 4] <- 3#
+rands[rands == 6] <- 5#
+rands[rands == 8] <- 7#
+#
+rands <- unique(rands)
+rands
+computedists <- function(x) {#
+	exposmatA <- exposmat[x,]#
+	#
+	output <- rep(NA,6)#
+	#
+	output[1] <- mean(Y[exposmatA>0])-mean(Y[exposmatA==0])#
+#
+	output[2] <- weighted.mean(Y[exposmatA>0],1/(1-prob00[exposmatA>0])) - weighted.mean(Y00[exposmatA==00],1/prob00[exposmatA==00])#
+#
+	output[3] <- mean(Y[exposmatA == 01]) - mean(Y[exposmatA == 0])#
+#
+	output[4] <- mean(Y[exposmatA == 11]) - mean(Y[exposmatA == 0])#
+	#
+# All units can be in 00 vs. 01	#
+	#
+	output[5] <- weighted.mean(Y01[exposmatA==01],1/prob01[exposmatA==01]) - weighted.mean(Y00[exposmatA==00],1/prob00[exposmatA==00])#
+#
+# Only periods 2 and 3 can be in 00 vs. 01 vs. 11#
+#
+	output[6] <- weighted.mean(Y11[exposmatA==11 & periodno > 1],1/prob11[exposmatA==11 & periodno > 1]) - weighted.mean(Y00[exposmatA==00 & periodno > 1],1/prob00[exposmatA==00 & periodno > 1])#
+#
+	return(output)#
+	}
+outputmat <- t(apply(rands,1,computedists))
+outputmat
+colMeans(outputmat)
+apply(outputmat,2,function(x) mean((x-mean(x))^2)^.5)
+test <- outputmat[,5]
+test
+mean(test)
+sd(test)
+weighted.mean(Y01[exposmatA==01],1/prob01[exposmatA==01]) - weighted.mean(Y00[exposmatA==00],1/prob00[exposmatA==00])
+sort(test)
+histogram(test)
+hist(test)
+install.packages(BayesTree)
+install.packages("BayesTree")
+install.packages("/Users/donaldgreen/Dropbox/BART/Green and Kern replication archive/BayestreeKern/BayesTree")
+install.packages("/Users/donaldgreen/Dropbox/BART/Green and Kern replication archive/BayestreeKern/BayesTree",repos=NULL)
+install.packages("/Users/donaldgreen/Dropbox/BART/Green and Kern replication archive/BayestreeKern/BayesTree",repos=NULL,type="source")
+install.packages("/Users/donaldgreen/Dropbox/BART/Green and Kern replication archive/BayestreeKern/BayesTree_0.3-1.tar.gz",repos=NULL,type="source")
+library(ri)#
+#
+Z <- c(0,0,0,0,0,0,1,1,1,1,1,1)#
+#
+Y0M0 = c(0,0,0,0,0,0,1,1,1,0,0,0)#
+Y1M0 = c(0,0,0,1,1,1,0,0,0,1,1,1)#
+Y0M1 = c(0,0,0,0,0,0,1,1,1,1,1,1)#
+Y1M1 = c(0,0,0,1,1,1,1,1,1,1,1,1)#
+M0 = c(0,0,1,0,0,1,0,0,1,0,0,1)#
+M1 = c(0,1,1,0,1,1,0,1,1,0,1,1)#
+#
+perms <- genperms(Z)#
+#
+coefmat <- matrix(NA,ncol(perms),3)#
+tcoefmat <- matrix(NA,ncol(perms),2)#
+#
+for (i in 1:ncol(perms)) {#
+	Zri <- perms[,i]#
+	M <- M0*(1-Zri) + M1*Zri#
+	Y <- Y0M0*(1-Zri)*(1-M) + Y1M0*(Zri)*(1-M) + Y0M1*(1-Zri)*(M) + Y1M1*(Zri)*(M)#
+	coefmat[i,] <- lm(Y~M+Zri)$coefficients#
+	tcoefmat[i,] <- lm(Y~Zri)$coefficients#
+	}#
+	#
+colMeans(na.omit(coefmat))#
+colMeans(na.omit(tcoefmat))#
+#
+mean(Y0M0)#
+mean(Y1M0)#
+mean(Y0M0)#
+mean(Y1M1)#
+#
+#####
+#
+Z <- c(0,0,0,0,0,0,1,1,1,1,1,1)#
+#
+Y0M0 = c(0,0,0,1,0,0,1,1,1,1,1,1)#
+Y1M0 = c(1,0,1,1,1,1,0,0,0,1,1,1)#
+Y0M1 = c(0,0,0,0,1,1,1,1,1,0,0,0)#
+Y1M1 = c(0,0,0,1,0,0,1,1,1,1,1,1)#
+M0 =   c(0,0,1,0,0,1,0,0,1,0,0,1)#
+M1 =   c(0,1,1,0,1,1,0,1,1,0,1,1)#
+#
+perms <- genperms(Z)#
+#
+coefmat <- matrix(NA,ncol(perms),3)#
+tcoefmat <- matrix(NA,ncol(perms),2)#
+#
+for (i in 1:ncol(perms)) {#
+	Zri <- perms[,i]#
+	M <- M0*(1-Zri) + M1*Zri#
+	Y <- Y0M0*(1-Zri)*(1-M) + Y1M0*(Zri)*(1-M) + Y0M1*(1-Zri)*(M) + Y1M1*(Zri)*(M)#
+	coefmat[i,] <- lm(Y~M+Zri)$coefficients#
+	tcoefmat[i,] <- lm(Y~Zri)$coefficients#
+	}#
+#
+labels(lm(Y~M+Zri)$coefficients)	#
+colMeans(na.omit(coefmat))#
+colMeans(na.omit(tcoefmat))#
+#
+mean(Y1M0-Y0M0)#
+mean(Y1M1-Y0M1)#
+mean(Y0M1-Y0M0)#
+mean(Y1M1-Y1M0)#
+#
+#
+##
+#coefmeans<- rep(NA,3)#
+##
+#for (j in 1:12) {#
+#	#
+##	Za <- Z[-j]#
+##
+#	Y0a = Y0[-j]#
+#	Y1a = Y1[-j]#
+#	M0a = M0[-j]#
+#	M1a = M1[-j]#
+##
+#	perms <- genperms(c(1,1,1,1,1,0,0,0,0,0,0))#
+##
+#	coefmat <- matrix(NA,ncol(perms),3)#
+##
+#	for (i in 1:ncol(perms)) {#
+#		Zri <- perms[,i]#
+#		Y <- Y0a*(1-Zri) + Y1a*Zri#
+#		M <- M0a*(1-Zri) + M1a*Zri#
+#		coefmat[i,] <- lm(Y~M+Zri)$coefficients#
+#		}#
+#	#
+#	coefmeans <- rbind(coefmeans,colMeans(na.omit(coefmat)))#
+#	#
+#	#
+#	}#
+##
+#coefmeans <- coefmeans[-1,]
+library(ri)#
+#
+Z <- c(0,0,0,0,0,0,1,1,1,1,1,1)#
+#
+Y0M0 = c(0,0,0,0,0,0,1,1,1,0,0,0)#
+Y1M0 = c(0,0,0,1,1,1,0,0,0,1,1,1)#
+Y0M1 = c(0,0,0,0,0,0,1,1,1,1,1,1)#
+Y1M1 = c(0,0,0,1,1,1,1,1,1,1,1,1)#
+M0 = c(0,0,1,0,0,1,0,0,1,0,0,1)#
+M1 = c(0,1,1,0,1,1,0,1,1,0,1,1)#
+#
+perms <- genperms(Z)#
+#
+coefmat <- matrix(NA,ncol(perms),3)#
+tcoefmat <- matrix(NA,ncol(perms),2)#
+#
+for (i in 1:ncol(perms)) {#
+	Zri <- perms[,i]#
+	M <- M0*(1-Zri) + M1*Zri#
+	Y <- Y0M0*(1-Zri)*(1-M) + Y1M0*(Zri)*(1-M) + Y0M1*(1-Zri)*(M) + Y1M1*(Zri)*(M)#
+	coefmat[i,] <- lm(Y~M+Zri)$coefficients#
+	tcoefmat[i,] <- lm(Y~Zri)$coefficients#
+	}#
+	#
+colMeans(na.omit(coefmat))#
+colMeans(na.omit(tcoefmat))#
+#
+mean(Y0M0)#
+mean(Y1M0)#
+mean(Y0M1)#
+mean(Y1M1)
+#Clear any previous work#
+rm(list=ls(all=TRUE))#
+#
+# note first must set file directory where data file is stored#
+#
+# example for mac: setwd("/Users/name/Documents/Data/")#
+# example for windows: setwd("C:/Documents/Data/") or setwd("C:\\Documents\\Data\\")#
+# if not sure of working directory, type: getwd()#
+#
+#Load Relevant packages#
+library(foreign)#
+#
+#Read in Data#
+bedout <- read.dta("/Users/alissastollwerk/Documents/Columbia/Dropbox/Field Experimentation Book/Final Code for Vignettes and Problems/Chapter 11/Dupas_WorkingPaper_2010.dta")
+# Creating Figures 11.2 and 11.3#
+#
+#Clear any previous work#
+rm(list=ls(all=TRUE))#
+#
+# note first must set file directory where data file is stored#
+#
+# example for mac: setwd("/Users/name/Documents/Data/")#
+# example for windows: setwd("C:/Documents/Data/") or setwd("C:\\Documents\\Data\\")#
+# if not sure of working directory, type: getwd()#
+#
+#Load Relevant packages#
+library(foreign)#
+#
+#Read in Data#
+bedout <- read.dta("/Dropbox/Field Experimentation Book/Final Code for Vignettes and Problems/Chapter 11/Dupas_WorkingPaper_2010.dta")
+#
+#Read in Data#
+bedout <- read.dta("Dupas_WorkingPaper_2010.dta")
+attach(bedout)#
+#
+quartz(width=8,height=4.5)#
+#
+par(family="Gill Sans MT",font.main=1,mfrow = c(1, 2),pty = "s")#
+#
+plot(purchaserate~price,pch=16,ylab="Purchase Rate",xlab="Price",xlim=c(0,300),ylim=c(0,1))#
+#
+summary(lm(purchaserate~price))#
+#
+lines(predict(lm(purchaserate~price),data.frame(price=c(-10:400)))~c(-10:400))#
+#
+text("R-squared = 0.897",x=225,y=.9)#
+#
+plot(logitr~price,pch=16,ylab="logit(Purchase Rate)",xlab="Price",xlim=c(0,300),ylim=c(-2,2))#
+#
+summary(lm(logitr~price))#
+#
+lines(predict(lm(logitr~price),data.frame(price=c(-10:400)))~c(-10:400))#
+#
+text("R-squared = 0.925",x=225,y=1.6)
