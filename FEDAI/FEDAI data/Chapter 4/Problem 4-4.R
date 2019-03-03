@@ -41,7 +41,7 @@ summary(lm(Y~Z+X))   # estimate the ATE using covariate adjustment
 
 # Part (d)
 
-perms <- genperms(Z,maxiter=10000)  # simulate possible random allocations
+perms <- genperms(Z,maxiter=10)  # simulate possible random allocations
 probs <- genprobexact(Z)
 ate <- estate(Y,Z,prob=probs)       # estimate the ATE
 Ys <- genouts(Y,Z,ate=0)            # calculate potential outcomes under sharp null of 0 effect for all units

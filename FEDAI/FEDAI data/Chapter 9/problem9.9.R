@@ -6,8 +6,12 @@ expand_data<- read.dta("Fieldhouse_et_al_unpublished_2010_expanded.dta")
 names(expand_data)
 library(dplyr)
 
-problem9 <- rename(expand_data, mail=m, phone_assign=p,phone_contact=c,
-                   vote=y,phone_contact.mail=c_m,
+problem9 <- rename(expand_data, 
+                   mail=m, 
+                   phone_assign=p,
+                   phone_contact=c,
+                   vote=y,
+                   phone_contact.mail=c_m,
                    phone_assign.mail=p_m)
 
 ols1 <- lm(phone_contact ~ mail * phone_assign,data=problem9)
