@@ -2,10 +2,6 @@ Unfinished:
 
 - [ ] 4.5 restricted randomization
 - [ ] 4.10 part c & d Horvitz–Thompson estimator 
-- [ ] 9.6 last part need double check
-- [ ] 9.9 - incorrect IV reg results
-- [ ] 10.3
-- [ ] 11.9  
 - [ ] 13.1 - part d  restricted randomization
 
 

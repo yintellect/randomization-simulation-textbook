@@ -1,5 +1,5 @@
 clear
-log using 10_3, name(solution10_3j)
+//log using 10_3, name(solution10_3j)
 
 *part j
 	input z Y0M0 Y1M0 Y0M1 Y1M1 M0 M1
@@ -19,9 +19,23 @@ log using 10_3, name(solution10_3j)
 	
 tabstat Y0M0 Y1M0 Y0M1 Y1M1, stat(mean)
 
-qui ritest z _b[z], reps(2000) saveresampling(zresample.dta): mean z
 
-use "zresample.dta", clear
+
+
+
+set seed 12345
+generate rannum = .
+
+
+
+quietly forvalues i = 1/1400 {
+replace rannum = uniform()
+egen z`i' = cut(rannum), group(2)
+}
+
+
+
+
 
 set matsize 1400
 
@@ -72,13 +86,13 @@ mat V = J(rowsof(tcoefmat),1,1)
 mat sum = V'*tcoefmat
 mat lis sum
 mat meanvec = sum/rowsof(tcoefmat)
-mat list meanvec
+mat list meanvec,format(%8.2f)
 
 mat W = J(rowsof(mcoefmat),1,1)
 mat sum = W'*mcoefmat
 mat lis sum
 mat meanvec = sum/rowsof(mcoefmat)
-mat list meanvec
+mat list meanvec,format(%8.2f)
 
 		
 log close solution10_3j

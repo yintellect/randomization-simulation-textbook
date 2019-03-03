@@ -1,25 +1,30 @@
 clear
 use "Rind_Bordia_JASP_1996.dta"
 
-*part a
-	
-	
-	quietly: sum tip if happyface==1, detail
-	scalar var_treat = r(Var)
-	quietly: sum tip if happyface==0, detail
-	scalar var_control = r(Var)
-	scalar testvar = var_treat - var_control
-	disp testvar
-	
-	//  p-value for var(Y1)>Var(Y0)
-	ritest happyface  testvar=((r(sd_2)^2)-(r(sd_1)^2)) , reps(1000) seed(1234) right: sdtest tip, by(happyface)
-	//  p-value for var(Y1)<>Var(Y0)
-	ritest happyface  testvar=((r(sd_2)^2)-(r(sd_1)^2)) , reps(1000) seed(1234): sdtest tip, by(happyface)
-	
+/*----------------------------------------------
+ part a
+----------------------------------------------*/
+
+program define var_difference, rclass
+	sum tip if happyface==1, detail
+	local var_treat = r(Var)
+	sum tip if happyface==0, detail
+	local var_control = r(Var)
+	return scalar vardiff= `var_treat'-`var_control'
+end
+
+tsrtest happyface r(vardiff): var_difference	
+
+//  p-value for var(Y1)>Var(Y0)
+di r(uppertail) 
+
+//  p-value for var(Y1)<>Var(Y0)
+di r(twotail) 
 
 
-
- *part c
+/*----------------------------------------------
+ part c
+----------------------------------------------*/
 
 	gen zfemale = happyface*female
 	

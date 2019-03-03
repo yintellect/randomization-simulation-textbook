@@ -2,7 +2,7 @@
 log using 11_9
 
 clear 
-import delimited using "/Users/yy2633/MA/2019Spring/RA/FEDAI code STATA/dupas.csv"
+import delimited using "/Users/yy2633/MA/2019Spring/RAship/FEDAI/FEDAI code STATA/dupas.csv"
 
 *part b
 	
