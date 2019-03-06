@@ -1,4 +1,4 @@
-cd "/Users/yy2633/MA/2019Spring/RAship/FEDAI/draft"
+
 clear
 use example_classes.dta
 
