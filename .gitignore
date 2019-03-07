@@ -4,3 +4,5 @@ qjy010/
 # ignore all .zip
 *.zip
 
+*.DS_Store
+
