@@ -1,0 +1,6 @@
+# ignore folder named `gjy010
+qjy010/
+
+# ignore all .zip
+*.zip
+
