@@ -37,7 +37,13 @@ randfun <- function() {
 
 perms <- genperms.custom(numiter=10000,randfun=randfun)    # notice the use of the restricted randomization function in the generation of simulated random allocations
 
-probs <- genprob(perms)           # important: restricted randomization can sometimes generate unequal probabilities of assignment, so it's important to generate the probs and use inverse probability weights when estimating the ATE
+probs <- genprob(perms) # important: restricted randomization can sometimes generate unequal probabilities of assignment, so it's important to generate the probs and use inverse probability weights when estimating the ATE
+weights <- (1/probs) *Z + (1/(1-probs))*(1-Z)
+var.weights.treat <- var(weights[Z==1])
+var.weights.control <- var(weights[Z==0])
+
+
+
 
 ate <- estate(Y,Z,prob=probs)    
 
