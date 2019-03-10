@@ -1,7 +1,0 @@
-Unfinished: 
-
-- [ ] 4.5 restricted randomization
-- [ ] 4.10 part c & d Horvitz–Thompson estimator 
-- [ ] 13.1 - part d  restricted randomization
-
-

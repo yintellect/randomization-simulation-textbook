@@ -65,10 +65,10 @@ matrix y_dis=J(10000, 1, .)
 
 
 forvalues i = 1/10000 {
-
-		qui reg Y z`i' [pw=weights]
-		
-		matrix y_dis[`i', 1] = _b[z`i']
+	tempvar weight`i'
+	gen `weight`i'' = (1/probs)*z`i' +(1/(1-probs))*(1-z`i')
+	qui reg Y z`i' [pw=`weight`i'']
+	matrix y_dis[`i', 1] = _b[z`i']
 
 }
 
@@ -76,7 +76,7 @@ forvalues i = 1/10000 {
 preserve
 svmat y_dis
 sort y_dis1
-count if abs(y_dis1) > abs(ate)
+count if abs(y_dis1) > abs($ate_restricted_RA)
 di r(N)/_N
 restore 
 
@@ -94,7 +94,9 @@ cap matrix drop cov_dis
 matrix cov_dis=J(10000, 1, .)
 
 forvalues i = 1/10000 {
-		qui reg Y x z`i' [iw=weights]		
+		tempvar weight`i'
+		gen `weight`i'' = (1/probs)*z`i' +(1/(1-probs))*(1-z`i')
+		qui reg Y x z`i' [pw=`weight`i'']		
 		matrix cov_dis[`i', 1] = _b[z`i']
 
 }
@@ -103,7 +105,7 @@ forvalues i = 1/10000 {
 preserve
 svmat cov_dis
 sort cov_dis1
-count if abs(cov_dis1) > abs(ate_cov)
+count if abs(cov_dis1) > abs($ate_cov_restricted_RA)
 di r(N)/_N
 restore 
 

@@ -6,8 +6,7 @@ set.seed(1234567)   # random number seed, so that results are reproducible
 library(foreign)    # package allows R to read Stata datasets
 
 
-setwd("/Users/donaldgreen/Dropbox/Field Experimentation Book/Final Code for Vignettes and Problems/Chapter 13/")
-
+setwd("~/MA/2019Spring/RAship/FEDAI/FEDAI data/Chapter 13")
 #  Data are from Middleton, Joel, and Todd Rogers. 2010. “Defend Oregon’s Voter Guide Program.” Report for the Analyst Institute. 
 
 mail <- read.dta("Chapter 13_Middleton and Rogers (2010) Dataset.dta")
@@ -42,7 +41,7 @@ dispdist(distout,ate)               # display p-values, 95% confidence interval,
 
 randfun <- function() {
 	teststat <- 100             # initialize teststat at an inadmissible value
-	while (teststat > 0.5) {
+	while (abs(teststat) >= 0.5) {
 		Zri <- sample(Z)        # randomly allocate
 		teststat <- summary(lm(X~Zri))$coefficients[2,1]   # extract the coefficient representing the difference-in-means and reject if it violates the while condition
 	}
@@ -53,16 +52,63 @@ perms <- genperms.custom(numiter=10000,randfun=randfun)    # notice the use of t
 
 probs <- genprob(perms)           # important: restricted randomization can sometimes generate unequal probabilities of assignment, so it's important to generate the probs and use inverse probability weights when estimating the ATE
 
+summary(probs)
 ate <- estate(Y,Z,prob=probs)    
-
+weights <- Z/probs + (1 - Z)/(1 - probs)
 Ys <- genouts(Y,Z,ate=0)
 
 distout <- gendist(Ys,perms,prob=probs)
 
 ate
-
+mean(distout>ate)
 dispdist(distout,ate)
 
 
+p_sims <-rep(NA,10000)
+for (i in 1:10000){
+        p_sims[i] <- summary(lm(X~perms[,i]))$coefficients[2,1]
+}
+
+p_sims<-sort(p_sims)
+min(p_sims)
+max(p_sims)
+perms_d <-t(perms)
+
+perms_d <-as_tibble(perms_d)%>%distinct()
+
+setwd("~/MA/2019Spring/RAship/FEDAI/FEDAI code STATA")
+library(readstata13)
+stata_r <- readstata13::read.dta13("13_1_ra_122.dta")
+stata_perm <-stata_r%>%
+        select(starts_with("z"), -Z)%>%
+        as.matrix()
+dim(stata_perm)
 
 
+
+library(tidyverse)
+
+stata_d <-stata_r%>%select(starts_with("z"), -Z)%>%
+        as.matrix()%>%t()%>%as_tibble()%>%distinct()
+
+
+probs <- genprob(stata_perm)           # important: restricted randomization can sometimes generate unequal probabilities of assignment, so it's important to generate the probs and use inverse probability weights when estimating the ATE
+
+summary(probs)
+ate <- estate(Y,Z,prob=probs)    
+weights <- Z/probs + (1 - Z)/(1 - probs)
+Ys <- genouts(Y,Z,ate=0)
+
+distout <- gendist(Ys,stata_perm,prob=probs)
+
+ate
+mean(distout>ate)
+dispdist(distout,ate)
+
+sort(distout)[1]
+sort(distout)[10000]
+
+
+weighted.mean(Y[stata_perm[,1] == 1], weights[stata_perm[,1] == 1])  
+
+weighted.mean(Y[stata_perm[,1] == 0], weights[stata_perm[,1] == 0])
