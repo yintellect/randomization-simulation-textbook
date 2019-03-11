@@ -43,6 +43,23 @@ colMeans(na.omit(coefmat))  # report the avg coefficients from a regression of Y
 colMeans(na.omit(tcoefmat)) # report the avg coefficients from a regression of Y on Z 
 colMeans(na.omit(mcoefmat)) # report the avg coefficients from a regression of M on Z 
 
+library(tidyverse)
+cm <- as_tibble(coefmat)%>%mutate(id=row_number())
+cm_omitna <- as_tibble(coefmat)%>%mutate(id=row_number())%>%drop_na()
+
+cm_na <-anti_join(cm, cm_omitna)
+cm_na$id
+perms[,cm_na$id]
+
+perms[,530]
+
+M530 <- M0*(1-perms[,530]) + M1*perms[,530]
+Y530 <- Y0M0*(1-perms[,530])*(1-M) + Y1M0*(perms[,530])*(1-M) + Y0M1*(1-perms[,530])*(M) + Y1M1*(perms[,530])*(M)
+summary(lm(Y530~M530+perms[,530]))
+
+perms[,150]
 
 
-
+dim(na.omit(coefmat))
+dim(na.omit(tcoefmat))
+dim(na.omit(mcoefmat))
