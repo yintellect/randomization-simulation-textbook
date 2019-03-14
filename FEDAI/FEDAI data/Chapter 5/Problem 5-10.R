@@ -1,5 +1,5 @@
 # Exercise 5.10 -- Beijing Clustered Design
-
+setwd("~/MA/2019Spring/RAship/FEDAI/FEDAI data/Chapter 5")
 rm(list=ls())       # clear objects in memory
 library(ri)         # load the RI package
 set.seed(1234567)   # random number seed, so that results are reproducible

@@ -4,8 +4,7 @@ rm(list=ls())       # clear objects in memory
 library(ri)         # load the RI package
 set.seed(1234567)   # random number seed, so that results are reproducible
 
-
-setwd("/Users/donaldgreen/Dropbox/Field Experimentation Book/Final Code for Vignettes and Problems/Chapter 3/")
+setwd("~/MA/2019Spring/RAship/FEDAI/FEDAI data/Chapter 3")
 
 library(foreign)    # package allows R to read Stata datasets
 
@@ -34,6 +33,25 @@ mean(abs(distout) >= abs(ate))  # two-tailed comparison used to calculate p-valu
 
 
 dispdist(distout,ate)       # display p-values, 95% confidence interval, standard error under the null, and graph the sampling distribution under the null
+
+
+######
+### check stata perms
+######
+setwd("~/MA/2019Spring/RAship/FEDAI/check_code_FEIDA")
+library(readstata13)
+stata_perm <-read.dta13("3_8_resam.dta")
+library(tidyverse)
+stata_perm <-stata_perm%>%select(starts_with("D"))%>%select(-D)
+
+distout <- gendist(Ys,stata_perm,prob=probs)  # generate the sampling distribution  based on the schedule of potential outcomes implied by the null hypothesis
+
+ate                             # estimated ATE
+mean(abs(distout) >= abs(ate))  # two-tailed comparison used to calculate p-value
+
+
+dispdist(distout,ate)   
+
 
 
 # illustration that naive estimation of the ATE is misleading

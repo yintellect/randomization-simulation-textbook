@@ -1,3 +1,4 @@
+rm(list = ls())
 library(ri)
 
 set.seed(1234567)

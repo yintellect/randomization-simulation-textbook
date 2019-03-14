@@ -1,7 +1,12 @@
+// download data from: http://hdl.handle.net/10079/dv41p3d
+// copy and paste the url to your web browser
+
+
 clear
 clear mata
 clear matrix
-cd "/Users/yy2633/MA/2019Spring/RAship/FEDAI/FEDAI code STATA"
+
+
 use "Arceneaux_AAAPSSsubset_2005.dta"
 set seed 1234567
 /*----------------------------------------------
@@ -22,11 +27,13 @@ global cov v_p2003 v_m2003 v_g2002 v_p2002 v_m2002 ///
 ritest Z Fstat=e(F), right clu(clust) reps(1000): reg Z $cov
 
 // one-tail p-value
-di el(r(p),1,1)
+di %8.3f el(r(p),1,1)
 
 /*----------------------------------------------
  part b
 ----------------------------------------------*/
+
+// calculate the probabibility under cluster assignment
 
 preserve
 collapse Z, by(clust)   
@@ -44,8 +51,11 @@ di "ATE= " _b[Z]
 
 ritest Z ate_sim=_b[Z], right clu(clust) reps(1000): reg Y Z $cov
 
+// ate
+di %8.5f el(r(b),1,1)
+
 // one-tail p-value
-di el(r(p),1,1)
+di %8.3f el(r(p),1,1)
 
 /*----------------------------------------------
  part c
@@ -56,7 +66,7 @@ gen weights = Z/probs + (1 - Z)/(1 - probs)
 tabstat Y [aw=weights], by(Z)  stat(sum) save
 
 scalar ateHT = (el(r(Stat2),1,1) - el(r(Stat1),1,1))/_N
-di ateHT
+di %8.5f ateHT
 
 
 /*----------------------------------------------
@@ -72,11 +82,9 @@ end
 
 ritest Z ateHT_sim=r(ateHT_sim), right clu(clust) reps(1000): di_in_total
 
-// ateHT
-di el(r(b),1,1)
 
 // one-tail p-value
-di el(r(p),1,1)
+di %8.3f el(r(p),1,1)
 
 
 

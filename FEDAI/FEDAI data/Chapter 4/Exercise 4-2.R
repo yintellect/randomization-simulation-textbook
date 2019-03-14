@@ -5,7 +5,7 @@ rm(list=ls())       # clear objects in memory
 library(ri)         # load the RI package
 set.seed(1234567)   # random number seed, so that results are reproducible
 library(foreign)    # package allows R to read Stata datasets
-setwd("~/Desktop/2016/4368 Experimental/5.FEDAI replication/Chapter 4")
+setwd("~/MA/2019Spring/RAship/FEDAI/FEDAI data/Chapter 4")
 rush <- read.dta("RushHour data for exercise 4-2.dta")
 
 #   -----------------------------------------------------------------------
@@ -34,7 +34,7 @@ Fstatstore <- rep(NA,numiter)    # initialize vector of simulated F statistics
 for (i in 1:numiter) {
 	Fstatstore[i] <- summary(lm(perms[,i]~covs))$fstatistic[1]
 	}
-
+sum(Fstatstore >= Fstat)
 mean(Fstatstore >= Fstat)    # calculate p-value
 
 #   -----------------------------------------------------------------------

@@ -9,5 +9,6 @@ cov.pop <- function(x,y){sum((x-mean(x))*(y-mean(y)))/(length(x))}
 var_Ybar0 <- var.pop(Ybar0)
 var_Ybar1 <- var.pop(Ybar1)
 cov_Ybar0 <- cov.pop(Ybar0,Ybar1)
+
 se_ate <- sqrt((1/6) * ((4/3)*var_Ybar0 + (3/4)*var_Ybar1 + 2*cov_Ybar0))
 se_ate

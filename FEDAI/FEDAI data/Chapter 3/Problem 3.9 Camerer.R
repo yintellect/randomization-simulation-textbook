@@ -3,7 +3,7 @@
 rm(list=ls())       # clear objects in memory
 library(ri)         # load the RI package
 set.seed(1234567)   # random number seed, so that results are reproducible
-setwd("~/Desktop/2016/4368 Experimental/5.FEDAI replication/Chapter 3")
+setwd("~/MA/2019Spring/RAship/FEDAI/FEDAI data/Chapter 3")
 library(foreign)    # package allows R to read Stata datasets
 
 # Data are from Camerer, Colin F. . 1998. “Can Asset Markets Be Manipulated? A Field Experiment with Racetrack Betting.” Journal of Political Economy 106(3): 457-482.
@@ -21,7 +21,7 @@ covs <- as.matrix(camerer$preexperimentbets)     # reads in covariates
 
 probs <- genprobexact(Z,blockvar=block)
 
-numiter <- 10000
+numiter <- 1000
 
 perms <- genperms(Z,maxiter=numiter,blockvar=block)
 numiter <- ncol(perms)  # reset numiter so that it is no larger than the maximum number of possible randomizations
@@ -59,3 +59,8 @@ sum(abs(distout) >= abs(ate))
 
 dispdist(distout,ate)   # display p-values, 95% confidence interval, standard error under the null, and graph the sampling distribution under the null
 
+change <- camerer$experimentbets
+change_treatment <- mean(change[Z==1])
+change_control <- mean(change[Z==0])
+ATE <- change_treatment - change_control
+ATE
