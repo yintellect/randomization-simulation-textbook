@@ -1,0 +1,8 @@
+# ignore folder named "replication_archive"
+replication_archive/
+
+# ignore all .zip
+*.zip
+
+*.DS_Store
+

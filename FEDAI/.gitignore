@@ -1,0 +1,7 @@
+# ignore all .dta
+*.dta
+# ignore all .zip
+*.zip
+
+*.DS_Store
+
