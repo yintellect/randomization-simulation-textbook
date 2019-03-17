@@ -1,13 +1,6 @@
-/***
-\documentclass[a4paper]{article}
-\usepackage{stata}
-\begin{document}
 
-\section*{Problem 3.6}
-download data from: http://hdl.handle.net/10079/6hdr852
-copy and paste the url to your web browser
-***/
-
+// download data from: http://hdl.handle.net/10079/6hdr852
+// copy and paste the url to your web browser
 
 
 import delim "Clingingsmith_et_al_QJE_2009dta.csv",clear

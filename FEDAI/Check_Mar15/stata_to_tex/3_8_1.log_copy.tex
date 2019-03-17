@@ -1,0 +1,32 @@
+. // download data from : http://hdl.handle.net/10079/s1rn910
+. // copy and paste the url to your web browser
+. use "Titiunik_WorkingPaper_2010.csv.dta",clear 
+
+. 
+. set seed 1234567
+
+. 
+.         rename term2year D
+
+.         rename bills_introduced Y
+
+.         rename texas0_arkansas1 block
+
+.         
+.         qui tabstat Y if block ==0, by(D) stat(mean) save       
+
+.         scalar ate_texas = el(r(Stat2),1,1) - el(r(Stat1),1,1)
+
+. 
+.         
+.         qui tabstat Y if block ==1, by(D) stat(mean) save       
+
+.         scalar ate_ark = el(r(Stat2),1,1) - el(r(Stat1),1,1)
+
+.         
+.         di "ate_texas="\%18.5f ate_texas 
+ate_texas=         -16.74167
+
+.         di "ate_arkansas="\%18.5f ate_ark        
+ate_arkansas=         -10.09477
+

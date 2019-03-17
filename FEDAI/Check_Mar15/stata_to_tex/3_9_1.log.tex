@@ -1,0 +1,62 @@
+. // download data from : http://hdl.handle.net/10079/1g1jx43
+. // copy and paste the url to your web browser
+. 
+. use "Camerer_JPEsubset_1998.dta.dta", clear 
+{\smallskip}
+. 
+. set seed 1234567
+{\smallskip}
+. 
+. 
+.         rename treatment D
+{\smallskip}
+.         rename pair block
+{\smallskip}
+.         rename preexperimentbets covs
+{\smallskip}
+. 
+.         // calculate probs under block assignment
+.         bysort block: egen probs=mean(D)
+{\smallskip}
+.         
+.                 
+.         // permuation to calculate F stat and one-side P value
+.         ritest D e(F), strata(block) reps(10000) right nodots: ///
+>         regress D covs
+{\smallskip}
+      Source {\VBAR}       SS           df       MS      Number of obs   =        34
+\HLI{13}{\PLUS}\HLI{34}   F(1, 32)        =      0.02
+       Model {\VBAR}  .005024372         1  .005024372   Prob > F        =    0.8914
+    Residual {\VBAR}  8.49497563        32  .265467988   R-squared       =    0.0006
+\HLI{13}{\PLUS}\HLI{34}   Adj R-squared   =   -0.0306
+       Total {\VBAR}         8.5        33  .257575758   Root MSE        =    .51524
+{\smallskip}
+\HLI{13}{\TOPT}\HLI{64}
+           D {\VBAR}      Coef.   Std. Err.      t    P>|t|     [95\% Conf. Interval]
+\HLI{13}{\PLUS}\HLI{64}
+        covs {\VBAR}  -.0000386   .0002809    -0.14   0.891    -.0006109    .0005336
+       _cons {\VBAR}   .5137818   .1335793     3.85   0.001     .2416896     .785874
+\HLI{13}{\BOTT}\HLI{64}
+{\smallskip}
+      command:  regress D covs
+        _pm_1:  e(F)
+  res. var(s):  D
+   Resampling:  Permuting D
+Clust. var(s):  __000000
+     Clusters:  34
+Strata var(s):  block
+       Strata:  17
+{\smallskip}
+\HLI{13}{\TOPT}\HLI{64}
+T            {\VBAR}     T(obs)       c       n   p=c/n   SE(p) [95\% Conf. Interval]
+\HLI{13}{\PLUS}\HLI{64}
+       _pm_1 {\VBAR}   .0189265    3736   10000  0.3736  0.0048  .3641064   .3831672
+\HLI{13}{\BOTT}\HLI{64}
+Note: Confidence interval is with respect to p=c/n.
+Note: c = \#{\lbr}T >= T(obs){\rbr}
+{\smallskip}
+. 
+.         // p.value
+.         di el(r(p),1,1)
+.3736
+{\smallskip}

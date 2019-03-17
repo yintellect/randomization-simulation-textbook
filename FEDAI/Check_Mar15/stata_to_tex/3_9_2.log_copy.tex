@@ -1,0 +1,24 @@
+. 
+. 
+. rename experimentbets change
+
+. 
+. tabstat change, by(D) stat(mean) save   
+
+Summary for variables: change
+     by categories of: D 
+
+       D {\VBAR}      mean
+\HLI{9}{\PLUS}\HLI{10}
+       0 {\VBAR}  571.4118
+       1 {\VBAR}  461.2353
+\HLI{9}{\PLUS}\HLI{10}
+   Total {\VBAR}  516.3235
+\HLI{9}{\BOTT}\HLI{10}
+
+. 
+. di "ATE ="\%180.4f el(r(Stat2),1,1)-el(r(Stat1),1,1)
+ATE =                 -110.1765
+
+. 
+.         

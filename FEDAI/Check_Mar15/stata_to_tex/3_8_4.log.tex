@@ -1,0 +1,9 @@
+. 
+. scalar se_overall = sqrt((el(r(Stat1),1,1)/_N){\caret}2*se_texas{\caret}2 + /// 
+>                                          (el(r(Stat2),1,1)/_N){\caret}2*se_arkansas{\caret}2)
+{\smallskip}
+.                                          
+. di \%18.5f se_overall
+           4.74478
+{\smallskip}
+. 

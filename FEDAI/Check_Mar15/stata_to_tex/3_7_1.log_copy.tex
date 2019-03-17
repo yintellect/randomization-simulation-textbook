@@ -1,0 +1,69 @@
+. 
+. clear
+
+. set seed 1234567
+
+. set obs 10
+number of observations (_N) was 0, now 10
+
+. 
+. input D Y
+
+             D          Y
+  1. 0 1 
+  2. 0 0 
+  3. 0 0 
+  4. 0 4 
+  5. 0 3 
+  6. 1 2 
+  7. 1 11 
+  8. 1 14 
+  9. 1 0 
+ 10. 1 3 
+
+. 
+. 
+. gen Y_star= Y+D*(-7)
+
+. 
+. cap program drop ate
+
+. program define ate, rclass
+  1.         args Y D
+  2.         sum `Y' if `D'==1, meanonly
+  3.         local Y_treat=r(mean)
+  4.         sum `Y' if `D'==0, meanonly
+  5.         local Y_con=r(mean)
+  6.         return scalar ate_avg = `Y_treat'-`Y_con'
+  7. end
+
+. 
+. // findit tsrtest (to install the package)
+. tsrtest D r(ate_avg): ate Y_star D
+Two-sample randomization test for theta=r(ate_avg) of ate Y_star D by D
+
+Combinations:   252 = (10 choose 5)
+Assuming null=0
+Observed theta: -2.6
+
+Minimum time needed for exact test (h:m:s):  0:00:00
+Mode: exact
+
+progress: |........................................|
+
+ p=0.83730 [one-tailed test of Ho:  theta(D==0)<=theta(D==1)]
+ p=0.20635 [one-tailed test of Ho:  theta(D==0)>=theta(D==1)]
+ p=0.41270 [two-tailed test of Ho:  theta(D==0)==theta(D==1)]
+
+. 
+. // ate
+. di r(obsvStat)       
+-2.6
+
+. 
+. // p.value.onesided
+. di r(lowertail)   
+.20634921
+
+. 
+. 

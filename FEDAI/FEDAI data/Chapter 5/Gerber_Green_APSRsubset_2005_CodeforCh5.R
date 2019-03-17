@@ -6,8 +6,8 @@ rm(list=ls(all=TRUE))
 #Load Relevant packages
 library(AER)
 library(sandwich)
-
-data1 <- read.csv(file="http://hdl.handle.net/10079/70rxwqn",head=TRUE,sep=",")
+setwd("~/MA/2019Spring/RAship/FEDAI/exmaple_in_FEIDA")
+data1 <- read.csv(file="Gerber_Green_APSRsubset_2005.csv",head=TRUE,sep=",")
 
 # You can check that your data was read in correctly using these two commands:
 # colnames(data1)
@@ -33,7 +33,7 @@ coef(summary(lm(v98 ~ persngrp)))
 # robust SEs
 itt_fit <- lm(v98 ~ persngrp)
 coeftest(itt_fit,vcovHC(itt_fit))
-
+coeftest(itt_fit,vcovHC(itt_fit, type = "HC3"))
 
 # Box 5.5: ITT_D
 # Note that results from this will vary based on the current version that you have but this variation should not be a concern. 
@@ -42,14 +42,15 @@ coef(summary(lm(cntany ~ persngrp)))
 itt_d_fit <- lm(cntany ~ persngrp)
 coeftest(itt_d_fit,vcovHC(itt_d_fit))
 
+coeftest(itt_d_fit,vcovHC(itt_d_fit, type = "HC3"))
 
 # Box 5.6: CACE
 coef(summary(ivreg(v98 ~ cntany,~persngrp)))
 # robust SEs
 cace_fit <- ivreg(v98 ~ cntany,~persngrp)
+coeftest(cace_fit,vcovHC(cace_fit, type = "HC3"))
+
+
 coeftest(cace_fit,vcovHC(cace_fit))
-
-
-
 
 

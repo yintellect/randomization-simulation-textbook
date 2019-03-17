@@ -1,17 +1,23 @@
+// initiate tex file
 
-texdoc init 3_6_tex.tex, replace
+texdoc init 3_6.tex, replace
+
+
+
 /***
 \documentclass[a4paper]{article}
 \usepackage{stata}
 \begin{document}
 
-\section*{Problem 3.6}
-download data from: http://hdl.handle.net/10079/6hdr852
-copy and paste the url to your web browser
+\section*{Question 6}
 ***/
 
-
 texdoc stlog
+
+// download data from: http://hdl.handle.net/10079/6hdr852
+// copy and paste the url to your web browser
+
+
 import delim "Clingingsmith_et_al_QJE_2009dta.csv",clear
 set seed 1234567
 
@@ -49,9 +55,10 @@ di "p.value.onesided = "p_onesided
 di "p.value.twosided = "p_twosided 
 restore
 
+
 texdoc stlog close
 
 /***
-
 \end{document}
 ***/
+
