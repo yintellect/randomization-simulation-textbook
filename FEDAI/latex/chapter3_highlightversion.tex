@@ -231,6 +231,7 @@ ate_texas=         -16.74167
 ate_arkansas=         -10.09477
 
 \end{lstlisting}
+
 \subsection*{part(b)}
 \begin{lstlisting}[language=stata]
 
@@ -252,6 +253,7 @@ se_texas=          9.345871
 se_arkansas=          3.395979
 
 \end{lstlisting}
+
 \subsection*{part(c)}
 \begin{lstlisting}[language=stata]
  qui tabstat Y, by(block) stat(n) save   
@@ -267,6 +269,8 @@ se_arkansas=          3.395979
 . // teffects nnmatch (bills_introduced) (term2year), ematch(texas0_arkansas1)
 
 \end{lstlisting}
+
+
 \subsection*{part(e)}
 \begin{lstlisting}[language=stata]
 . scalar se_overall = sqrt((el(r(Stat1),1,1)/_N)^2*se_texas^2 + /// 
@@ -276,6 +280,7 @@ se_arkansas=          3.395979
            4.74478
 
 \end{lstlisting}
+
 \subsection*{part(f)}
 \begin{lstlisting}[language=stata]
  // calculate probs under block assignment

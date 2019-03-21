@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2018) (preloaded format=pdflatex 2018.4.16)  16 MAR 2019 14:05
+This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2018) (preloaded format=pdflatex 2018.4.16)  17 MAR 2019 03:01
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1076,7 +1076,7 @@ LaTeX Font Info:    Font shape `T1/mdput/b/n' will be
 Here is how much of TeX's memory you used:
  27242 strings out of 492649
  512487 string characters out of 6129622
- 1029728 words of memory out of 5000000
+ 1029727 words of memory out of 5000000
  30740 multiletter control sequences out of 15000+600000
  602438 words of font info for 63 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
