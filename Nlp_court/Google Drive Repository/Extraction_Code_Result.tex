@@ -1,0 +1,990 @@
+
+% Default to the notebook output style
+
+    
+
+
+% Inherit from the specified cell style.
+
+
+
+
+    
+\documentclass[10.5pt,landscape]{article}
+    
+    
+    \usepackage[T1]{fontenc}
+    % Nicer default font (+ math font) than Computer Modern for most use cases
+    \usepackage{mathpazo}
+
+    % Basic figure setup, for now with no caption control since it's done
+    % automatically by Pandoc (which extracts ![](path) syntax from Markdown).
+    \usepackage{graphicx}
+    % We will generate all images so they have a width \maxwidth. This means
+    % that they will get their normal width if they fit onto the page, but
+    % are scaled down if they would overflow the margins.
+    \makeatletter
+    \def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth
+    \else\Gin@nat@width\fi}
+    \makeatother
+    \let\Oldincludegraphics\includegraphics
+    % Set max figure width to be 80% of text width, for now hardcoded.
+    \renewcommand{\includegraphics}[1]{\Oldincludegraphics[width=.8\maxwidth]{#1}}
+    % Ensure that by default, figures have no caption (until we provide a
+    % proper Figure object with a Caption API and a way to capture that
+    % in the conversion process - todo).
+    \usepackage{caption}
+    \DeclareCaptionLabelFormat{nolabel}{}
+    \captionsetup{labelformat=nolabel}
+
+    \usepackage{adjustbox} % Used to constrain images to a maximum size 
+    \usepackage{xcolor} % Allow colors to be defined
+    \usepackage{enumerate} % Needed for markdown enumerations to work
+    \usepackage{geometry} % Used to adjust the document margins
+    \usepackage{amsmath} % Equations
+    \usepackage{amssymb} % Equations
+    \usepackage{textcomp} % defines textquotesingle
+    % Hack from http://tex.stackexchange.com/a/47451/13684:
+    \AtBeginDocument{%
+        \def\PYZsq{\textquotesingle}% Upright quotes in Pygmentized code
+    }
+    \usepackage{upquote} % Upright quotes for verbatim code
+    \usepackage{eurosym} % defines \euro
+    \usepackage[mathletters]{ucs} % Extended unicode (utf-8) support
+    \usepackage[utf8x]{inputenc} % Allow utf-8 characters in the tex document
+    \usepackage{fancyvrb} % verbatim replacement that allows latex
+    \usepackage{grffile} % extends the file name processing of package graphics 
+                         % to support a larger range 
+    % The hyperref package gives us a pdf with properly built
+    % internal navigation ('pdf bookmarks' for the table of contents,
+    % internal cross-reference links, web links for URLs, etc.)
+    \usepackage{hyperref}
+    \usepackage{longtable} % longtable support required by pandoc >1.10
+    \usepackage{booktabs}  % table support for pandoc > 1.12.2
+    \usepackage[inline]{enumitem} % IRkernel/repr support (it uses the enumerate* environment)
+    \usepackage[normalem]{ulem} % ulem is needed to support strikethroughs (\sout)
+                                % normalem makes italics be italics, not underlines
+    
+
+    
+    
+    % Colors for the hyperref package
+    \definecolor{urlcolor}{rgb}{0,.145,.698}
+    \definecolor{linkcolor}{rgb}{.71,0.21,0.01}
+    \definecolor{citecolor}{rgb}{.12,.54,.11}
+
+    % ANSI colors
+    \definecolor{ansi-black}{HTML}{3E424D}
+    \definecolor{ansi-black-intense}{HTML}{282C36}
+    \definecolor{ansi-red}{HTML}{E75C58}
+    \definecolor{ansi-red-intense}{HTML}{B22B31}
+    \definecolor{ansi-green}{HTML}{00A250}
+    \definecolor{ansi-green-intense}{HTML}{007427}
+    \definecolor{ansi-yellow}{HTML}{DDB62B}
+    \definecolor{ansi-yellow-intense}{HTML}{B27D12}
+    \definecolor{ansi-blue}{HTML}{208FFB}
+    \definecolor{ansi-blue-intense}{HTML}{0065CA}
+    \definecolor{ansi-magenta}{HTML}{D160C4}
+    \definecolor{ansi-magenta-intense}{HTML}{A03196}
+    \definecolor{ansi-cyan}{HTML}{60C6C8}
+    \definecolor{ansi-cyan-intense}{HTML}{258F8F}
+    \definecolor{ansi-white}{HTML}{C5C1B4}
+    \definecolor{ansi-white-intense}{HTML}{A1A6B2}
+
+    % commands and environments needed by pandoc snippets
+    % extracted from the output of `pandoc -s`
+    \providecommand{\tightlist}{%
+      \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+    \DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+    % Add ',fontsize=\small' for more characters per line
+    \newenvironment{Shaded}{}{}
+    \newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.56,0.13,0.00}{{#1}}}
+    \newcommand{\DecValTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\FloatTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\CharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\StringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\CommentTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textit{{#1}}}}
+    \newcommand{\OtherTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{{#1}}}
+    \newcommand{\AlertTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.02,0.16,0.49}{{#1}}}
+    \newcommand{\RegionMarkerTok}[1]{{#1}}
+    \newcommand{\ErrorTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\NormalTok}[1]{{#1}}
+    
+    % Additional commands for more recent versions of Pandoc
+    \newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.53,0.00,0.00}{{#1}}}
+    \newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.73,0.40,0.53}{{#1}}}
+    \newcommand{\ImportTok}[1]{{#1}}
+    \newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.73,0.13,0.13}{\textit{{#1}}}}
+    \newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\VariableTok}[1]{\textcolor[rgb]{0.10,0.09,0.49}{{#1}}}
+    \newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.40,0.40,0.40}{{#1}}}
+    \newcommand{\BuiltInTok}[1]{{#1}}
+    \newcommand{\ExtensionTok}[1]{{#1}}
+    \newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.74,0.48,0.00}{{#1}}}
+    \newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.49,0.56,0.16}{{#1}}}
+    \newcommand{\InformationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\WarningTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    
+    
+    % Define a nice break command that doesn't care if a line doesn't already
+    % exist.
+    \def\br{\hspace*{\fill} \\* }
+    % Math Jax compatability definitions
+    \def\gt{>}
+    \def\lt{<}
+    % Document parameters
+    \title{Extraction\_with\_Comment}
+    
+    
+    
+
+    % Pygments definitions
+    
+\makeatletter
+\def\PY@reset{\let\PY@it=\relax \let\PY@bf=\relax%
+    \let\PY@ul=\relax \let\PY@tc=\relax%
+    \let\PY@bc=\relax \let\PY@ff=\relax}
+\def\PY@tok#1{\csname PY@tok@#1\endcsname}
+\def\PY@toks#1+{\ifx\relax#1\empty\else%
+    \PY@tok{#1}\expandafter\PY@toks\fi}
+\def\PY@do#1{\PY@bc{\PY@tc{\PY@ul{%
+    \PY@it{\PY@bf{\PY@ff{#1}}}}}}}
+\def\PY#1#2{\PY@reset\PY@toks#1+\relax+\PY@do{#2}}
+
+\expandafter\def\csname PY@tok@w\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.73,0.73}{##1}}}
+\expandafter\def\csname PY@tok@c\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.74,0.48,0.00}{##1}}}
+\expandafter\def\csname PY@tok@k\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.69,0.00,0.25}{##1}}}
+\expandafter\def\csname PY@tok@o\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ow\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@ne\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.82,0.25,0.23}{##1}}}
+\expandafter\def\csname PY@tok@nv\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@no\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ni\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.60,0.60,0.60}{##1}}}
+\expandafter\def\csname PY@tok@na\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.49,0.56,0.16}{##1}}}
+\expandafter\def\csname PY@tok@nt\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@s\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sd\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@si\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@se\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sr\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@ss\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sx\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@m\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@gh\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gu\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.50,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gr\endcsname{\def\PY@tc##1{\textcolor[rgb]{1.00,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ge\endcsname{\let\PY@it=\textit}
+\expandafter\def\csname PY@tok@gs\endcsname{\let\PY@bf=\textbf}
+\expandafter\def\csname PY@tok@gp\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@go\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.53,0.53}{##1}}}
+\expandafter\def\csname PY@tok@gt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.27,0.87}{##1}}}
+\expandafter\def\csname PY@tok@err\endcsname{\def\PY@bc##1{\setlength{\fboxsep}{0pt}\fcolorbox[rgb]{1.00,0.00,0.00}{1,1,1}{\strut ##1}}}
+\expandafter\def\csname PY@tok@kc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kd\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kr\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@bp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@fm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@vc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vg\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sa\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@dl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s2\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s1\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@mb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@il\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mo\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ch\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cm\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cpf\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@c1\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cs\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+
+\def\PYZbs{\char`\\}
+\def\PYZus{\char`\_}
+\def\PYZob{\char`\{}
+\def\PYZcb{\char`\}}
+\def\PYZca{\char`\^}
+\def\PYZam{\char`\&}
+\def\PYZlt{\char`\<}
+\def\PYZgt{\char`\>}
+\def\PYZsh{\char`\#}
+\def\PYZpc{\char`\%}
+\def\PYZdl{\char`\$}
+\def\PYZhy{\char`\-}
+\def\PYZsq{\char`\'}
+\def\PYZdq{\char`\"}
+\def\PYZti{\char`\~}
+% for compatibility with earlier versions
+\def\PYZat{@}
+\def\PYZlb{[}
+\def\PYZrb{]}
+\makeatother
+
+
+    % Exact colors from NB
+    \definecolor{incolor}{rgb}{0.0, 0.0, 0.5}
+    \definecolor{outcolor}{rgb}{0.545, 0.0, 0.0}
+
+
+
+    
+    % Prevent overflowing lines due to hard-to-break entities
+    \sloppy 
+    % Setup hyperref package
+    \hypersetup{
+      breaklinks=true,  % so long urls are correctly broken across lines
+      colorlinks=true,
+      urlcolor=urlcolor,
+      linkcolor=linkcolor,
+      citecolor=citecolor,
+      }
+    % Slightly bigger margins than the latex defaults
+    
+    \geometry{verbose,tmargin=1in,bmargin=1in,lmargin=1in,rmargin=1in}
+    
+    
+
+    \begin{document}
+    
+    
+    \maketitle
+    
+    
+
+    
+    \hypertarget{table-of-contents}{%
+\section{Table of Contents}\label{table-of-contents}}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  Enviroment Information
+\item
+  Read PDF files
+\item
+  Extract Citations e.g \texttt{870\ F.3d\ 1320}
+\item
+  Case Number of the PDF file
+\item
+  Extract Regulations e.g \texttt{28\ USC\ §\ 1292}
+\item
+  Extract Courts
+\item
+  Court for this PDF file
+\item
+  Extract Date for the PDF
+\item
+  Case number \texttt{xxxx-xxxx}
+\item
+  Wrap up to Data Frame and write CSV file
+\end{enumerate}
+
+    \hypertarget{environment-information}{%
+\subsubsection{1. Environment
+Information}\label{environment-information}}
+
+\begin{itemize}
+\tightlist
+\item
+  show the python version and system for this computer
+\item
+  help others who use this code to produce replicable result
+\end{itemize}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}1}]:} \PY{k+kn}{import} \PY{n+nn}{IPython}
+        
+        \PY{c+c1}{\PYZsh{} Information of my Python version, computer system}
+        \PY{n+nb}{print}\PY{p}{(}\PY{n}{IPython}\PY{o}{.}\PY{n}{sys\PYZus{}info}\PY{p}{(}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+\{'commit\_hash': '523ed2fe5',
+ 'commit\_source': 'installation',
+ 'default\_encoding': 'UTF-8',
+ 'ipython\_path': '/anaconda/envs/nlp/lib/python3.6/site-packages/IPython',
+ 'ipython\_version': '7.2.0',
+ 'os\_name': 'posix',
+ 'platform': 'Darwin-18.5.0-x86\_64-i386-64bit',
+ 'sys\_executable': '/anaconda/envs/nlp/bin/python',
+ 'sys\_platform': 'darwin',
+ 'sys\_version': '3.6.8 |Anaconda, Inc.| (default, Dec 29 2018, 19:04:46) \textbackslash{}n'
+                '[GCC 4.2.1 Compatible Clang 4.0.1 (tags/RELEASE\_401/final)]'\}
+
+    \end{Verbatim}
+
+    \hypertarget{read-pdf-files}{%
+\subsubsection{2.Read PDF files}\label{read-pdf-files}}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}2}]:} \PY{c+c1}{\PYZsh{} import pdfminer and to read PDF files}
+        \PY{k+kn}{from} \PY{n+nn}{pdfminer}\PY{n+nn}{.}\PY{n+nn}{pdfinterp} \PY{k}{import} \PY{n}{PDFResourceManager}\PY{p}{,} \PY{n}{PDFPageInterpreter}
+        \PY{k+kn}{from} \PY{n+nn}{pdfminer}\PY{n+nn}{.}\PY{n+nn}{converter} \PY{k}{import} \PY{n}{TextConverter}
+        \PY{k+kn}{from} \PY{n+nn}{pdfminer}\PY{n+nn}{.}\PY{n+nn}{layout} \PY{k}{import} \PY{n}{LAParams}
+        \PY{k+kn}{from} \PY{n+nn}{pdfminer}\PY{n+nn}{.}\PY{n+nn}{pdfpage} \PY{k}{import} \PY{n}{PDFPage}
+        
+        \PY{c+c1}{\PYZsh{} import io (input and output); BytesIO encode string to byte object}
+        \PY{k+kn}{from} \PY{n+nn}{io} \PY{k}{import} \PY{n}{BytesIO}
+        
+        \PY{c+c1}{\PYZsh{} extract all file name in a folder, for the convenience of reading PDF files}
+        \PY{k+kn}{import} \PY{n+nn}{glob}
+        
+        \PY{c+c1}{\PYZsh{} latter use to store cleaned string into json file}
+        \PY{k+kn}{import} \PY{n+nn}{simplejson} \PY{k}{as} \PY{n+nn}{json}
+        
+        \PY{c+c1}{\PYZsh{} re (regular expression) to find string with certain patterns}
+        \PY{k+kn}{import} \PY{n+nn}{re}
+\end{Verbatim}
+
+
+    \hypertarget{a-function-to-read-pdf-file}{%
+\paragraph{A function to read PDF
+file:}\label{a-function-to-read-pdf-file}}
+
+\begin{verbatim}
+pdf_file: the filename of PDF (including the path (i.e location) )
+return: contentt of the PDF (string in Byte object,
+remember we use BytesIO to encode our string result)
+\end{verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}3}]:} \PY{k}{def} \PY{n+nf}{read\PYZus{}pdf}\PY{p}{(}\PY{n}{pdf\PYZus{}file}\PY{p}{)}\PY{p}{:}
+        
+            \PY{n}{resource\PYZus{}mgr} \PY{o}{=} \PY{n}{PDFResourceManager}\PY{p}{(}\PY{p}{)}
+            \PY{n}{retstr} \PY{o}{=} \PY{n}{BytesIO}\PY{p}{(}\PY{p}{)}
+            \PY{n}{codec} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{utf\PYZhy{}8}\PY{l+s+s1}{\PYZsq{}}
+            \PY{n}{laparams} \PY{o}{=} \PY{n}{LAParams}\PY{p}{(}\PY{p}{)}
+            \PY{n}{device} \PY{o}{=} \PY{n}{TextConverter}\PY{p}{(}\PY{n}{resource\PYZus{}mgr}\PY{p}{,} \PY{n}{retstr}\PY{p}{,} \PY{n}{codec}\PY{o}{=}\PY{n}{codec}\PY{p}{,} \PY{n}{laparams}\PY{o}{=}\PY{n}{laparams}\PY{p}{)}
+            \PY{n}{interpreter} \PY{o}{=} \PY{n}{PDFPageInterpreter}\PY{p}{(}\PY{n}{resource\PYZus{}mgr}\PY{p}{,} \PY{n}{device}\PY{p}{)}
+            \PY{n}{fp} \PY{o}{=} \PY{n+nb}{open}\PY{p}{(}\PY{n}{pdf\PYZus{}file}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{rb}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+            \PY{n}{maxpages} \PY{o}{=} \PY{l+m+mi}{0}
+            \PY{n}{caching} \PY{o}{=} \PY{k+kc}{True}
+            \PY{n}{pagenos} \PY{o}{=} \PY{n+nb}{set}\PY{p}{(}\PY{p}{)}
+            
+            \PY{k}{for} \PY{n}{page} \PY{o+ow}{in} \PY{n}{PDFPage}\PY{o}{.}\PY{n}{get\PYZus{}pages}\PY{p}{(}\PY{n}{fp}\PY{p}{,} \PY{n}{pagenos}\PY{p}{,} 
+                                          \PY{n}{maxpages}\PY{o}{=}\PY{n}{maxpages}\PY{p}{,} 
+                                          \PY{n}{caching}\PY{o}{=}\PY{n}{caching}\PY{p}{,} 
+                                          \PY{n}{check\PYZus{}extractable}\PY{o}{=}\PY{k+kc}{True}\PY{p}{)}\PY{p}{:}
+                \PY{n}{interpreter}\PY{o}{.}\PY{n}{process\PYZus{}page}\PY{p}{(}\PY{n}{page}\PY{p}{)}
+        
+            \PY{n}{result\PYZus{}str} \PY{o}{=} \PY{n}{retstr}\PY{o}{.}\PY{n}{getvalue}\PY{p}{(}\PY{p}{)}
+            
+            \PY{n}{fp}\PY{o}{.}\PY{n}{close}\PY{p}{(}\PY{p}{)}
+            \PY{n}{device}\PY{o}{.}\PY{n}{close}\PY{p}{(}\PY{p}{)}
+            \PY{n}{retstr}\PY{o}{.}\PY{n}{close}\PY{p}{(}\PY{p}{)}
+            
+            \PY{k}{return} \PY{n}{result\PYZus{}str}
+\end{Verbatim}
+
+
+    Create a list contains all the PDF files we want to read
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}224}]:} \PY{n}{case\PYZus{}list} \PY{o}{=} \PY{n}{glob}\PY{o}{.}\PY{n}{glob}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{./Cases/*.pdf}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\end{Verbatim}
+
+
+    We can print the PDF files list to inspect.
+
+The list contains all the PDF files name in a folder
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}227}]:} \PY{n}{case\PYZus{}list}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{:}\PY{l+m+mi}{10}\PY{p}{]}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}227}]:} ['./Cases/052 - Nuance Communications Inc v ABBYY USA Software House Inc.pdf',
+           './Cases/021 - Intellectual Ventures I LLC v Erie Indemnity Company.pdf',
+           "./Cases/040 - Sioux Honey Ass'n v Hartford Fire Ins Co.pdf",
+           './Cases/021 - Aspex Eyewear Inc v Zenni Optical Inc.pdf',
+           './Cases/056 - Soverain Software LLC v Newegg Inc.pdf',
+           './Cases/100 - In re Geller.pdf',
+           './Cases/08 - Boeri v US.pdf',
+           './Cases/080 - Harmonic Inc v Avid Technology Inc.pdf',
+           './Cases/095 - Ethicon EndoSurgery Inc v Covidien LP.pdf',
+           './Cases/039 - OIP Technologies Inc v Amazoncom Inc.pdf']
+\end{Verbatim}
+            
+    \hypertarget{a-for-loop-to-read-all-the-pdf-files-in-case_list}{%
+\paragraph{\texorpdfstring{A for loop to read all the PDF files in
+\texttt{case\_list}}{A for loop to read all the PDF files in case\_list}}\label{a-for-loop-to-read-all-the-pdf-files-in-case_list}}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}228}]:} \PY{c+c1}{\PYZsh{} a list to store the name of the pdf}
+          \PY{n}{pdf\PYZus{}name} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+          \PY{c+c1}{\PYZsh{} a list to store the content of the pdf}
+          \PY{n}{pdf\PYZus{}content} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+          
+          \PY{c+c1}{\PYZsh{} a loop to read all the pdf and store their name and content to the respective list}
+          \PY{k}{for} \PY{n}{case} \PY{o+ow}{in} \PY{n}{case\PYZus{}list}\PY{p}{:}
+              \PY{n}{pdf\PYZus{}name}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{case}\PY{o}{.}\PY{n}{replace}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{./Cases/}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{o}{.}\PY{n}{replace}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{.pdf}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{)}
+              \PY{n}{pdf\PYZus{}content}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{read\PYZus{}pdf}\PY{p}{(}\PY{n}{case}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}229}]:} \PY{c+c1}{\PYZsh{} we can inspect the pdf names}
+          \PY{n}{pdf\PYZus{}name}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{:}\PY{l+m+mi}{10}\PY{p}{]}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}229}]:} ['./Cases/052 - Nuance Communications Inc v ABBYY USA Software House Inc',
+           './Cases/021 - Intellectual Ventures I LLC v Erie Indemnity Company',
+           "./Cases/040 - Sioux Honey Ass'n v Hartford Fire Ins Co",
+           './Cases/021 - Aspex Eyewear Inc v Zenni Optical Inc',
+           './Cases/056 - Soverain Software LLC v Newegg Inc',
+           './Cases/100 - In re Geller',
+           './Cases/08 - Boeri v US',
+           './Cases/080 - Harmonic Inc v Avid Technology Inc',
+           './Cases/095 - Ethicon EndoSurgery Inc v Covidien LP',
+           './Cases/039 - OIP Technologies Inc v Amazoncom Inc']
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}230}]:} \PY{c+c1}{\PYZsh{} the first 300 cahracters of\PYZsq{}001 \PYZhy{} Intellectual Ventures I LLC v Motorola Mobility LLC\PYZsq{}}
+          \PY{n}{pdf\PYZus{}content}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{[}\PY{p}{:}\PY{l+m+mi}{300}\PY{p}{]}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}230}]:} b'Nuance Communications, Inc. v. ABBYY USA Software House, Inc., 813 F.3d 1368 (2016)\textbackslash{}n117 U.S.P.Q.2d 1944\textbackslash{}n\textbackslash{}n813 F.3d 1368\textbackslash{}n\textbackslash{}nUnited States Court of Appeals,\textbackslash{}n\textbackslash{}nFederal Circuit.\textbackslash{}n\textbackslash{}nNUANCE COMMUNICATIONS, INC., a Delaware Corporation, Plaintiff\textbackslash{}xe2\textbackslash{}x80\textbackslash{}x93Appellant\textbackslash{}n\textbackslash{}nv.\textbackslash{}n\textbackslash{}nABBYY USA SOFTWARE HOUSE, INC., A California Corp'
+\end{Verbatim}
+            
+    \textbf{Above is the content of the first pdf file} (`001 - Intellectual
+Ventures I LLC v Motorola Mobility LLC')
+
+You can compare the PDF file with the string above, basically, python
+process the PDF file into raw string format, e.g
+\texttt{\textbackslash{}n} means a new line,
+\texttt{\textbackslash{}xe2\textbackslash{}x80\textbackslash{}x93} is a
+maker of byte encoding
+
+Note the first letter b``\ldots{}..(content)'' indicate this is a byte
+string (remember we use BytesIO to specify the string to be stored in a
+byte object, for the convenience of encoding.)
+
+    \hypertarget{extract-citation}{%
+\subsubsection{3. Extract Citation}\label{extract-citation}}
+
+    There are multiple citation (references) in a legal court case, come
+with a format like \texttt{870\ F.3d\ 1320}
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{870} is the volumn
+\item
+  \texttt{F.3d} is the reporter
+\item
+  \texttt{1320} is the page
+\end{itemize}
+
+    \texttt{lexnlp} is a module deal with legal domain-specific text, we can
+use \texttt{lexnlp} to help us extract citations from the pdf content.
+
+For more information about \texttt{lexnlp}, go to the documentation
+website:
+https://lexpredict-lexnlp.readthedocs.io/en/docs-0.1.6/index.html
+
+    \texttt{pandas} (i.e.~Python Data Analysis Library) is a module to
+manipulate data tables. After extract information from the PDF contents,
+\texttt{pandas} is used to create data frame to store the information.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}231}]:} \PY{c+c1}{\PYZsh{} import the function in lexnlp module to extract citations}
+          \PY{k+kn}{import} \PY{n+nn}{lexnlp}\PY{n+nn}{.}\PY{n+nn}{extract}\PY{n+nn}{.}\PY{n+nn}{en}\PY{n+nn}{.}\PY{n+nn}{citations}
+          
+          \PY{c+c1}{\PYZsh{} store extracted information into dataframe}
+          \PY{k+kn}{import} \PY{n+nn}{pandas} \PY{k}{as} \PY{n+nn}{pd}
+\end{Verbatim}
+
+
+    Before the extraction, we have to decode out byte string object to
+literal string. Remember that our PDF content come with
+\texttt{b}``\ldots{}..(literal content)'', since python read the PDF to
+byte object
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}232}]:} \PY{n}{court\PYZus{}text} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+          \PY{k}{for} \PY{n}{content} \PY{o+ow}{in} \PY{n}{pdf\PYZus{}content}\PY{p}{:}
+              \PY{c+c1}{\PYZsh{} decode every pdf file content, sepecify the decode style \PYZdq{}utf\PYZhy{}8\PYZdq{}}
+              \PY{c+c1}{\PYZsh{} p.s. \PYZdq{}utf\PYZhy{}8\PYZdq{} is the most commom encoding sytle today}
+              \PY{n}{decoded\PYZus{}content} \PY{o}{=} \PY{n}{content}\PY{o}{.}\PY{n}{decode}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{utf\PYZhy{}8}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)} 
+              \PY{n}{court\PYZus{}text}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{decoded\PYZus{}content}\PY{p}{)} 
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}233}]:} \PY{c+c1}{\PYZsh{} Decoded the first 300 cahracters of }
+          \PY{c+c1}{\PYZsh{} \PYZsq{}001 \PYZhy{} Intellectual Ventures I LLC v Motorola Mobility LLC\PYZsq{}}
+          \PY{n}{court\PYZus{}text}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{[}\PY{p}{:}\PY{l+m+mi}{300}\PY{p}{]}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}233}]:} 'Nuance Communications, Inc. v. ABBYY USA Software House, Inc., 813 F.3d 1368 (2016)\textbackslash{}n117 U.S.P.Q.2d 1944\textbackslash{}n\textbackslash{}n813 F.3d 1368\textbackslash{}n\textbackslash{}nUnited States Court of Appeals,\textbackslash{}n\textbackslash{}nFederal Circuit.\textbackslash{}n\textbackslash{}nNUANCE COMMUNICATIONS, INC., a Delaware Corporation, Plaintiff–Appellant\textbackslash{}n\textbackslash{}nv.\textbackslash{}n\textbackslash{}nABBYY USA SOFTWARE HOUSE, INC., A California Corpor'
+\end{Verbatim}
+            
+    After decoding, we can see the \texttt{b} was removed (the decoding is
+more than removing the \texttt{b} behind the scenes, \texttt{b} is a
+notation for \emph{byte} object)
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}234}]:} \PY{n}{cite\PYZus{}list} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+          \PY{k}{for} \PY{n}{text} \PY{o+ow}{in} \PY{n}{court\PYZus{}text}\PY{p}{:}
+              \PY{n}{text\PYZus{}citation} \PY{o}{=}\PY{n+nb}{list}\PY{p}{(}\PY{n}{lexnlp}\PY{o}{.}\PY{n}{extract}\PY{o}{.}\PY{n}{en}\PY{o}{.}\PY{n}{citations}\PY{o}{.}\PY{n}{get\PYZus{}citations}\PY{p}{(}\PY{n}{text}\PY{p}{,} 
+                                                                        \PY{n}{return\PYZus{}source}\PY{o}{=}\PY{k+kc}{False}\PY{p}{,}
+                                                                        \PY{n}{as\PYZus{}dict}\PY{o}{=}\PY{k+kc}{True}\PY{p}{)}\PY{p}{)}
+              
+              \PY{c+c1}{\PYZsh{} cite\PYZus{}in\PYZus{}pdf is a list contains all the citations in a pdf file}
+              \PY{n}{cite\PYZus{}in\PYZus{}pdf} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+              \PY{k}{for} \PY{n}{cite} \PY{o+ow}{in} \PY{n}{text\PYZus{}citation}\PY{p}{:}
+                  \PY{c+c1}{\PYZsh{} sotre every citation in the pdf file to this container}
+                  \PY{n}{cite\PYZus{}in\PYZus{}pdf}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n+nb}{str}\PY{p}{(}\PY{n}{cite}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{volume}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)} \PY{o}{+} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{ }\PY{l+s+s2}{\PYZdq{}} \PY{o}{+} \PY{n}{cite}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{reporter}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{+} 
+                                     \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{ }\PY{l+s+s2}{\PYZdq{}} \PY{o}{+} \PY{n+nb}{str}\PY{p}{(}\PY{n}{cite}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{page}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}\PY{p}{)}
+                  
+                  \PY{c+c1}{\PYZsh{} remove duplicated citations in a file}
+                  \PY{n}{cite\PYZus{}in\PYZus{}pdf} \PY{o}{=} \PY{n+nb}{list}\PY{p}{(}\PY{n+nb}{dict}\PY{o}{.}\PY{n}{fromkeys}\PY{p}{(}\PY{n}{cite\PYZus{}in\PYZus{}pdf}\PY{p}{)}\PY{p}{)}
+                  
+              \PY{c+c1}{\PYZsh{} cite\PYZus{}list is a list contatins lists of citations for pdf files in the folder}
+              \PY{n}{cite\PYZus{}list}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{cite\PYZus{}in\PYZus{}pdf}\PY{p}{)}
+                  
+              
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}235}]:} \PY{c+c1}{\PYZsh{} citations in the first pdf files}
+          \PY{n}{cite\PYZus{}list}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}235}]:} ['813 F.3d 1368',
+           '805 F.3d 1368',
+           '467 F.3d 1355',
+           '299 F.3d 1313',
+           '639 F.3d 1303']
+\end{Verbatim}
+            
+    \hypertarget{case-number-of-the-pdf-file}{%
+\subsubsection{4. Case Number of the PDF
+file}\label{case-number-of-the-pdf-file}}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}236}]:} \PY{c+c1}{\PYZsh{} A list contain the case number of the PDF file}
+          \PY{n}{case\PYZus{}number} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+          \PY{k}{for} \PY{n}{cites} \PY{o+ow}{in} \PY{n}{cite\PYZus{}list}\PY{p}{:}
+              \PY{c+c1}{\PYZsh{} Case number is the first citation number in the citation list}
+              \PY{n}{case\PYZus{}number}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{cites}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}263}]:} \PY{n}{case\PYZus{}number}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{:}\PY{l+m+mi}{6}\PY{p}{]}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}263}]:} ['813 F.3d 1368',
+           '850 F.3d 1315',
+           '672 F.3d 1041',
+           '713 F.3d 1377',
+           '728 F.3d 1332',
+           '751 F.3d 1355']
+\end{Verbatim}
+            
+    \hypertarget{extract-regulations}{%
+\subsubsection{5. Extract Regulations}\label{extract-regulations}}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}238}]:} \PY{c+c1}{\PYZsh{} import the function in lexnlp module to extract regulations}
+          \PY{k+kn}{import} \PY{n+nn}{lexnlp}\PY{n+nn}{.}\PY{n+nn}{extract}\PY{n+nn}{.}\PY{n+nn}{en}\PY{n+nn}{.}\PY{n+nn}{regulations}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}239}]:} \PY{n}{reg\PYZus{}list} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+          \PY{k}{for} \PY{n}{text} \PY{o+ow}{in} \PY{n}{court\PYZus{}text}\PY{p}{:}
+              \PY{n}{text\PYZus{}regulation} \PY{o}{=}\PY{n+nb}{list}\PY{p}{(}\PY{n}{lexnlp}\PY{o}{.}\PY{n}{extract}\PY{o}{.}\PY{n}{en}\PY{o}{.}\PY{n}{regulations}\PY{o}{.}\PY{n}{get\PYZus{}regulations}\PY{p}{(}\PY{n}{text}\PY{p}{,} 
+                                                                        \PY{n}{return\PYZus{}source}\PY{o}{=}\PY{k+kc}{False}\PY{p}{,}
+                                                                       \PY{n}{as\PYZus{}dict}\PY{o}{=}\PY{k+kc}{True}\PY{p}{)}\PY{p}{)}
+              
+              \PY{c+c1}{\PYZsh{} reg\PYZus{}in\PYZus{}pdf is a list contains all the regulations in a pdf file}
+              \PY{n}{reg\PYZus{}in\PYZus{}pdf} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+              \PY{k}{for} \PY{n}{reg} \PY{o+ow}{in} \PY{n}{text\PYZus{}regulation}\PY{p}{:}
+                  
+                  \PY{c+c1}{\PYZsh{} sotre every regulation in the pdf file to this container}
+                  \PY{n}{reg\PYZus{}in\PYZus{}pdf}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{reg}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{regulation\PYZus{}code}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}
+                  
+                  \PY{c+c1}{\PYZsh{} remove duplicated regulations in a file}
+                  \PY{n}{reg\PYZus{}in\PYZus{}pdf} \PY{o}{=} \PY{n+nb}{list}\PY{p}{(}\PY{n+nb}{dict}\PY{o}{.}\PY{n}{fromkeys}\PY{p}{(}\PY{n}{reg\PYZus{}in\PYZus{}pdf}\PY{p}{)}\PY{p}{)} 
+              
+              \PY{c+c1}{\PYZsh{} reg\PYZus{}list is a list contatins lists of regulations for pdf files in the folder}
+              \PY{n}{reg\PYZus{}list}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{reg\PYZus{}in\PYZus{}pdf}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}240}]:} \PY{c+c1}{\PYZsh{} regulations in the first pdf file}
+          \PY{n}{reg\PYZus{}list}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}240}]:} ['28 USC § 1295']
+\end{Verbatim}
+            
+    \hypertarget{extract-courts}{%
+\subsubsection{6. Extract Courts}\label{extract-courts}}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}241}]:} \PY{c+c1}{\PYZsh{} Load court configuration data automatically from LexPredict legal dictionaries}
+          \PY{k+kn}{from} \PY{n+nn}{lexnlp}\PY{n+nn}{.}\PY{n+nn}{extract}\PY{n+nn}{.}\PY{n+nn}{en}\PY{n+nn}{.}\PY{n+nn}{dict\PYZus{}entities} \PY{k}{import} \PY{n}{get\PYZus{}entity\PYZus{}name}\PY{p}{,} \PY{n}{entity\PYZus{}config}
+          \PY{k+kn}{import} \PY{n+nn}{lexnlp}\PY{n+nn}{.}\PY{n+nn}{extract}\PY{n+nn}{.}\PY{n+nn}{en}\PY{n+nn}{.}\PY{n+nn}{courts}
+          \PY{k+kn}{import} \PY{n+nn}{pandas}
+          \PY{n}{text} \PY{o}{=} \PY{n}{court\PYZus{}text}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}
+          \PY{n}{court\PYZus{}df} \PY{o}{=} \PY{n}{pandas}\PY{o}{.}\PY{n}{read\PYZus{}csv}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{https://raw.githubusercontent.com/LexPredict/lexpredict\PYZhy{}legal\PYZhy{}dictionary/1.0.5/en/legal/us\PYZus{}courts.csv}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+          \PY{c+c1}{\PYZsh{} Create config objects}
+          
+          \PY{n}{court\PYZus{}config\PYZus{}data} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+          \PY{k}{for} \PY{n}{\PYZus{}}\PY{p}{,} \PY{n}{row} \PY{o+ow}{in} \PY{n}{court\PYZus{}df}\PY{o}{.}\PY{n}{iterrows}\PY{p}{(}\PY{p}{)}\PY{p}{:}
+              \PY{n}{c} \PY{o}{=} \PY{n}{entity\PYZus{}config}\PY{p}{(}\PY{n}{row}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Court ID}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{p}{,}\PY{n}{row}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Court Name}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{p}{,}\PY{n}{row}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Court Type}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{p}{)}
+              \PY{n}{court\PYZus{}config\PYZus{}data}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{c}\PY{p}{)}
+          
+          \PY{n}{court\PYZus{}in\PYZus{}pdf} \PY{o}{=} \PY{p}{[}\PY{p}{]}    
+          \PY{k}{for} \PY{n}{entity} \PY{o+ow}{in} \PY{n}{lexnlp}\PY{o}{.}\PY{n}{extract}\PY{o}{.}\PY{n}{en}\PY{o}{.}\PY{n}{courts}\PY{o}{.}\PY{n}{get\PYZus{}courts}\PY{p}{(}\PY{n}{text}\PY{p}{,} \PY{n}{court\PYZus{}config\PYZus{}data}\PY{p}{)}\PY{p}{:}
+              \PY{n}{court\PYZus{}in\PYZus{}pdf}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{entity}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{:}\PY{l+m+mi}{3}\PY{p}{]}\PY{p}{)}
+              \PY{c+c1}{\PYZsh{} remove duplicated regulations in a file}
+              \PY{n}{court\PYZus{}in\PYZus{}pdf} \PY{o}{=} \PY{n+nb}{list}\PY{p}{(}\PY{n+nb}{dict}\PY{o}{.}\PY{n}{fromkeys}\PY{p}{(}\PY{n}{court\PYZus{}in\PYZus{}pdf}\PY{p}{)}\PY{p}{)} 
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}242}]:} \PY{n}{court\PYZus{}list} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+          \PY{k}{for} \PY{n}{text} \PY{o+ow}{in} \PY{n}{court\PYZus{}text}\PY{p}{:}
+              \PY{n}{text\PYZus{}court} \PY{o}{=}\PY{n}{lexnlp}\PY{o}{.}\PY{n}{extract}\PY{o}{.}\PY{n}{en}\PY{o}{.}\PY{n}{courts}\PY{o}{.}\PY{n}{get\PYZus{}courts}\PY{p}{(}\PY{n}{text}\PY{p}{,} \PY{n}{court\PYZus{}config\PYZus{}data}\PY{p}{)}
+              
+              \PY{c+c1}{\PYZsh{} court\PYZus{}in\PYZus{}pdf is a list contains all the courts in a pdf file}
+              \PY{n}{court\PYZus{}in\PYZus{}pdf} \PY{o}{=} \PY{p}{[}\PY{p}{]}    
+              \PY{k}{for} \PY{n}{entity} \PY{o+ow}{in} \PY{n}{text\PYZus{}court}\PY{p}{:}
+                  
+                  \PY{c+c1}{\PYZsh{} sotre every court in the pdf file to this container}
+                  \PY{n}{court\PYZus{}in\PYZus{}pdf}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{entity}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{:}\PY{l+m+mi}{3}\PY{p}{]}\PY{p}{)}
+                  
+                  \PY{c+c1}{\PYZsh{} remove duplicated courts in a file}
+                  \PY{n}{court\PYZus{}in\PYZus{}pdf} \PY{o}{=} \PY{n+nb}{list}\PY{p}{(}\PY{n+nb}{dict}\PY{o}{.}\PY{n}{fromkeys}\PY{p}{(}\PY{n}{court\PYZus{}in\PYZus{}pdf}\PY{p}{)}\PY{p}{)}  
+              
+              \PY{c+c1}{\PYZsh{} reg\PYZus{}list is a list contatins lists of regulations for pdf files in the folder}
+              \PY{n}{court\PYZus{}list}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{court\PYZus{}in\PYZus{}pdf}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}262}]:} \PY{n}{court\PYZus{}list}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{:}\PY{l+m+mi}{6}\PY{p}{]}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}262}]:} [[('Federal Circuit', 'Appellate Court'),
+            ('Northern District of California', 'Federal District Court'),
+            ('Northern District of California', 'Bankruptcy Court')],
+           [('Federal Circuit', 'Appellate Court'),
+            ('Western District of Pennsylvania', 'Federal District Court'),
+            ('Western District of Pennsylvania', 'Bankruptcy Court'),
+            ('Third Circuit', 'Appellate Court')],
+           [('Federal Circuit', 'Appellate Court'),
+            ('United States Court of International Trade', 'Federal Court'),
+            ('International Trade Commission', 'Federal Court')],
+           [('Federal Circuit', 'Appellate Court'),
+            ('Southern District of Florida', 'Federal District Court'),
+            ('Southern District of Florida', 'Bankruptcy Court'),
+            ('Eleventh Circuit', 'Appellate Court')],
+           [('Federal Circuit', 'Appellate Court'),
+            ('Eastern District of Texas', 'Federal District Court'),
+            ('Eastern District of Texas', 'Bankruptcy Court')],
+           [('Federal Circuit', 'Appellate Court'),
+            ('Trademark Trial and Appeal Board', 'Federal Court')]]
+\end{Verbatim}
+            
+    \hypertarget{court-for-this-pdf-file}{%
+\subsubsection{7. Court for this PDF
+file}\label{court-for-this-pdf-file}}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}244}]:} \PY{c+c1}{\PYZsh{} A list contain the courts appeared in the PDF file}
+          \PY{n}{court\PYZus{}for\PYZus{}this\PYZus{}file} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+          \PY{k}{for} \PY{n}{courts} \PY{o+ow}{in} \PY{n}{court\PYZus{}list}\PY{p}{:}
+              \PY{c+c1}{\PYZsh{} Court for this PDF file is the first court in the court list}
+              \PY{n}{court\PYZus{}for\PYZus{}this\PYZus{}file}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{courts}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}260}]:} \PY{n}{court\PYZus{}for\PYZus{}this\PYZus{}file}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{:}\PY{l+m+mi}{10}\PY{p}{]}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}260}]:} [('Federal Circuit', 'Appellate Court'),
+           ('Federal Circuit', 'Appellate Court'),
+           ('Federal Circuit', 'Appellate Court'),
+           ('Federal Circuit', 'Appellate Court'),
+           ('Federal Circuit', 'Appellate Court'),
+           ('Federal Circuit', 'Appellate Court'),
+           ('Federal Circuit', 'Appellate Court'),
+           ('Federal Circuit', 'Appellate Court'),
+           ('Federal Circuit', 'Appellate Court'),
+           ('Federal Circuit', 'Appellate Court')]
+\end{Verbatim}
+            
+    \hypertarget{extract-date}{%
+\subsubsection{8. Extract Date}\label{extract-date}}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}246}]:} \PY{k+kn}{import} \PY{n+nn}{lexnlp}\PY{n+nn}{.}\PY{n+nn}{extract}\PY{n+nn}{.}\PY{n+nn}{en}\PY{n+nn}{.}\PY{n+nn}{dates}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}254}]:} \PY{n}{dates\PYZus{}for\PYZus{}pdf} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+          \PY{k}{for} \PY{n}{text} \PY{o+ow}{in} \PY{n}{court\PYZus{}text}\PY{p}{:}
+              \PY{n}{date\PYZus{}list} \PY{o}{=}\PY{n+nb}{list}\PY{p}{(}\PY{n}{lexnlp}\PY{o}{.}\PY{n}{extract}\PY{o}{.}\PY{n}{en}\PY{o}{.}\PY{n}{dates}\PY{o}{.}\PY{n}{get\PYZus{}dates}\PY{p}{(}\PY{n}{text}\PY{p}{)}\PY{p}{)}
+              \PY{k}{if} \PY{n+nb}{len}\PY{p}{(}\PY{n}{date\PYZus{}list}\PY{p}{)}\PY{o}{\PYZgt{}}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{:}
+                  \PY{n}{dates\PYZus{}for\PYZus{}pdf}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{date\PYZus{}list}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{)}
+              \PY{k}{else}\PY{p}{:} 
+                  \PY{n}{dates\PYZus{}for\PYZus{}pdf}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{k+kc}{None}\PY{p}{)}
+                  
+              
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}259}]:} \PY{n}{dates\PYZus{}for\PYZus{}pdf}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{:}\PY{l+m+mi}{10}\PY{p}{]}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}259}]:} [datetime.date(2016, 2, 22),
+           datetime.date(2017, 3, 7),
+           datetime.date(2012, 2, 7),
+           datetime.date(2013, 4, 19),
+           datetime.date(2035, 2, 1),
+           datetime.date(2014, 5, 13),
+           datetime.date(2013, 2, 1),
+           datetime.date(2016, 3, 1),
+           datetime.date(2016, 6, 22),
+           datetime.date(2015, 6, 11)]
+\end{Verbatim}
+            
+    \hypertarget{case-no-xxxx-xxxx}{%
+\subsubsection{\texorpdfstring{9. Case No
+\texttt{xxxx-xxxx}}{9. Case No xxxx-xxxx}}\label{case-no-xxxx-xxxx}}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}266}]:} \PY{n}{case\PYZus{}num\PYZus{}xxx} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+          \PY{n}{pattern} \PY{o}{=} \PY{n}{re}\PY{o}{.}\PY{n}{compile}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{[0\PYZhy{}9]}\PY{l+s+si}{\PYZob{}4\PYZcb{}}\PY{l+s+s1}{[–|\PYZhy{}][0\PYZhy{}9]}\PY{l+s+s1}{\PYZob{}}\PY{l+s+s1}{3,4\PYZcb{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{flags}\PY{o}{=}\PY{n}{re}\PY{o}{.}\PY{n}{DOTALL}\PY{p}{)}
+          \PY{k}{for} \PY{n}{text} \PY{o+ow}{in} \PY{n}{court\PYZus{}text}\PY{p}{:}
+              \PY{n}{num} \PY{o}{=} \PY{n}{re}\PY{o}{.}\PY{n}{findall}\PY{p}{(}\PY{n}{pattern}\PY{p}{,}\PY{n}{text}\PY{p}{)}
+              \PY{k}{if} \PY{n+nb}{len}\PY{p}{(}\PY{n}{num}\PY{p}{)}\PY{o}{\PYZgt{}}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{:}
+                  \PY{n}{case\PYZus{}num\PYZus{}xxx}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{num}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{)}
+              \PY{k}{else}\PY{p}{:} 
+                  \PY{n}{case\PYZus{}num\PYZus{}xxx}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{k+kc}{None}\PY{p}{)}
+          
+             
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}269}]:} \PY{n+nb}{len}\PY{p}{(}\PY{n}{case\PYZus{}num\PYZus{}xxx}\PY{p}{)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}269}]:} 159
+\end{Verbatim}
+            
+    \hypertarget{synopsis-and-other-titled-part}{%
+\subsubsection{synopsis (and other titled
+part)}\label{synopsis-and-other-titled-part}}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}160}]:} \PY{n}{synopsis} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+          \PY{n}{pattern} \PY{o}{=} \PY{n}{re}\PY{o}{.}\PY{n}{compile}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s1}{Background:}\PY{l+s+s1}{\PYZbs{}}\PY{l+s+s1}{s(.*?)}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{flags}\PY{o}{=}\PY{n}{re}\PY{o}{.}\PY{n}{DOTALL}\PY{p}{)}
+          \PY{k}{for} \PY{n}{text} \PY{o+ow}{in} \PY{n}{court\PYZus{}text}\PY{p}{:}
+              \PY{n}{background} \PY{o}{=} \PY{n}{re}\PY{o}{.}\PY{n}{search}\PY{p}{(}\PY{n}{pattern}\PY{p}{,}\PY{n}{text}\PY{p}{)}\PY{o}{.}\PY{n}{group}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{)}
+              \PY{n}{synopsis}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{background}\PY{p}{)}
+              
+\end{Verbatim}
+
+
+    \hypertarget{wrap-up-to-data-frame}{%
+\subsection{10. Wrap up to Data Frame}\label{wrap-up-to-data-frame}}
+
+    So for we have - \texttt{pdf\_name}, - \texttt{cite\_list}, -
+\texttt{case\_number}, - \texttt{reg\_list}, - \texttt{court\_list}, -
+\texttt{court\_for\_this\_file}, - \texttt{dates\_for\_pdf}, -
+\texttt{case\_num\_xxx}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}277}]:} \PY{c+c1}{\PYZsh{} all the lists contains extracted information}
+          \PY{n}{varlist} \PY{o}{=}\PY{p}{[}\PY{n}{pdf\PYZus{}name}\PY{p}{,}
+          \PY{n}{cite\PYZus{}list}\PY{p}{,}
+          \PY{n}{case\PYZus{}number}\PY{p}{,}
+          \PY{n}{reg\PYZus{}list}\PY{p}{,}
+          \PY{n}{court\PYZus{}list}\PY{p}{,}
+          \PY{n}{court\PYZus{}for\PYZus{}this\PYZus{}file}\PY{p}{,}
+          \PY{n}{dates\PYZus{}for\PYZus{}pdf}\PY{p}{,}
+          \PY{n}{case\PYZus{}num\PYZus{}xxx}\PY{p}{]}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}278}]:} \PY{c+c1}{\PYZsh{} check the length of the lists}
+          \PY{k}{for} \PY{n}{var} \PY{o+ow}{in} \PY{n}{varlist}\PY{p}{:}
+              \PY{n+nb}{print}\PY{p}{(}\PY{n+nb}{len}\PY{p}{(}\PY{n}{var}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+159
+159
+159
+159
+159
+159
+159
+159
+
+    \end{Verbatim}
+
+    A data frame contains the meta data of the court case in the PDF file
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}279}]:} \PY{n}{metadata} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{DataFrame}\PY{p}{(}
+              \PY{p}{\PYZob{}}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{file\PYZus{}name}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{n}{pdf\PYZus{}name}\PY{p}{,}
+               \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{case\PYZus{}number}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{n}{case\PYZus{}number}\PY{p}{,}
+               \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{court}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:}\PY{n}{court\PYZus{}for\PYZus{}this\PYZus{}file}\PY{p}{,}
+               \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{dates}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:}\PY{n}{dates\PYZus{}for\PYZus{}pdf}\PY{p}{,}
+               \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{num\PYZus{}x\PYZus{}x}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:}\PY{n}{case\PYZus{}num\PYZus{}xxx}
+              \PY{p}{\PYZcb{}}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}280}]:} \PY{n}{metadata}\PY{o}{.}\PY{n}{head}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}280}]:}                                            file\_name    case\_number  \textbackslash{}
+          0  052 - Nuance Communications Inc v ABBYY USA So{\ldots}  813 F.3d 1368   
+          1  021 - Intellectual Ventures I LLC v Erie Indem{\ldots}  850 F.3d 1315   
+          2     040 - Sioux Honey Ass'n v Hartford Fire Ins Co  672 F.3d 1041   
+          3        021 - Aspex Eyewear Inc v Zenni Optical Inc  713 F.3d 1377   
+          4           056 - Soverain Software LLC v Newegg Inc  728 F.3d 1332   
+          
+                                          court       dates    num\_x\_x  
+          0  (Federal Circuit, Appellate Court)  2016-02-22  2014–1629  
+          1  (Federal Circuit, Appellate Court)  2017-03-07  2016-1128  
+          2  (Federal Circuit, Appellate Court)  2012-02-07  2011–1040  
+          3  (Federal Circuit, Appellate Court)  2013-04-19  2012–1318  
+          4  (Federal Circuit, Appellate Court)  2035-02-01  2011–1009  
+\end{Verbatim}
+            
+    Save the data frame to CSV file
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}286}]:} \PY{n}{metadata}\PY{o}{.}\PY{n}{to\PYZus{}csv}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{meta\PYZus{}file.csv}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{sep}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+se}{\PYZbs{}t}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{encoding}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{utf\PYZhy{}8}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\end{Verbatim}
+
+
+    A data frame contains the reference list of the court case in the PDF
+file
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}282}]:} \PY{n}{reference\PYZus{}extract} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{DataFrame}\PY{p}{(}
+              \PY{p}{\PYZob{}}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{file\PYZus{}name}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{n}{pdf\PYZus{}name}\PY{p}{,}
+               \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{citations}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{n}{cite\PYZus{}list}\PY{p}{,}
+               \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{regulations}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{n}{reg\PYZus{}list}\PY{p}{,}
+               \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{courts}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:}\PY{n}{court\PYZus{}list}\PY{p}{,}
+              \PY{p}{\PYZcb{}}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}283}]:} \PY{n}{reference\PYZus{}extract}\PY{o}{.}\PY{n}{head}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}283}]:}                                            file\_name  \textbackslash{}
+          0  052 - Nuance Communications Inc v ABBYY USA So{\ldots}   
+          1  021 - Intellectual Ventures I LLC v Erie Indem{\ldots}   
+          2     040 - Sioux Honey Ass'n v Hartford Fire Ins Co   
+          3        021 - Aspex Eyewear Inc v Zenni Optical Inc   
+          4           056 - Soverain Software LLC v Newegg Inc   
+          
+                                                     citations  \textbackslash{}
+          0  [813 F.3d 1368, 805 F.3d 1368, 467 F.3d 1355, {\ldots}   
+          1  [850 F.3d 1315, 444 F.3d 1337, 718 P.2d 920, 5{\ldots}   
+          2  [672 F.3d 1041, 200 F.3d 1369, 517 F.3d 1319, {\ldots}   
+          3  [713 F.3d 1377, 439 U.S. 322, 342 F.3d 1320, 6{\ldots}   
+          4  [728 F.3d 1332, 705 F.3d 1333, 2013 WL 2631445{\ldots}   
+          
+                                                   regulations  \textbackslash{}
+          0                                    [28 USC § 1295]   
+          1        [35 USC § 101, 28 USC § 1295, 35 USC § 261]   
+          2  [19 USC § 1675c, 19 USC § 1675, 28 USC § 1295,{\ldots}   
+          3                                                 []   
+          4                                                 []   
+          
+                                                        courts  
+          0  [(Federal Circuit, Appellate Court), (Northern{\ldots}  
+          1  [(Federal Circuit, Appellate Court), (Western {\ldots}  
+          2  [(Federal Circuit, Appellate Court), (United S{\ldots}  
+          3  [(Federal Circuit, Appellate Court), (Southern{\ldots}  
+          4  [(Federal Circuit, Appellate Court), (Eastern {\ldots}  
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}285}]:} \PY{n}{reference\PYZus{}extract}\PY{o}{.}\PY{n}{to\PYZus{}csv}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{reference\PYZus{}extract.csv}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{sep}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+se}{\PYZbs{}t}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{encoding}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{utf\PYZhy{}8}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\end{Verbatim}
+
+
+
+    % Add a bibliography block to the postdoc
+    
+    
+    
+    \end{document}

@@ -1,0 +1,98 @@
+---
+title: "Interview Case - iKnowledge report"
+author: "YIN YI"
+date: "3/29/2019"
+output:
+  html_document:
+    df_print: paged
+  word_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+
+```{r load data,message=FALSE}
+library(tidyverse)
+raw <-read_csv("raw_data.csv")
+```
+
+# Part A: For each course, 
+
+## 1) total person/times of course taking
+```{r}
+raw%>%select(课程名称,姓名)%>%
+        group_by(课程名称)%>%
+        summarise(total_times = n())%>%write.csv(file = "A1.csv")
+
+```
+
+
+## 2) total person/times of quiz taking
+假如理解成：每门课有多少人参加了考试
+```{r}
+raw%>%select(课程名称,问卷作答时间)%>%
+        group_by(课程名称)%>%
+        summarise(total_quiztake = n())%>%write.csv(file = "A2.csv")
+
+```
+
+假如理解成：每门课所有学习着的总学习时长
+```{r}
+raw%>%select(课程名称,`学习时长(秒)`)%>%
+        group_by(课程名称)%>%
+        summarise(total_quiztake_time= sum(`学习时长(秒)`))%>%
+        write.csv(file = "A2_总时长.csv")
+
+```
+
+## 3) average score of quiz
+```{r}
+raw%>%select(课程名称,测试得分)%>%
+        group_by(课程名称)%>%
+        summarise(avg_score = mean(测试得分))%>%
+        write.csv(file = "A3.csv")
+```
+## 4) quiz pass rate
+```{r}
+raw%>%select(课程名称,是否及格)%>%
+        mutate(pass = ifelse(是否及格=="及格", 1,0))%>%
+        group_by(课程名称)%>%
+        summarise(pass_rate = mean(pass))%>%
+        write.csv(file = "A4.csv")
+
+```
+
+# Part B: For each month, what are the
+
+## 5) total person/times of course taking
+
+```{r}
+raw%>%select(月份,姓名)%>%
+        group_by(月份)%>%summarise(total_times = n())%>%
+        write.csv(file = "B5.csv")
+```
+
+# Part C: For each district, what are the
+
+## 6) total person/times of course taking
+```{r}
+
+raw%>%select(地区经理姓名,姓名)%>%
+        mutate(region = ifelse(is.na(地区经理姓名), raw$姓名, 地区经理姓名))%>%
+        group_by(region)%>%
+        summarise(total_times = n())%>%
+        write.csv(file = "C6.csv")
+```
+
+## 7) the average score of quiz
+## 3) average score of quiz
+```{r}
+raw%>%select(地区经理姓名,测试得分)%>%
+        mutate(region = ifelse(is.na(地区经理姓名), raw$姓名, 地区经理姓名))%>%
+        group_by(region)%>%
+        summarise(avg_score = mean(测试得分))%>%
+        write.csv(file = "C7.csv")
+```

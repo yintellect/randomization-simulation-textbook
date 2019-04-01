@@ -33,7 +33,7 @@ gen vouch0phone = vouch0*phone
 gen vouch0age = vouch0*age
 
 // Use logistic regression to predict probabilities of being observed
-glm observed vouch0 sex phone age vouch0sex vouch0phone vouch0age, family(binomial)
+qui glm observed vouch0 sex phone age vouch0sex vouch0phone vouch0age, family(binomial)
 
 predict probobs
 

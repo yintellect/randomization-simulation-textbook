@@ -1,0 +1,24 @@
+---
+title: "Readability"
+author: "Liyan Nie"
+date: "10/30/2018"
+output: html_document
+---
+
+```{r}
+install.packages("koRpus.lang.en", repos = "https://cran.rstudio.com")
+library(koRpus.lang.en)
+set.kRp.env(TT.cmd="/Users/liyannie/Desktop/TreeTagger/cmd/tree-tagger-english", lang="en")
+get.kRp.env(TT.cmd=TRUE)
+tagged.text = treetag("/Users/liyannie/Desktop/Fall_2018_Courses/RA/processed_case_example1.txt", 
+        treetagger = "kRp.env", rm.sgml = TRUE, lang = "kRp.env", apply.sentc.end = TRUE, 
+        sentc.end = c(".", "!", "?", ";", ":"), encoding = NULL, TT.options = NULL, debug = FALSE, 
+        TT.tknz = TRUE, format = "file", stopwords = NULL, stemmer = NULL)
+
+dal_chall_3000 = read.delim("/Users/liyannie/Desktop/Fall_2018_Courses/RA/Dale_Chall_3000.txt")
+# Bormuth, Dale-Chall, DRP: long Dale-Chall list of 3000 familiar (english) words  new.dale.chall.wl
+# Harris.Jacobson: the short Harris-Jacobson word list for grades 1 and 2 (english) harris.jacobson.wl
+# Spache: short Dale-Chall list with 769 easy words should be used.   spache.revised.wl
+readability(tagged.text, word.lists = list(Bormuth = dal_chall_3000, Dale.Chall = dal_chall_3000, 
+                                           DRP = dal_chall_3000))
+```
