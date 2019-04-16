@@ -1,0 +1,16 @@
+base
+methods
+datasets
+utils
+grDevices
+graphics
+stats
+knitr
+ri
+foreign
+MASS
+Matrix
+lme4
+arm
+xtable
+ggplot2

@@ -1,0 +1,608 @@
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% PROBLEM SET LATEX TEMPLATE FILE
+% DEFINE DOCUMENT STYLE, LOAD PACKAGES
+\documentclass[11pt,notitlepage]{article}\usepackage[]{graphicx}\usepackage[]{color}
+%% maxwidth is the original width if it is less than linewidth
+%% otherwise use linewidth (to make sure the graphics do not exceed the margin)
+\makeatletter
+\def\maxwidth{ %
+  \ifdim\Gin@nat@width>\linewidth
+    \linewidth
+  \else
+    \Gin@nat@width
+  \fi
+}
+\makeatother
+
+\definecolor{fgcolor}{rgb}{0.345, 0.345, 0.345}
+\newcommand{\hlnum}[1]{\textcolor[rgb]{0.686,0.059,0.569}{#1}}%
+\newcommand{\hlstr}[1]{\textcolor[rgb]{0.192,0.494,0.8}{#1}}%
+\newcommand{\hlcom}[1]{\textcolor[rgb]{0.678,0.584,0.686}{\textit{#1}}}%
+\newcommand{\hlopt}[1]{\textcolor[rgb]{0,0,0}{#1}}%
+\newcommand{\hlstd}[1]{\textcolor[rgb]{0.345,0.345,0.345}{#1}}%
+\newcommand{\hlkwa}[1]{\textcolor[rgb]{0.161,0.373,0.58}{\textbf{#1}}}%
+\newcommand{\hlkwb}[1]{\textcolor[rgb]{0.69,0.353,0.396}{#1}}%
+\newcommand{\hlkwc}[1]{\textcolor[rgb]{0.333,0.667,0.333}{#1}}%
+\newcommand{\hlkwd}[1]{\textcolor[rgb]{0.737,0.353,0.396}{\textbf{#1}}}%
+
+\usepackage{framed}
+\makeatletter
+\newenvironment{kframe}{%
+ \def\at@end@of@kframe{}%
+ \ifinner\ifhmode%
+  \def\at@end@of@kframe{\end{minipage}}%
+  \begin{minipage}{\columnwidth}%
+ \fi\fi%
+ \def\FrameCommand##1{\hskip\@totalleftmargin \hskip-\fboxsep
+ \colorbox{shadecolor}{##1}\hskip-\fboxsep
+     % There is no \\@totalrightmargin, so:
+     \hskip-\linewidth \hskip-\@totalleftmargin \hskip\columnwidth}%
+ \MakeFramed {\advance\hsize-\width
+   \@totalleftmargin\z@ \linewidth\hsize
+   \@setminipage}}%
+ {\par\unskip\endMakeFramed%
+ \at@end@of@kframe}
+\makeatother
+
+\definecolor{shadecolor}{rgb}{.97, .97, .97}
+\definecolor{messagecolor}{rgb}{0, 0, 0}
+\definecolor{warningcolor}{rgb}{1, 0, 1}
+\definecolor{errorcolor}{rgb}{1, 0, 0}
+\newenvironment{knitrout}{}{} % an empty environment to be redefined in TeX
+
+\usepackage{alltt}    % ADD COMMENTS USING A PERCENT SIGN
+\usepackage{amsfonts}
+\usepackage{amsthm}
+\usepackage{amsmath, booktabs}
+\usepackage{mathtools}
+\usepackage{amssymb}
+\usepackage{subfig}
+\usepackage{setspace}
+\usepackage{fullpage}
+\usepackage{verbatim}
+\usepackage{graphicx}
+\usepackage{tabularx}
+\usepackage{longtable}
+\usepackage{multicol}
+\usepackage{multirow}
+\setlength{\parindent}{0in}  	% uncomment to remove indent at start of paragraphs
+\usepackage{pdflscape}
+\usepackage[english]{babel}
+\usepackage[pdftex]{hyperref}
+\usepackage{natbib}
+\usepackage{caption}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{graphics}
+\usepackage{multirow}
+\usepackage{graphics}
+\usepackage{hyperref}
+\usepackage{longtable}
+\usepackage{latexsym}
+\usepackage{rotating}
+\usepackage{setspace}
+\usepackage{layouts} 
+\usepackage[titletoc]{appendix}
+\DeclareGraphicsExtensions{.pdf,.jpg,.png}
+\usepackage[margin=1in]{geometry}
+\usepackage{enumerate}
+\usepackage{float}
+
+\newcolumntype{L}[1]{>{\raggedright\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+% FONTS
+\usepackage[T1]{fontenc}					% always use this no matter what
+
+\usepackage{xcolor}
+\usepackage[printwatermark]{xwatermark}
+
+
+
+% uncomment any one of these to see what it does to your font!
+%\usepackage{pxfonts}
+%\usepackage{cmbright}
+%\usepackage{txfonts}
+%\usepackage[adobe-utopia]{mathdesign}
+%\usepackage{kpfonts}
+%\usepackage{lmodern}
+%\usepackage{newtxtext,newtxmath}
+
+
+
+
+% DEFINE WHAT GOES INTO YOUR TITLE BEFORE THE DOCUMENT BEGINS
+\title{Field Experiments: Design, Analysis and Interpretation \\
+Solutions for Chapter 4 Exercises}
+\author{Alan S. Gerber and Donald P. Green\footnote{Solutions prepared by Peter M. Aronow and revised by Alexander Coppock}}
+\date{\today}
+
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\begin{document}
+
+\maketitle
+
+
+\section*{Question 1}
+Important concepts: [10pts]
+
+\begin{enumerate}[a)]
+\item Define ``covariate.''  Explain why covariates are (at least in principle) measured prior to the random allocation of subjects to treatment and control.\\
+Answer:\\
+A covariate is a variable that is (1) unaffected by the treatment and (2) used to predict outcomes. In order to increase the credibility of the claim that a given covariate is unaffected by the treatment, researchers typically restrict the set of covariates to those variables that are measured (or are measurable) prior to the random allocation of treatments.
+
+\item Define ``disturbance term.''  \\
+Answer:\\
+The disturbance term comprises all sources of variation in potential outcomes other than the average treatment effect.  For example, in equation (4.7), the disturbance term is $u_i=Y_i (0)-\mu_{Y(0)}+[(Y_i (1)-\mu_{Y(1)} )-(Y_i (0)-\mu_{Y(0)})] D_i$.  The disturbance term comprises the idiosyncratic variation in untreated responses $Y_i (0)-\mu_{Y(0)}$, plus the idiosyncratic variation in treatment effects $[(Y_i (1)-\mu_{Y(1)})-(Y_i (0)-\mu_{Y(0)})] D_i.$  
+
+\item In equation (4.2), we demonstrated that rescaling the outcome by subtracting a pre-test leads to unbiased estimates of the ATE. Suppose that instead of subtracting the pre-test $X_i$, we subtracted a rescaled pretest $cX_i$, where $c$ is some positive constant.  Show that this procedure produces unbiased estimates of the ATE. \\
+Answer:\\
+The proof is similar to equation (4.2) and again makes use of the fact that the expected value of $X_i$ is the same in the treatment and control groups when treatments are allocated randomly:
+
+\begin{align*}
+E[\widehat{ATE}] &=E[Y_i-cX_i |D_i=1]-E[Y_i-cX_i | D_i=0)]\\
+&= E[Y_i|D_i=1]-E[cX_i|D_i=1]-E[Y_i|D_i=0]+E[cX_i|D_i=0]\\
+&= E[Y_i|D_i=1]-cE[X_i|D_i=1]-E[Y_i|D_i=0]+cE[X_i|D_i=0]\\
+&= E[Y_i(1)] - E[Y_i(0)]
+\end{align*}
+
+\item Show that the parameter $b$ in equation (4.7) is identical to the ATE.\\
+Answer:\\
+Recall from Equation (4.7) that:
+\begin{align*}
+Y_i & =Y_i (0)(1-D_i )+Y_i (1) D_i\\
+&=Y_i (0)+(Y_i (1)-Y_i (0) )D_i\\
+&= \mu_{Y(0)}+[\mu_{Y(1)}-\mu_{Y(0)} ] D_i+Y_i (0)-\mu_{Y(0)}+[(Y_i (1)-\mu_{Y(1)} )-(Y_i (0)-\mu_{Y(0)} )] D_i\\
+&= a+bD_i+u_i
+\end{align*}
+
+This equation implies that $b=\mu_{Y(1)}-\mu_{Y(0)}$, which is the ATE because the expected value of $Y_i (1)$ is $\mu_{Y(1)}$, and the expected value of $Y_i (0)$ is $\mu_{Y(0)}$.
+
+\end{enumerate}
+
+\section*{Question 2}
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{verbatim}
+
+
+
+
+
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+\section*{Question 3}
+The table below illustrates the problems that may arise when researchers exercise discretion over what results to report to readers. Suppose the true ATE associated with a given treatment were 1.0. The table reports the estimated ATE from nine experiments, each of which involves approximately 200 subjects. Each study produces two estimates, one based on a difference-in-means and another using regression to control for covariates. In principle, both estimators generate unbiased estimates, and covariate adjustment has a slight edge in terms of precision. Suppose the researchers conducting each study use the following decision rule: ``Estimate the ATE using both estimators and report whichever estimate is larger.'' Under this reporting policy, are the reported estimates unbiased? Why or why not? [6 pts]\\
+Answer:\\
+This procedure leads to biased estimates. Although each estimator is unbiased, the greater of two unbiased estimates is not unbiased. One can think of this procedure as ``Report the no-covariates estimate unless the with-covariates estimate is larger, in which case report the with-covariates estimate.'' On its own, the no-covariates estimate is unbiased, but it tends to be corrected when it generates a lower-than-average estimate. In this example, the average estimate generated by this reporting procedure is 12/9 = 1.33, which is greater than the true ATE of 1.0.
+
+\begin{table}[H]
+  \centering
+  \caption{Question 3 table}
+    \begin{tabular}{r|cc|c}
+    \toprule
+   \multicolumn{1}{r}{Study} & No covariates & \multicolumn{1}{c}{With covariates} & \multicolumn{1}{c}{Greater of two estimates} \\
+    \midrule
+    1     & 5     & 4     & 5 \\
+    2     & 3     & 3     & 3 \\
+    3     & 2     & 2     & 2 \\
+    4     & 6     & 5     & 6 \\
+    5     & 1     & 1     & 1 \\
+    6     & 0     & 0     & 0 \\
+    7     & -3    & -1    & -1 \\
+    8     & -5    & -4    & -4 \\
+    9     & 0     & -1    & 0 \\ \midrule
+    Average & 1     & 1     & 1.33 \\
+    Standard Deviation & 3.54  & 2.83  & 3.08 \\
+    \bottomrule
+    \end{tabular}%
+  \label{tab:addlabel}%
+\end{table}%
+
+\section*{Question 4}
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{verbatim}
+
+
+
+
+
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+\section*{Question 5}
+
+
+Randomizations are said to be ``restricted'' when the set of all possible random allocations is narrowed to exclude allocations that have inadequate covariate balance.  Suppose, for example, that the assignment of treatments ($D_i$) in Table 4.1 was conducted subject to the restriction that a regression of $D_i$ on $X_i$ (the pretest) does not allow the researcher to reject the sharp null hypothesis of no effect of $X_i$ on $D_i$ at the 0.05 significance level) produces a $p$-value on that is greater than 0.05. In other words, had the researcher found that the assigned $D_i$ were significantly predicted by $X_i$, the random allocation would have been conducted again, until the $D_i$ met this criterion. [10pts]
+
+\begin{enumerate}[a)]
+\item Conduct a series of random assignments in order to calculate the weighting variable $w_i$; for units in the treatment group, this weight is defined as the inverse of the probability of being assigned to treatment, and for units in the control group, this weight is defined as the inverse of the probability of being assigned to control. See Table 4.2 for an example. Does $w_i$ appear to vary within the treatment group or within the control group?
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{D}  \hlkwb{<-} \hlstd{teach}\hlopt{$}\hlstd{D}
+\hlstd{Y1} \hlkwb{<-} \hlstd{teach}\hlopt{$}\hlstd{y1}
+\hlstd{Y0} \hlkwb{<-} \hlstd{teach}\hlopt{$}\hlstd{y0}
+\hlstd{X} \hlkwb{<-} \hlstd{teach}\hlopt{$}\hlstd{x}
+
+\hlstd{Y} \hlkwb{<-} \hlstd{Y0}\hlopt{*}\hlstd{(}\hlnum{1}\hlopt{-}\hlstd{D)} \hlopt{+} \hlstd{Y1}\hlopt{*}\hlstd{(D)}
+\hlstd{N} \hlkwb{<-} \hlkwd{length}\hlstd{(D)}
+
+
+\hlstd{randfun} \hlkwb{<-} \hlkwa{function}\hlstd{() \{}
+  \hlstd{teststat} \hlkwb{<-} \hlopt{-}\hlnum{1}
+  \hlkwa{while} \hlstd{(teststat} \hlopt{<} \hlnum{0.05}\hlstd{) \{}
+                \hlstd{Zri} \hlkwb{<-} \hlkwd{sample}\hlstd{(D)}
+                \hlstd{teststat} \hlkwb{<-} \hlkwd{summary}\hlstd{(}\hlkwd{lm}\hlstd{(Zri}\hlopt{~}\hlstd{X))}\hlopt{$}\hlstd{coefficients[}\hlnum{2}\hlstd{,}\hlnum{4}\hlstd{]}
+        \hlstd{\}}
+        \hlkwd{return}\hlstd{(Zri)}
+\hlstd{\}}
+
+\hlcom{# notice the use of the restricted randomization function.}
+\hlcom{# restricted randomization often generates unequal probabilities of assignment. }
+\hlcom{# if so, inverse probability weighting is required.}
+
+\hlstd{perms} \hlkwb{<-} \hlkwd{genperms.custom}\hlstd{(}\hlkwc{numiter}\hlstd{=}\hlnum{10000}\hlstd{,}\hlkwc{randfun}\hlstd{=randfun)}
+\hlstd{probs} \hlkwb{<-} \hlkwd{genprob}\hlstd{(perms)}
+\hlstd{weights} \hlkwb{<-} \hlstd{(}\hlnum{1}\hlopt{/}\hlstd{probs)} \hlopt{*}\hlstd{D} \hlopt{+} \hlstd{(}\hlnum{1}\hlopt{/}\hlstd{(}\hlnum{1}\hlopt{-}\hlstd{probs))}\hlopt{*}\hlstd{(}\hlnum{1}\hlopt{-}\hlstd{D)}
+\hlstd{var.weights.treat} \hlkwb{<-} \hlkwd{var}\hlstd{(weights[D}\hlopt{==}\hlnum{1}\hlstd{])}
+\hlstd{var.weights.control} \hlkwb{<-} \hlkwd{var}\hlstd{(weights[D}\hlopt{==}\hlnum{0}\hlstd{])}
+\end{alltt}
+\end{kframe}
+\end{knitrout}
+
+The variance of the weights is \ensuremath{4\times 10^{-4}} in the treatment condition and \ensuremath{6\times 10^{-4}} in the control condition. Indeed, units do have different probabilities of assignments as a result of the restriction scheme, but the differences are small.
+
+\item Use randomization inference to test the sharp null hypothesis that $D_i$ has no effect on $Y_i$ by regressing $Y_i$ on $D_i$ and comparing the estimate to the sampling distribution under the null hypothesis. Make sure that your sampling distribution includes only random allocations that satisfy the restriction mentioned above. Be sure to weight units by inverse probability weights as produced by the random allocation procedure. Estimate the ATE, calculate the $p$-value, and interpret the results.
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{ate} \hlkwb{<-} \hlkwd{estate}\hlstd{(Y,D,}\hlkwc{prob}\hlstd{=probs)}
+\hlstd{Ys} \hlkwb{<-} \hlkwd{genouts}\hlstd{(Y,D,}\hlkwc{ate}\hlstd{=}\hlnum{0}\hlstd{)}
+\hlstd{distout} \hlkwb{<-} \hlkwd{gendist}\hlstd{(Ys,perms,}\hlkwc{prob}\hlstd{=probs)}
+\hlstd{p.value} \hlkwb{<-} \hlkwd{mean}\hlstd{(}\hlkwd{abs}\hlstd{(distout)} \hlopt{>} \hlkwd{abs}\hlstd{(ate))}
+\hlstd{ate}
+\end{alltt}
+\begin{verbatim}
+## [1] 10.73
+\end{verbatim}
+\begin{alltt}
+\hlstd{p.value}
+\end{alltt}
+\begin{verbatim}
+## [1] 0.0054
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+
+The IPW estimate of the ATE is 10.73, which is close to the unweighted estimate above.  Using a two-tailed test in order to evaluate the null hypothesis that the treatment has no effect for any subject, we find a p-value of 0.005, which leads us to reject the null hypothesis in favor of the alternative hypothesis that the treatment has some effect. 
+
+\item Use randomization inference to test the sharp null hypothesis that $D_i$ has no effect on $Y_i$ by regressing $Y_i$ on $D_i$ and $X_i$ and comparing the estimate to the sampling distribution under the null hypothesis.  Estimate the ATE, calculate the $p$-value, and interpret the results. 
+
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{perms} \hlkwb{<-} \hlkwd{genperms.custom}\hlstd{(}\hlkwc{numiter}\hlstd{=}\hlnum{10000}\hlstd{,}\hlkwc{randfun}\hlstd{=randfun)}
+\hlstd{probs} \hlkwb{<-} \hlkwd{genprob}\hlstd{(perms)}
+\hlstd{ate_cov} \hlkwb{<-} \hlkwd{estate}\hlstd{(Y,D,X,}\hlkwc{prob}\hlstd{=probs)}
+\hlstd{Ys} \hlkwb{<-} \hlkwd{genouts}\hlstd{(Y,D,}\hlkwc{ate}\hlstd{=}\hlnum{0}\hlstd{)}
+\hlstd{distout_cov} \hlkwb{<-} \hlkwd{gendist}\hlstd{(Ys,perms,X,}\hlkwc{prob}\hlstd{=probs)}
+\hlstd{p.value_cov} \hlkwb{<-} \hlkwd{mean}\hlstd{(}\hlkwd{abs}\hlstd{(distout_cov)} \hlopt{>} \hlkwd{abs}\hlstd{(ate_cov))}
+\hlstd{ate_cov}
+\end{alltt}
+\begin{verbatim}
+##     Z 
+## 5.346
+\end{verbatim}
+\begin{alltt}
+\hlstd{p.value_cov}
+\end{alltt}
+\begin{verbatim}
+## [1] 0.0017
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+The IPW estimate of the ATE is 5.35, which is close to the unweighted estimate above. We again use a two-tailed test in order to evaluate the null hypothesis that the treatment has no effect for any subject. We find a $p$-value of 0.002, which leads us to reject the null hypothesis in favor of the alternative hypothesis that the treatment has some effect.
+
+\item Compare the sampling distributions under the null hypothesis in parts (a) and (b) to the sampling distributions obtained in exercises 4(d) and 4(e), which assumed that the randomization was unrestricted.  
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlcom{## Sampling Distributions from 4(d) and 4(e)}
+\hlstd{perms_complete_RA} \hlkwb{<-} \hlkwd{genperms}\hlstd{(D,}\hlkwc{maxiter}\hlstd{=}\hlnum{10000}\hlstd{)}
+\end{alltt}
+\begin{verbatim}
+## Too many permutations to use exact method.
+## Defaulting to approximate method.
+## Increase maxiter to at least 137846528820 to perform exact estimation.
+\end{verbatim}
+\begin{alltt}
+\hlstd{probs_complete_RA} \hlkwb{<-} \hlkwd{genprobexact}\hlstd{(D)}
+
+\hlstd{ate_complete_RA} \hlkwb{<-} \hlkwd{estate}\hlstd{(Y,D,}\hlkwc{prob}\hlstd{=probs_complete_RA)}
+\hlstd{Ys_complete_RA} \hlkwb{<-} \hlkwd{genouts}\hlstd{(Y,D,}\hlkwc{ate}\hlstd{=ate_complete_RA)}
+\hlstd{distout_complete_RA} \hlkwb{<-} \hlkwd{gendist}\hlstd{(Ys_complete_RA,perms_complete_RA,}
+                               \hlkwc{prob}\hlstd{=probs_complete_RA)}
+\hlstd{se_complete_RA} \hlkwb{<-} \hlkwd{sd}\hlstd{(distout_complete_RA)}
+\hlstd{se_complete_RA}
+\end{alltt}
+\begin{verbatim}
+## [1] 4.601
+\end{verbatim}
+\begin{alltt}
+\hlstd{ate_cov_complete_RA} \hlkwb{<-} \hlkwd{estate}\hlstd{(Y,D,X,}\hlkwc{prob}\hlstd{=probs_complete_RA)}
+\hlstd{Ys_cov_complete_RA} \hlkwb{<-} \hlkwd{genouts}\hlstd{(Y,D,}\hlkwc{ate}\hlstd{=ate_cov_complete_RA)}
+\hlstd{distout_cov_complete_RA} \hlkwb{<-} \hlkwd{gendist}\hlstd{(Ys_cov_complete_RA,perms_complete_RA,X,}
+                                   \hlkwc{prob}\hlstd{=probs_complete_RA)}
+\hlstd{se_cov_complete_RA} \hlkwb{<-} \hlkwd{sd}\hlstd{(distout_cov_complete_RA)}
+\hlstd{se_cov_complete_RA}
+\end{alltt}
+\begin{verbatim}
+## [1] 1.593
+\end{verbatim}
+\begin{alltt}
+\hlcom{## Sampling Distributions from 5(a) and 5(b)}
+\hlstd{perms_restricted_RA} \hlkwb{<-} \hlkwd{genperms.custom}\hlstd{(}\hlkwc{numiter}\hlstd{=}\hlnum{10000}\hlstd{,}\hlkwc{randfun}\hlstd{=randfun)}
+\hlstd{probs_restricted_RA} \hlkwb{<-} \hlkwd{genprob}\hlstd{(perms_restricted_RA)}
+
+\hlstd{ate_restricted_RA} \hlkwb{<-} \hlkwd{estate}\hlstd{(Y,D,}\hlkwc{prob}\hlstd{=probs_restricted_RA)}
+\hlstd{Ys_restricted_RA} \hlkwb{<-} \hlkwd{genouts}\hlstd{(Y,D,}\hlkwc{ate}\hlstd{=ate_restricted_RA)}
+\hlstd{distout_restricted_RA} \hlkwb{<-} \hlkwd{gendist}\hlstd{(Ys_restricted_RA,perms_restricted_RA,}
+                                 \hlkwc{prob}\hlstd{=probs_restricted_RA)}
+\hlstd{se_restricted_RA} \hlkwb{<-} \hlkwd{sd}\hlstd{(distout_restricted_RA)}
+\hlstd{se_restricted_RA}
+\end{alltt}
+\begin{verbatim}
+## [1] 4.199
+\end{verbatim}
+\begin{alltt}
+\hlstd{ate_cov_restricted_RA} \hlkwb{<-} \hlkwd{estate}\hlstd{(Y,D,X,}\hlkwc{prob}\hlstd{=probs_restricted_RA)}
+\hlstd{Ys_cov_restricted_RA} \hlkwb{<-} \hlkwd{genouts}\hlstd{(Y,D,}\hlkwc{ate}\hlstd{=ate_cov_restricted_RA)}
+\hlstd{distout_cov_restricted_RA} \hlkwb{<-} \hlkwd{gendist}\hlstd{(Ys_cov_restricted_RA,perms_restricted_RA,X,}
+                                     \hlkwc{prob}\hlstd{=probs_restricted_RA)}
+\hlstd{se_cov_restricted_RA} \hlkwb{<-} \hlkwd{sd}\hlstd{(distout_cov_restricted_RA)}
+\hlstd{se_cov_restricted_RA}
+\end{alltt}
+\begin{verbatim}
+## [1] 1.607
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+% latex table generated in R 3.1.2 by xtable 1.7-4 package
+% Fri Feb 27 19:40:43 2015
+\begin{table}[H]
+\centering
+\caption{Summary of Estimated Standard Errors} 
+\begin{tabular}{rrr}
+  \hline
+ & Without Covariates & With Covariates \\ 
+  \hline
+Complete Random Assignment & 4.601 & 1.593 \\ 
+  Restricted Random Assignment & 4.199 & 1.607 \\ 
+   \hline
+\end{tabular}
+\end{table}
+
+
+Without covariates and assuming complete randomization, we obtain a standard error of 4.601. Under restricted randomization, the standard error declines to 4.199.  Including a covariate and assuming complete randomization, we obtain a standard error of 1.593.  Under restricted randomization, the standard error remains essentially unchanged at 1.607. Restricted randomization is akin to blocking, in that it rules out random allocations that result in imbalance; however, its advantages in terms of precision are limited when the researcher controls for a strongly prognostic covariate, which achieves most of the precision gains associated with blocking. 
+
+\end{enumerate}
+
+\section*{Question 6}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{verbatim}
+
+
+
+
+
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+\section*{Question 7}
+Researchers may be concerned about using block randomization when they are unsure whether the variable used to form the blocks actually predicts the outcome. Consider the case in which blocks are formed randomly -- in other words, the variable used to form the blocks has no prognostic value whatsoever. Below is a schedule of potential outcomes for four observations. [10pts]
+
+% Table generated by Excel2LaTeX from sheet 'Sheet1'
+\begin{table}[H]
+  \centering
+  \caption{Question 7 Table}
+    \begin{tabular}{ccc}
+    \toprule
+    Subject & Y(0)  & Y(1) \\
+    \midrule
+    A     & 1     & 2 \\
+    B     & 0     & 3 \\
+    C     & 2     & 2 \\
+    D     & 5     & 5 \\
+    \bottomrule
+    \end{tabular}%
+  \label{tab:addlabel}%
+\end{table}%
+
+\begin{enumerate}[a)]
+\item Suppose you were to use complete random assignment such that $m=2$ units are assigned to treatment.  What is the sampling variance of the difference-in-means estimator across all six possible random assignments?
+
+% Table generated by Excel2LaTeX from sheet 'Sheet1'
+\begin{table}[htbp]
+  \centering
+  \caption{Question 7a table}
+    \begin{tabular}{rrrr}
+    \toprule
+     Treated Units     &  $\bar{Y(1)}$ &  $\bar{Y(0)}$ &  $\widehat{ATE}$ \\
+    \midrule
+    A and B & 2.5   & 3.5   & -1 \\
+    A and C & 2     & 2.5   & -0.5 \\
+    A and D & 3.5   & 1     & 2.5 \\
+    B and C & 2.5   & 3     & -0.5 \\
+    B and D & 4     & 1.5   & 2.5 \\
+    C and D & 3.5     & 0.5   & 3 \\
+    \bottomrule
+    \end{tabular}%
+  \label{tab:addlabel}%
+\end{table}%
+
+The average estimated ATE is 1.0, which is the true ATE. The variance of the estimated ATEs over all 6 possible randomizations is 2.833.
+
+\item Suppose you were to form blocks by randomly pairing the observations. Within each pair, you randomly allocate one subject to treatment and the other to control so that $m=2$ units are assigned to treatment.There are three possible blocking schemes; for each blocking scheme, there are four possible random assignments.  What is the sampling variance of the difference-in-means estimator across all twelve possible random assignments?
+
+% Table generated by Excel2LaTeX from sheet 'Sheet1'
+\begin{table}[H]
+  \centering
+  \caption{Question 7b table}
+    \begin{tabular}{rrrrr}
+    \toprule
+          & Treated Units     &  $\bar{Y(1)}$ &  $\bar{Y(0)}$ &  $\widehat{ATE}$ \\
+    \midrule
+    \multicolumn{1}{c}{\multirow{4}[0]{*}{AB and CD blocked}} & A,C   & 2     & 2.5   & -0.5 \\
+    \multicolumn{1}{c}{} & A,D   & 3.5   & 1     & 2.5 \\
+    \multicolumn{1}{c}{} & B,D   & 4     & 1.5   & 2.5 \\
+    \multicolumn{1}{c}{} & B,C   & 2.5   & 3     & -0.5 \\
+          &       &       &       &  \\
+    \multicolumn{1}{c}{\multirow{4}[0]{*}{AC and BD blocked}} & A,B   & 2.5   & 3.5   & -1 \\
+    \multicolumn{1}{c}{} & A,D   & 3.5   & 1     & 2.5 \\
+    \multicolumn{1}{c}{} & C,B   & 2.5   & 3     & -0.5 \\
+    \multicolumn{1}{c}{} & C,D   & 3.5   & 0.5   & 3 \\
+          &       &       &       &  \\
+    \multicolumn{1}{c}{\multirow{4}[0]{*}{AD and BC blocked}} & A,B   & 2.5   & 3.5   & -1 \\
+    \multicolumn{1}{c}{} & A,C   & 2     & 2.5   & -0.5 \\
+    \multicolumn{1}{c}{} & D,B   & 4     & 1.5   & 2.5 \\
+    \multicolumn{1}{c}{} & D,C   & 3.5   & 0.5   & 3 \\
+    \bottomrule
+    \end{tabular}%
+  \label{tab:addlabel}%
+\end{table}%
+
+Across the 12 possible random assignments, the variance of the estimated ATE is again 2.833.  Notice that every estimate in the previous table appears in this table twice.
+
+\item From this example, what do you infer about the risks of blocking on a non-prognostic covariate?\\
+Answer:\\
+There is no risk of increasing variance with a useless blocking variable; at worst, the variable will be random noise, in which case the sampling variance will be the same as a design without blocking.
+\end{enumerate}
+
+
+\section*{Question 8}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{verbatim}
+
+
+
+
+
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+
+\section*{Question 9}
+Gerber and Green conducted a mobilization experiment in which calls from a large commercial phone bank urged voters in Iowa and Michigan to vote in the November 2002 election.\footnote{Gerber and Green 2005.} The randomization was conducted within four blocks: uncompetitive congressional districts in Iowa, competitive congressional districts in Iowa, uncompetitive congressional districts in Michigan, and competitive congressional districts in Michigan. Table 4.3 presents results only for one-voter households in order to sidestep the complications of cluster assignment. [10pts]
+
+
+
+\begin{enumerate}[a)]
+\item Within each of the four blocks, what was the apparent effect of being called by a phone bank on voter turnout?  \\
+Answer:\\
+From the ``Estimated ATE'' Row: Block 1: .0096, Block 2: -.0078, Block 3: -.0136, Block 4: .0083.  Substantively, these results suggest that calls encouraging voter turnout had effects ranging from -1.4 percentage points to +1.0 percentage point.
+\item When all of the subjects in this experiment are combined (see the rightmost column of the table), turnout seems substantially higher in the treatment group than the control group.  Explain why this comparison gives a biased estimate of the ATE.\\
+Answer:\\
+This estimator is biased because individuals in each stratum had different propensities to enter into treatment. The uncompetitive Michigan block has the lowest rate of treatment and also has the lowest rate of voting in the control group. Overall, blocks with higher rates of treatment tend to have higher rates of voting in the control group, which accounts for the upward bias.
+\item Using the weighted estimator described in Chapter 3, show the calculations used to generate an unbiased estimate of the overall ATE. 
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{ests} \hlkwb{<-} \hlkwd{c}\hlstd{(}\hlnum{.00964}\hlstd{,} \hlopt{-}\hlnum{.007829}\hlstd{,} \hlopt{-}\hlnum{.01362}\hlstd{,}\hlnum{.008271}\hlstd{)}
+\hlstd{shareoftotalN} \hlkwb{<-} \hlkwd{c}\hlstd{(}\hlnum{0.049487}\hlstd{,} \hlnum{0.1520981}\hlstd{,} \hlnum{0.626616}\hlstd{,} \hlnum{0.171799}\hlstd{)}
+\hlstd{overall_ate} \hlkwb{<-}\hlkwd{sum}\hlstd{(ests}\hlopt{*}\hlstd{shareoftotalN)}
+\hlstd{overall_ate}
+\end{alltt}
+\begin{verbatim}
+## [1] -0.007827
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+\item When analyzing block randomized experiments, researchers frequently use regression to estimate the ATE by regressing the outcome on the treatment and indicator variables for each of the blocks (omitting one block if the regression includes an intercept.)  This regression estimator places extra weight on blocks that allocate approximately half of the subjects to the treatment condition (i.e., $P_j  = 0.5$) because these blocks tend to estimate the within-block ATE with less sampling variability. Compare the four OLS weights to the weights $W_j$ used in part (c).\\
+Answer:\\
+The weights used in part (c) are based on the share of the subject pool that is in each block.  This weighting scheme places a great deal of weight on the relatively large Michigan block. By contrast, the OLS weights are a blend of the number of subjects in each block and each block's balance between treatment and control allocations. Because the blocks do not differ very much in terms of their allocation rates, the OLS weights tend to be similar across blocks.
+\item Regression provides an easy way to calculate the weighted estimate of the ATE in part (c) above. For each treatment subject $i$, compute the proportion of subjects in the same block who were assigned to the treatment group.  For control subjects, compute the proportion of subjects in the same block who were assigned to the control group.  Call this variable $q_i$.  Regress outcomes on treatment, weighting each observation by $1/q_i$, and show that this type of weighted regression produces the same estimate as weighting the estimated ATEs for each block.
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{Y} \hlkwb{<-} \hlstd{phones}\hlopt{$}\hlstd{vote02}
+\hlstd{block} \hlkwb{<-} \hlstd{phones}\hlopt{$}\hlstd{strata}
+\hlstd{Z} \hlkwb{<-} \hlstd{phones}\hlopt{$}\hlstd{treat2}
+
+\hlcom{## Proportion of subjects in each block assigned to treatment}
+\hlstd{block.pr} \hlkwb{<-} \hlkwd{tapply}\hlstd{(Z, block, mean)}
+
+\hlstd{q} \hlkwb{<-} \hlkwd{rep}\hlstd{(}\hlnum{NA}\hlstd{,} \hlkwd{length}\hlstd{(Y))}
+
+\hlkwa{for}\hlstd{(i} \hlkwa{in} \hlnum{1}\hlopt{:}\hlnum{4}\hlstd{)\{}
+  \hlstd{q[block}\hlopt{==}\hlstd{i]} \hlkwb{<-} \hlstd{block.pr[i]}\hlopt{*}\hlstd{Z[block}\hlopt{==}\hlstd{i]} \hlopt{+} \hlstd{(}\hlnum{1}\hlopt{-}\hlstd{block.pr[i])}\hlopt{*}\hlstd{(}\hlnum{1}\hlopt{-}\hlstd{Z[block}\hlopt{==}\hlstd{i])}
+\hlstd{\}}
+
+\hlstd{fit} \hlkwb{<-} \hlkwd{lm}\hlstd{(Y} \hlopt{~} \hlstd{Z,} \hlkwc{weights}\hlstd{=}\hlnum{1}\hlopt{/}\hlstd{q)}
+\hlkwd{summary}\hlstd{(fit)}
+\end{alltt}
+\begin{verbatim}
+## 
+## Call:
+## lm(formula = Y ~ Z, weights = 1/q)
+## 
+## Weighted Residuals:
+##    Min     1Q Median     3Q    Max 
+## -4.051 -0.469 -0.469  0.537  4.786 
+## 
+## Coefficients:
+##              Estimate Std. Error t value Pr(>|t|)    
+## (Intercept)  0.466198   0.000727  641.31  < 2e-16 ***
+## Z           -0.007828   0.001028   -7.61  2.7e-14 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 0.705 on 940713 degrees of freedom
+## Multiple R-squared:  6.16e-05,	Adjusted R-squared:  6.06e-05 
+## F-statistic:   58 on 1 and 940713 DF,  p-value: 2.65e-14
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+The coefficient on the treatment indicator is \ensuremath{-0.0078}, which is the same as was found in part c.
+
+\end{enumerate}
+
+
+\section*{Question 10}
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{verbatim}
+
+
+
+
+
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+
+\end{document}
+

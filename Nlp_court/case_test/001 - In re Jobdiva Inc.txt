@@ -1,0 +1,416 @@
+------------- Layer 0  ---------------
+In re Jobdiva, Inc., 843 F.3d 936 (2016)
+121 U.S.P.Q.2d 1122
+------------- Layer 1  ---------------
+843 F.3d 936
+------------- Layer 2  ---------------
+United States Court of Appeals,
+------------- Layer 3  ---------------
+Federal Circuit.
+------------- Layer 4  ---------------
+IN RE: JOBDIVA, INC., Appellant
+------------- Layer 5  ---------------
+2015-1960
+------------- Layer 6  ---------------
+|
+------------- Layer 7  ---------------
+Decided: December 12, 2016
+------------- Layer 8  ---------------
+Synopsis
+Background: The United States Patent and Trademark Office, Trademark Trial and Appeal Board, 2015 WL 2170162,
+cancelled JOBDIVA service mark in proceeding that owner originally requested to cancel registration owned by another
+party, and denied reconsideration, 2015 WL 3542849. Owner appealed.
+------------- Layer 9  ---------------
+[Holding:] The Court of Appeals, Stoll, Circuit Judge, held that question of whether owner of JOBDIVA service mark,
+through its software, performed personnel placement and recruitment services and whether consumers would associate
+that mark with personnel placement and recruitment services, regardless of whether steps of service were performed by
+software, was factual determination to which bright-line rule could not be applied.
+------------- Layer 10  ---------------
+Vacated and remanded.
+------------- Layer 11  ---------------
+West Headnotes (8)
+------------- Layer 12  ---------------
+[1]
+------------- Layer 13  ---------------
+[2]
+------------- Layer 14  ---------------
+Questions of law or fact
+Goods or services underlying mark;  class
+------------- Layer 15  ---------------
+Trademarks
+Trademarks
+Question of whether owner of JOBDIVA service mark, through its software, performed personnel placement
+and  recruitment  services  and  whether  consumers  would  associate  that  mark  with  personnel  placement
+and  recruitment  services,  regardless  of  whether  steps  of  service  were  performed  by  software,  was  factual
+determination to which bright-line rule could not be applied in proceeding to cancel registration; case-specific
+factors might indicate that owner was rendering service even though service might be performed by owner's
+software. Lanham Trade-Mark Act §§ 1, 8, 14, 45, 15 U.S.C.A. §§ 1051(a), 1058(b)(1)(B), 1064(3), 1127; 37
+C.F.R. § 2.86.
+------------- Layer 16  ---------------
+Cases that cite this headnote
+------------- Layer 17  ---------------
+Extent of Use;  Discontinuance and Non-Use
+Validity, ownership, and use
+------------- Layer 18  ---------------
+Trademarks
+Trademarks
+Because service mark registrations are presumed valid, the party seeking cancellation of such registration must
+establish a prima facie case of abandonment by showing proof of nonuse for three consecutive years. Lanham
+Trade-Mark Act § 45, 15 U.S.C.A. § 1127.
+------------- Layer 19  ---------------
+Cases that cite this headnote
+------------- Layer 20  ---------------
+ © 2018 Thomson Reuters. No claim to original U.S. Government Works.
+------------- Layer 21  ---------------
+1
+------------- Layer 22  ---------------
+In re Jobdiva, Inc., 843 F.3d 936 (2016)
+121 U.S.P.Q.2d 1122
+------------- Layer 23  ---------------
+[3]
+------------- Layer 24  ---------------
+[4]
+------------- Layer 25  ---------------
+[5]
+------------- Layer 26  ---------------
+[6]
+------------- Layer 27  ---------------
+[7]
+------------- Layer 28  ---------------
+[8]
+------------- Layer 29  ---------------
+Questions of law or fact
+------------- Layer 30  ---------------
+Trademarks
+Whether a mark has been used to identify a particular service is a question of fact. Lanham Trade-Mark Act
+§ 45, 15 U.S.C.A. § 1127.
+------------- Layer 31  ---------------
+Cases that cite this headnote
+------------- Layer 32  ---------------
+Trademarks
+Whether a trademark holder has abandoned its use of a mark is a question of fact.
+------------- Layer 33  ---------------
+Questions of law or fact
+------------- Layer 34  ---------------
+Cases that cite this headnote
+------------- Layer 35  ---------------
+Scope of review
+------------- Layer 36  ---------------
+Trademarks
+The legal conclusions of the United States Patent and Trademark Office, Trademark Trial and Appeal Board,
+are reviewed de novo and its factual findings are reviewed for substantial evidence.
+------------- Layer 37  ---------------
+Cases that cite this headnote
+------------- Layer 38  ---------------
+Goods or services underlying mark;  class
+------------- Layer 39  ---------------
+Trademarks
+To  determine  whether  a  mark  is  used  in  connection  with  the  services  described  in  the  registration,  a  key
+consideration is the perception of the user.
+------------- Layer 40  ---------------
+Cases that cite this headnote
+------------- Layer 41  ---------------
+Trademarks
+JOBDIVA
+------------- Layer 42  ---------------
+Alphabetical listing
+------------- Layer 43  ---------------
+Cases that cite this headnote
+------------- Layer 44  ---------------
+Trademarks
+ONLINE TODAY
+------------- Layer 45  ---------------
+Alphabetical listing
+------------- Layer 46  ---------------
+Cases that cite this headnote
+------------- Layer 47  ---------------
+*937   Appeal  from  the  United  States  Patent  and  Trademark  Office,  Trademark  Trial  and  Appeal  Board  in  No.
+92050828.
+------------- Layer 48  ---------------
+Attorneys and Law Firms
+------------- Layer 49  ---------------
+DANIEL  I.  SCHLOSS,  Greenberg  Traurig  LLP,  New  York,  NY,  argued  for  appellant.  Also  represented  by
+MASAHIRO NODA.
+------------- Layer 50  ---------------
+MARY BETH WALKER, Office of the Solicitor, United States Patent and Trademark Office, Alexandria, VA, argued
+for intervenor Michelle K. Lee. Also represented by THOMAS W. KRAUSE, CHRISTINA HIEBER.
+------------- Layer 51  ---------------
+Before Prost, Chief Judge, Dyk, and Stoll, Circuit Judges.
+------------- Layer 52  ---------------
+ © 2018 Thomson Reuters. No claim to original U.S. Government Works.
+------------- Layer 53  ---------------
+2
+------------- Layer 54  ---------------
+In re Jobdiva, Inc., 843 F.3d 936 (2016)
+121 U.S.P.Q.2d 1122
+------------- Layer 55  ---------------
+Opinion
+------------- Layer 56  ---------------
+Stoll, Circuit Judge.
+------------- Layer 57  ---------------
+In this trademark case, we must decide whether JobDiva, Inc. used its marks in connection with personnel placement
+and recruitment services, or whether the Trademark Trial and Appeal Board correctly held that JobDiva failed to do
+so because it used its marks on software offerings, without more. The Board required JobDiva to prove that it used its
+marks on more than just software because its software sales alone could not, in the Board's view, constitute personnel
+and recruitment services. We disagree with the Board's approach. The proper question is whether JobDiva, through its
+software, performed personnel placement and recruitment services and whether consumers would associate JobDiva's
+registered marks with personnel placement and recruitment services, regardless of whether the steps of the service were
+performed by software. Because the Board must visit that question in the first instance, we vacate its decision and remand
+for further consideration.
+------------- Layer 58  ---------------
+BACKGROUND
+------------- Layer 59  ---------------
+I.
+------------- Layer 60  ---------------
+On June 8, 2004, the United States Patent and Trademark Office issued Registration No. 2851917 (“the '917 registration”)
+to JobDiva for the service mark JOBDIVA for “personnel placement and recruitment” services. On November 8, 2005,
+it issued Registration No. 3013235 (“the '235 registration”) to JobDiva for the service mark shown below:
+------------- Layer 61  ---------------
+for “personnel placement and recruitment services; computer services, namely, providing databases featuring recruitment
+and employment, employment advertising, career information and resources, resume creation, resume transmittals and
+communication of responses thereto via a global computer network.” J.A. 498; see also J.A. 52–53.
+------------- Layer 62  ---------------
+JobDiva uses its trademarks in connection with its product and service offerings, which its website describes as “the
+largest, ultimate, full service solution for the staffing industry with an extensive suite of products & tools, front to back
+end, covering all staffing needs.” J.A. 117. JobDiva offers, in the words of its Chief Executive Officer, “an applicant
+tracking system for recruiting departments, [and] for HR departments seeking to staff people.” J.A. 212. JobDiva uses
+software to automatically provide these offerings to clients.
+------------- Layer 63  ---------------
+JobDiva's software generally provides a database of employment applications that a hiring manager or recruiter might
+use  to  fill  a  job  opening.  J.A.  223.  The  software  performs  multiple  functions  to  facilitate  this  job-filling  process.  It
+employs  automated  “harvesters”  to  find  potential  job  candidates  by  automatically  scraping  job  *938   boards  and
+aggregating relevant resumes. J.A. 223, 461–63. And it reviews and analyzes job candidates' resumes to determine if any
+candidate's qualifications match the job's requirements. J.A. 393. It thus “replaces a tedious manual search” previously
+performed by hiring managers or recruiters. J.A. 462–63. JobDiva also helps hiring managers directly communicate with
+job candidates. For instance, it permits hiring managers to post job openings in a job candidate portal. J.A. 221. This
+candidate portal may also be embedded into a company's website. J.A. 13. The software further assists job candidates by
+recommending potential openings to the candidates based on skillsets and provides them automated resume feedback.
+J.A. 221.
+------------- Layer 64  ---------------
+ © 2018 Thomson Reuters. No claim to original U.S. Government Works.
+------------- Layer 65  ---------------
+3
+------------- Layer 66  ---------------
+In re Jobdiva, Inc., 843 F.3d 936 (2016)
+121 U.S.P.Q.2d 1122
+------------- Layer 67  ---------------
+In many circumstances, JobDiva renders these offerings on a software-as-a-service, or “SaaS,” basis to its customers. As
+the Board explained, “Software as a Service (SaaS) leverages software by delivering it over the Internet.” JobDiva, Inc. v.
+Jobvite, Inc., Cancellation No. 92050828, 2015 WL 3542849, at *1 (T.T.A.B. May 20, 2015) (“JobDiva Rehearing”). The
+Board noted that SaaS is “also known as cloud computing.” Id. at *2. “Cloud computing,” according to the Board, “is
+defined as ‘computing operations carried out on servers that are accessed through the Internet, rather than on one's own
+personal computers.’ ” Id. at *2 (quoting Dictionary of Computer and Internet Terms 434 (11th ed. 2013)). By hosting
+its software remotely, JobDiva provides its clients a product without the need to download “cumbersome software ...
+onto office desktops or laptops.” J.A. 474.
+------------- Layer 68  ---------------
+As the Board explained, JobDiva's SaaS model of software delivery also changes the way that users interact with JobDiva:
+“The users pay for the computing as a service rather than owning the machines and software to do it.” JobDiva Rehearing,
+2015 WL 3542849, at *2 (quoting Dictionary of Computer and Internet Terms, supra, at 434). Unlike a locally installed
+software program, which might be downloaded from the Internet or a disk, JobDiva's software resides on remote servers
+and customers access it via the Internet.
+------------- Layer 69  ---------------
+II.
+------------- Layer 70  ---------------
+The Board cancelled JobDiva's marks in a proceeding that JobDiva originally requested. JobDiva initially petitioned
+the Board to cancel a registration owned by Jobvite, Inc., which is no longer a party to this case. JobDiva asserted, inter
+alia, a likelihood of confusion between Jobvite's and JobDiva's service marks. To establish its claim, JobDiva asserted
+ownership of its two marks introduced above.
+------------- Layer 71  ---------------
+Jobvite counterclaimed, petitioning the Board to cancel JobDiva's trademark registrations by alleging that JobDiva failed
+to perform personnel placement and recruitment services. Jobvite requested that the Board cancel the '917 registration in
+whole and its '235 registration in part. Notably, Jobvite did not submit affirmative evidence of abandonment or challenge
+that JobDiva used the '235 registration to identify the other services specified in its registration.
+------------- Layer 72  ---------------
+A.
+------------- Layer 73  ---------------
+The Board granted Jobvite's counterclaim, cancelling the '917 registration in whole and the '235 registration in part.
+JobDiva,  Inc.  v.  Jobvite,  Inc.,  Cancellation  No.  92050828,  2015  WL  2170162  (T.T.A.B.  Apr.  16,  2015).  The  Board
+explained that under Section 45 of the Trademark Act, “[a] mark shall be deemed to be ‘abandoned’ ... [w]hen its use has
+been discontinued with intent not to resume such use.” Id. at *7 (quoting 15 U.S.C. § 1125).
+------------- Layer 74  ---------------
+*939  The Board started its analysis of JobDiva's use of its marks by defining the scope of JobDiva's registrations for
+“personnel placement and recruitment” services and consulting dictionary definitions for each word. Id. at *6. Combining
+these definitions, the Board found that “personnel placement and recruitment” meant “that [JobDiva] is finding and
+placing people in jobs at other companies or providing personnel staffing services for others.” Id.
+------------- Layer 75  ---------------
+To  prove  its  use  of  the  marks  in  connection  with  personnel  placement  and  recruitment,  JobDiva  had  submitted
+screenshots  from  its  website  and  a  declaration  of  its  CEO,  Diya  Obeid.  But  the  Board  found  JobDiva's  evidence
+insufficient,  explaining  that  “[t]here  [was]  no  reference  ...  to  Petitioner's  performance  of  personnel  placement  and
+recruitment  services  other  than  supplying  Petitioner's  software.”  Id.  The  Board  concluded  that,  “[s]ince  there  is  no
+evidence of use of Petitioner's marks in connection with ‘personnel placement and recruitment’ services, there has been
+nonuse for three consecutive years.” Id. The Board therefore cancelled the '917 registration in whole and amended the
+'235 registration to delete “personnel placement and recruitment.” Id.
+------------- Layer 76  ---------------
+ © 2018 Thomson Reuters. No claim to original U.S. Government Works.
+------------- Layer 77  ---------------
+4
+------------- Layer 78  ---------------
+In re Jobdiva, Inc., 843 F.3d 936 (2016)
+121 U.S.P.Q.2d 1122
+------------- Layer 79  ---------------
+B.
+------------- Layer 80  ---------------
+JobDiva  petitioned  the  Board  to  reconsider  its  judgment,  arguing  that  “the  Board  made  erroneous  findings  of  fact
+because there is ‘abundant evidence of record’ that shows Petitioner providing the service of ‘finding and placing people
+in jobs at other companies or providing personnel staffing services for others.’ ” JobDiva Rehearing, 2015 WL 3542849,
+at *1. The Board again disagreed, finding that JobDiva had failed to prove use of its marks for “personnel placement
+and recruitment” services.
+------------- Layer 81  ---------------
+The Board explained that “[a] term that only identifies a computer program does not become a service mark merely
+because the program is sold or licensed in commerce.” Id. at *2. “Such a mark does not serve to identify a service unless it
+is also used to identify and distinguish the service itself, as opposed to the program.” Id. The Board counseled, however,
+that “it is important to review the record carefully to determine the manner of use of the mark and the impression it is
+likely to make on purchasers.” Id.
+------------- Layer 82  ---------------
+The Board found JobDiva's evidence of use insufficient because JobDiva only provided software, but not additional
+“personnel placement and recruitment” services. The Board explained that it “looked for evidence that Petitioner was
+rendering ‘personnel placement and recruitment services' for others rather than merely providing a software solution for
+clients to use in performing their ‘personnel placement and recruitment’ activities.” Id. The Board criticized JobDiva
+for  “confus[ing]  the  service  of  providing  a  software  solution  for  personnel  placement  and  recruitment  with  actually
+rendering personnel placement and recruitment services.” Id. at *3. The Board repeatedly faulted JobDiva's evidence as
+proving only that JobDiva offered software for personnel placement and recruitment, instead of providing that software
+in addition to offering personnel placement and recruitment services. Id. at *3–4. Indeed, the Board required JobDiva
+to prove that “it is rendering ‘personnel placement and recruitment’ as an independent activity distinct from providing
+its software to others.” Id. at *4 (emphasis added).
+------------- Layer 83  ---------------
+The Board further made clear that JobDiva did not use the marks for services, even though the software itself could
+perform  the  “personnel  placement  and  recruitment”  functions.  JobDiva's  CEO  had  *940   testified  that  JobDiva's
+software actually performs personnel placement and recruitment services:
+------------- Layer 84  ---------------
+“JobDiva aggregates resumes for its clients, employers, from the job boards ... they apply to job boards to source
+candidates and that is usually a manual exercise,” but JobDiva can “search the job board's sites and databases for
+candidates on behalf of employers who are subscribing to these job boards, so it's almost like an outsource function
+that JobDiva performs in the recruiting process.”
+------------- Layer 85  ---------------
+Id. at *3 (quoting J.A. 223). The Board dismissed this evidence, however, because the testimony did “not provide any
+evidence that Petitioner renders ‘personnel placement and recruitment services' other than by providing the software
+that performs those functions.” Id. Thus, the Board ultimately found that JobDiva had failed to establish “that it is
+rendering ‘personnel placement and recruitment’ services for others separate and apart from providing its software.” Id.
+(emphasis added).
+------------- Layer 86  ---------------
+The Board denied JobDiva's request for reconsideration, and JobDiva appealed. We have jurisdiction under 28 U.S.C.
+§ 1295(a)(4)(B).
+------------- Layer 87  ---------------
+DISCUSSION
+------------- Layer 88  ---------------
+ © 2018 Thomson Reuters. No claim to original U.S. Government Works.
+------------- Layer 89  ---------------
+5
+------------- Layer 90  ---------------
+In re Jobdiva, Inc., 843 F.3d 936 (2016)
+121 U.S.P.Q.2d 1122
+------------- Layer 91  ---------------
+[1] Section 1(a) of the Lanham Act requires that an application to register a trademark must include “specification of ...
+the goods in connection with which the mark is used.” 15 U.S.C. § 1051(a). The Supreme Court has recognized that
+“[t]he usages listed in [an] application ... are critical” because of, inter alia, the legal rights that trademark registration
+conveys. B & B Hardware, Inc. v. Hargis Indus., Inc., ––– U.S. ––––, 135 S.Ct. 1293, 1300, 191 L.Ed.2d 222 (2015). As
+such, a registrant must use its mark in accordance with goods and services recited in the registration. 15 U.S.C. § 1064(3);
+see also 15 U.S.C. § 1058(b)(1)(B).
+------------- Layer 92  ---------------
+  [3]
+------------- Layer 93  ---------------
+  [4]
+------------- Layer 94  ---------------
+  [5] A registration may be cancelled on grounds of abandonment when the mark has not been used for the
+------------- Layer 95  ---------------
+[2]
+goods or services specified in the registration for at least three years and there is no showing of an intent to resume use
+of the mark for those goods or services. 15 U.S.C. § 1127; On–Line Careline, Inc. v. Am. Online, Inc., 229 F.3d 1080,
+1087 (Fed. Cir. 2000). Because service mark registrations are presumed valid, the party seeking cancellation of such
+registration must “establish[ ] a prima facie case of abandonment by showing proof of nonuse for three consecutive
+years.” On–Line Careline, 229 F.3d at 1087. Whether a mark has been used to identify a particular service is a question
+of fact. In re Advert. & Mktg. Dev., Inc., 821 F.2d 614, 621 (Fed. Cir. 1987). Likewise, whether a trademark holder has
+abandoned its use of a mark is a question of fact. On–Line Careline, 229 F.3d at 1087. We review the Board's legal
+conclusions de novo and its factual findings for substantial evidence. Princeton Vanguard, LLC v. Frito–Lay N. Am.,
+Inc., 786 F.3d 960, 964 (Fed. Cir. 2015).
+------------- Layer 96  ---------------
+We agree with the Board's initial observation that, with modern technology, the line between services and products
+sometimes  blurs.  See  JobDiva  Rehearing,  2015  WL  3542849,  at  *2.  As  the  Board  correctly  observed,  “[i]n  today's
+commercial context if a customer goes to a company's website and accesses the company's software to conduct some type
+of business, the company may be rendering a service, even though the service utilizes software.” Id. (quoting In re Ancor
+Holdings, No. 76213721, 2006 WL 1258813 (T.T.A.B. April 28, 2006)). But a mark used with a web-based offering may
+equally identify the provision of software, rather than a  *941  service. For these reasons, careful analysis is required to
+determine whether web-based offerings, like those JobDiva provides, are products or services: “[I]t is important,” as the
+Board properly noted, “to review all the information in the record to understand both how the mark is used and how it
+will be perceived by potential customers.” JobDiva Rehearing, 2015 WL 3542849, at *2.
+------------- Layer 97  ---------------
+But while the Board rightly recognized that it is crucial to carefully review the manner of use of the marks and their
+likely impression on purchasers, id. it nevertheless appeared to apply a bright-line rule requiring JobDiva to show that
+it performed the “personnel placement and recruitment” services in a way other than having its software perform those
+services. It stated, for example, that “there is no testimony or evidence that supports [JobDiva's] claim that it is rendering
+‘personnel placement and recruitment’ as an independent activity distinct from providing its software to others.” Id. at
+*4 (emphasis added). The Board repeatedly faulted JobDiva for failing to prove that it offered personnel placement and
+recruitment services in addition to its provision of software. Id. at *3 (“The references on Petitioner's web sites show that
+Petitioner is supplying ‘personnel placement and recruitment’ software, not that Petitioner itself is rendering ‘personnel
+placement  and  recruitment’  services  for  others.”);  id.  at  *4  (“Petitioner's  ‘harvesters'  are  functions  or  capabilities  of
+the  JobDiva  software,  not  activities  performed  by  Petitioner  for  the  purpose  of  offering  ‘personnel  placement  and
+recruitment services' for others.”). In holding JobDiva to that standard, the Board erred in its understanding of the law.
+------------- Layer 98  ---------------
+Even though a service may be performed by a company's software, the company may well be rendering a service. For
+example, in On–Line Careline, we held that AOL had used its ONLINE TODAY mark in connection with services, even
+though those services were provided by software. 229 F.3d at 1088. AOL had used its mark in connection with software
+that “provided its users with ‘access' to its service through on-screen menu items.” Id. We affirmed the Board's finding
+that AOL used its mark to identify the services described in the registration: “providing access to online computer services
+offering computer-industry news, commentary and product reviews.” Id. We explained that, “[i]n a very literal sense, the
+subject mark was the designation by which AOL provides users access to the Internet news and information service.”
+Id. At bottom, we recognized that software may be used by companies to provide services. Id. Indeed, here the '235
+registration for “computer services, namely, providing databases featuring recruitment and employment, employment
+------------- Layer 99  ---------------
+ © 2018 Thomson Reuters. No claim to original U.S. Government Works.
+------------- Layer 100  ---------------
+6
+------------- Layer 101  ---------------
+In re Jobdiva, Inc., 843 F.3d 936 (2016)
+121 U.S.P.Q.2d 1122
+------------- Layer 102  ---------------
+advertising, career information and resources, resume creation, resume transmittals and communication of responses
+thereto via a global computer network,” remains unchallenged.
+------------- Layer 103  ---------------
+[6] To determine whether a mark is used in connection with the services described in the registration, a key consideration
+is the perception of the user. See Lens.com, Inc. v. 1–800 Contacts, Inc., 686 F.3d 1376, 1381–82 (Fed. Cir. 2012). The
+question is whether a user would associate the mark with “personnel placement and recruitment” services performed by
+JobDiva, even if JobDiva's software performs each of the steps of the service. 1  In other  *942  words, the question is
+whether the evidence of JobDiva's use of its marks “sufficiently creates in the minds of purchasers an association between
+the mark[s] and [JobDiva's personnel placement and recruitment] services.” Ancor Holdings, 2006 WL 1258813, at *3.
+------------- Layer 104  ---------------
+This “is a factual determination that must be conducted on a case-by-case basis,” and there are many case-specific factors
+the Board might examine. Lens.com, 686 F.3d at 1381–82. For example, in this case, the Board should consider the
+nature of the user's interaction with JobDiva when using JobDiva's software, as well as the location of the software host.
+If JobDiva sells its software to a customer who hosts the software on its own website and a third-party user's interactions
+appear to be with the customer (as opposed to JobDiva), it is unlikely that the customer or the third-party user would
+associate the JOBDIVA mark with a service performed by JobDiva. But if the software is hosted on JobDiva's website
+such that the user perceives direct interaction with JobDiva during operation of the software, a user might well associate
+JobDiva's marks with personnel “placement and recruitment” services performed by JobDiva. The purchasers' acquiring
+ownership  in  JobDiva's  software  likely  will  preclude  a  finding  that  JobDiva  has  rendered  services,  unless  JobDiva's
+activities after the sale create the perception that JobDiva is in fact providing services.
+------------- Layer 105  ---------------
+The ultimate question here is this: whether purchasers would perceive JobDiva's marks to identify “personnel placement
+and recruitment” services. Because that question is a factual one, the Board must answer it in the first instance.
+------------- Layer 106  ---------------
+Because the Board applied the wrong legal standard, we vacate its judgment and remand for further consideration in
+light of this opinion.
+------------- Layer 107  ---------------
+CONCLUSION
+------------- Layer 108  ---------------
+VACATED AND REMANDED
+------------- Layer 109  ---------------
+All Citations
+------------- Layer 110  ---------------
+843 F.3d 936, 121 U.S.P.Q.2d 1122
+------------- Layer 111  ---------------
+Footnotes
+1
+------------- Layer 112  ---------------
+We note that JobDiva, like any entity, may register its marks to identify both software and services performed by software.
+37 C.F.R. § 2.86 (“In a single application for a trademark, service mark, and/or collective mark, an applicant may apply to
+register the same mark for goods, services, and/or a collective membership organization in multiple classes.”). For example,
+JobDiva might use its marks to identify software sold to some customers, but those uses do not somehow negate other uses
+of the same marks to identify service offerings.
+------------- Layer 113  ---------------
+End of Document
+------------- Layer 114  ---------------
+© 2018 Thomson Reuters. No claim to original U.S. Government Works.
+------------- Layer 115  ---------------
+ © 2018 Thomson Reuters. No claim to original U.S. Government Works.
+------------- Layer 116  ---------------
+7

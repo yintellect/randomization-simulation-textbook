@@ -1,0 +1,514 @@
+\documentclass[11pt,notitlepage]{article}
+\usepackage{calc}
+\usepackage{amsfonts}
+\usepackage{amsthm}
+\usepackage{amsmath, booktabs}
+\usepackage{mathtools}
+\usepackage{amssymb}
+\usepackage{caption}
+\usepackage{subcaption}
+%\usepackage[none]{hyphenat} 
+\usepackage{setspace}
+%\usepackage{fullpage}
+\usepackage{verbatim}
+\usepackage{graphicx}
+\usepackage{tabularx}
+\usepackage{longtable}
+\usepackage{multicol}
+\usepackage{multirow}
+\setlength{\parindent}{0in}
+\usepackage{pdflscape}
+\usepackage[english]{babel}
+\usepackage[pdftex]{hyperref}
+\usepackage{natbib}
+\usepackage{caption}
+\usepackage{enumitem}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{graphics}
+\usepackage{multirow}
+\usepackage{graphics}
+\usepackage{hyperref}
+\usepackage{longtable}
+\usepackage{latexsym}
+\usepackage{rotating}
+\usepackage{setspace}
+\usepackage{layouts} 
+\usepackage[titletoc]{appendix}
+\DeclareGraphicsExtensions{.pdf,.jpg,.png}
+\usepackage[margin=.5in]{geometry}
+
+\usepackage{fancyvrb}
+
+\usepackage[nottoc]{tocbibind}
+\usepackage{framed}
+
+
+% FONTS
+\usepackage[T1]{fontenc}
+%\usepackage{lmodern}
+\usepackage{libertine}
+%\usepackage{mathptmx}
+%\usepackage{mathpazo}
+%\usepackage{arev}
+%\usepackage{times}
+%\usepackage{pxfonts}
+%\usepackage{cmbright}
+%\usepackage{txfonts}
+%\usepackage[adobe-utopia]{mathdesign}
+%\usepackage{kpfonts}
+%\usepackage{newtxtext,newtxmath}
+
+% custom math
+\renewcommand{\tablename}{\bf Table}
+\newtheorem{assump}{\bf Assumption}
+\newtheorem{hyp}{\it Hypothesis}
+\def\Var{\mathop{\text{Var}}} 
+\def\E{\mathop{\mathbb{E}}} 
+\def\Exp{\mathop{\mathbb{E}}} 
+\def\Cov{\mathop{\text{Cov}}} 
+\def\Pr{\mathop{\text{Pr}}} 
+
+\usepackage{sectsty}
+\sectionfont{\Large\bfseries\centering}
+\subsectionfont{\large\bfseries\centering}
+
+\renewcommand{\thesection}{}
+\renewcommand{\thesubsection}{}
+
+\hypersetup{
+    colorlinks=true,       % false: boxed links; true: colored links
+    linkcolor=red,          % color of internal links (change box color with linkbordercolor)
+    citecolor=red,        % color of links to bibliography
+    filecolor=red,      % color of file links
+    urlcolor=red           % color of external links
+}
+
+\title{\large\bf Experimental Research: Design, Analysis, and Interpretation\\ \mdseries W4368\\Spring 2013\\Take-Home Midterm Exam\\[0.5cm] {\bf SOLUTION KEY FOR UNSAMPLED DATASETS}}
+\author{TA: Albert Fang}
+\date{\today}
+
+
+
+\begin{document}
+\maketitle
+\frenchspacing
+\singlespacing
+
+
+\tableofcontents
+
+\clearpage
+
+\section{Problem 1.}  The FEDAI book presents results from a simplified version of the Clingingsmith et al. dataset.  The actual dataset has multiple observations in each household, and random assignment of visas occurred at the level of the household (i.e., everyone in the household was entered in the lottery together, and everyone won or lost as a cluster).  The data for this problem may be found in q1hajj\_sub.dta.  The assignment (success), treatment (hajj2006) and outcome variables (views) are otherwise the same as the dataset used in the book.  As noted in Chapter 6, the study encountered two-sided noncompliance.  Thus, when analyzing these data, bear in mind the complications of clustered assignment and two-sided noncompliance.
+
+\vspace{.5cm}
+\hrule
+\vspace{.5cm}
+
+\subsection{Problem 1, Part A} {\bf Conduct a randomization check using the pre-treatment covariates in the dataset (age, female, literate).  Interpret the results.}
+
+\vspace{1cm}
+
+
+\begin{table}[ht]
+\begin{center}
+\begin{tabular}{rrr}
+  \hline
+ & f.stat & p.value \\ 
+  \hline
+unsampled data & 0.772 & 0.424 \\ 
+   \hline
+\end{tabular}
+\end{center}
+\end{table}
+
+
+\begin{figure}[h!]
+  \centering
+    \includegraphics[width=0.7\textwidth]{{q1a_unsampled}.pdf}
+\end{figure}
+
+\clearpage
+
+\subsection{Problem 1, Part B} {\bf Construct a table or graph to illustrate the ITT.}
+
+% latex table generated in R 2.15.1 by xtable 1.7-0 package
+% Wed Apr 24 12:45:29 2013
+\begin{table}[ht]
+\begin{center}
+\begin{tabular}{r|cc|cc|cc}
+  \hline
+ & $\E[Y_i(Z=1)]$ & $N_{z=1}$ & $\E[Y_i(Z=0)]$ & $N_{z=0}$ & $\E[Y_i(Z=1)] - \E[Y_i(Z=0)]$ & $N$ \\ 
+  \hline
+treated $d=1$ & 2.362 & [835] & 2.67 & [103] & -0.308 & [938] \\ 
+  untreated $d=0$ & 3 & [7] & 1.758 & [636] & 1.242 & [643] \\ 
+  \hline
+  total & 2.367 & [842] & 1.885 & [739] & 0.482 & [1581] \\ 
+   \hline
+\end{tabular}
+\end{center}
+\end{table}
+
+\subsection{Problem 1, Part C} {\bf Estimate the ITT with and without covariate adjustment. Provide a 95\% confidence interval for the ITT.  Test the sharp null hypothesis that the ITT is zero for all subjects.}
+
+\vspace{1cm}
+% latex table generated in R 2.15.1 by xtable 1.7-0 package
+% Wed Apr 24 12:45:29 2013
+\begin{table}[h!]\footnotesize
+\begin{center}
+\begin{tabular}{lrrrrrrr|rrrrrr}
+  \hline
+  & & \multicolumn{6}{c|}{No Covariate Adjustment} & \multicolumn{6}{c}{With Covariate Adjustment} \\
+  \cline{3-14}
+  & & & \multicolumn{3}{c}{RI p-values} & \multicolumn{2}{c|}{Adj. 95\% CI} &  & \multicolumn{3}{c}{RI p-values} & \multicolumn{2}{c}{Adj. 95\% CI} \\
+  \cline{4-6}\cline{10-12}
+Student & k & $\widehat{ITT}$ & Two-tailed & Greater & Lesser & LB & UB & $\widehat{ITT}$ & Two-tailed & Greater & Lesser & LB & UB \\ 
+  \hline
+unsampled data & 1026 & 0.482 & 0.000 & 0.000 & 1.000 & -0.268 & 1.230 & 0.490 & 0.000 & 0.000 & 1.000 & -0.255 & 1.235 \\ 
+   \hline
+\end{tabular}
+\end{center}
+\end{table}
+
+
+%%%%%
+\clearpage
+
+\subsection{Problem 1, Part D} {\bf What are the pros and cons of estimating the ITT controlling for the pre-treatment covariates?  Does controlling for covariates have a material effect on the results in part [b]?  Present a res-res plot of the covariate-adjusted ITT (see Figure 4.3).}
+
+
+\begin{figure}[h!]
+  \centering
+    \includegraphics[width=0.7\textwidth]{{q1d_unsampled}.pdf}
+\end{figure}
+
+
+%%%%%
+
+\subsection{Problem 1, Part E} {\bf Because cluster size varies, assess whether the results you found above change when you change the estimator of the ITT from difference-in-means to difference-in-totals.}
+
+\vspace{1cm}
+
+
+\begin{table}[h!]\footnotesize\doublespacing
+\begin{center}
+\begin{tabular}{lrrrrrr|rrrrrr}
+  \hline
+  & \multicolumn{6}{c|}{No Covariate Adjustment} & \multicolumn{6}{c}{With Covariate Adjustment} \\
+  \cline{2-13}
+  & & \multicolumn{3}{c}{RI p-values} & \multicolumn{2}{c|}{Adj. 95\% CI} &  & \multicolumn{3}{c}{RI p-values} & \multicolumn{2}{c}{Adj. 95\% CI} \\
+  \cline{3-5}\cline{9-11}
+Student & $\widehat{ITT}$ & Two-tailed & Greater & Lesser & LB & UB & $\widehat{ITT}$ & Two-tailed & Greater & Lesser & LB & UB \\ 
+  \hline
+unsampled data & 0.535 & 0.000 & 0.000 & 1.000 & -0.230 & 1.296 & 0.489 & 0.000 & 0.000 & 1.000 & -0.257 & 1.233 \\ 
+   \hline
+\end{tabular}
+\end{center}
+\end{table}
+
+
+
+\clearpage
+%%%%%
+
+\subsection{Problem 1, Part F} {\bf Explain what the term ``CACE'' means in the context of this study. } 
+
+\vspace{1cm}
+
+\underline{{\sc General Solution:}}
+
+The term ``CACE'' (complier average causal effect) refers to the average treatment effect of the hajj on views toward people from other countries among compliers -- those who would go on the hajj if they win the lottery and would not go on the hajj if they did not win the lottery.
+
+
+%%%%%
+\subsection{Problem 1, Part G} {\bf Explain what the monotonicity assumption means in the context of this study.  Assuming monotonicity, estimate the share of Compliers, Never-Takers, and Always-Takers.}
+
+
+\vspace{1cm}
+
+
+\underline{{\sc General Solution:}}
+
+The monotonicity assumption states that $d_i(z=0) < d_i(z=1), \forall i \in N$ given treatment receipt $d = \lbrace 0, 1 \rbrace$ and treatment assignment $z = \lbrace 0, 1 \rbrace$ where 1=treatment, 0=control. In the context of this study, this assumption means that there are no individuals who are Defiers -- that is, individuals who take up the treatment (i.e. go on the hajj) when assigned to control (i.e. losing the lottery) {\em and} who do not take up treatment (i.e. do not go on the hajj) when assigned to treatment (i.e. winning the lottery).\\
+
+When we assume monotonicity, we can estimate the population shares of Compliers, Never-Takers, and Always-Takers. Recall that with a binary treatment variable, these three types are defined by the following relationships between $d_i(z)$ and $z$.
+
+\begin{itemize}
+\item Compliers: $d_i(0) = 0$ and $d_i(1) = 1$
+\item Always-Takers: $d_i(0) = 1$ and $d_i(1) = 1$
+\item Never-Takers:  $d_i(0) = 0$ and $d_i(1) = 0$
+\end{itemize}
+
+Let the share of Compliers, Never-Takers, and Always-Takers be denoted:
+
+\begin{eqnarray*}
+\alpha_C &=& \Pr[ d_i(0) = 0 \text{ and } d_i(1) = 1 ] = \frac{1}{N} \sum_{i=1}^N d_i(1)(1-d_i(0))  = \Pr[\text{Complier}] \\
+\alpha_A &=& \Pr[ d_i(0) = 1 \text{ and } d_i(1) = 1 ] = \frac{1}{N} \sum_{i=1}^N d_i(1)d_i(0) = \Pr[\text{Always-Taker}] \\
+\alpha_N &=& \Pr[ d_i(0) = 0 \text{ and } d_i(1) = 0 ] = \frac{1}{N} \sum_{i=1}^N (1 - d_i(1))(1-d_i(0)) = \Pr[\text{Never-Taker}] 
+\end{eqnarray*}
+
+and
+
+\begin{eqnarray*}
+1 &=& \alpha_C + \alpha_A + \alpha_N
+\end{eqnarray*}
+
+Under two-sided noncompliance:
+
+\begin{itemize}
+\item Among those assigned to the treatment group ($z=1$), subjects who do not take up treatment ($d=0$) must be Never-Takers.
+\item Among those assigned to the control group ($z=0$), subjects who do take up treatment ($d=1$) must be Always-Takers.
+\end{itemize}
+
+Due to random assignment, in expectation the distribution of types is equal across treatment and control groups. So we can estimate:
+
+\begin{eqnarray*}
+\hat{\alpha}_A &=& \Pr[d=1 | z=0] \\
+\hat{\alpha}_N &=& \Pr[d=0 | z=1] \\
+\hat{\alpha}_C &=& 1 - \hat{\alpha}_A - \hat{\alpha}_N \\
+\end{eqnarray*}
+
+\begin{table}[h!]
+\begin{center}
+\begin{tabular}{lrrr}
+  \hline
+   & Pr(Complier) & Pr(Always-Taker) & Pr(Never-Taker) \\ 
+  \hline
+unsampled data & 0.852 & 0.139 & 0.008 \\ 
+   \hline
+\end{tabular}
+\end{center}
+\end{table}
+
+
+%%%%%
+
+\subsection{Problem 1, Part H} {\bf Estimate the CACE with and without covariate adjustment, and interpret the results.}
+
+\vspace{1cm}
+
+
+CACE estimated using the IV estimator ({\tt estlate} in the {\tt ri} package, or the {\tt ivreg} function in the {\tt AER} package). P-values from randomization inference of the sharp null that the ITT = 0 for all subjects. Confidence intervals estimated using output from IV regression (assumes constant treatment effects and a normal sampling distribution) and are adjusted (for clustered randomization).
+
+\begin{table}[h!]\footnotesize\doublespacing
+\begin{center}
+\begin{tabular}{lrrrrrr|rrrrrr}
+  \hline
+  & \multicolumn{6}{c|}{No Covariate Adjustment} & \multicolumn{6}{c}{With Covariate Adjustment} \\
+  \cline{2-13}
+  & & \multicolumn{3}{c}{RI p-values} & \multicolumn{2}{c|}{Adj. 95\% CI} &  & \multicolumn{3}{c}{RI p-values} & \multicolumn{2}{c}{Adj. 95\% CI} \\
+  \cline{3-5}\cline{9-11}
+ & $\widehat{CACE}$ & Two-tailed & Greater & Lesser & LB & UB & $\widehat{CACE}$ & Two-tailed & Greater & Lesser & LB & UB \\ 
+  \hline
+unsampled data & 0.566 & 0.000 & 0.000 & 1.000 & -0.229 & 1.360 & 0.575 & 0.000 & 0.000 & 1.000 & -0.215 & 1.365 \\ 
+   \hline
+\end{tabular}
+\end{center}
+\end{table}
+
+
+\subsection{Problem 1, Part I} {\bf Another version of this dataset may be found in q1hajj.dta; this version includes observations for which outcomes are missing.  Use this dataset to calculate extreme value bounds for the ITT.  }
+
+
+\vspace{1cm}
+
+Estimated extreme value bounds for the ITT, without and with covariate adjustment. The first four columns show the estimated extreme value bounds for the ITT estimated using the difference-in-means estimator. The next four columns show the estimated extreme value bounds for the ITT estimated using the difference-in-totals estimator.
+
+\begin{table}[h!]\small\doublespacing
+\begin{center}
+\begin{tabular}{lcc|cc|cc|cc}
+  \hline
+         & \multicolumn{4}{c|}{Difference-in-means estimator} & \multicolumn{4}{c}{Difference-in-totals estimator} \\
+         \cline{2-9}
+         & \multicolumn{2}{c}{Not Covariate Adjusted} & \multicolumn{2}{c|}{Covariate Adjusted} &  \multicolumn{2}{c}{Not Covariate Adjusted} & \multicolumn{2}{c}{Covariate Adjusted} \\
+         \cline{2-9}
+ Student & Lower & Upper & Lower & Upper & Lower & Upper & Lower & Upper \\
+  \hline
+unsampled data & 0.115 & 0.832 & 0.122 & 0.840 & 0.170 & 0.887 & 0.121 & 0.837 \\ 
+   \hline
+\end{tabular}
+\end{center}
+\end{table}
+
+
+\clearpage
+
+
+\subsection{Problem 1, Part J} {\bf Does missingness appear to be related to treatment assignment?  Suppose the missingness rates were identical for the assigned treatment and control groups; under monotonicity, would the upper trimming bound and lower trimming bound be identical?}
+
+\vspace{1cm}
+
+\underline{{\sc General Solution:}}
+
+We can apply the logic of the randomization check (from Ch. 4) to conduct a formal statistical test of the null of random missingness (i.e. missingness is unrelated to treatment). We would regress observed missingness $r_i$ on the experimental assignment and obtain an F-test statistic, and then we would compare this F statistic to the sampling distribution of F statistics generated using randomization inference.\\
+
+
+\begin{figure}[h!]
+  \centering
+    \includegraphics[width=0.7\textwidth]{{q1j_unsampled}.pdf}
+\end{figure}
+
+
+The main limitation of this method is that failure to reject the null of random missingness does not actually prove that missingness is unrelated to potential outcomes. (This holds even when we account for covariates prognostic of missingness.)\\
+
+If missingness rates were identical for the assigned treatment and control groups; under monotonicity, the upper and lower trimming bounds would be identical because in expectation all of the reporters in both treatment and control are Always Reporters (i.e., there are no If-Treated Reporters in the treatment group). Thus per Eq. 7.21, $Q = 0$; the proportion of the $Y_i$ values trimmed from the observed distribution in the treatment group is zero.
+
+
+\clearpage
+\section{Problem 2.}  In 2003, ACORN conducted an experiment in which 5,761 registered voters in Maricopa County were randomly assigned to be canvassed in advance of a municipal election.  The data for this problem may be found in q2acorn.dta. Subjects resided in one-voter and two-voter households.  Although the assignment was intended to take place at the individual level (see the variable treatment), ACORN decided that it was easier for canvassers to treat everyone in a household if any of its members were assigned to the treatment group.  The effective assignment is the variable treat2; ACORN's procedure amounted to a blocked and clustered assignment, where blocks are defined by household size and clusters are all subjects living at the same address.  The variable hhid gives the cluster identifier.  The variable persons indicates the number of voters in each household.  The outcome variable in this study is voter turnout, vote03.  Previous votes, precinct, and age are included as covariates. ACORN's canvassers only reached some of the subjects they sought to canvass; the variable contact indicates that the treatment was actually administered.  When analyzing these data, bear in mind the complications of blocked and clustered assignment as well as one-sided noncompliance.
+
+
+\vspace{.5cm}
+\hrule
+\vspace{.5cm}
+
+\subsection{Problem 2, Part A} {\bf Estimate the probability of treatment assignment for each block.}
+
+\vspace{1cm}
+
+\begin{table}[ht]
+\begin{center}
+\begin{tabular}{rllll}
+  \hline
+ & Student & UNI & Block (Num. Persons) & Pr(Assign to Treatment) \\ 
+  \hline
+ & unsampled data & none & 1 & 0.849 \\ 
+ & unsampled data & none & 2 & 0.973 \\ 
+   \hline
+\end{tabular}
+\end{center}
+\end{table}
+
+
+%%%%%
+
+\subsection{Problem 2, Part B} {\bf Construct a table showing the relationship between assigned treatment and voter turnout for each size household.  Use this table to calculate the ITT for each block, and interpret the results.}
+
+\vspace{1cm}
+
+\begin{table}[ht]
+\begin{center}
+\begin{tabular}{rc|cc|cc|cc}
+  \hline
+ & Block $j$ (\# Persons) & $\E[Y_i(Z=1)]$ & $N_{j, z=1}$ & $\E[Y_i(Z=0)]$ & $N_{j, z=0}$ & $\E[Y_i(1)]-\E[Y_i(0)]$ & $N_j$ \\ 
+  \hline
+ & 1 & 0.159 & 2666 & 0.074 & 473 & 0.085 & 3139 \\ 
+ & 2 & 0.21 & 2550 & 0.069 & 72 & 0.14 & 2622 \\ 
+   \hline
+\end{tabular}
+\end{center}
+\end{table}
+ 
+
+
+\subsection{Problem 2, Part C} {\bf Pooling both blocks, estimate the overall ITT, and estimate a 95\% confidence interval.  Test the sharp null hypothesis of no ITT effect.  Interpret the results.}
+
+\vspace{1cm}
+
+
+\begin{table}[h!]\footnotesize\onehalfspacing
+\begin{center}
+\begin{tabular}{lrrrrrrr|rrrrrr}
+  \hline
+  & & \multicolumn{6}{c|}{No Covariate Adjustment} & \multicolumn{6}{c}{With Covariate Adjustment} \\
+  \cline{3-14}
+  & & & \multicolumn{3}{c}{RI p-values} & \multicolumn{2}{c|}{Adj. 95\% CI} &  & \multicolumn{3}{c}{RI p-values} & \multicolumn{2}{c}{Adj. 95\% CI} \\
+  \cline{4-6}\cline{10-12}
+Student & k & $\widehat{ITT}$ & Two-tailed & Greater & Lesser & LB & UB & $\widehat{ITT}$ & Two-tailed & Greater & Lesser & LB & UB \\ 
+  \hline
+unsampled data & 4450 & 0.11 & 0.00 & 0.00 & 1.00 & -0.44 & 0.66 & 0.11 & 0.00 & 0.00 & 1.00 & -0.44 & 0.66 \\ 
+   \hline
+\end{tabular}
+\end{center}
+\end{table}
+
+\clearpage
+
+\subsection{Problem 2, Part D} {\bf Because cluster size varies, assess whether the results in part [c] change when you change the estimator of the ITT from difference-in-means to difference-in-totals.}
+
+\vspace{1cm}
+
+\begin{table}[h!]\scriptsize\onehalfspacing
+\begin{center}
+\begin{tabular}{lrrrrrrr|rrrrrr}
+  \hline
+  & & \multicolumn{6}{c|}{No Covariate Adjustment} & \multicolumn{6}{c}{With Covariate Adjustment} \\
+  \cline{3-14}
+  & & & \multicolumn{3}{c}{RI p-values} & \multicolumn{2}{c|}{Adj. 95\% CI} &  & \multicolumn{3}{c}{RI p-values} & \multicolumn{2}{c}{Adj. 95\% CI} \\
+  \cline{4-6}\cline{10-12}
+Student & k & $\widehat{ITT}$ & Two-tailed & Greater & Lesser & LB & UB & $\widehat{ITT}$ & Two-tailed & Greater & Lesser & LB & UB \\ 
+  \hline
+unsampled data & 4450 & 0.11 & 0.00 & 0.00 & 1.00 & -0.44 & 0.66 & 0.11 & 0.00 & 0.00 & 1.00 & -0.44 & 0.66 \\ 
+   \hline
+\end{tabular}
+\end{center}
+\end{table}
+
+
+\subsection{Problem 2, Part E} {\bf Construct a table showing the relationship between assigned treatment and actual treatment for each size household.  Use this table to calculate the $ITT_D$ for each block, and interpret the results.}
+
+\vspace{1cm}
+
+\begin{table}[h!]\small
+\begin{center}
+\begin{tabular}{rc|cc|cc|cc}
+  \hline
+ & Block $j$ (\# Persons) & $\E[d_i(Z=1)]$ & $N_{j, z=1}$ & $\E[d_i(Z=0)]$ & $N_{j, z=0}$ & $\E[d_i(1)]-\E[d_i(0)]$ & $N_j$ \\ 
+  \hline
+ & 1 & 0.709 & 2666 & 0 & 473 & 0.709 & 3139 \\ 
+ & 2 & 0.8 & 2550 & 0 & 72 & 0.8 & 2622 \\ 
+   \hline
+\end{tabular}
+\end{center}
+\end{table}
+
+
+
+\subsection{Problem 2, Part F} {\bf Define the CACE in this context.  Estimate the CACE and its 95\% confidence interval.  To what extent are these results changed when you control for covariates?}
+
+\vspace{1cm}
+
+\begin{table}[h!]\scriptsize\onehalfspacing
+\begin{center}
+\begin{tabular}{lrrrrrrr|rrrrrr}
+  \hline
+  & & \multicolumn{6}{c|}{No Covariate Adjustment} & \multicolumn{6}{c}{With Covariate Adjustment} \\
+  \cline{3-14}
+  & & & \multicolumn{3}{c}{RI p-values (for ITT)} & \multicolumn{2}{c|}{Adj. 95\% CI} &  & \multicolumn{3}{c}{RI p-values (for ITT)} & \multicolumn{2}{c}{Adj. 95\% CI} \\
+  \cline{4-6}\cline{10-12}
+Student & k & $\widehat{CACE}$ & Two-tailed & Greater & Lesser & LB & UB & $\widehat{CACE}$ & Two-tailed & Greater & Lesser & LB & UB \\ 
+  \hline
+unsampled data & 4450 & 0.147 & 0.00 & 0.00 & 1.00 & -0.38 & 0.67 & 0.15 & 0.00 & 0.00 & 1.00 & -0.38 & 0.67 \\ 
+   \hline
+\end{tabular}
+\end{center}
+\end{table}
+
+
+
+
+
+\clearpage
+
+\subsection{Problem 2, Part G} {\bf Conduct a randomization check in which treat2 is predicted by age, precinct, and voting in previous elections.  Interpret the results.}
+
+\vspace{1cm}
+
+\underline{{\sc General Solution:}}
+\begin{itemize}
+\item Use randomization inference to test the null hypothesis that the covariates predict treatment assignment no better than would be expected by chance. The test statistic is the F statistic, which tells us the goodness of fit of a regression model (with all covariates) vs. a restricted model that contains only an intercept on the right hand side.
+\item First, regress treatment assignment (treat2) on four covariates (age, precinct, vote02, vote00); grab F statistic.
+\item Simulate permutations of treatment assignment, accounting for clustered random assignment (clustvar=hhid). For each simulated vector of treatment assignments, regress the simulated treatment assignment vector on the four covariates, and save the F statistic from every iteration.
+\item Compute a $p$-value: the probability of obtaining an F statistic under the null hypothesis at least as large as the one obtained from the actual experiment. If the $p$-value is small (e.g., $p$=0.01), then this tells us the imbalance is greater than one would expect by chance (FEDAI, pp. 107-08).
+\end{itemize}
+
+\begin{figure}[h!]
+  \centering
+    \includegraphics[width=0.7\textwidth]{{q2g_unsampled}.pdf}
+\end{figure}
+
+
+
+
+\end{document}

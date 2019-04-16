@@ -1,0 +1,11 @@
+arm
+base
+foreign
+knitr
+lme4
+MASS
+Matrix
+Rcpp
+ri
+stargazer
+xtable
