@@ -1,0 +1,509 @@
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% PROBLEM SET LATEX TEMPLATE FILE
+% DEFINE DOCUMENT STYLE, LOAD PACKAGES
+\documentclass[11pt,notitlepage]{article}\usepackage[]{graphicx}\usepackage[]{color}
+%% maxwidth is the original width if it is less than linewidth
+%% otherwise use linewidth (to make sure the graphics do not exceed the margin)
+\makeatletter
+\def\maxwidth{ %
+  \ifdim\Gin@nat@width>\linewidth
+    \linewidth
+  \else
+    \Gin@nat@width
+  \fi
+}
+\makeatother
+
+\definecolor{fgcolor}{rgb}{0.345, 0.345, 0.345}
+\newcommand{\hlnum}[1]{\textcolor[rgb]{0.686,0.059,0.569}{#1}}%
+\newcommand{\hlstr}[1]{\textcolor[rgb]{0.192,0.494,0.8}{#1}}%
+\newcommand{\hlcom}[1]{\textcolor[rgb]{0.678,0.584,0.686}{\textit{#1}}}%
+\newcommand{\hlopt}[1]{\textcolor[rgb]{0,0,0}{#1}}%
+\newcommand{\hlstd}[1]{\textcolor[rgb]{0.345,0.345,0.345}{#1}}%
+\newcommand{\hlkwa}[1]{\textcolor[rgb]{0.161,0.373,0.58}{\textbf{#1}}}%
+\newcommand{\hlkwb}[1]{\textcolor[rgb]{0.69,0.353,0.396}{#1}}%
+\newcommand{\hlkwc}[1]{\textcolor[rgb]{0.333,0.667,0.333}{#1}}%
+\newcommand{\hlkwd}[1]{\textcolor[rgb]{0.737,0.353,0.396}{\textbf{#1}}}%
+
+\usepackage{framed}
+\makeatletter
+\newenvironment{kframe}{%
+ \def\at@end@of@kframe{}%
+ \ifinner\ifhmode%
+  \def\at@end@of@kframe{\end{minipage}}%
+  \begin{minipage}{\columnwidth}%
+ \fi\fi%
+ \def\FrameCommand##1{\hskip\@totalleftmargin \hskip-\fboxsep
+ \colorbox{shadecolor}{##1}\hskip-\fboxsep
+     % There is no \\@totalrightmargin, so:
+     \hskip-\linewidth \hskip-\@totalleftmargin \hskip\columnwidth}%
+ \MakeFramed {\advance\hsize-\width
+   \@totalleftmargin\z@ \linewidth\hsize
+   \@setminipage}}%
+ {\par\unskip\endMakeFramed%
+ \at@end@of@kframe}
+\makeatother
+
+\definecolor{shadecolor}{rgb}{.97, .97, .97}
+\definecolor{messagecolor}{rgb}{0, 0, 0}
+\definecolor{warningcolor}{rgb}{1, 0, 1}
+\definecolor{errorcolor}{rgb}{1, 0, 0}
+\newenvironment{knitrout}{}{} % an empty environment to be redefined in TeX
+
+\usepackage{alltt}    % ADD COMMENTS USING A PERCENT SIGN
+\usepackage{amsfonts}
+\usepackage{amsthm}
+\usepackage{amsmath, booktabs}
+\usepackage{mathtools}
+\usepackage{amssymb}
+\usepackage{subfig}
+\usepackage{setspace}
+\usepackage{fullpage}
+\usepackage{verbatim}
+\usepackage{graphicx}
+\usepackage{tabularx}
+\usepackage[table]{xcolor}% http://ctan.org/pkg/xcolor
+\usepackage{longtable}
+\usepackage{multicol}
+\usepackage{multirow}
+\setlength{\parindent}{0in}  	% uncomment to remove indent at start of paragraphs
+\usepackage{pdflscape}
+\usepackage[english]{babel}
+\usepackage[pdftex]{hyperref}
+\usepackage{natbib}
+\usepackage{caption}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{graphics}
+\usepackage{multirow}
+\usepackage{graphics}
+\usepackage{hyperref}
+\usepackage{longtable}
+\usepackage{latexsym}
+\usepackage{rotating}
+\usepackage{setspace}
+\usepackage{layouts} 
+\usepackage[titletoc]{appendix}
+\DeclareGraphicsExtensions{.pdf,.jpg,.png}
+\usepackage[margin=1in]{geometry}
+\usepackage{enumerate}
+\usepackage{float}
+
+\newcolumntype{L}[1]{>{\raggedright\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\usepackage[T1]{fontenc}				
+
+\usepackage{xcolor}
+\usepackage[printwatermark]{xwatermark}
+
+
+
+
+
+\title{Field Experiments: Design, Analysis and Interpretation \\
+Solutions for Chapter 10 Exercises}
+\author{Alan S. Gerber and Donald P. Green\footnote{Solutions prepared by Peter M. Aronow and revised by Alexander Coppock}}
+\date{\vspace{-5ex}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\begin{document}
+
+\maketitle
+
+
+\section*{Question 1}
+Important concepts:
+
+\begin{enumerate}[a)]
+\item Suppose that equations (10.1), (10.2), and (10.3) depict the true causal process that generates outcomes. Referring to these equations, define the direct effect of $Z_i$ on $Y_i$ and the indirect effect that $Z_i$ transmits through $M_i$ to $Y_i$.\\
+Answer:\\
+The direct effect is the causal influence that is transmitted from $Z_i$ to $Y_i$ without passing through $M_i$, and the indirect effect is the causal influence that passes from $Z_i$ to $Y_i$ through $M_i$. The direct effect of $Z_i$ on $Y_i$ is the parameter $d$ in equation (10.3).  The indirect or ``mediated'' effect is the product $ab$.
+
+
+\item Explain why the equation Total effect = Direct effect + Indirect effect breaks down when the parameters of equations (10.1), (10.2), and (10.3) vary across subjects.\\
+Answer:\\
+The indirect or ``mediated'' effect is the product $ab$, but when these two parameters vary, their expected product is not in general equal to the product of their expectations.  Thus, one cannot estimate the average $a_i$ using equation (10.1) and multiply it by the estimate of the average $b_i$ from equation (10.3) in order to obtain an estimated whose expected value is $E[a_i b_i]$.  
+
+\item Suppose that the effect of $M_i$ on $Y_i$ varies from one subject to the next. Show that the indirect effect of $Z_i$ on $Y_i$ is zero when the treatment effect of $Z_i$ on $M_i$ is zero for all subjects.\\
+Answer:\\
+When $a_i$ is zero for all subjects, the expected product of $a_i$ and $b_i$ is zero:  $E[a_i b_i]=aE[b_i]= 0E[b_i]=0$.   
+
+\item Explain why the complex potential outcome $Y_i(M_i(0),1)$ defies empirical investigation.\\
+Answer:\\
+The expression $Y_i (M_i (0),1)$ denotes the potential outcome that would occur given two inputs: $Z_i=1$ (i.e., the subject is assigned to the treatment group) and $M_i$ were the value it would take on if $Z_i=0$. These are two incompatible conditions, since $Z_i$ is either 1 or 0. When $Z_i=1$, for instance, the outcome we observe is $Y_i (M_i (1),1)$; when $Z_i=0$, the outcome we observe is $Y_i (M_i (0),0)$.
+
+\item Explain the distinction between the indirect effect that $Z_i$ transmits to $Y_i$ through $M_i$ given in equations (10.15) and (10.16) and the causal effect of $M_i$, defined using $Y_i(m, z)$ notation as $Y_i(1, 0) - Y_i(0, 0)$ or $Y_i(1, 1) - Y_i(0, 1)$. (Hint: Look closely at how the mediator takes on its value).\\
+Answer:\\
+Equations 10.15 and 10.16 involve complex potential outcomes, which are inherently unobservable. The causal effect of M holding Z constant involves two potentially observable potential outcomes. The difference is that in the latter comparison, we are not trying to set the value of the mediator to its potential outcome in the wake of a manipulation of Z. Instead, we are just setting M to a value and holding Z constant.
+\end{enumerate}
+
+
+\section*{Question 2}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{verbatim}
+
+
+
+
+
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+\section*{Question 3}
+Consider the following schedule of potential outcomes for 12 observations. This table illustrates a special situation in which the disturbance $e_{1i}$ is unrelated to the disturbance $e_{3i}$.
+% Table generated by Excel2LaTeX from sheet 'Sheet1'
+\begin{table}[H]
+  \centering
+  \caption{Question 3 Table}
+    \begin{tabular}{C{1.5cm}C{1.7cm}C{1.7cm}C{1.7cm}C{1.7cm}C{2cm}C{2cm}}
+    \toprule
+    Observation  & Yi(m = 0, z = 0)  & Yi(m = 0, z = 1)  & Yi(m = 1, z = 0)  & Yi(m = 1, z = 1)  & Mi(z = 0)  & Mi(z = 1)  \\
+    \midrule
+    1     & \cellcolor{yellow!25}0\#     & \cellcolor{green!25}0*     & 0     & 0     & 0     & 0 \\
+    2     & \cellcolor{yellow!25}0     & 0*     & 0\#     & \cellcolor{green!25}0     & 0     & 1 \\
+    3     & 0     & 0     & \cellcolor{yellow!25}0\#     & \cellcolor{green!25}0*     & 1     & 1 \\
+    4     & \cellcolor{yellow!25}0\#     & \cellcolor{green!25}1*     & 0     & 1     & 0     & 0 \\
+    5     & \cellcolor{yellow!25}0     & 1*     & 0\#     & \cellcolor{green!25}1     & 0     & 1 \\
+    6     & 0     & 1     & \cellcolor{yellow!25}0\#     & \cellcolor{green!25}1*     & 1     & 1 \\
+    7     & \cellcolor{yellow!25}1\#     & \cellcolor{green!25}0*     & 1     & 1     & 0     & 0 \\
+    8     & \cellcolor{yellow!25}1     & 0*     & 1\#     & \cellcolor{green!25}1     & 0     & 1 \\
+    9     & 1     & 0     & \cellcolor{yellow!25}1\#     & \cellcolor{green!25}1*     & 1     & 1 \\
+    10    & \cellcolor{yellow!25}0\#     & \cellcolor{green!25}1*     & 1     & 1     & 0     & 0 \\
+    11    & \cellcolor{yellow!25}0     & 1*     & 1\#     & \cellcolor{green!25}1     & 0     & 1 \\
+    12    & 0     & 1     & \cellcolor{yellow!25}1\#     & \cellcolor{green!25}1*     & 1     & 1 \\
+    \bottomrule
+    \end{tabular}%
+  \label{tab:addlabel}%
+\end{table}%
+
+\begin{enumerate}[a)]
+
+\item What is the average effect of $Z_i$ on $M_i$? \\
+Answer:\\
+The average effect of Z on M is the average difference between the last two columns on p.339: $\frac{1}{3}$
+
+\item Use yellow to highlight the cells in the table of potential outcomes to indicate which potential outcomes for $Y_i$ correspond to $Y_i(M_i(0), 0)$. Use green to highlight the cells in the table of potential outcomes to indicate which potential outcomes for $Y_i$ correspond to $Y_i(M_i(1), 1)$. Put an asterisk by the potential outcomes for $Y_i$ in each row that correspond to the complex potential outcome $Y_i(M_i(0), 1)$. Put a pound sign by the potential outcomes for $Y_i$ in each row that correspond to the complex potential outcome $Y_i(M_i(1), 0)$.
+
+\item What is the average total effect of $Z_i$ on $Y_i$?\\
+Answer:\\
+This difference is green minus yellow = 8/12 - 4/12 = 1/3
+\item What is the average direct effect of $Z_i$ on $Y_i$ holding $M_i$ constant at $M_i(0)$? Hint: see
+equation (10.13).\\
+Answer:\\
+This difference is asterisk minus yellow = 7/12 - 4/12 = 1/4
+\item What is the average direct effect of $Z_i$ on $Y_i$ holding $M_i$ constant at $M_i(1)$? Hint: see
+equation (10.14).\\
+Answer:\\
+This difference is green minus pound sign = 8/12 - 5/12 = 1/4
+\item What is the average indirect effect that $Z_i$ transmits through $M_i$ to $Y_i$ when $Z_i = 1$? Hint: see equation (10.15).\\
+Answer:\\
+This difference is green minus asterisk = 8/12 - 7/12 = 1/12
+\item What is the average indirect effect that $Z_i$ transmits through $M_i$ to $Y_i$ when $Z_i = 0$? Hint: see equation (10.16).\\
+Answer:\\
+This difference is pound sign minus yellow = 5/12 - 4/12 = 1/12
+\item In this example, does the total effect of $Z_i$ equal the sum of its average direct and indirect effect?\\
+Answer:\\
+Yes because the average of the direct effects is 1/4 and the average of the indirect effects is 1/12, which sums to the total effect, 1/3
+
+\item What is the average effect of $M_i$ on $Y_i$ when $Z_i = 0$?\\
+Answer:\\
+This is the 3rd column minus the 1st column: 6/12 - 3/12 = 3/12
+
+\item Suppose you were to randomly assign half of these observations to treatment ($Z_i = 1$) and the other half to control ($Z_i = 0$). If you were to regress $Y_i$ on $M_i$ and $Z_i$, you would obtain unbiased estimates of the average direct effect of $Z_i$ on $Y_i$ and the average effect of $M_i$ on $Y_i$. (This fact may be verified using the R simulation at http://isps.research.yale.edu/FEDAI.) What special features of this schedule of potential outcomes allows for unbiased estimation?\\
+Answer:\\
+See simulation below and following question for answer.
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlkwd{rm}\hlstd{(}\hlkwc{list}\hlstd{=}\hlkwd{ls}\hlstd{())}       \hlcom{# clear objects in memory}
+\hlkwd{library}\hlstd{(ri)}
+
+\hlcom{# schedule of potential outcomes for problem 10.3}
+\hlstd{Z} \hlkwb{<-} \hlkwd{c}\hlstd{(}\hlnum{0}\hlstd{,}\hlnum{0}\hlstd{,}\hlnum{0}\hlstd{,}\hlnum{0}\hlstd{,}\hlnum{0}\hlstd{,}\hlnum{0}\hlstd{,}\hlnum{1}\hlstd{,}\hlnum{1}\hlstd{,}\hlnum{1}\hlstd{,}\hlnum{1}\hlstd{,}\hlnum{1}\hlstd{,}\hlnum{1}\hlstd{)}
+
+\hlstd{Y0M0} \hlkwb{=} \hlkwd{c}\hlstd{(}\hlnum{0}\hlstd{,}\hlnum{0}\hlstd{,}\hlnum{0}\hlstd{,}\hlnum{0}\hlstd{,}\hlnum{0}\hlstd{,}\hlnum{0}\hlstd{,}\hlnum{1}\hlstd{,}\hlnum{1}\hlstd{,}\hlnum{1}\hlstd{,}\hlnum{0}\hlstd{,}\hlnum{0}\hlstd{,}\hlnum{0}\hlstd{)}
+\hlstd{Y1M0} \hlkwb{=} \hlkwd{c}\hlstd{(}\hlnum{0}\hlstd{,}\hlnum{0}\hlstd{,}\hlnum{0}\hlstd{,}\hlnum{1}\hlstd{,}\hlnum{1}\hlstd{,}\hlnum{1}\hlstd{,}\hlnum{0}\hlstd{,}\hlnum{0}\hlstd{,}\hlnum{0}\hlstd{,}\hlnum{1}\hlstd{,}\hlnum{1}\hlstd{,}\hlnum{1}\hlstd{)}
+\hlstd{Y0M1} \hlkwb{=} \hlkwd{c}\hlstd{(}\hlnum{0}\hlstd{,}\hlnum{0}\hlstd{,}\hlnum{0}\hlstd{,}\hlnum{0}\hlstd{,}\hlnum{0}\hlstd{,}\hlnum{0}\hlstd{,}\hlnum{1}\hlstd{,}\hlnum{1}\hlstd{,}\hlnum{1}\hlstd{,}\hlnum{1}\hlstd{,}\hlnum{1}\hlstd{,}\hlnum{1}\hlstd{)}
+\hlstd{Y1M1} \hlkwb{=} \hlkwd{c}\hlstd{(}\hlnum{0}\hlstd{,}\hlnum{0}\hlstd{,}\hlnum{0}\hlstd{,}\hlnum{1}\hlstd{,}\hlnum{1}\hlstd{,}\hlnum{1}\hlstd{,}\hlnum{1}\hlstd{,}\hlnum{1}\hlstd{,}\hlnum{1}\hlstd{,}\hlnum{1}\hlstd{,}\hlnum{1}\hlstd{,}\hlnum{1}\hlstd{)}
+\hlstd{M0} \hlkwb{=} \hlkwd{c}\hlstd{(}\hlnum{0}\hlstd{,}\hlnum{0}\hlstd{,}\hlnum{1}\hlstd{,}\hlnum{0}\hlstd{,}\hlnum{0}\hlstd{,}\hlnum{1}\hlstd{,}\hlnum{0}\hlstd{,}\hlnum{0}\hlstd{,}\hlnum{1}\hlstd{,}\hlnum{0}\hlstd{,}\hlnum{0}\hlstd{,}\hlnum{1}\hlstd{)}
+\hlstd{M1} \hlkwb{=} \hlkwd{c}\hlstd{(}\hlnum{0}\hlstd{,}\hlnum{1}\hlstd{,}\hlnum{1}\hlstd{,}\hlnum{0}\hlstd{,}\hlnum{1}\hlstd{,}\hlnum{1}\hlstd{,}\hlnum{0}\hlstd{,}\hlnum{1}\hlstd{,}\hlnum{1}\hlstd{,}\hlnum{0}\hlstd{,}\hlnum{1}\hlstd{,}\hlnum{1}\hlstd{)}
+
+\hlcom{# verify column averages}
+\hlkwd{mean}\hlstd{(Y0M0)}
+\end{alltt}
+\begin{verbatim}
+## [1] 0.25
+\end{verbatim}
+\begin{alltt}
+\hlkwd{mean}\hlstd{(Y1M0)}
+\end{alltt}
+\begin{verbatim}
+## [1] 0.5
+\end{verbatim}
+\begin{alltt}
+\hlkwd{mean}\hlstd{(Y0M1)}
+\end{alltt}
+\begin{verbatim}
+## [1] 0.5
+\end{verbatim}
+\begin{alltt}
+\hlkwd{mean}\hlstd{(Y1M1)}
+\end{alltt}
+\begin{verbatim}
+## [1] 0.75
+\end{verbatim}
+\begin{alltt}
+\hlcom{# simulate all possible random assignments}
+\hlstd{perms} \hlkwb{<-} \hlkwd{genperms}\hlstd{(Z)}
+
+\hlcom{# stores estimates from equation 10.3}
+\hlstd{coefmat} \hlkwb{<-} \hlkwd{matrix}\hlstd{(}\hlnum{NA}\hlstd{,}\hlkwd{ncol}\hlstd{(perms),}\hlnum{3}\hlstd{)}
+\hlcom{# stores estimates from equation 10.2}
+\hlstd{tcoefmat} \hlkwb{<-} \hlkwd{matrix}\hlstd{(}\hlnum{NA}\hlstd{,}\hlkwd{ncol}\hlstd{(perms),}\hlnum{2}\hlstd{)}
+\hlcom{# stores estimates from equation 10.1}
+\hlstd{mcoefmat} \hlkwb{<-} \hlkwd{matrix}\hlstd{(}\hlnum{NA}\hlstd{,}\hlkwd{ncol}\hlstd{(perms),}\hlnum{2}\hlstd{)}
+
+\hlkwa{for} \hlstd{(i} \hlkwa{in} \hlnum{1}\hlopt{:}\hlkwd{ncol}\hlstd{(perms)) \{}
+        \hlstd{Zri} \hlkwb{<-} \hlstd{perms[,i]}
+        \hlstd{M} \hlkwb{<-} \hlstd{M0}\hlopt{*}\hlstd{(}\hlnum{1}\hlopt{-}\hlstd{Zri)} \hlopt{+} \hlstd{M1}\hlopt{*}\hlstd{Zri}
+        \hlstd{Y} \hlkwb{<-} \hlstd{Y0M0}\hlopt{*}\hlstd{(}\hlnum{1}\hlopt{-}\hlstd{Zri)}\hlopt{*}\hlstd{(}\hlnum{1}\hlopt{-}\hlstd{M)} \hlopt{+} \hlstd{Y1M0}\hlopt{*}\hlstd{(Zri)}\hlopt{*}\hlstd{(}\hlnum{1}\hlopt{-}\hlstd{M)} \hlopt{+}
+          \hlstd{Y0M1}\hlopt{*}\hlstd{(}\hlnum{1}\hlopt{-}\hlstd{Zri)}\hlopt{*}\hlstd{(M)} \hlopt{+} \hlstd{Y1M1}\hlopt{*}\hlstd{(Zri)}\hlopt{*}\hlstd{(M)}
+        \hlstd{coefmat[i,]} \hlkwb{<-} \hlkwd{lm}\hlstd{(Y}\hlopt{~}\hlstd{M}\hlopt{+}\hlstd{Zri)}\hlopt{$}\hlstd{coefficients}
+        \hlstd{tcoefmat[i,]} \hlkwb{<-} \hlkwd{lm}\hlstd{(Y}\hlopt{~}\hlstd{Zri)}\hlopt{$}\hlstd{coefficients}
+        \hlstd{mcoefmat[i,]} \hlkwb{<-} \hlkwd{lm}\hlstd{(M}\hlopt{~}\hlstd{Zri)}\hlopt{$}\hlstd{coefficients}
+        \hlstd{\}}
+
+\hlcom{# results omit instances of perfect colinearity between M and Z}
+\hlcom{# report the avg coefficients from a regression of Y on M and Z }
+\hlkwd{colMeans}\hlstd{(}\hlkwd{na.omit}\hlstd{(coefmat))}
+\end{alltt}
+\begin{verbatim}
+## [1] 0.25 0.25 0.25
+\end{verbatim}
+\begin{alltt}
+\hlcom{# report the avg coefficients from a regression of Y on Z }
+\hlkwd{colMeans}\hlstd{(}\hlkwd{na.omit}\hlstd{(tcoefmat))}
+\end{alltt}
+\begin{verbatim}
+## [1] 0.3333333 0.3333333
+\end{verbatim}
+\begin{alltt}
+\hlcom{# report the avg coefficients from a regression of M on Z }
+\hlkwd{colMeans}\hlstd{(}\hlkwd{na.omit}\hlstd{(mcoefmat))}
+\end{alltt}
+\begin{verbatim}
+## [1] 0.3333333 0.3333333
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+
+\item In order to estimate average indirect effect that $Z_i$ transmits through $M_i$ to $Y_i$, estimate the regressions in equations (10.1) and (10.3) and multiply the estimates of $a$ and $b$ together.\footnote{Text mistakenly has ``multiply estimates of $a$ and $c$ together.} Use the simulation to show that this estimator is unbiased when applied to this schedule of potential outcomes. Why does this estimator, which usually produces biased results, produce unbiased results in this example?\\
+Answer:\\
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlcom{# Estimates of a, from simulation above}
+\hlstd{as} \hlkwb{<-} \hlstd{mcoefmat[,}\hlnum{2}\hlstd{]}
+\hlcom{# Estimates of b, from simulation above}
+\hlstd{bs} \hlkwb{<-} \hlstd{coefmat[,}\hlnum{3}\hlstd{]}
+\hlcom{# This average is very nearly 1/12.}
+\hlkwd{mean}\hlstd{(as}\hlopt{*}\hlstd{bs,} \hlkwc{na.rm} \hlstd{=} \hlnum{TRUE}\hlstd{)}
+\end{alltt}
+\begin{verbatim}
+## [1] 0.08224401
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+
+The simulation confirms that the results are unbiased (excluding random assignments that result in perfect collinearity between Z and M) for the direct and total effects.  The reason is that the special conditions (1) constant direct and indirect effects on Y and (2) no relationship between unobserved causes of Y and unobserved causes of M.  In effect, M is as good as randomly assigned in this special case.  
+
+\end{enumerate}
+
+
+\section*{Question 4}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{verbatim}
+
+
+
+
+
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+\section*{Question 5}
+In most places in the United States, you can only vote if you are a registered voter. You become a registered voter by filling out a form and, in some cases, presenting identification and proof of residence. Consider a jurisdiction that requires and enforces voter registration. Imagine a voter registration experiment that takes the following form: unregistered citizens are approached at their homes with one of two randomly chosen messages. The treatment group is presented with voter registration forms along with an explanation of how to fill them out and return them to the local registrar of voters. The control group is presented with an encouragement to donate books to a local library and receives instructions about how to do so. Voter registration and voter turnout rates are compiled for each person who is contacted using either script. In the table below, Treatment = 1 if encouraged to register, 0 otherwise; Registered = 1 if registered, 0 otherwise; Voted = 1 if voted, 0 otherwise; and N is the number of observations).
+
+% Table generated by Excel2LaTeX from sheet 'Sheet1'
+\begin{table}[H]
+  \centering
+  \caption{Question 5 Table}
+    \begin{tabular}{rrrr}
+    \toprule
+    Treatment  & Registered  & Voted  & N  \\
+    \midrule
+    0     & 0     & 0     & 400 \\
+    0     & 0     & 1     & 0 \\
+    0     & 1     & 0     & 10 \\
+    0     & 1     & 1     & 90 \\
+    1     & 0     & 0     & 300 \\
+    1     & 0     & 1     & 0 \\
+    1     & 1     & 0     & 100 \\
+    1     & 1     & 1     & 100 \\
+    \bottomrule
+    \end{tabular}%
+  \label{tab:addlabel}%
+\end{table}%
+
+\begin{enumerate}[a)]
+\item Estimate the average effect of Treatment ($Z_i$) on Registered ($M_i$). Interpret the results. \\
+Answer:\\
+The registration rate is 40\% in the treatment group and 20\% in the control group, for an ATE of 0.20, or 20 percentage points.
+
+\item Estimate the average total effect of treatment on voter turnout ($Y_i$).\\
+Answer:\\
+The turnout rate is 20\% in the treatment group and 18\% in the control group, for an ATE of 0.02, or 2 percentage points. 
+
+\item Regress $Y_i$ on $X_i$ and $M_i$. What does this regression seem to indicate? List the assumptions necessary to ascribe a causal interpretation to the regression coefficient associated with $M_i$. Are these assumptions plausible in this case?\\
+Answer:\\
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{Y} \hlkwb{<-} \hlkwd{c}\hlstd{(}\hlkwd{rep}\hlstd{(}\hlnum{0}\hlstd{,} \hlnum{400}\hlstd{),} \hlkwd{rep}\hlstd{(}\hlnum{1}\hlstd{,} \hlnum{0}\hlstd{),} \hlkwd{rep}\hlstd{(}\hlnum{0}\hlstd{,} \hlnum{10}\hlstd{),} \hlkwd{rep}\hlstd{(}\hlnum{1}\hlstd{,} \hlnum{90}\hlstd{),}
+       \hlkwd{rep}\hlstd{(}\hlnum{0}\hlstd{,} \hlnum{300}\hlstd{),} \hlkwd{rep}\hlstd{(}\hlnum{1}\hlstd{,} \hlnum{0}\hlstd{),} \hlkwd{rep}\hlstd{(}\hlnum{0}\hlstd{,} \hlnum{100}\hlstd{),} \hlkwd{rep}\hlstd{(}\hlnum{1}\hlstd{,} \hlnum{100}\hlstd{))}
+\hlstd{Z} \hlkwb{<-} \hlkwd{c}\hlstd{(}\hlkwd{rep}\hlstd{(}\hlnum{0}\hlstd{,} \hlnum{500}\hlstd{),} \hlkwd{rep}\hlstd{(}\hlnum{1}\hlstd{,} \hlnum{500}\hlstd{))}
+\hlstd{M} \hlkwb{<-} \hlkwd{c}\hlstd{(}\hlkwd{rep}\hlstd{(}\hlnum{0}\hlstd{,} \hlnum{400}\hlstd{),} \hlkwd{rep}\hlstd{(}\hlnum{0}\hlstd{,} \hlnum{0}\hlstd{),} \hlkwd{rep}\hlstd{(}\hlnum{1}\hlstd{,} \hlnum{10}\hlstd{),} \hlkwd{rep}\hlstd{(}\hlnum{1}\hlstd{,} \hlnum{90}\hlstd{),}
+       \hlkwd{rep}\hlstd{(}\hlnum{0}\hlstd{,} \hlnum{300}\hlstd{),} \hlkwd{rep}\hlstd{(}\hlnum{0}\hlstd{,} \hlnum{0}\hlstd{),} \hlkwd{rep}\hlstd{(}\hlnum{1}\hlstd{,} \hlnum{100}\hlstd{),} \hlkwd{rep}\hlstd{(}\hlnum{1}\hlstd{,} \hlnum{100}\hlstd{))}
+\hlkwd{summary}\hlstd{(}\hlkwd{lm}\hlstd{(Y}\hlopt{~} \hlstd{Z} \hlopt{+} \hlstd{M))}
+\end{alltt}
+\begin{verbatim}
+## 
+## Call:
+## lm(formula = Y ~ Z + M)
+## 
+## Residuals:
+##    Min     1Q Median     3Q    Max 
+## -0.708 -0.048 -0.048  0.064  0.404 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(>|t|)    
+## (Intercept)  0.04800    0.01213   3.957 8.12e-05 ***
+## Z           -0.11200    0.01676  -6.683 3.90e-11 ***
+## M            0.66000    0.01829  36.092  < 2e-16 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 0.2586 on 997 degrees of freedom
+## Multiple R-squared:  0.5667,	Adjusted R-squared:  0.5659 
+## F-statistic: 652.1 on 2 and 997 DF,  p-value: < 2.2e-16
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+The results seem to suggest that registration has a strong effect on voter turnout, which makes intuitive sense; however, registration per se is not randomly assigned, and so this regression estimator may be biased. The regression also seems to indicate that the treatment exerts a negative effect on turnout holding registration constant. This finding makes no sense substantively; intuitively, one would think that the treatment should, if anything, have a positive effect net of its indirect via registration because the act of encouraging someone to register may also make them more interested in voting. Because Z and M are correlated, the inclusion of M (a post-treatment covariate) may lead to biased estimation of BOTH causal effects.
+
+\item Suppose you were to assume that the treatment has no direct effect on turnout; its total effect is entirely mediated through registration. Under this assumption and monotonicity, what is the Complier average causal effect of registration on turnout?\\
+Answer:\\
+As noted above, the estimated ITT is 0.02, and the estimated $ITT_d$ is $0.20$, so the ratio of the two quantities is $0.02/0.20 = 0.10$.  Among Compliers (those who register if and only if encouraged), the ATE of registration is a 10 percentage point increase in turnout.
+
+
+\end{enumerate}
+
+\section*{Question 6}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{verbatim}
+
+
+
+
+
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+\section*{Question 7}
+Several experimental studies conducted in North America and Europe have demonstrated that employers are less likely to reply to job applications from ethnic minorities than from non-minorities.
+
+\begin{enumerate}[a)]
+\item Propose at least two hypotheses about why this type of discrimination occurs. \\
+Answer:\\
+Hypothesis 1: Employers believe that ethnic minorities are less productive; according to this hypothesis, discrimination occurs because of rational economic calculations, not hostility toward ethnic minorities. Hypothesis 2: Employers tend to be hostile to ethnic minorities and discriminate against them in order to maintain ``social distance'' from them.  Hypothesis 3: Employers themselves believe ethnic minorities to be as productive as non-minorities and do not discriminate out of animus toward them, but employers believe that their current employees look down on ethnic minorities and defer to their employees' tastes.
+
+\item Propose an experimental research design to test each of your hypotheses, and explain how your experiment helps identify the causal parameters of interest.\\
+Answer:\\
+There is no ideal way to test these hypotheses, because each of them involves individual beliefs or tastes, which are unobserved. Some suggestive evidence, however, may be generated by experimentally inducing changes to beliefs or accommodating tastes. In order to test hypothesis 1, the application letter could provide evidence of qualifications and work experience attesting to the applicant's productivity; the point of this test is to see whether stereotypes about productivity can be overcome by applicant-specific information. The hostility hypothesis is more difficult to test, since it involves an interaction between the employer's attitudes and the minority treatment. In principle, one could conduct an unrelated survey of employers in order to gauge their attitudes toward various groups and assess whether their pattern of discrimination toward the fictitious applicants coincides with their general attitudes as expressed in response to the survey. Regarding the last hypothesis, one might devise a treatment that signals that the applicant is an especially likable and friendly person who fits in well in any situation.  
+
+
+\item Create a hypothetical schedule of potential outcomes, and simulate the results of the experiment you proposed in part (b). Analyze and interpret the results.\\
+Answer:\\
+% Table generated by Excel2LaTeX from sheet 'Sheet1'
+\begin{table}[H]
+  \centering
+  \caption{Hypothetical schedule of potential outcomes for Question 7}
+    \begin{tabular}{rrC{2.3cm}C{2.3cm}C{2.3cm}C{2.3cm}}
+    \toprule
+    Employer Type & Outcome      & Y(Non-minority) & Y(Minority) & Y(Productive Minority) & Y(Likeable Minority) \\
+    \midrule
+    Hostile & Grants Interview & 50    & 25    & 25    & 30 \\
+    Hostile & No Interview & 950   & 975   & 975   & 970 \\
+    Accepting & Grants Interview & 100   & 75    & 100   & 80 \\
+    Accepting & No Interview & 900   & 925   & 900   & 920 \\
+    \bottomrule
+    \end{tabular}%
+  \label{tab:addlabel}%
+\end{table}%
+
+The above table simulates potential outcomes for 1000 people who, in response to a survey, express hostility toward minorities and 1000 people who are accepting of them. Each of these blocks could be randomly divided into four experimental groups, each of which receives one of the treatments. Suppose the results of the experiment were close to the expected proportions given above. The numbers above imply that employers in each block discriminate against minorities. Both groups are 2.5 percentage points more likely to interview a non-minority applicant than a minority applicant; since hostile employers are (for unknown reasons) less likely to interview any applicant, the ethnicity cue has a much larger effect on the odds they will grant an interview than it does on the odds that an accepting employer will grant an interview. Cues that the candidate is productive have no effect on hostile employers but eliminate the difference between minority and non-minority candidates among accepting employers. This treatment-by-covariate interaction (not necessarily causal, but suggestive) suggests that animus causes hostile employers to disregard applicants' qualifications; among the accepting, a showing of qualifications overcomes the presupposition that ethnic candidates are less productive. The likability treatment has little effect, suggesting that the consideration of who will ``fit in'' to the employment environment plays a small role in the decision to interview.
+
+\end{enumerate}
+
+\section*{Question 8}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{verbatim}
+
+
+
+
+
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+\section*{Question 9}
+Researchers who attempt to study mediation by adding or subtracting elements of the treatment confront the practical and conceptual challenge of altering treatments in ways that isolate the operation of a single causal ingredient. Carefully compare the four mailings from the Gerber et al. (2008) study, which are reproduced in the appendix to this chapter.
+
+\begin{enumerate}[a)]
+\item Discuss the ways in which the treatments differ from one another. \\
+Answer:\\
+The four treatments are: Civic Duty, Hawthorne, Self, and Neighbors.  Civic Duty emphasizes citizens' responsibilities to participate in the Democratic process. Hawthorne simply informs subjects that they are under study.  Self and Neighbors reveal voter history: the self treatment informs subjects of their past voter history and the neighbors treatment informs subjects of their own past voter history and that of their neighbors. Also, Self and Neighbors promise to send an updated vote history.
+
+\item How might these differences affect the interpretation of Table 10.2?\\
+Answer:\\
+The largest difference is between the control group and the neighbors treatment. The reasons why the neighbors treatment are so effective may be many. It could be that the treatment reminds subjects of their civic duty.  It could be that the treatment reminds subjects that they are being studied.  It could be that the treatment reminds subjects of their own voter behavior. The other treatments in the experiment explicitly vary these factors. This allows us to conclude that social pressure is indeed the causative ingredient in the neighbors treatment.
+
+\item Suppose you were in charge of conducting one or more ``manipulation checks'' as part of this study. What sorts of manipulation checks would you propose, and why?\\
+Answer:\\
+The following manipulation checks would be helpful. For all treatment groups, a question such as ``Have you received any mail encouraging you to vote in the past three months?'' would verify that treatment subjects did receive more encouragements than control subjects. For the ``Self'' and ``Neighbors'' treatments, a question such as ``Did you vote in the November 2004 election'' might reveal if the treatments increased subjects' recall.  Another idea: ask a random subset (so as not to disrupt voting habits among a large segment of the subject pool) whether voting is a matter of public record.
+\end{enumerate}
+
+
+
+
+
+
+
+\end{document}
+

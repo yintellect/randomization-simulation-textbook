@@ -157,14 +157,14 @@ This definition should be ``those who take the treatment if AND ONLY IF assigned
 \section*{Question 5}
 Suppose that a sample contains $30\%$ Always-Takers, $40\%$ Never-Takers, $15\%$ Compliers, and $15\%$ Defiers. What is the $ITT_D$? \\
 Answer:\\
-Recall from equation (6.19): $ITT_D= \pi_C+ \pi_AT- (\pi_D + \pi_AT) = \pi_C- \pi_D$, which in this case implies that the $ITT_D = 0$.
+Recall from equation (6.19): $ITT_D= \pi_C+ \pi_{AT}- (\pi_D + \pi_{AT}) = \pi_C- \pi_D$, which in this case implies that the $ITT_D = 0$.
 
 \section*{Question 6}
 Suppose that, in violation of the monotonicity assumption, a sample contains both Compliers and Defiers. Let $\pi_C$ be the proportion of subjects who are Compliers, and let $\pi_D$ be the proportion of subjects who are Defiers. Show that the CACE is nevertheless identified if (i) the ATE among Defiers equals the ATE among Compliers and (ii) $\pi_C \neq \pi_D$.\\
 Answer:\\
 Let's re-write equation (6.20) assuming that the two ATEs are the same and that the denominator is nonzero:
 \begin{equation*}
-\frac{ITT}{ITT_D} =\frac{(ATE│Compliers) \pi_C-(ATE|Defiers)\pi_D}{(\pi_C-\pi_D )}=\frac{(ATE│Compliers) (\pi_C- \pi_D)}{(\pi_C-\pi_D)}=(ATE│Compliers).
+\frac{\mathrm{ITT}}{\mathrm{ITT_D}} =\frac{\mathrm{(ATE\mid Compliers)} \pi_C-\mathrm{(ATE\mid Defiers)}\pi_D}{(\pi_C-\pi_D )}=\frac{\mathrm{(ATE\mid Compliers)} (\pi_C- \pi_D)}{(\pi_C-\pi_D)}=\mathrm{(ATE\mid Compliers)}.
 \end{equation*}
 
 \section*{Question 7}

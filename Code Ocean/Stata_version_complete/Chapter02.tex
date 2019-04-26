@@ -1,0 +1,346 @@
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% PROBLEM SET LATEX TEMPLATE FILE
+% DEFINE DOCUMENT STYLE, LOAD PACKAGES
+\documentclass[11pt,notitlepage]{article}		% ADD COMMENTS USING A PERCENT SIGN
+\usepackage{amsfonts}
+\usepackage{amsthm}
+\usepackage{amsmath, booktabs}
+\usepackage{mathtools}
+\usepackage{amssymb}
+\usepackage{subfig}
+\usepackage{setspace}
+\usepackage{fullpage}
+\usepackage{verbatim}
+\usepackage{graphicx}
+\usepackage{tabularx}
+\usepackage{longtable}
+\usepackage{multicol}
+\usepackage{multirow}
+\setlength{\parindent}{0in}		% uncomment to remove indent at start of paragraphs
+\usepackage{pdflscape}
+\usepackage[english]{babel}
+\usepackage[pdftex]{hyperref}
+\usepackage{natbib}
+\usepackage{caption}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{graphics}
+\usepackage{multirow}
+\usepackage{graphics}
+\usepackage{hyperref}
+\usepackage{longtable}
+\usepackage{latexsym}
+\usepackage{rotating}
+\usepackage{setspace}
+\usepackage{layouts} 
+\usepackage[titletoc]{appendix}
+\DeclareGraphicsExtensions{.pdf,.jpg,.png}
+\usepackage[margin=1in]{geometry}
+\usepackage{enumerate}
+\usepackage{float}
+
+\usepackage{xcolor}
+\usepackage[printwatermark]{xwatermark}
+\newwatermark[allpages,color=black!50,angle=45,scale=1,xpos=0,ypos=0]{DO NOT DISTRIBUTE}
+
+
+
+% FONTS
+\usepackage[T1]{fontenc}					% always use this no matter what
+
+% uncomment any one of these to see what it does to your font!
+%\usepackage{pxfonts}
+%\usepackage{cmbright}
+%\usepackage{txfonts}
+%\usepackage[adobe-utopia]{mathdesign}
+%\usepackage{kpfonts}
+%\usepackage{lmodern}
+%\usepackage{newtxtext,newtxmath}
+
+
+
+% DEFINE WHAT GOES INTO YOUR TITLE BEFORE THE DOCUMENT BEGINS
+\title{Field Experiments: Design, Analysis and Interpretation \\
+Solutions for Chapter 2 Exercises}
+\author{Alan S. Gerber and Donald P. Green\footnote{Solutions prepared by Peter M. Aronow and revised by Alexander Coppock}}
+\date{\today}
+
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+
+\maketitle
+
+
+\section*{Question 1}
+Potential outcomes notation:[5 points]
+
+\begin{enumerate}[a)]
+\item Explain the notation ``$Y_{i}(0)$.''\\
+Answer:\\
+The potential outcome for subject $i$ if this subject were untreated. Another way to put it: the untreated potential outcome for subject $i$. Note that the argument in parentheses refers to the case in which d (the treatment indicator) equals zero (lack of treatment).
+
+\item Explain the notation ``$Y_{i}(0)|D_i=1$'' and contrast it with the notation ``$Y_{i}(0)|d_i=1$''\\
+Answer:\\
+$Y_{i}(0)|D_i=1$ The untreated potential outcome for subject $i$ who hypothetically receives the treatment, whereas $Y_{i}(0)|d_i=1$ is the untreated potential outcome for subject $i$ if $i$ is actually treated.
+
+\item Contrast the meaning of ``$Y_{i}(0)$'' with the meaning of ``$Y_{i}(0)|D_{i}=0$.''\\
+Answer:\\
+The first is the untreated potential outcome for subject i; the second is the untreated potential outcome for a subject who is untreated under some hypothetical assignment.
+
+\item Contrast the meaning of ``$Y_{i}(0)|D_{i}=1$'' with the meaning of ``$Y_{i}(0)|D_{i}=0$.'' \\
+Answer:\\
+The first is the untreated potential outcome for a subject in the treatment group under a hypothetical treatment allocation; the second is the untreated potential outcome for a subject who is in the control group under a hypothetical allocation.
+
+\item Contrast the meaning of $E[Y_i(0)]$ with the meaning of $E[Y_i(0) | D_{i}=1]$.\\
+Answer: The first is the expectation of the untreated potential outcome for the entire subject pool, whereas the second is the expected untreated potential outcome for a randomly selected subject who would receive the treatment in a hypothetical allocation.
+
+\item Explain why the ``selection bias'' term in equation (2.15), $E[Y_{i}(0)|D_{i}=1]-E[Y_{i}(0)|D_{i}=0]$, is zero when $D_{i}$ is randomly assigned. \\
+Answer:\\
+This equality states that when treatments are allocated randomly, the untreated potential outcome for a subject who actually receives the treatment is, in expectation, the same as the untreated outcome for a subject who goes untreated.  This equality follows from the fact that under random assignment, $E[Y_{i}(0)|D_{i}=1]=E[Y_{i}(0)]$ and $E[Y_{i}(0)|D_{i}=0]=E[Y_{i}(0)]$, since both the treatment and control groups are random samples of the entire set of potential outcomes.
+
+\end{enumerate}
+
+\section*{Question 2}
+Use the values depicted in Table 2.1 to illustrate that $E[Y_{i}(0)] - E[Y_{i}(1)] = E[Y_{i}(0)-Y_{i}(1)]$.[5 points]\\
+Answer:\\
+Using the values in the table, we obtain: 
+\begin{align*}
+E(Y_{i}(0))&=\frac{\sum_{i=1}^7 Y_{i}(0))}{7} = \frac{(10+15+20+20+10+15+15)}{7} =\frac{105}{7	} = 15 \\
+E(Y_{i}(1))&=\frac{\sum_{i=1}^7 Y_{i}(1))}{7} = \frac{(15+15+30+15+20+15+30)}{7} =\frac{140}{7	} = 20
+\end{align*}
+
+And therefore: $E[Y_{i}(0)]-E[Y_{i}(1)]=-5$
+
+Alternatively, we may calculate the expectation of each of the differences: 
+\begin{align*}
+E[Y_{i}(0)-Y_{i}(1)] &= \frac{\sum_{i=1}^7 Y_{i}(0)-Y_{i}(1)}{7}\\
+&= \frac{(10-15)+(15-15)+(20-30)+(20-15)+(10-20)+(15-15)+(15-30)}{7}\\
+&= \frac{-35}{7}\\
+&= -5
+\end{align*}
+
+%% Might be better in future versions to have it be $E[Y_{i}(1)] - E[Y_{i}(0)]
+
+\section*{Question 3}
+Use the values depicted in Table 2.1 to complete the following table.[5 points]
+\begin{enumerate}[a)]
+\item Fill in the number of observations in each of the nine cells. \\
+see below.
+\item Indicate the percentage of all subjects that fall into each of the nine cells. (These cells represent what is known as the joint distribution of $Y_{i}(0)$ and $Y_{i}(1)$, or $p(Y_{i}(0), Y_{i}(1))$.\\
+see below.
+\item At the bottom of the table, indicate the proportion of subjects falling into each category of $Y_{i}(1)$ (These cells represent what is known as the marginal distribution of $Y_{i}(1)$, or $p(Y_{i}(1))$. \\
+see below.
+\item At the right of the table, indicate the proportion of subjects falling into each category of $Y_{i}(0)$ (i.e., the marginal distribution of $Y_{i}(0)$, or $p(Y_{i}(0))$. \\
+
+\begin{table}[H]
+  \centering
+  \caption{Table for Question 3}
+    \begin{tabular}{r|r|c|c|c|c|}
+     \multicolumn{1}{c}{}       &      \multicolumn{1}{c}{}    & \multicolumn{3}{c}{$Y_{i}(1)$}  &    \multicolumn{1}{c}{} \\ \cline{2-6}
+     &        &  \multicolumn{1}{c}{15}    &  \multicolumn{1}{c}{20}    &    30    &   \\ \cline{2-6}
+   \multirow{3}[0]{*}{$Y_{i}(0)$} & 10    & 1: 1/7   & 1: 1/7   & 0: 0/7     & 2/7 \\\cline{3-6}
+     & 15    & 2: 2/7   & 0: 0/7     & 1: 1/7   & 3/7 \\ \cline{3-6}
+     & 20    & 1: 1/7   & 0: 0/7     & 1: 1/7   & 2/7 \\ \cline{2-6}
+          &       & 4/7   & 1/7   & 2/7   & 1 \\
+\cline{2-6}
+    \end{tabular}
+\end{table}
+
+\item Use the table to calculate the conditional expectation that $E[Y_{i}(0)|Y_{i}(1) > 15]$.  (Hint: this expression refers to the expected value of $Y_i (0)$ given that $Y_i (1)$ is greater than 15.) 
+
+\begin{align*}
+E[Y_i (0)| Y_i (1)>15] & =\sum_i Y_i(0) \frac{pr(Y(0)=Y_i (0),Y_i (1)>15)}{pr(Y_i (1)>15)} \\
+&=10*\frac{(1/7)}{(3/7)} +15* \frac{(1/7)}{(3/7)}+20*\frac{(1/7)}{(3/7)}\\
+&=15
+\end{align*}
+
+\item Use the table to calculate the conditional expectation that $E[Y_{i}(1)|Y_{i}(0) > 15]$.  
+
+\begin{align*}
+E[Y_i (1)| Y_i (0)>15] & =\sum_i Y_i(1) \frac{pr(Y(1)=Y_i (1),Y_i (0)>15)}{pr(Y_i (0)>15)} \\
+&=15*\frac{(1/7)}{(2/7)} +20* \frac{0}{(2/7)}+30*\frac{(1/7)}{(2/7)}\\
+&=22.5
+\end{align*}
+
+
+\end{enumerate}  
+
+
+\section*{Question 4}
+Define the average treatment effect among the treated, or ATT for short, as $E[\tau_i |D_i=1]$.  Using the equations in this chapter, prove the following claim: ``When subjects are randomly assigned to treatment, the ATT is, in expectation, equal to the ATE.  In other words, taking expectations over all possible random assignments, $E[\tau_i |D_i=1]=E[\tau_i ]$.'' [5 points] \\
+Answer:\\
+% UPDATING ANSWER 1/24/2018
+% PREVIOUS ANSWER:
+% Because the units assigned to the control group are a random sample of all units, the average of the control group outcomes $Y_i (0)|(D_i=0)$ is an unbiased estimator of the average value of $Y_i (0)$ among all units.  The same goes for the treatment group: the average outcome among units that receive the treatment is an unbiased estimator of the average value of $Y_i (1)$ among all units.  Formally, if we order the villages such that the first m observations are from the randomly assigned treatment group and the remaining N-m observations from the control group, we can analyze the expected, or average, outcome over all possible random assignments:
+
+
+%\begin{align*}
+%E\bigg[\frac{\sum_1^m Y_i }{m}-\frac{\sum_{m+1}^N Y_i}{N-m}\bigg] &= E\bigg[\frac{\sum_1^m Y_i }{m}\bigg] - E\bigg[\frac{\sum_{m+1}^N Y_i}{N-m}\bigg]\\
+%&= \frac{E[Y_1 ]+E[Y_2 ]+ \ldots +E[Y_m]}{m}- \frac{E[Y_{m+1}]+E[Y_{m+2} ]+ \ldots +E[Y_N]}{N-m} \\
+%&= E[Y_i (1)│D_i=1]-E[Y_i (0)│D_i=0]\\
+%&= E[Y_i (1)]-E[Y_i (0)]\\
+%&= E[\tau_i]\\
+%&= ATE
+%end{align*}
+
+%When treatments are allocated randomly, the expected outcomes in the treated group are the same as for the untreated group and for the subject pool as a whole.  Therefore, when treatment is random, $ATT=ATE$.
+
+% NEW ANSWER:
+Narrative Response:
+Because the units assigned to the control group are a random sample of all units, the average of the control group outcomes $Y_i (0)|(D_i=0)$ is an unbiased estimator of the average value of $Y_i (0)$ among all units.  The same goes for the treatment group: the average outcome among units that receive the treatment is an unbiased estimator of the average value of $Y_i (1)$ among all units.  Formally, if we order the villages such that the first m observations are from the randomly assigned treatment group and the remaining N-m observations from the control group, we can analyze the expected, or average, outcome over all possible random assignments:
+\begin{align*}
+E\bigg[\frac{\sum_1^m Y_i }{m}-\frac{\sum_{m+1}^N Y_i}{N-m}\bigg] &= E\bigg[\frac{\sum_1^m Y_i }{m}\bigg] - E\bigg[\frac{\sum_{m+1}^N Y_i}{N-m}\bigg]\\
+&= \frac{E[Y_1 ]+E[Y_2 ]+ \ldots +E[Y_m]}{m}- \frac{E[Y_{m+1}]+E[Y_{m+2} ]+ \ldots +E[Y_N]}{N-m} \\
+&= E[Y_i (1)│D_i=1]-E[Y_i (0)│D_i=0] \\
+&= E[Y_i (1)]-E[Y_i (0)] = E[\tau_i] = ATE\\
+\end{align*}
+
+As $\tau_i$ is defined as the difference between $Y_i (1)$ and $Y_i (0)$, then the difference between the expected value of an unbiased estimator for each potential outcome will be the same as the expected value of $\tau_i$, that is $E[\tau_{i}] = E[Y_{i}(1)] - E[Y_{i}(0)]$. When treatments are allocated randomly, the expected outcomes in the treated group are the same as for the untreated group and for the subject pool as a whole. Therefore, when treatment is random, in expectation $E[ATT]=E[ATE]$.\\
+
+Proof Response:
+\begin{align*}
+ATT&= E[ \tau_{i} \vert D_{i}=1]\\
+&= E[Y_{i}(1)-Y_{i}(0)\vert D_{i}=1] &\vert \hspace{.25cm}& \text{equation 2.1}\\
+&=E[Y_{i}(1)\vert D_{i}=1] - E[Y_{i}(0)\vert D_{i}=1]&\vert \hspace{.25cm}& \text{property of expected value}\\
+&=E[Y_{i}(1)] - E[Y_{i}(0)\vert D_{i}=1]&\vert \hspace{.25cm}& \text{equation 2.9, random assignment}\\
+&=E[Y_{i}(1)] - E[Y_{i}(0)]&\vert \hspace{.25cm}& \text{equation 2.12, random assignment}\\
+&=E[\tau_{i}] &\vert \hspace{.25cm}& \text{equation 2.1}
+\end{align*}
+
+\section*{Question 5}
+A researcher plans to ask six subjects to donate time to an adult literacy program. Each subject will be asked to donate either 30 or 60 minutes.  The researcher is considering three methods for randomizing the treatment.  One method is to flip a coin before talking to each person and to ask for a 30-minute donation if the coin comes up heads or a 60-minute donation if it comes up tails. The second method is to write ``30'' and ``60'' on three playing cards each, and then shuffle the six cards. The first subject would be assigned the number on the first card, the second subject would be assigned the number on the second card, and so on.  A third method is to write each number on three different slips of paper, seal the six slips into envelopes, and shuffle the six envelopes before talking to the first subject.  The first subject would be assigned the first envelope, the second subject would be assigned the second envelope, and so on. [10 points]
+
+\begin{enumerate}[a)]
+\item Discuss the strengths and weaknesses of each approach.\\
+Answer:\\
+All three physical methods of random assignment require that the person or persons in charge of implementing the randomization follow the intended protocol: dice must be rolled once per subject, and cards or envelopes must be shuffled thoroughly. Assuming that the mechanics of each physical method of randomization are carried out, the limitation of the dice method is that possibility that the allocation of treatments could wind up being imbalanced; in principle, one could flip a coin 6 times and come up with 6 heads, in which case the treatments would not vary. The card method overcomes this problem and ensures that exactly half of the subjects will receive each treatment. The advantage of the sealed envelope method over the card method is the fact that envelopes help prevent the person who is allocating subjects from deliberately or unconsciously exercising discretion over who receives which treatment, thereby subverting the randomization.  It also prevents the implementer from anticipating the next treatment assignment (until the last few envelopes).
+\item In what ways would your answer to (a) change if the number of subjects were 600 instead of 6?  \\
+Answer:\\
+As the N increases, the dice method becomes more likely to produce a 50-50 division in treatments. For example, with 600 subjects, the probability of obtaining an assignment as imbalanced as 250-350 is less than 1-in-10,000. 
+\item What is the expected value of D if the coin toss method is used?  What is the expected value of D if the sealed envelope method is used? \\
+Answer:\\
+The methods produce identical results, in expectation. \\
+The expected value of X if the dice is used: $E[x_{dice}]=\frac{1}{2} 30+ \frac{1}{2} 60=45$.  \\
+The expected value of X if the envelope method is used: $E[x_{envelope}]=\frac{30+30+30+60+60+60}{6}=45$\\
+\end{enumerate}
+
+\section*{Question 6}
+Many programs strive to help students prepare for college entrance exams, such as the SAT. In an effort to study the effectiveness of these preparatory programs, a researcher draws a random sample of students attending public high school in the United States, and compares the SAT scores of those who took a preparatory class to those who did not.  Is this an experiment or an observational study?  Why? [10 points]\\
+Answer:\\
+This is an observational study. Subjects are not randomly assigned to the treatment, which in this case is taking the preparatory class. Instead, they self-select into the treatment for unknown reasons. The fact that the students were sampled randomly from the large population is immaterial; the key issue is whether students in the sample were randomly allocated to the treatment or control group. Note that this research method is prone to bias. If students with higher potential outcomes tend to take the prep class, this research design will tend to produce upwardly biased estimates of the ATE; if students with low potential outcomes tend to take the class in order to improve what they expect to be a sub-par score, this research design will tend to produce downwardly biased estimates of the ATE.
+
+\section*{Question 7}
+Suppose that an experiment were performed on the villages in Table 2.1, such that two villages are allocated to the treatment group and the other five villages to the control group. Suppose that an experimenter randomly selects villages 3 and 7 from the set of seven villages and places them into the treatment group.  Table 2.1 shows that these villages have unusually high potential outcomes. [10 points]
+\begin{enumerate}[a)]
+\item Define the term \textit{unbiased estimator}.\\
+Answer:\\
+An unbiased estimator is a formula that, on average over hypothetical replications of the study, generates estimates that equal the true parameter. Any given estimate may be too high or too low, but on average over hypothetical replications of the study, an unbiased estimator recovers the estimand.
+\item Does this allocation procedure produce upwardly biased estimates?  Why or why not? \\
+Answer:\\
+No.  The procedure is unbiased because the two villages selected for treatment as drawn randomly from the list of villages; therefore their potential outcomes are, in expectation, identical to the average potential outcomes for the entire set of villages.  Although in this instance the random allocation procedure produced an estimate that was not equal to the true ATE, the procedure remains unbiased because across all possible random allocations, the average estimate equals the true ATE.
+\item Suppose that instead of using random assignment, the researcher placed Villages 3 and 7 into the treatment group because the treatment could be administered inexpensively in those villages.  Explain why this procedure is prone to bias. \\
+Answer:\\
+Unlike random assignment, inexpensiveness is not a criterion the ensures that the treatment group and control group have potential outcomes that are identical in expectation. For example, it may be that villages are inexpensive to treat because they are near transportation networks, which may in turn mean that their potential outcomes are unusual due to increased access to or demand for water sanitation.
+\end{enumerate}
+
+\section*{Question 8}
+An experiment by Peisakhin and Pinto\footnote{Peisakhin and Pinto 2010.} reports the results of an experiment in India designed to test the effectiveness of a policy called the Right to Information Act, which allows citizens to inquire about the status of a pending request from government officials.  In their study, the researchers hired confederates, slum dwellers who sought to obtain ration cards (which permit the purchase of food at low cost).  Applicants for such cards must fill out a form and have their residence and income verified by a government agent.  Slum dwellers widely believe that the only way to obtain a ration card is to pay a bribe.  The researchers instructed the confederates to apply for ration cards in one of four ways, specified by the researchers. The control group submitted an application form at a government office; the RTIA group submitted a form and followed it up with an official Right to Information request; the NGO group submitted a letter of support from a local nongovernmental organization (NGO) along with the application form; and finally, a bribe group submitted an application and paid a small fee to a person who is known to facilitate the processing of forms. Slum dwellers widely believe that the only way to obtain a ration card is to pay a bribe.  The researchers instructed the confederates to apply for ration cards in one of four ways, specified by the researchers. The control group submitted an application form at a government office; the RTIA group submitted a form and followed it up with an official Right to Information request; the NGO group submitted a letter of support from a local nongovernmental organization (NGO) along with the application form; and finally, a bribe group submitted an application and paid a small fee to a person who is known to facilitate the processing of forms. [10 points] 
+
+\begin{table}[H]
+  \centering
+  \caption{Table for Question 8}
+    \begin{tabular}{rcccc}
+    \toprule
+          & Bribe & RTIA  & NGO   & Control \\
+    \midrule
+    Number of confederates in the study & 24    & 23    & 18    & 21 \\
+    Number of confederates who had residence verification & 24    & 23    & 18    & 20 \\
+    Median number of days to residence verification & 17    & 37    & 37    & 37 \\
+    Number of confederates who received a ration card within one year & 24    & 20    & 3     & 5 \\
+    \bottomrule
+    \end{tabular}
+\end{table}
+
+\begin{enumerate}[a)]
+
+\item Interpret the apparent effects of the treatments on the proportion of applicants who have their residence verified and the speed with which verification occurred. \\
+Answer:\\
+Each of the treatments had a slight effect on the first outcome, the probability of residence verification.  In the control group, this rate was 20/21 or approximately 95\%.  In the three treatment groups, the rate is 100\%, implying an average treatment effect of approximately 100 - 95 = 5 percentage points.  In terms of the median number of days until residence verification, the RTIA and NGO treatments were the same as the control group, implying an estimated ATE of 37 - 37 = 0.  However, the Bribe group received their verification in only 17 days, which is 37 - 17 = 20 days faster than the control group. 
+\item Interpret the apparent effects of the treatments on the proportion of applicants who actually received a ration card. \\
+Answer:\\
+In the control group, the rate was 5/21 or 24\%.  The NGO group fared slightly worse 3/18 = 17\%.  When a right to information request was filed, this rate jumped to 20/23 = 87\%, which approaches the 24/24 = 100\% success rate among those who paid a bribe.   
+\item What do these results seem to suggest about the effectiveness of the Right to Information Act as a way of helping slum dwellers obtain ration cards?  \\
+Answer:\\
+Although the RTIA treatment does not appear to speed the process of residency verification, it does seem to increase the probability of receiving a card by 20/23 - 5/21 = 63 percentage points over the control group, which seems like a large effect, especially for a treatment that may be implemented inexpensively by applicants.
+\end{enumerate}
+
+\section*{Question 9}
+A researcher wants to know how winning large sums of money in a national lottery affects people's views about the estate tax.  The researcher interviews a random sample of adults and compares the attitudes of those who report winning more than \$10,000 in the lottery to those who claim to have won little or nothing. The researcher reasons that the lottery chooses winners at random, and therefore the amount that people report having won is random. [10 points]
+
+\begin{enumerate}[a)]
+\item Critically evaluate this assumption. (Hint: are the potential outcomes of those who report winning more than \$10,000 identical, in expectation, to those who report winning little or nothing?)  \\
+Answer:\\
+This assumption may not be plausible in this application.  Although lottery winners are chosen at random from the pool of players in a given lottery, this study does not compare (randomly assigned) winners and losers from a pool of lottery players.  Instead, winners are compared to non-winners, where the latter group may include non-players.  Winning is therefore not randomly assigned.  If frequent players are more likely to win than non-players and the two groups have different potential outcomes, the comparison of the two groups may be prone to bias.
+\item Suppose the researcher were to restrict the sample to people who had played the lottery at least once during the past year.  Is it now safe to assume that the potential outcomes of those who report winning more than \$10,000 are identical, in expectation, to those who report winning little or nothing?  \\
+Answer:\\
+The assumption is not rooted in a randomization procedure because frequent players are still more likely to be winners than infrequent players.  Unfortunately, without detailed information about how many tickets were purchased for each lottery, we don't know the exact probability that each subject would win.  If frequent and infrequent players have different potential outcomes, the comparison is prone to bias (although, arguably, less bias than a comparison of winners to non-players).
+
+\end{enumerate}
+
+
+
+\section*{Question 10}
+Suppose researchers seek to assess the effect of receiving a free newspaper subscription on students' interest in politics.  A list of student dorm rooms is drawn up and sorted randomly. Dorm rooms in the first half of the randomly sorted list receive a newspaper at their door each morning for two months; dorm rooms in the second half of the list do not receive a paper. [10 points]
+
+\begin{enumerate}[a)]
+\item University researchers are sometimes required to disclose to subjects that they are participating in an experiment. Suppose that prior to the experiment, researchers distributed a letter informing students in the treatment group that they would be receiving a newspaper as part of a study to see if newspapers make students more interested in politics. Explain (in words and using potential outcomes notation) how this disclosure may jeopardize the excludability assumption.  \\
+Answer:\\
+The letter is distributed to the treatment group only, so the random assignment is now related to two potential treatments: the newspaper and the letter.  In order to use the treatment versus control comparison to identify the ATE of the newspaper, one must assume that the letter has no effect.  Formally, this excludability condition states that potential outcomes $Y_i (z,d)$ are affected solely by the treatment ($D_i=d$, whether one receives the newspaper), not by the random assignment and its other consequences ($Z_i=z$, the assigned condition, which determines whether one receives the letter): $Y_i (1,d) = Y_i (0,d)$.
+\item Suppose that students in the treatment group carry their newspapers to the cafeteria where they may be read by others.  Explain (in words and using potential outcomes notation) how this may jeopardize the non-interference assumption. \\
+Answer:\\
+If the treatment effect is defined as the difference between receipt of the newspaper and no treatment whatsoever, the fact that the control group is exposed to the treatment in the cafeteria is a possible source of bias. In an extreme case where everyone in both treatment and control groups reads the paper (either because they receive it or find it in the cafeteria), a comparison of the treatment and control group may suggest no effect, even if the ATE is large.  In a less extreme case, where cafeteria exposure increases with the number of treated friends one has, potential outcomes depend on how the random assignment happens to allocate papers. 
+% UPDATED 1/24/2018
+In either case, the students would not have just one potential outcome of $Y_{i}(d)$ for their individual treatment, but rather a schedule of potential outcomes of $Y_{i}(\textbf{d})$ or a vector of all the treatments administered to all subjects and whether the subject shared cafeteria time with a treated subject.
+\end{enumerate}
+
+
+\section*{Question 11}
+Several randomized experiments have assessed the effects of drivers' training classes on the likelihood that a student will be involved in a traffic accident or receive a ticket for a moving violation.   A complication arises because students who take drivers' training courses typically obtain their licenses faster than students who do not take a course. (The reason is unknown but may reflect the fact that those who take the training are better prepared for the licensing examination.)  If students in the control group on average start driving much later, the proportion of students who have an accident or receive a ticket could well turn out to be higher in the treatment group.  Suppose a researcher were to compare the treatment and control group in terms of the number of accidents that occur within 3 years of obtaining a license.[10 points]
+
+\begin{enumerate}[a)]
+\item Does this measurement approach maintain symmetry between treatment and control groups?  \\
+Answer:\\
+No, because the measurement procedure differs for treatment and control groups.  If control subjects tend to receive their licenses later, the apparent treatment effect may be biased by the fact that the control group is on average older than the treatment group during the period of study.  If the groups have different ages, their potential outcomes may differ as well.\\
+\item Would symmetry be maintained if the outcome measure were the number of accidents per mile of driving?  \\
+Answer:\\
+No, the problem of asymmetry remains.  The control group tends to be older, so their driving patterns may differ, which in turn implies different potential outcomes.
+\item Suppose researchers were to measure outcomes over a period of three years starting the moment at which students were randomly assigned to be trained or not.  Would this measurement strategy maintain symmetry?  Are there drawbacks to this approach? \\
+Answer:\\
+Yes, this approach maintains symmetry, since the clock starts at the same moment for both treatment and control.  However, the estimand is now the combined effect of the program on the amount of driving and the quality of the drivers. The program might improve driver quality yet produce more accidents due to increased driving.  Some of the uncertainty of interpretation would be eliminated if the driving program were to focus solely on those who already have their licenses, so that eligibility to drive were held constant.
+\end{enumerate}
+
+
+\section*{Question 12}
+A researcher studying 1,000 prison inmates noticed that prisoners who spend at least 3 hours per day reading are less likely to have violent encounters with prison staff.  The researcher therefore recommends that all prisoners be required to spend at least 3 hours reading each day.  Let $D_i$ be 0 when prisoners read less than 3 hours each day and 1 when prisoners read more than 3 hours each day. Let $Y_i (0)$ be each prisoner's potential number of violent encounters with prison staff when reading less than 3 hours per day, and let $Y_i (1)$ be each prisoner's potential number of violent encounters when reading more than 3 hours per day. [10 points]
+
+\begin{enumerate}[a)]
+\item In this study, nature has assigned a particular realization of $d_i$ to each subject. When assessing this study, why might one be hesitant to assume that $E[Y_i (0)|D_i=0]=E[Y_i (0)|D_i=1]$ and $E[Y_i (1)|D_i=0]= E[Y_i (1)|D_i=1]$? \\
+Answer:\\
+In this case, those who self-select into the treatment may have distinctive potential outcomes -- bookish inmates may be less prone to violence. In that case, $E[Y_i (0)|D_i=0] \neq E[Y_i (0)|D_i=1]$. Thus, a comparison of readers and non-readers will not tend to produce unbiased estimates of the ATE.
+\item Suppose that researchers were to test this researcher's hypothesis by randomly assigning 10 prisoners to a treatment group.  Prisoners in this group are required to go to the prison library and read in specially designated carrels for 3 hours each day for one week; the other prisoners, who make up the control group, go about their usual routines.  Suppose, for the sake of argument, that all prisoners in the treatment group in fact read for 3 hours each day and that none of the prisoners in the control group read at all during the week of the study. Critically evaluate the excludability assumption as it applies to this experiment.  \\
+Answer:\\
+The excludability assumption implies that potential outcomes respond only to the specified treatment (reading) and not to the random assignment (and other factors it may set in motion).  Before attributing the apparent contrast in outcomes between the treatment and control groups to reading per se, we might want to find out what other activities the reading period replaced in the treatment group's schedule.  For example, if reading took the place of some activity that often provoked violent encounters with guards (e.g., weightroom exercise), the effect of reading might actually be due to a substitution effect, not the effect of reading per se.  
+\item State the assumption of non-interference as it applies to this experiment.  \\
+Answer:\\
+The requirement that $Y_i (d )=Y_i (\textbf{d})$ implies that each subject's potential outcomes respond only to the treatment they personally receive, not the treatments received by others.  In this case, each prisoner's potential outcomes might depend on which other prisoners are assigned to the reading group (if it's an unruly bunch, reading might not be a quiet, contemplative activity). 
+\item Suppose that the results of this experiment were to indicate that the reading treatment sharply reduces violent confrontations with prison staff.  How does the non-interference assumption come into play if the aim is to evaluate the effects of a policy whereby all prisoners are required to read for 3 hours?  \\
+Answer:\\
+The fact that only 10 prisoners were assigned to the reading period means that one must be cautious about generalizing to a policy whereby all prisoners are treated simultaneously. Potential outcomes might be different if a very large proportion of prisoners were sent to reading period, perhaps because a universal reading period would have to be closely monitored by guards in order to maintain control over the entire prison population, which changes the nature of the treatment as well as the likelihood of a violent confrontation.
+
+\end{enumerate}
+
+
+
+
+
+\end{document}

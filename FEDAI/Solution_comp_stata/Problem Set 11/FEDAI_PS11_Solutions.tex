@@ -97,14 +97,14 @@
 \usepackage{xcolor}
 \usepackage[printwatermark]{xwatermark}
 \newwatermark[allpages,color=black!50,angle=45,scale=1,xpos=0,ypos=0]{DO NOT DISTRIBUTE}
-
+\input{pygments.tex}
 
 
 
 \title{Field Experiments: Design, Analysis and Interpretation \\
 Solutions for Chapter 11 Exercises}
 \author{Alan S. Gerber and Donald P. Green\footnote{Solutions prepared by Peter M. Aronow and revised by Alexander Coppock}}
-\date{\today}
+\date{\vspace{-5ex}}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \IfFileExists{upquote.sty}{\usepackage{upquote}}{}
@@ -255,33 +255,43 @@ Answer:\\
 
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlstd{p_c_MI06} \hlkwb{<-} \hlnum{8755}\hlopt{/}\hlnum{26481}
-\hlstd{p_t_MI06} \hlkwb{<-} \hlnum{2123}\hlopt{/}\hlnum{5310}
-\hlstd{ATE_MI06} \hlkwb{=} \hlstd{p_t_MI06} \hlopt{-} \hlstd{p_c_MI06}
-\hlstd{ATE_MI06}
-\end{alltt}
-\begin{verbatim}
-## [1] 0.06919727
-\end{verbatim}
-\begin{alltt}
-\hlstd{p_c_MI07} \hlkwb{<-} \hlnum{88960}\hlopt{/}\hlnum{348227}
-\hlstd{p_t_MI07} \hlkwb{<-} \hlnum{3791}\hlopt{/}\hlnum{12391}
-\hlstd{ATE_MI07} \hlkwb{=} \hlstd{p_t_MI07} \hlopt{-} \hlstd{p_c_MI07}
-\hlstd{ATE_MI07}
-\end{alltt}
-\begin{verbatim}
-## [1] 0.05048232
-\end{verbatim}
-\begin{alltt}
-\hlstd{p_c_IL09} \hlkwb{<-} \hlnum{2600}\hlopt{/}\hlnum{15676}
-\hlstd{p_t_IL09} \hlkwb{<-} \hlnum{1936}\hlopt{/}\hlnum{9326}
-\hlstd{ATE_IL09} \hlkwb{=}  \hlstd{p_t_IL09} \hlopt{-} \hlstd{p_c_IL09}
-\hlstd{ATE_IL09}
-\end{alltt}
-\begin{verbatim}
-## [1] 0.04173304
-\end{verbatim}
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}1}]:} \PY{k}{clear}
+        \PY{k}{scalar} p\PYZus{}c\PYZus{}MI06 = \PY{l+m}{8755}\PY{o}{/}\PY{l+m}{26481}
+        \PY{k}{scalar} p\PYZus{}t\PYZus{}MI06 = \PY{l+m}{2123}\PY{o}{/}\PY{l+m}{5310}
+        \PY{k}{global} ATE\PYZus{}MI06 = p\PYZus{}t\PYZus{}MI06 \PY{o}{\PYZhy{}} p\PYZus{}c\PYZus{}MI06
+        \PY{k}{disp} \PY{n+nv+vg}{\PYZdl{}}\PY{n+nv+vg}{ATE\PYZus{}MI06}
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+.06919727
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}2}]:} \PY{k}{scalar} p\PYZus{}c\PYZus{}MI07 = \PY{l+m}{88960}\PY{o}{/}\PY{l+m}{348227}
+        \PY{k}{scalar} p\PYZus{}t\PYZus{}MI07 = \PY{l+m}{3791}\PY{o}{/}\PY{l+m}{12391}
+        \PY{k}{global} ATE\PYZus{}MI07 = p\PYZus{}t\PYZus{}MI07 \PY{o}{\PYZhy{}} p\PYZus{}c\PYZus{}MI07
+        \PY{k}{disp} \PY{n+nv+vg}{\PYZdl{}}\PY{n+nv+vg}{ATE\PYZus{}MI07}
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+.05048232
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}3}]:} \PY{k}{scalar} p\PYZus{}c\PYZus{}IL09 = \PY{l+m}{2600}\PY{o}{/}\PY{l+m}{15676}
+        \PY{k}{scalar} p\PYZus{}t\PYZus{}IL09 = \PY{l+m}{1936}\PY{o}{/}\PY{l+m}{9326}
+        \PY{k}{global} ATE\PYZus{}IL09 = p\PYZus{}t\PYZus{}IL09 \PY{o}{\PYZhy{}} p\PYZus{}c\PYZus{}IL09
+        \PY{k}{disp} \PY{n+nv+vg}{\PYZdl{}}\PY{n+nv+vg}{ATE\PYZus{}IL09}
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+.04173304
+
+    \end{Verbatim}
+
 \end{kframe}
 \end{knitrout}
 
@@ -291,52 +301,61 @@ Answer:\\
 Answer:\\
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlstd{SE_MI06} \hlkwb{<-} \hlkwd{sqrt}\hlstd{((p_t_MI06} \hlopt{*} \hlstd{(}\hlnum{1}\hlopt{-}\hlstd{p_t_MI06))}\hlopt{/}\hlnum{5310} \hlopt{+}
-                \hlstd{(p_c_MI06} \hlopt{*} \hlstd{(}\hlnum{1}\hlopt{-}\hlstd{p_c_MI06))}\hlopt{/}\hlnum{26481}\hlstd{)}
-\hlstd{SE_MI06}
-\end{alltt}
-\begin{verbatim}
-## [1] 0.007317643
-\end{verbatim}
-\begin{alltt}
-\hlstd{SE_MI07} \hlkwb{<-} \hlkwd{sqrt}\hlstd{((p_t_MI07} \hlopt{*} \hlstd{(}\hlnum{1}\hlopt{-}\hlstd{p_t_MI07))}\hlopt{/}\hlnum{12391} \hlopt{+}
-                \hlstd{(p_c_MI07} \hlopt{*} \hlstd{(}\hlnum{1}\hlopt{-}\hlstd{p_c_MI07))}\hlopt{/}\hlnum{348227}\hlstd{)}
-\hlstd{SE_MI07}
-\end{alltt}
-\begin{verbatim}
-## [1] 0.004205133
-\end{verbatim}
-\begin{alltt}
-\hlstd{SE_IL09} \hlkwb{<-} \hlkwd{sqrt}\hlstd{((p_t_IL09} \hlopt{*} \hlstd{(}\hlnum{1}\hlopt{-}\hlstd{p_t_IL09))}\hlopt{/}\hlnum{9326} \hlopt{+}
-                \hlstd{(p_c_IL09} \hlopt{*} \hlstd{(}\hlnum{1}\hlopt{-}\hlstd{p_c_IL09))}\hlopt{/}\hlnum{15676}\hlstd{)}
-\hlstd{SE_IL09}
-\end{alltt}
-\begin{verbatim}
-## [1] 0.005144331
-\end{verbatim}
-\begin{alltt}
-\hlstd{prec_MI06} \hlkwb{<-} \hlnum{1}\hlopt{/}\hlstd{SE_MI06}\hlopt{^}\hlnum{2}
-\hlstd{prec_MI07} \hlkwb{<-} \hlnum{1}\hlopt{/}\hlstd{SE_MI07}\hlopt{^}\hlnum{2}
-\hlstd{prec_IL09} \hlkwb{<-} \hlnum{1}\hlopt{/}\hlstd{SE_IL09}\hlopt{^}\hlnum{2}
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}4}]:} \PY{k}{global} SE\PYZus{}MI06 = \PY{n+nf}{sqrt}((p\PYZus{}t\PYZus{}MI06 \PY{o}{*} (\PY{l+m}{1}\PY{o}{\PYZhy{}}p\PYZus{}t\PYZus{}MI06))\PY{o}{/}\PY{l+m}{5310} \PY{o}{+} \PY{c+cs}{///}
+        (p\PYZus{}c\PYZus{}MI06 \PY{o}{*} (\PY{l+m}{1}\PY{o}{\PYZhy{}}p\PYZus{}c\PYZus{}MI06))\PY{o}{/}\PY{l+m}{26481})
+        \PY{k}{disp} \PY{n+nv+vg}{\PYZdl{}}\PY{n+nv+vg}{SE\PYZus{}MI06}
+\end{Verbatim}
 
-\hlstd{prec_MI06}
-\end{alltt}
-\begin{verbatim}
-## [1] 18674.87
-\end{verbatim}
-\begin{alltt}
-\hlstd{prec_MI07}
-\end{alltt}
-\begin{verbatim}
-## [1] 56551.04
-\end{verbatim}
-\begin{alltt}
-\hlstd{prec_IL09}
-\end{alltt}
-\begin{verbatim}
-## [1] 37786.98
-\end{verbatim}
+    \begin{Verbatim}[commandchars=\\\{\}]
+.00731764
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}5}]:} \PY{k}{global} SE\PYZus{}MI07 = \PY{n+nf}{sqrt}((p\PYZus{}t\PYZus{}MI07 \PY{o}{*} (\PY{l+m}{1}\PY{o}{\PYZhy{}}p\PYZus{}t\PYZus{}MI07))\PY{o}{/}\PY{l+m}{12391} \PY{o}{+} \PY{c+cs}{///}
+        (p\PYZus{}c\PYZus{}MI07 \PY{o}{*} (\PY{l+m}{1}\PY{o}{\PYZhy{}}p\PYZus{}c\PYZus{}MI07))\PY{o}{/}\PY{l+m}{348227})
+        \PY{k}{disp} \PY{n+nv+vg}{\PYZdl{}}\PY{n+nv+vg}{SE\PYZus{}MI07}
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+.00420513
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}6}]:} \PY{k}{global} SE\PYZus{}IL09 = \PY{n+nf}{sqrt}((p\PYZus{}t\PYZus{}IL09 \PY{o}{*} (\PY{l+m}{1}\PY{o}{\PYZhy{}}p\PYZus{}t\PYZus{}IL09))\PY{o}{/}\PY{l+m}{9326} \PY{o}{+} \PY{c+cs}{///}
+        (p\PYZus{}c\PYZus{}IL09 \PY{o}{*} (\PY{l+m}{1}\PY{o}{\PYZhy{}}p\PYZus{}c\PYZus{}IL09))\PY{o}{/}\PY{l+m}{15676})
+        \PY{k}{disp} \PY{n+nv+vg}{\PYZdl{}}\PY{n+nv+vg}{SE\PYZus{}IL09}
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+.00514433
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}7}]:} \PY{k}{global} prec\PYZus{}MI06 = \PY{l+m}{1}\PY{o}{/}\PY{n+nv+vg}{\PYZdl{}}\PY{n+nv+vg}{SE\PYZus{}MI06}\PY{o}{\PYZca{}}\PY{l+m}{2}
+        \PY{k}{global} prec\PYZus{}MI07 = \PY{l+m}{1}\PY{o}{/}\PY{n+nv+vg}{\PYZdl{}}\PY{n+nv+vg}{SE\PYZus{}MI07}\PY{o}{\PYZca{}}\PY{l+m}{2}
+        \PY{k}{global} prec\PYZus{}IL09 = \PY{l+m}{1}\PY{o}{/}\PY{n+nv+vg}{\PYZdl{}}\PY{n+nv+vg}{SE\PYZus{}IL09}\PY{o}{\PYZca{}}\PY{l+m}{2}
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}8}]:} \PY{k}{disp} \PY{n+nv+vg}{\PYZdl{}}\PY{n+nv+vg}{prec\PYZus{}MI06}
+        \PY{k}{disp} \PY{n+nv+vg}{\PYZdl{}}\PY{n+nv+vg}{prec\PYZus{}MI07}
+        \PY{k}{disp} \PY{n+nv+vg}{\PYZdl{}}\PY{n+nv+vg}{prec\PYZus{}IL09}
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+
+18674.87
+
+56551.044
+
+37786.98
+
+    \end{Verbatim}
+
 \end{kframe}
 \end{knitrout}
 
@@ -346,12 +365,18 @@ Answer:\\
 
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlkwd{weighted.mean}\hlstd{(}\hlkwd{c}\hlstd{(ATE_MI06, ATE_MI07, ATE_IL09),} \hlkwd{c}\hlstd{(prec_MI06, prec_MI07, prec_IL09))}
-\end{alltt}
-\begin{verbatim}
-## [1] 0.05064947
-\end{verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}9}]:} \PY{k}{scalar} weighted\PYZus{}mean = (\PY{n+nv+vg}{\PYZdl{}}\PY{n+nv+vg}{ATE\PYZus{}MI06}\PY{o}{*}\PY{n+nv+vg}{\PYZdl{}}\PY{n+nv+vg}{prec\PYZus{}MI06} \PY{o}{+} \PY{c+cs}{///}
+        \PY{n+nv+vg}{\PYZdl{}}\PY{n+nv+vg}{ATE\PYZus{}MI07}\PY{o}{*}\PY{n+nv+vg}{\PYZdl{}}\PY{n+nv+vg}{prec\PYZus{}MI07} \PY{o}{+} \PY{c+cs}{///}
+        \PY{n+nv+vg}{\PYZdl{}}\PY{n+nv+vg}{ATE\PYZus{}IL09}\PY{o}{*}\PY{n+nv+vg}{\PYZdl{}}\PY{n+nv+vg}{prec\PYZus{}IL09})\PY{o}{/}(\PY{n+nv+vg}{\PYZdl{}}\PY{n+nv+vg}{prec\PYZus{}MI06}\PY{o}{+}\PY{n+nv+vg}{\PYZdl{}}\PY{n+nv+vg}{prec\PYZus{}MI07}\PY{o}{+}\PY{n+nv+vg}{\PYZdl{}}\PY{n+nv+vg}{prec\PYZus{}IL09})
+        \PY{k}{disp} weighted\PYZus{}mean
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+.05064947
+
+    \end{Verbatim}
 \end{kframe}
 \end{knitrout}
 
@@ -422,21 +447,43 @@ The Lower bound is $0.051 – (1.96)(.00297)=0.0448$.  The upper bound is $0.051
 These results are confirmed by the \texttt{rmeta} package:
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlkwd{suppressMessages}\hlstd{(}\hlkwd{library}\hlstd{(rmeta))}
-\hlstd{meta_analysis} \hlkwb{<-} \hlkwd{meta.summaries}\hlstd{(}\hlkwc{d} \hlstd{=} \hlkwd{c}\hlstd{(ATE_MI06, ATE_MI07, ATE_IL09),}
-                                \hlkwc{se} \hlstd{=} \hlkwd{c}\hlstd{(SE_MI06, SE_MI07, SE_IL09))}
-\hlstd{meta_analysis}\hlopt{$}\hlstd{summary}
-\end{alltt}
-\begin{verbatim}
-## [1] 0.05064947
-\end{verbatim}
-\begin{alltt}
-\hlstd{meta_analysis}\hlopt{$}\hlstd{se.summary}
-\end{alltt}
-\begin{verbatim}
-## [1] 0.002974651
-\end{verbatim}
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}10}]:} \PY{k}{clear}
+         \PY{k}{set} obs \PY{l+m}{3}
+         \PY{k}{gen} ate = .
+         \PY{k}{replace} ate = \PY{n+nv+vg}{\PYZdl{}}\PY{n+nv+vg}{ATE\PYZus{}MI06}\PY{k}{ if} \PYZus{}n \PY{o}{==}\PY{l+m}{1}
+         \PY{k}{replace} ate = \PY{n+nv+vg}{\PYZdl{}}\PY{n+nv+vg}{ATE\PYZus{}MI07}\PY{k}{ if} \PYZus{}n \PY{o}{==}\PY{l+m}{2}
+         \PY{k}{replace} ate = \PY{n+nv+vg}{\PYZdl{}}\PY{n+nv+vg}{ATE\PYZus{}IL09}\PY{k}{ if} \PYZus{}n \PY{o}{==}\PY{l+m}{3}
+         
+         \PY{k}{gen} ate\PYZus{}se = .
+         \PY{k}{replace} ate\PYZus{}se = \PY{n+nv+vg}{\PYZdl{}}\PY{n+nv+vg}{SE\PYZus{}MI06}\PY{k}{ if} \PYZus{}n \PY{o}{==}\PY{l+m}{1}
+         \PY{k}{replace} ate\PYZus{}se = \PY{n+nv+vg}{\PYZdl{}}\PY{n+nv+vg}{SE\PYZus{}MI07}\PY{k}{ if} \PYZus{}n \PY{o}{==}\PY{l+m}{2}
+         \PY{k}{replace} ate\PYZus{}se = \PY{n+nv+vg}{\PYZdl{}}\PY{n+nv+vg}{SE\PYZus{}IL09}\PY{k}{ if} \PYZus{}n \PY{o}{==}\PY{l+m}{3}
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}11}]:} \PY{k}{qui} metaan ate ate\PYZus{}se, fe
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}12}]:} \PY{c+c1}{//}\PY{c+c1}{ }\PY{c+c1}{ }\PY{c+c1}{i}\PY{c+c1}{n}\PY{c+c1}{v}\PY{c+c1}{e}\PY{c+c1}{r}\PY{c+c1}{s}\PY{c+c1}{e}\PY{c+c1}{\PYZhy{}}\PY{c+c1}{v}\PY{c+c1}{a}\PY{c+c1}{r}\PY{c+c1}{i}\PY{c+c1}{a}\PY{c+c1}{n}\PY{c+c1}{c}\PY{c+c1}{e}\PY{c+c1}{ }\PY{c+c1}{w}\PY{c+c1}{e}\PY{c+c1}{i}\PY{c+c1}{g}\PY{c+c1}{h}\PY{c+c1}{t}\PY{c+c1}{e}\PY{c+c1}{d}\PY{c+c1}{ }\PY{c+c1}{e}\PY{c+c1}{f}\PY{c+c1}{f}\PY{c+c1}{e}\PY{c+c1}{c}\PY{c+c1}{t}
+         \PY{k}{disp}  \PY{n+nf}{r}(eff)
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+.05064947
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}13}]:} \PY{c+c1}{//}\PY{c+c1}{ }\PY{c+c1}{ }\PY{c+c1}{i}\PY{c+c1}{n}\PY{c+c1}{v}\PY{c+c1}{e}\PY{c+c1}{r}\PY{c+c1}{s}\PY{c+c1}{e}\PY{c+c1}{\PYZhy{}}\PY{c+c1}{v}\PY{c+c1}{a}\PY{c+c1}{r}\PY{c+c1}{i}\PY{c+c1}{a}\PY{c+c1}{n}\PY{c+c1}{c}\PY{c+c1}{e}\PY{c+c1}{ }\PY{c+c1}{w}\PY{c+c1}{e}\PY{c+c1}{i}\PY{c+c1}{g}\PY{c+c1}{h}\PY{c+c1}{t}\PY{c+c1}{e}\PY{c+c1}{d}\PY{c+c1}{ }\PY{c+c1}{s}\PY{c+c1}{e}
+         \PY{k}{disp}  \PY{n+nf}{sqrt}(\PY{n+nf}{r}(effvar))
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+.00297465
+
+    \end{Verbatim}
 \end{kframe}
 \end{knitrout}
 
@@ -467,12 +514,32 @@ Table 11.3 presents observed and predicted values for each of the experimental s
 Answer:\\
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{verbatim}
-##    1    2    3    4    5    6 
-## 0.67 2.17 0.45 7.10 2.14 1.91
-##     1     2     3     4     5     6 
-##  1.14  2.53  0.50 13.36  2.53  2.05
-\end{verbatim}
+   \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}1}]:} import delimited .\PY{o}{/}data\PY{o}{/}chapter11\PY{o}{/}GerberGreenBook\PYZus{}Chapter11\PYZus{}Table\PYZus{}11\PYZus{}3,\PY{k}{ clear}
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}2}]:} \PY{k}{tabstat} m1\PYZus{}x2 m2\PYZus{}x2, statistics(sum)\PY{k}{ by}(region)
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+
+Summary statistics: sum
+  by categories of: region (Region)
+
+  region |     m1\_x2     m2\_x2
+---------+--------------------
+       1 |       .67      1.14
+       2 |      2.17      2.53
+       3 |       .45        .5
+       4 |       7.1     13.36
+       5 |      2.14      2.53
+       6 |      1.91      2.05
+---------+--------------------
+   Total |     14.44     22.11
+------------------------------
+
+    \end{Verbatim}
 \end{kframe}
 \end{knitrout}
 
@@ -483,175 +550,160 @@ Answer:\\
 
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlkwd{suppressMessages}\hlstd{(\{}
-  \hlkwd{library}\hlstd{(foreign)}
-  \hlkwd{library}\hlstd{(arm)}
-  \hlkwd{library}\hlstd{(dplyr)}
-  \hlkwd{library}\hlstd{(knitr)}
-\hlstd{\})}
-\hlstd{dupas} \hlkwb{<-} \hlkwd{read.dta}\hlstd{(}\hlstr{"/Users/alex/Documents/Dropbox/Columbia/Spring 2014/Experiments2014/FEDAI AEC Data and R Programs/Chapter 11/Chapter 11_Dupas (2010) Dataset.dta"}\hlstd{)}
-\hlstd{dupas} \hlkwb{<-} \hlkwd{within}\hlstd{(dupas,\{}
-  \hlstd{purchased} \hlkwb{<-} \hlkwd{as.numeric}\hlstd{(purchasednet} \hlopt{==}\hlstr{"yes"}\hlstd{)}
-  \hlstd{log_price} \hlkwb{<-} \hlkwd{log}\hlstd{(price)}
-  \hlstd{region} \hlkwb{<-} \hlstd{cfw_id}
-\hlstd{\})}
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}3}]:} \PY{k}{clear} 
+        
+        import delim .\PY{o}{/}data\PY{o}{/}chapter11\PY{o}{/}Chapter\PYZus{}11\PYZus{}Dupas\PYZus{}2010\PYZus{}Dataset,\PY{k}{ clear}
+        \PY{c+c1}{//}\PY{c+c1}{i}\PY{c+c1}{m}\PY{c+c1}{p}\PY{c+c1}{o}\PY{c+c1}{r}\PY{c+c1}{t}\PY{c+c1}{ }\PY{c+c1}{d}\PY{c+c1}{e}\PY{c+c1}{l}\PY{c+c1}{i}\PY{c+c1}{m}\PY{c+c1}{ }\PY{c+c1}{D}\PY{c+c1}{u}\PY{c+c1}{p}\PY{c+c1}{a}\PY{c+c1}{s}\PY{c+c1}{\PYZus{}}\PY{c+c1}{Q}\PY{c+c1}{J}\PY{c+c1}{E}\PY{c+c1}{\PYZus{}}\PY{c+c1}{2}\PY{c+c1}{0}\PY{c+c1}{1}\PY{c+c1}{0}\PY{c+c1}{,}\PY{c+c1}{ }\PY{c+c1}{c}\PY{c+c1}{l}\PY{c+c1}{e}\PY{c+c1}{a}\PY{c+c1}{r}
+        
+        
+        \PY{k}{gen} log\PYZus{}price =\PY{k}{ log}(price)
+        
+        \PY{k}{gen} purchased =.
+        \PY{k}{replace} purchased = \PY{l+m}{1}\PY{k}{ if} purchasednet\PY{o}{==}\PY{l+s}{\PYZdq{}}\PY{l+s}{y}\PY{l+s}{e}\PY{l+s}{s}\PY{l+s}{\PYZdq{}}
+        \PY{k}{replace} purchased = \PY{l+m}{0}\PY{k}{ if} purchasednet\PY{o}{==}\PY{l+s}{\PYZdq{}}\PY{l+s}{n}\PY{l+s}{o}\PY{l+s}{\PYZdq{}}
+        
+        \PY{k}{rename} cfw\PYZus{}id region	
+        \PY{k}{	}
+        \PY{k}{drop}\PY{k}{ if} (price \PY{o}{==}\PY{l+m}{0} | region\PY{o}{==}\PY{l+m}{4})
+        
+        
+        \PY{k}{qui}\PY{k}{ glm} purchased log\PYZus{}price i\PY{l+m}{.}region c\PY{l+m}{.}log\PYZus{}price\PYZsh{}i\PY{l+m}{.}region, \PY{c+c1}{///}
+        family(binomial) link(logit)
+        \PY{k}{predict} double preds\PYZus{}1
+        
+        \PY{k}{qui}\PY{k}{ glm} purchased log\PYZus{}price i\PY{l+m}{.}region, family(binomial) link(logit)
+        \PY{k}{predict} double preds\PYZus{}2
+        
+        
+        
+        \PY{k}{generate} non\PYZus{}p =.
+        \PY{k}{replace} non\PYZus{}p=\PY{l+m}{1}\PY{k}{ if} purchased\PY{o}{==}\PY{l+m}{0}
+        \PY{k}{replace} non\PYZus{}p=\PY{l+m}{0}\PY{k}{ if} purchased\PY{o}{!=}\PY{l+m}{0}
+        
+        \PY{k}{generate} pred\PYZus{}nonp\PYZus{}1 = \PY{l+m}{1}\PY{o}{\PYZhy{}}preds\PYZus{}1
+        \PY{k}{generate} pred\PYZus{}nonp\PYZus{}2 = \PY{l+m}{1}\PY{o}{\PYZhy{}}preds\PYZus{}2
+\end{Verbatim}
 
-\hlstd{dupas_subset} \hlkwb{<-} \hlkwd{subset}\hlstd{(dupas, price} \hlopt{!=}\hlnum{0} \hlopt{&} \hlstd{region}\hlopt{!=}\hlnum{4}\hlstd{)}
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}4}]:} \PY{k}{collapse} (sum) purchases=purchased \PY{c+cs}{///}
+           non\PYZus{}purchases=non\PYZus{}p \PY{c+cs}{///}
+           pred\PYZus{}purchases\PYZus{}1=preds\PYZus{}1 \PY{c+cs}{///}
+           pred\PYZus{}nonpurchases\PYZus{}1=pred\PYZus{}nonp\PYZus{}1 \PY{c+cs}{///}
+           pred\PYZus{}purchases\PYZus{}2=preds\PYZus{}2 \PY{c+cs}{///}
+           pred\PYZus{}nonpurchases\PYZus{}2=pred\PYZus{}nonp\PYZus{}2,\PY{k}{ by}(region price)
+\end{Verbatim}
 
-\hlstd{model_1} \hlkwb{<-} \hlkwd{glm}\hlstd{(purchased} \hlopt{~} \hlstd{log_price}\hlopt{*}\hlstd{region,} \hlkwc{data} \hlstd{= dupas_subset,} \hlkwc{family} \hlstd{=} \hlstr{"binomial"}\hlstd{)}
-\hlstd{model_2} \hlkwb{<-} \hlkwd{glm}\hlstd{(purchased} \hlopt{~} \hlstd{log_price} \hlopt{+} \hlstd{region,} \hlkwc{data} \hlstd{= dupas_subset,} \hlkwc{family} \hlstd{=} \hlstr{"binomial"}\hlstd{)}
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}5}]:} \PY{k}{gen} chi\PYZus{}square\PYZus{}1 = (purchases\PY{o}{\PYZhy{}} pred\PYZus{}purchases\PYZus{}1)\PY{o}{\PYZca{}}\PY{l+m}{2}\PY{o}{/} pred\PYZus{}purchases\PYZus{}1 \PY{o}{+} \PY{c+cs}{///}
+        (non\PYZus{}purchases\PY{o}{\PYZhy{}} pred\PYZus{}nonpurchases\PYZus{}1)\PY{o}{\PYZca{}}\PY{l+m}{2}\PY{o}{/} pred\PYZus{}nonpurchases\PYZus{}1
+        
+        \PY{k}{gen} chi\PYZus{}square\PYZus{}2 = (purchases\PY{o}{\PYZhy{}} pred\PYZus{}purchases\PYZus{}2)\PY{o}{\PYZca{}}\PY{l+m}{2}\PY{o}{/} pred\PYZus{}purchases\PYZus{}2 \PY{o}{+} \PY{c+cs}{///}
+        ( non\PYZus{}purchases\PY{o}{\PYZhy{}} pred\PYZus{}nonpurchases\PYZus{}2)\PY{o}{\PYZca{}}\PY{l+m}{2}\PY{o}{/} pred\PYZus{}nonpurchases\PYZus{}2
+\end{Verbatim}
 
-\hlstd{dupas_subset}\hlopt{$}\hlstd{preds_1} \hlkwb{<-} \hlkwd{invlogit}\hlstd{(}\hlkwd{predict}\hlstd{(model_1))}
-\hlstd{dupas_subset}\hlopt{$}\hlstd{preds_2} \hlkwb{<-} \hlkwd{invlogit}\hlstd{(}\hlkwd{predict}\hlstd{(model_2))}
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}6}]:} \PY{c+c1}{//}\PY{c+c1}{ }\PY{c+c1}{p}\PY{c+c1}{r}\PY{c+c1}{i}\PY{c+c1}{n}\PY{c+c1}{t}\PY{c+c1}{ }\PY{c+c1}{t}\PY{c+c1}{a}\PY{c+c1}{b}\PY{c+c1}{l}\PY{c+c1}{e}
+        \PY{k}{list} region price purchases non\PYZus{}purchases pred\PYZus{}purchases\PYZus{}1 \PY{c+cs}{///}
+        pred\PYZus{}nonpurchases\PYZus{}1 chi\PYZus{}square\PYZus{}1
+        \PY{k}{list} region price purchases non\PYZus{}purchases pred\PYZus{}purchases\PYZus{}2 \PY{c+cs}{///}
+        pred\PYZus{}nonpurchases\PYZus{}2 chi\PYZus{}square\PYZus{}2
+\end{Verbatim}
 
-\hlstd{table_11_3_mod} \hlkwb{<-}
-\hlstd{dupas_subset} \hlopt{%>%}
-  \hlkwd{group_by}\hlstd{(region, price)} \hlopt{%>%}
-  \hlkwd{summarize}\hlstd{(}\hlkwc{purchases} \hlstd{=} \hlkwd{sum}\hlstd{(purchased),}
-            \hlkwc{non_purchases} \hlstd{=} \hlkwd{sum}\hlstd{(purchased}\hlopt{==}\hlnum{0}\hlstd{),}
-            \hlkwc{pred_purchases_1} \hlstd{=} \hlkwd{sum}\hlstd{(preds_1),}
-            \hlkwc{pred_nonpurchases_1} \hlstd{=} \hlkwd{sum}\hlstd{(}\hlnum{1}\hlopt{-}\hlstd{preds_1),}
-            \hlkwc{chi_square_1} \hlstd{= (purchases}\hlopt{-} \hlstd{pred_purchases_1)}\hlopt{^}\hlnum{2}\hlopt{/} \hlstd{pred_purchases_1} \hlopt{+}
-              \hlstd{( non_purchases}\hlopt{-} \hlstd{pred_nonpurchases_1)}\hlopt{^}\hlnum{2}\hlopt{/} \hlstd{pred_nonpurchases_1,}
-            \hlkwc{pred_purchases_2} \hlstd{=} \hlkwd{sum}\hlstd{(preds_2),}
-            \hlkwc{pred_nonpurchases_2} \hlstd{=} \hlkwd{sum}\hlstd{(}\hlnum{1}\hlopt{-}\hlstd{preds_2),}
-            \hlkwc{chi_square_2} \hlstd{= (purchases}\hlopt{-} \hlstd{pred_purchases_2)}\hlopt{^}\hlnum{2}\hlopt{/} \hlstd{pred_purchases_2} \hlopt{+}
-              \hlstd{( non_purchases}\hlopt{-} \hlstd{pred_nonpurchases_2)}\hlopt{^}\hlnum{2}\hlopt{/} \hlstd{pred_nonpurchases_2)}
+\begin{footnotesize}
+    \begin{Verbatim}[commandchars=\\\{\}]
+     +------------------------------------------------------------------------+
+     | region   price   purcha\textasciitilde{}s   non\_pu\textasciitilde{}s   pred\_pu\textasciitilde{}1   pred\_n\textasciitilde{}1   chi\_sq\textasciitilde{}1 |
+     |------------------------------------------------------------------------|
+  1. |      1      70         16         13   15.441598    13.5584   .0431908 |
+  2. |      1     100         16         31   16.920757   30.07924    .078289 |
+  3. |      1     130         12         37   12.291133   36.70887   .0092048 |
+  4. |      1     190          5         23   3.8221953    24.1778    .420315 |
+  5. |      1     250          2         28   2.5243177   27.47568   .1189098 |
+     |------------------------------------------------------------------------|
+  6. |      2      40         46         15   47.582604    13.4174   .2393082 |
+  7. |      2      80         40         30   35.429156   34.57085   1.194044 |
+  8. |      2     120         18         46   21.212681   42.78732   .7277873 |
+  9. |      2     200         10         49   9.7755597   49.22444   .0061763 |
+ 10. |      3      50         42         16   43.139894   14.86011   .1175591 |
+     |------------------------------------------------------------------------|
+ 11. |      3      90         33         27   31.052283   28.94772   .2532181 |
+ 12. |      3     150         18         40   18.042949   39.95705   .0001484 |
+ 13. |      3     210          9         39   9.7648732   38.23513   .0752127 |
+ 14. |      5      60         27         10   26.083854   10.91615   .1090662 |
+ 15. |      5     110         12         25   15.218787   21.78121   1.156442 |
+     |------------------------------------------------------------------------|
+ 16. |      5     140         11         18   8.6973594   20.30264   .8707839 |
+ 17. |      6      50         14          5   14.837853   4.162147   .2159737 |
+ 18. |      6     100         11          7   8.7298279   9.270172   1.146296 |
+ 19. |      6     150          4         14   5.4323191   12.56768   .5408933 |
+     +------------------------------------------------------------------------+
 
-\hlkwd{kable}\hlstd{(table_11_3_mod[,}\hlkwd{c}\hlstd{(}\hlnum{1}\hlopt{:}\hlnum{4}\hlstd{,} \hlnum{5}\hlopt{:}\hlnum{7}\hlstd{)],}\hlkwc{caption} \hlstd{=} \hlstr{"Modified Table 11-3 (Model 1)"}\hlstd{)}
-\end{alltt}
-\end{kframe}\begin{table}
 
-\caption{Modified Table 11-3 (Model 1)}
-\begin{tabular}{l|r|r|r|r|r|r}
-\hline
-region & price & purchases & non\_purchases & pred\_purchases\_1 & pred\_nonpurchases\_1 & chi\_square\_1\\
-\hline
-1 & 70 & 16 & 13 & 15.441596 & 13.558404 & 0.0431911\\
-\hline
-1 & 100 & 16 & 31 & 16.920757 & 30.079243 & 0.0782891\\
-\hline
-1 & 130 & 12 & 37 & 12.291135 & 36.708865 & 0.0092049\\
-\hline
-1 & 190 & 5 & 23 & 3.822194 & 24.177806 & 0.4203157\\
-\hline
-1 & 250 & 2 & 28 & 2.524317 & 27.475683 & 0.1189097\\
-\hline
-2 & 40 & 46 & 15 & 47.582604 & 13.417396 & 0.2393083\\
-\hline
-2 & 80 & 40 & 30 & 35.429156 & 34.570844 & 1.1940434\\
-\hline
-2 & 120 & 18 & 46 & 21.212681 & 42.787319 & 0.7277873\\
-\hline
-2 & 200 & 10 & 49 & 9.775560 & 49.224440 & 0.0061763\\
-\hline
-3 & 50 & 42 & 16 & 43.139894 & 14.860106 & 0.1175590\\
-\hline
-3 & 90 & 33 & 27 & 31.052284 & 28.947716 & 0.2532181\\
-\hline
-3 & 150 & 18 & 40 & 18.042950 & 39.957050 & 0.0001484\\
-\hline
-3 & 210 & 9 & 39 & 9.764872 & 38.235128 & 0.0752124\\
-\hline
-5 & 60 & 27 & 10 & 26.083853 & 10.916147 & 0.1090665\\
-\hline
-5 & 110 & 12 & 25 & 15.218789 & 21.781211 & 1.1564439\\
-\hline
-5 & 140 & 11 & 18 & 8.697359 & 20.302641 & 0.8707845\\
-\hline
-6 & 50 & 14 & 5 & 14.837853 & 4.162147 & 0.2159737\\
-\hline
-6 & 100 & 11 & 7 & 8.729828 & 9.270172 & 1.1462956\\
-\hline
-6 & 150 & 4 & 14 & 5.432319 & 12.567681 & 0.5408934\\
-\hline
-\end{tabular}
-\end{table}
+     +------------------------------------------------------------------------+
+     | region   price   purcha\textasciitilde{}s   non\_pu\textasciitilde{}s   pred\_pu\textasciitilde{}2   pred\_n\textasciitilde{}2   chi\_sq\textasciitilde{}2 |
+     |------------------------------------------------------------------------|
+  1. |      1      70         16         13    14.85299   14.14701    .181574 |
+  2. |      1     100         16         31   16.687555   30.31244   .0439238 |
+  3. |      1     130         12         37   12.498146   36.50185   .0266531 |
+  4. |      1     190          5         23   4.1147946   23.88521   .2232385 |
+  5. |      1     250          2         28   2.8465156   27.15348   .2781327 |
+     |------------------------------------------------------------------------|
+  6. |      2      40         46         15   47.744037   13.25596    .293164 |
+  7. |      2      80         40         30   35.468777   34.53122   1.173467 |
+  8. |      2     120         18         46   21.135136   42.86486   .6943625 |
+  9. |      2     200         10         49    9.652051   49.34795   .0149967 |
+ 10. |      3      50         42         16   44.054578   13.94542   .3985204 |
+     |------------------------------------------------------------------------|
+ 11. |      3      90         33         27   31.294685   28.70532   .1942352 |
+ 12. |      3     150         18         40   17.510472   40.48953   .0196039 |
+ 13. |      3     210          9         39   9.1402666   38.85973   .0026588 |
+ 14. |      5      60         27         10   25.287202    11.7128    .366482 |
+ 15. |      5     110         12         25    15.49734   21.50266   1.358088 |
+     |------------------------------------------------------------------------|
+ 16. |      5     140         11         18    9.215458   19.78454    .506534 |
+ 17. |      6      50         14          5   14.607437   4.392563   .1092606 |
+ 18. |      6     100         11          7   8.7615558   9.238444   1.114256 |
+ 19. |      6     150          4         14   5.6310073   12.36899    .687486 |
+     +------------------------------------------------------------------------+
 
-\begin{kframe}\begin{alltt}
-\hlkwd{kable}\hlstd{(table_11_3_mod[,}\hlkwd{c}\hlstd{(}\hlnum{1}\hlopt{:}\hlnum{4}\hlstd{,} \hlnum{8}\hlopt{:}\hlnum{10}\hlstd{)],}\hlkwc{caption} \hlstd{=} \hlstr{"Modified Table 11-3 (Model 2)"}\hlstd{)}
-\end{alltt}
-\end{kframe}\begin{table}
+    \end{Verbatim}
+\end{footnotesize}
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}7}]:} \PY{k}{qui}\PY{k}{ tabstat} chi\PYZus{}square\PYZus{}1, statistics(sum)\PY{k}{ save}
+        \PY{k}{scalar}  model\PYZus{}1\PYZus{}chi\PYZus{}sq=\PY{n+nf}{el}(\PY{n+nf}{r}(StatTotal),\PY{l+m}{1},\PY{l+m}{1})
+\end{Verbatim}
 
-\caption{Modified Table 11-3 (Model 2)}
-\begin{tabular}{l|r|r|r|r|r|r}
-\hline
-region & price & purchases & non\_purchases & pred\_purchases\_2 & pred\_nonpurchases\_2 & chi\_square\_2\\
-\hline
-1 & 70 & 16 & 13 & 14.852988 & 14.147012 & 0.1815747\\
-\hline
-1 & 100 & 16 & 31 & 16.687555 & 30.312445 & 0.0439238\\
-\hline
-1 & 130 & 12 & 37 & 12.498147 & 36.501852 & 0.0266533\\
-\hline
-1 & 190 & 5 & 23 & 4.114794 & 23.885206 & 0.2232390\\
-\hline
-1 & 250 & 2 & 28 & 2.846515 & 27.153485 & 0.2781326\\
-\hline
-2 & 40 & 46 & 15 & 47.744038 & 13.255962 & 0.2931645\\
-\hline
-2 & 80 & 40 & 30 & 35.468776 & 34.531224 & 1.1734669\\
-\hline
-2 & 120 & 18 & 46 & 21.135136 & 42.864864 & 0.6943623\\
-\hline
-2 & 200 & 10 & 49 & 9.652050 & 49.347950 & 0.0149967\\
-\hline
-3 & 50 & 42 & 16 & 44.054580 & 13.945420 & 0.3985211\\
-\hline
-3 & 90 & 33 & 27 & 31.294685 & 28.705315 & 0.1942350\\
-\hline
-3 & 150 & 18 & 40 & 17.510472 & 40.489528 & 0.0196039\\
-\hline
-3 & 210 & 9 & 39 & 9.140263 & 38.859737 & 0.0026587\\
-\hline
-5 & 60 & 27 & 10 & 25.287203 & 11.712797 & 0.3664814\\
-\hline
-5 & 110 & 12 & 25 & 15.497341 & 21.502659 & 1.3580892\\
-\hline
-5 & 140 & 11 & 18 & 9.215456 & 19.784544 & 0.5065353\\
-\hline
-6 & 50 & 14 & 5 & 14.607437 & 4.392563 & 0.1092608\\
-\hline
-6 & 100 & 11 & 7 & 8.761556 & 9.238444 & 1.1142560\\
-\hline
-6 & 150 & 4 & 14 & 5.631007 & 12.368993 & 0.6874859\\
-\hline
-\end{tabular}
-\end{table}
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}8}]:} \PY{k}{scalar} pvalue\PYZus{}1=chiprob(\PY{l+m}{9}, model\PYZus{}1\PYZus{}chi\PYZus{}sq)
+        \PY{k}{disp} \PY{n+nFormat}{\PYZpc{}8.5f} model\PYZus{}1\PYZus{}chi\PYZus{}sq
+        \PY{k}{disp} \PY{n+nFormat}{\PYZpc{}8.6f} pvalue\PYZus{}1
+\end{Verbatim}
 
-\begin{kframe}\begin{alltt}
-\hlcom{# degrees of freedom: 19 rows in all, minus 5 intercepts and 5 slopes}
-\hlstd{model_1_chi_sq} \hlkwb{<-} \hlkwd{with}\hlstd{(table_11_3_mod,} \hlkwd{sum}\hlstd{(chi_square_1))}
-\hlstd{pvalue_1} \hlkwb{=} \hlkwd{pchisq}\hlstd{(model_1_chi_sq,} \hlnum{9}\hlstd{,} \hlkwc{lower.tail} \hlstd{=} \hlnum{FALSE}\hlstd{)}
+    \begin{Verbatim}[commandchars=\\\{\}]
 
-\hlcom{# degrees of freedom: 19 rows in all, minus 5 intercepts and 1 slope}
-\hlstd{model_2_chi_sq} \hlkwb{<-} \hlkwd{with}\hlstd{(table_11_3_mod,} \hlkwd{sum}\hlstd{(chi_square_2))}
-\hlstd{pvalue_2} \hlkwb{=} \hlkwd{pchisq}\hlstd{(model_2_chi_sq,} \hlnum{13}\hlstd{,} \hlkwc{lower.tail} \hlstd{=} \hlnum{FALSE}\hlstd{)}
+ 7.32282
 
-\hlstd{model_1_chi_sq}
-\end{alltt}
-\begin{verbatim}
-## [1] 7.322821
-\end{verbatim}
-\begin{alltt}
-\hlstd{pvalue_1}
-\end{alltt}
-\begin{verbatim}
-## [1] 0.603548
-\end{verbatim}
-\begin{alltt}
-\hlstd{model_2_chi_sq}
-\end{alltt}
-\begin{verbatim}
-## [1] 7.686641
-\end{verbatim}
-\begin{alltt}
-\hlstd{pvalue_2}
-\end{alltt}
-\begin{verbatim}
-## [1] 0.8633989
-\end{verbatim}
+0.603548
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}9}]:} \PY{k}{qui}\PY{k}{ tabstat} chi\PYZus{}square\PYZus{}2, statistics(sum)\PY{k}{ save}
+        \PY{k}{scalar}  model\PYZus{}2\PYZus{}chi\PYZus{}sq=\PY{n+nf}{el}(\PY{n+nf}{r}(StatTotal),\PY{l+m}{1},\PY{l+m}{1})
+        \PY{k}{scalar} pvalue\PYZus{}2=chiprob(\PY{l+m}{13}, model\PYZus{}2\PYZus{}chi\PYZus{}sq)
+        \PY{k}{disp} \PY{n+nFormat}{\PYZpc{}8.5f} model\PYZus{}2\PYZus{}chi\PYZus{}sq
+        \PY{k}{disp} \PY{n+nFormat}{\PYZpc{}8.6f} pvalue\PYZus{}2
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+
+ 7.68664
+
+0.863399
+
+    \end{Verbatim}
+
 \end{kframe}
 \end{knitrout}
 
@@ -679,30 +731,51 @@ Answer:\\
 We tried different values of $\gamma$ until we came upon the value 19, which maximized the log-likelihood:
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlstd{gammas} \hlkwb{<-} \hlkwd{seq}\hlstd{(}\hlnum{1}\hlopt{:}\hlnum{100}\hlstd{)}
-\hlstd{lls} \hlkwb{<-} \hlkwd{rep}\hlstd{(}\hlnum{NA}\hlstd{,} \hlkwd{length}\hlstd{(gammas))}
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}1}]:} import delim .\PY{o}{/}data\PY{o}{/}chapter11\PY{o}{/}Chapter\PYZus{}11\PYZus{}Dupas\PYZus{}2010\PYZus{}Dataset,clear
+\end{Verbatim}
 
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}2}]:} \PY{k}{gen} purchased =.
+        \PY{k}{replace} purchased = \PY{l+m}{1}\PY{k}{ if} purchasednet\PY{o}{==}\PY{l+s}{\PYZdq{}}\PY{l+s}{y}\PY{l+s}{e}\PY{l+s}{s}\PY{l+s}{\PYZdq{}}
+        \PY{k}{replace} purchased = \PY{l+m}{0}\PY{k}{ if} purchasednet\PY{o}{==}\PY{l+s}{\PYZdq{}}\PY{l+s}{n}\PY{l+s}{o}\PY{l+s}{\PYZdq{}}    
+        \PY{k}{rename} cfw\PYZus{}id region		
+            
+        \PY{k}{matrix} t=\PY{n+nf}{J}(\PY{l+m}{100}, \PY{l+m}{2}, .)
+        \PY{k}{matrix} colnames t=gammas lls
+            
+        \PY{k}{forvalues} i = \PY{l+m}{1}\PY{o}{/}\PY{l+m}{100} \PYZob{}
+        \PY{k}{		}
+        \PY{k}{		gen} log\PYZus{}price\PYZus{}star\PYZus{}\PY{n+nv}{`}\PY{n+nv}{i}\PY{n+nv}{\PYZsq{}} =\PY{k}{ log}(price \PY{o}{+} \PY{n+nv}{`}\PY{n+nv}{i}\PY{n+nv}{\PYZsq{}})
+        \PY{k}{		qui}\PY{k}{ glm} purchased log\PYZus{}price\PYZus{}star\PYZus{}\PY{n+nv}{`}\PY{n+nv}{i}\PY{n+nv}{\PYZsq{}} i\PY{l+m}{.}region, 
+        			family(binomial) link(logit)
+        \PY{k}{		}
+        \PY{k}{		matrix} t[\PY{n+nv}{`}\PY{n+nv}{i}\PY{n+nv}{\PYZsq{}}, \PY{l+m}{1}] = \PY{n+nv}{`}\PY{n+nv}{i}\PY{n+nv}{\PYZsq{}}
+        \PY{k}{		matrix} t[\PY{n+nv}{`}\PY{n+nv}{i}\PY{n+nv}{\PYZsq{}}, \PY{l+m}{2}] = \PY{n+nv}{`}\PY{n+nv}{e}\PY{n+nv}{(}\PY{n+nv}{l}\PY{n+nv}{l}\PY{n+nv}{)}\PY{n+nv}{\PYZsq{}}
+        
+        \PYZcb{}
+\end{Verbatim}
 
-\hlcom{# Loop through possible values of gamma}
-\hlkwa{for}\hlstd{(i} \hlkwa{in} \hlnum{1}\hlopt{:}\hlkwd{length}\hlstd{(gammas))\{}
-  \hlstd{dupas} \hlkwb{<-} \hlkwd{within}\hlstd{(dupas,\{}
-    \hlstd{log_price_star} \hlkwb{<-} \hlkwd{log}\hlstd{(price}\hlopt{+}\hlstd{i)}
-  \hlstd{\})}
-  \hlstd{fit} \hlkwb{<-} \hlkwd{glm}\hlstd{(purchased} \hlopt{~} \hlstd{log_price_star} \hlopt{+} \hlstd{region,} \hlkwc{data} \hlstd{= dupas,} \hlkwc{family} \hlstd{=} \hlstr{"binomial"}\hlstd{)}
-  \hlstd{lls[i]} \hlkwb{<-} \hlkwd{logLik}\hlstd{(fit)}
-\hlstd{\}}
-\hlkwd{plot}\hlstd{(gammas, lls)}
-\hlkwd{abline}\hlstd{(}\hlkwc{v} \hlstd{=} \hlnum{19}\hlstd{)}
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}3}]:} \PY{k}{svmat} double t, names(col)     
+        \PY{k}{qui}\PY{k}{ sum} lls
+        \PY{k}{list} gammas\PY{k}{ if} lls\PY{o}{==}\PY{n+nf}{r}(max)
+           
+        \PY{k}{scatter} lls gammas, xline(\PY{l+m}{19})
+        \PY{k}{graph} export ..\PY{o}{/}results\PY{o}{/}chapter11\PY{o}{/}exercise\PYZus{}11\PYZus{}9\PYZus{}graph\PY{l+m}{.}pdf
+\end{Verbatim}
 
-\hlstd{gammas[}\hlkwd{which}\hlstd{(lls} \hlopt{==} \hlkwd{max}\hlstd{(lls))]}
-\end{alltt}
-\begin{verbatim}
-## [1] 19
-\end{verbatim}
+    \begin{Verbatim}[commandchars=\\\{\}]
+      +--------+
+      | gammas |
+      |--------|
+  19. |     19 |
+      +--------+
+
+    \end{Verbatim}
 \end{kframe}
 
-{\centering \includegraphics[width=4in,height=4in]{figure/PS11-unnamed-chunk-6-1} 
+{\centering \includegraphics[width=3.7in,height=2.8in]{figure/PS11-unnamed-chunk-6-1} 
 
 }
 

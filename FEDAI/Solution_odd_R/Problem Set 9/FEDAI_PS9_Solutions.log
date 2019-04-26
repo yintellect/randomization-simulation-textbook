@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2018) (preloaded format=pdflatex 2018.4.16)  11 APR 2019 14:10
+This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2018) (preloaded format=pdflatex 2018.4.16)  18 APR 2019 18:47
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -882,22 +882,22 @@ LaTeX Warning: Label `tab:addlabel' multiply defined.
 )
 \openout1 = `FEDAI_PS9_Solutions.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 112.
-LaTeX Font Info:    ... okay on input line 112.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 112.
-LaTeX Font Info:    ... okay on input line 112.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 112.
-LaTeX Font Info:    ... okay on input line 112.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 112.
-LaTeX Font Info:    ... okay on input line 112.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 112.
-LaTeX Font Info:    ... okay on input line 112.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 112.
-LaTeX Font Info:    ... okay on input line 112.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 112.
-LaTeX Font Info:    ... okay on input line 112.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 112.
-LaTeX Font Info:    ... okay on input line 112.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 113.
+LaTeX Font Info:    ... okay on input line 113.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 113.
+LaTeX Font Info:    ... okay on input line 113.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 113.
+LaTeX Font Info:    ... okay on input line 113.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 113.
+LaTeX Font Info:    ... okay on input line 113.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 113.
+LaTeX Font Info:    ... okay on input line 113.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 113.
+LaTeX Font Info:    ... okay on input line 113.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 113.
+LaTeX Font Info:    ... okay on input line 113.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 113.
+LaTeX Font Info:    ... okay on input line 113.
  (/usr/local/texlive/2018/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
 \scratchcounter=\count279
@@ -943,7 +943,7 @@ Package caption Info: End \AtBeginDocument code.
 Package hyperref Warning: Height of page (\stockheight) is invalid (0.0pt),
 (hyperref)                using 11in.
 
-Package hyperref Info: Link coloring OFF on input line 112.
+Package hyperref Info: Link coloring OFF on input line 113.
 (/usr/local/texlive/2018/texmf-dist/tex/latex/hyperref/nameref.sty
 Package: nameref 2016/05/21 v2.44 Cross-referencing by name of section
 
@@ -952,9 +952,9 @@ Package: gettitlestring 2016/05/16 v1.5 Cleanup title references (HO)
 )
 \c@section@level=\count285
 )
-LaTeX Info: Redefining \ref on input line 112.
-LaTeX Info: Redefining \pageref on input line 112.
-LaTeX Info: Redefining \nameref on input line 112.
+LaTeX Info: Redefining \ref on input line 113.
+LaTeX Info: Redefining \pageref on input line 113.
+LaTeX Info: Redefining \nameref on input line 113.
 
 (./FEDAI_PS9_Solutions.out) (./FEDAI_PS9_Solutions.out)
 \@outlinefile=\write4
@@ -962,7 +962,7 @@ LaTeX Info: Redefining \nameref on input line 112.
 
 
 
-Package layouts Warning: Layout scale set to 0.5 on input line 112.
+Package layouts Warning: Layout scale set to 0.5 on input line 113.
 
 *geometry* driver: auto-detecting
 *geometry* detected driver: pdftex
@@ -998,66 +998,66 @@ Package layouts Warning: Layout scale set to 0.5 on input line 112.
 * \@reversemarginfalse
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
-LaTeX Font Info:    Try loading font information for U+msa on input line 115.
+LaTeX Font Info:    Try loading font information for U+msa on input line 116.
 (/usr/local/texlive/2018/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Try loading font information for U+msb on input line 115.
+LaTeX Font Info:    Try loading font information for U+msb on input line 116.
 
 (/usr/local/texlive/2018/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
 
-Package xcolor Warning: Incompatible color definition on input line 136.
+Package xcolor Warning: Incompatible color definition on input line 137.
 
 [1
 
 {/usr/local/texlive/2018/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
 
-Package xcolor Warning: Incompatible color definition on input line 173.
+Package xcolor Warning: Incompatible color definition on input line 174.
 
 
 LaTeX Font Warning: Font shape `T1/cmtt/bx/n' in size <10.95> not available
-(Font)              Font shape `T1/cmtt/m/n' tried instead on input line 175.
+(Font)              Font shape `T1/cmtt/m/n' tried instead on input line 176.
 
 [2]
 
-Package xcolor Warning: Incompatible color definition on input line 225.
+Package xcolor Warning: Incompatible color definition on input line 226.
 
 [3] [4]
 
-Package xcolor Warning: Incompatible color definition on input line 310.
+Package xcolor Warning: Incompatible color definition on input line 311.
 
 
-Overfull \hbox (49.63608pt too wide) in paragraph at lines 328--339
+Overfull \hbox (49.63608pt too wide) in paragraph at lines 329--340
  [][][] 
  []
 
 [5]
-Overfull \hbox (31.24515pt too wide) detected at line 353
+Overfull \hbox (31.24515pt too wide) detected at line 354
 []
  []
 
 
-Overfull \hbox (67.43509pt too wide) detected at line 362
+Overfull \hbox (67.43509pt too wide) detected at line 363
 []
  []
 
 
-Overfull \hbox (67.43509pt too wide) detected at line 368
+Overfull \hbox (67.43509pt too wide) detected at line 369
 []
  []
 
 
-Overfull \hbox (67.43509pt too wide) detected at line 374
+Overfull \hbox (67.43509pt too wide) detected at line 375
 []
  []
 
 
-Package xcolor Warning: Incompatible color definition on input line 376.
+Package xcolor Warning: Incompatible color definition on input line 377.
 
 
-Overfull \hbox (22.47928pt too wide) in paragraph at lines 385--385
+Overfull \hbox (22.47928pt too wide) in paragraph at lines 386--386
 [][]\T1/cmtt/m/n/10.95 lowquality[] []<-[] []c[][]([][]rep[][]([][]1[][],[] []5
 42[][]+[][]542[][]),[] []rep[][]([][]0[][],[] []541[][]+[][]541[][]),[] []rep[]
 []([][]1[][],[] []670[][]+[][]670[][]),[] []rep[][]([][]0[][],[] []682[][]+[][]
@@ -1065,13 +1065,13 @@ Overfull \hbox (22.47928pt too wide) in paragraph at lines 385--385
  []
 
 
-Overfull \hbox (58.86383pt too wide) in paragraph at lines 392--392
+Overfull \hbox (58.86383pt too wide) in paragraph at lines 393--393
 [][]\T1/cmtt/m/it/10.95 # Y ~ race + quality + city + race*quality + race*city 
 + quality*city + race*quality*city[][] 
  []
 
 
-Overfull \hbox (579.97026pt too wide) in paragraph at lines 403--403
+Overfull \hbox (579.97026pt too wide) in paragraph at lines 404--404
 [][]\T1/cmtt/m/n/10.95 stargazer[][](fit_1, fit_2, fit_3, fit_4,[] []style[] []
 =[] []"apsr"[][],[] []notes[] []=[] []c[][]([][]"Coeffcients depend on student\
 TS1/cmtt/m/n/10.95 '\T1/cmtt/m/n/10.95 s parameterization"[][],[] []"All four m
@@ -1079,64 +1079,64 @@ odels are equivalent."[] []),[] []title[][]=[] []"Question 7C Table"[][])[][]
  []
 
 
-Package xcolor Warning: Incompatible color definition on input line 405.
+Package xcolor Warning: Incompatible color definition on input line 406.
 
 
-Package xcolor Warning: Incompatible color definition on input line 405.
+Package xcolor Warning: Incompatible color definition on input line 406.
 
 
-Package xcolor Warning: Incompatible color definition on input line 405.
+Package xcolor Warning: Incompatible color definition on input line 406.
 
 [6]
 
-Package xcolor Warning: Incompatible color definition on input line 405.
+Package xcolor Warning: Incompatible color definition on input line 406.
 
 
-Package xcolor Warning: Incompatible color definition on input line 405.
+Package xcolor Warning: Incompatible color definition on input line 406.
 
 
-LaTeX Warning: Float too large for page by 85.06439pt on input line 466.
+LaTeX Warning: Float too large for page by 85.06439pt on input line 467.
 
 
-Package xcolor Warning: Incompatible color definition on input line 472.
+Package xcolor Warning: Incompatible color definition on input line 473.
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 504--506
+Underfull \hbox (badness 10000) in paragraph at lines 505--507
 
  []
 
 [7] [8]
-Underfull \hbox (badness 10000) in paragraph at lines 537--538
+Underfull \hbox (badness 10000) in paragraph at lines 538--539
 
  []
 
 [9]
-Overfull \hbox (2.80869pt too wide) detected at line 544
+Overfull \hbox (2.80869pt too wide) detected at line 545
 []
  []
 
 
-Package xcolor Warning: Incompatible color definition on input line 550.
+Package xcolor Warning: Incompatible color definition on input line 551.
 
 [10]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 594.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 595.
  [11]
-Package atveryend Info: Executing hook `AfterLastShipout' on input line 594.
+Package atveryend Info: Executing hook `AfterLastShipout' on input line 595.
  (./FEDAI_PS9_Solutions.xwm) (./FEDAI_PS9_Solutions.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 594.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 594.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 595.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 595.
 Package rerunfilecheck Info: File `FEDAI_PS9_Solutions.out' has not changed.
 (rerunfilecheck)             Checksum: D41D8CD98F00B204E9800998ECF8427E;0.
 
 
 LaTeX Warning: There were multiply-defined labels.
 
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 594.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 595.
  ) 
 Here is how much of TeX's memory you used:
  15072 strings out of 492649
  235901 string characters out of 6129622
- 427702 words of memory out of 5000000
+ 427708 words of memory out of 5000000
  18657 multiletter control sequences out of 15000+600000
  21936 words of font info for 68 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
@@ -1159,7 +1159,7 @@ e/2018/texmf-dist/fonts/type1/public/cm-super/sfrm0600.pfb></usr/local/texlive/
 exmf-dist/fonts/type1/public/cm-super/sfrm1200.pfb></usr/local/texlive/2018/tex
 mf-dist/fonts/type1/public/cm-super/sfrm1728.pfb></usr/local/texlive/2018/texmf
 -dist/fonts/type1/public/cm-super/sftt1000.pfb>
-Output written on FEDAI_PS9_Solutions.pdf (11 pages, 265161 bytes).
+Output written on FEDAI_PS9_Solutions.pdf (11 pages, 262203 bytes).
 PDF statistics:
  187 PDF objects out of 1000 (max. 8388607)
  156 compressed objects within 2 object streams

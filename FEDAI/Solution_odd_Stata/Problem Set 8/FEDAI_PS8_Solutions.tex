@@ -1,0 +1,653 @@
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% PROBLEM SET LATEX TEMPLATE FILE
+% DEFINE DOCUMENT STYLE, LOAD PACKAGES
+\documentclass[11pt,notitlepage]{article}\usepackage[]{graphicx}\usepackage[]{color}
+%% maxwidth is the original width if it is less than linewidth
+%% otherwise use linewidth (to make sure the graphics do not exceed the margin)
+\makeatletter
+\def\maxwidth{ %
+  \ifdim\Gin@nat@width>\linewidth
+    \linewidth
+  \else
+    \Gin@nat@width
+  \fi
+}
+\makeatother
+
+\definecolor{fgcolor}{rgb}{0.345, 0.345, 0.345}
+\newcommand{\hlnum}[1]{\textcolor[rgb]{0.686,0.059,0.569}{#1}}%
+\newcommand{\hlstr}[1]{\textcolor[rgb]{0.192,0.494,0.8}{#1}}%
+\newcommand{\hlcom}[1]{\textcolor[rgb]{0.678,0.584,0.686}{\textit{#1}}}%
+\newcommand{\hlopt}[1]{\textcolor[rgb]{0,0,0}{#1}}%
+\newcommand{\hlstd}[1]{\textcolor[rgb]{0.345,0.345,0.345}{#1}}%
+\newcommand{\hlkwa}[1]{\textcolor[rgb]{0.161,0.373,0.58}{\textbf{#1}}}%
+\newcommand{\hlkwb}[1]{\textcolor[rgb]{0.69,0.353,0.396}{#1}}%
+\newcommand{\hlkwc}[1]{\textcolor[rgb]{0.333,0.667,0.333}{#1}}%
+\newcommand{\hlkwd}[1]{\textcolor[rgb]{0.737,0.353,0.396}{\textbf{#1}}}%
+\let\hlipl\hlkwb
+
+\usepackage{framed}
+\makeatletter
+\newenvironment{kframe}{%
+ \def\at@end@of@kframe{}%
+ \ifinner\ifhmode%
+  \def\at@end@of@kframe{\end{minipage}}%
+  \begin{minipage}{\columnwidth}%
+ \fi\fi%
+ \def\FrameCommand##1{\hskip\@totalleftmargin \hskip-\fboxsep
+ \colorbox{shadecolor}{##1}\hskip-\fboxsep
+     % There is no \\@totalrightmargin, so:
+     \hskip-\linewidth \hskip-\@totalleftmargin \hskip\columnwidth}%
+ \MakeFramed {\advance\hsize-\width
+   \@totalleftmargin\z@ \linewidth\hsize
+   \@setminipage}}%
+ {\par\unskip\endMakeFramed%
+ \at@end@of@kframe}
+\makeatother
+
+\definecolor{shadecolor}{rgb}{.97, .97, .97}
+\definecolor{messagecolor}{rgb}{0, 0, 0}
+\definecolor{warningcolor}{rgb}{1, 0, 1}
+\definecolor{errorcolor}{rgb}{1, 0, 0}
+\newenvironment{knitrout}{}{} % an empty environment to be redefined in TeX
+
+\usepackage{alltt}    % ADD COMMENTS USING A PERCENT SIGN
+\usepackage{amsfonts}
+\usepackage{amsthm}
+\usepackage{amsmath, booktabs}
+\usepackage{mathtools}
+\usepackage{amssymb}
+\usepackage{subfig}
+\usepackage{setspace}
+\usepackage{fullpage}
+\usepackage{verbatim}
+\usepackage{graphicx}
+\usepackage{tabularx}
+\usepackage{longtable}
+\usepackage{multicol}
+\usepackage{multirow}
+\setlength{\parindent}{0in}  	% uncomment to remove indent at start of paragraphs
+\usepackage{pdflscape}
+\usepackage[english]{babel}
+\usepackage[pdftex]{hyperref}
+\usepackage{natbib}
+\usepackage{caption}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{graphics}
+\usepackage{multirow}
+\usepackage{graphics}
+\usepackage{hyperref}
+\usepackage{longtable}
+\usepackage{latexsym}
+\usepackage{rotating}
+\usepackage{setspace}
+\usepackage{layouts} 
+\usepackage[titletoc]{appendix}
+\DeclareGraphicsExtensions{.pdf,.jpg,.png}
+\usepackage[margin=1in]{geometry}
+\usepackage{enumerate}
+\usepackage{float}
+
+\newcolumntype{L}[1]{>{\raggedright\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\usepackage[T1]{fontenc}				
+
+\usepackage{xcolor}
+\usepackage[printwatermark]{xwatermark}
+
+\input{pygments.tex}
+
+
+
+\title{Field Experiments: Design, Analysis and Interpretation \\
+Solutions for Chapter 8 Exercises}
+\author{Alan S. Gerber and Donald P. Green\footnote{Solutions prepared by Peter M. Aronow and revised by Alexander Coppock}}
+\date{\vspace{-5ex}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\begin{document}
+
+\maketitle
+
+\section*{Question 1}
+Important concepts:
+\begin{enumerate}[a)]
+\item Interpret the expression $Y_i(\mathbf{d}) = Y_i(d)$ and explain how it conveys the non-interference assumption.\\
+Answer:\\
+The expression $Y_i(d)$ refers to the potential outcome that would be expressed based on the input $d$, which refers to the treatment that subject $i$ receives.  By contrast, $Y_i(\mathbf{d})$ refers to the potential outcome that subject $i$ would express based on the assignments that all of the subjects receive. The equality means that the only input that matters is the treatment that subject $i$ receives. 
+
+\item Why are experiments that involve possible spatial spillover effects (such as the example described in section 8.4) said to involve ``implicit'' clustered assignment?\\
+Answer:\\
+Because certain units are so closely spaced that if a subject receives spillovers from one of the units, it must receive spillovers from all of the units. In that sense, spillovers are assigned as clusters.
+
+\item In what ways might a within-subjects design violate the non-interference assumption?\\
+Answer:\\
+In a within-subjects design, the unit of observation is the time period. Non-interference presupposes that each unit's potential outcomes are solely a function of the treatments administered in that period. Possible violations include the following: subjects in one period are affected by the treatments that they may have received in a previous period; subjects in one period may be affected because they anticipate treatments that will be administered in a subsequent period.  
+
+\item What are the attractive properties of a waitlist (or stepped-wedge) design?\\
+Answer:\\
+If the assumptions for unbiased inference are met, this within-subjects design may provide precise estimates of causal effects even when the number of subjects is limited. In terms of implementation, it may be easier to gain the cooperation of subjects or groups administering the treatment that might otherwise object to the use of a control group because everyone in the study eventually receives the treatment.
+\end{enumerate}
+
+\section*{Question 2}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{verbatim}
+
+
+
+
+
+
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+
+\section*{Question 3}
+Sometimes researchers are reluctant to randomly assign individual students in elementary classrooms because they are concerned that treatments administered to some students are likely to spill over to untreated students in the same classroom. In an attempt to get around possible violations of the non-interference assumption, they assign classrooms as clusters to treatment and control, and administer the treatment to all students in a classroom.
+\begin{enumerate}[a)]
+\item State the non-interference assumption as it applies to the proposed clustered design. \\
+Answer:\\
+The non-interference assumption depends on the estimand. If the aim is to estimate the causal effect of the intervention on individual students, the non-interference assumption is the same as usual, namely, that each student's potential outcomes are affected only by the treatment administered to that subject. If one is concerned about transmission of treatments between students in the same classroom, that concern would still apply to a clustered design, since potential outcomes may be affected by the treatments that other subjects in the same classroom receive. On the other hand, if one is interested in classroom-level treatment effects (i.e., the difference between a 100\% treated classroom and a 0\% treated classroom), this design sidesteps concerns about within-classroom interference because they are built into the definition of the estimand. In the latter case, the relevant non-interference assumption holds that classroom outcomes are unaffected by the treatment status of other classrooms (e.g., other classrooms in the same school or grade).
+\item What causal estimand does the clustered design identify? Does this causal estimand include or exclude spillovers within classrooms?\\
+Answer:\\
+The causal estimand identified by the clustered design is the average effect of a classroom being 100\% treated versus 0\% treated. This includes within-classroom spillovers at the individual level, but assumes that across-classroom spillovers do not occur.
+\end{enumerate}
+
+\section*{Question 4}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{verbatim}
+
+
+
+
+
+
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+
+\section*{Question 5}
+In their study of spillover effects, Sinclair, McConnell, and Green sent mailings to ran-domly selected households encouraging them to vote in an upcoming special election.\footnote{Sinclair, McConnell, and Green 2010.} The mailings used a form of ``social pressure,'' disclosing whether the targeted individual had voted in previous elections. Because this type of mail had proven to increase turnout by approximately 4-5 percentage points in previous experiments, Sinclair, McConnell, and Green used it to study whether treatment effects are transmitted across households. Employing a multi-level design, they randomly assigned all, half, or none of the members of each nine-digit zip code to receive mail. For purposes of this example, we focus only on households with one registered voter. The outcome variable is voter turnout as measured by the registrar of voters. The results are as follows. Among registered voters in untreated zip codes, 1,021 of 6,217 cast ballots. Among untreated voters in zip codes where half of the households received mail, 526 of 3,316 registered voters cast ballots. Among treated voters in zip codes where half of the households received mail, 620 of 2,949 voted. Finally, among treated voters in zip codes where every household received mail, turnout was 1,316 of 6,377.
+\begin{enumerate}[a)]
+\item Using potential outcomes, define the treatment effect of receiving mail addressed to subject $i$.\\
+Answer:\\
+The definition of personally receiving mail could be defined in three ways (given our focus on one-voter households). It could be (a) the effect of mail on those whose zip code neighbors receive no mail, (b) the effect of mail on those for whom half of the neighboring households in the zip code receive mail, or (c) the effect of mail on those whose zip code neighbors all receive mail. Given the design of this study, only (b) can be estimated empirically because no one receives mail in an untreated zip code, and everyone receives mail in a 100\% treated zip code.
+
+\item Define the ``spillover'' treatment effect of being in a zip code where varying fractions of households are treated.\\
+Answer:\\
+Holding constant one's own treatment status, one may define three potential outcomes depending on whether none, half, or all of the neighboring households are treated.  When defining the ATE of spillover, one may compare half to none, full to half, or full to none.
+\item Propose an estimator for estimating the firsthand and secondhand treatment effects. Show that the estimator is unbiased, explaining the assumptions required to reach this conclusion. \\
+Answer:\\
+The firsthand effects can be estimated only for those in half-treated zip codes by comparing average outcomes among treated and untreated subjects. One can assess the spillover effect among subjects who receive no mail themselves but reside in either half-treated or untreated zip codes. Similarly, one can assess the spillover effect among subjects who received mail themselves and reside in either 100\% or 50\% treated zip codes. The three assumptions are random assignment (satisfied by design because direct treatments and rates of treatment among neighbors are randomly assigned), non-interference (satisfied if we believe that potential outcomes are solely a function of firsthand treatment and treatment of others in the same zip code; treatment of those outside the zip code is ignored), and excludability (satisfied if we believe that potential outcomes are affected only by firsthand and second hand receipt of mail and not by other factors that might be correlated with treatment assignment).
+\item Based on these data, what do you infer about the magnitude of the mailing's direct and indirect effects?\\
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+   \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}1}]:} \PY{k}{clear} 
+        \PY{k}{qui}\PY{k}{ set} obs \PY{l+m}{18859}
+        \PY{k}{qui}\PY{k}{ egen} z\PYZus{}ind = fill(\PY{l+m}{0},\PY{l+m}{0})
+        \PY{k}{qui}\PY{k}{ replace} z\PYZus{}ind = \PY{l+m}{1}\PY{k}{ in} \PY{l+m}{9534}\PY{o}{/}\PY{l+m}{18859}
+        
+        \PY{c+c1}{//}\PY{c+c1}{ }\PY{c+c1}{s}\PY{c+c1}{s}\PY{c+c1}{c}\PY{c+c1}{ }\PY{c+c1}{i}\PY{c+c1}{n}\PY{c+c1}{s}\PY{c+c1}{t}\PY{c+c1}{a}\PY{c+c1}{l}\PY{c+c1}{l}\PY{c+c1}{ }\PY{c+c1}{e}\PY{c+c1}{g}\PY{c+c1}{e}\PY{c+c1}{n}\PY{c+c1}{m}\PY{c+c1}{o}\PY{c+c1}{r}\PY{c+c1}{e}\PY{c+c1}{ }\PY{c+c1}{(}\PY{c+c1}{u}\PY{c+c1}{n}\PY{c+c1}{c}\PY{c+c1}{o}\PY{c+c1}{m}\PY{c+c1}{m}\PY{c+c1}{e}\PY{c+c1}{n}\PY{c+c1}{t}\PY{c+c1}{ }\PY{c+c1}{t}\PY{c+c1}{o}\PY{c+c1}{ }\PY{c+c1}{i}\PY{c+c1}{n}\PY{c+c1}{s}\PY{c+c1}{t}\PY{c+c1}{a}\PY{c+c1}{l}\PY{c+c1}{l}\PY{c+c1}{ }\PY{c+c1}{t}\PY{c+c1}{h}\PY{c+c1}{e}\PY{c+c1}{ }\PY{c+c1}{p}\PY{c+c1}{a}\PY{c+c1}{c}\PY{c+c1}{k}\PY{c+c1}{a}\PY{c+c1}{g}\PY{c+c1}{e}\PY{c+c1}{)}
+        \PY{k}{qui}\PY{k}{ egen} z\PYZus{}zip =\PY{k}{ repeat}(), values(\PY{l+s}{\PYZdq{}}\PY{l+s}{n}\PY{l+s}{o}\PY{l+s}{n}\PY{l+s}{e}\PY{l+s}{\PYZdq{}})
+        \PY{k}{qui}\PY{k}{ replace} z\PYZus{}zip = \PY{l+s}{\PYZdq{}}\PY{l+s}{h}\PY{l+s}{a}\PY{l+s}{l}\PY{l+s}{f}\PY{l+s}{\PYZdq{}}\PY{k}{ in} \PY{l+m}{6218}\PY{o}{/}\PY{l+m}{12482}
+        \PY{k}{qui}\PY{k}{ replace} z\PYZus{}zip = \PY{l+s}{\PYZdq{}}\PY{l+s}{a}\PY{l+s}{l}\PY{l+s}{l}\PY{l+s}{\PYZdq{}}\PY{k}{ in} \PY{l+m}{12483}\PY{o}{/}\PY{l+m}{18859}
+        
+        \PY{k}{qui}\PY{k}{ egen} Y = fill(\PY{l+m}{1},\PY{l+m}{1})
+        \PY{k}{qui}\PY{k}{ replace} Y=\PY{l+m}{0}\PY{k}{ in} \PY{l+m}{1022}\PY{o}{/}\PY{l+m}{6217}
+        \PY{k}{qui}\PY{k}{ replace} Y = \PY{l+m}{0}\PY{k}{ in} \PY{l+m}{6744}\PY{o}{/}\PY{l+m}{9533}
+        \PY{k}{qui}\PY{k}{ replace} Y=\PY{l+m}{0}\PY{k}{ in} \PY{l+m}{10154}\PY{o}{/}\PY{l+m}{12482}
+        \PY{k}{qui}\PY{k}{ replace} Y=\PY{l+m}{0}\PY{k}{ in} \PY{l+m}{13799}\PY{o}{/}\PY{l+m}{18859}
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}2}]:} \PY{k}{qui}\PY{k}{ mean} Y\PY{k}{ if} z\PYZus{}ind\PY{o}{==}\PY{l+m}{1} \PY{o}{\PYZam{}} z\PYZus{}zip\PY{o}{==}\PY{l+s}{\PYZdq{}}\PY{l+s}{h}\PY{l+s}{a}\PY{l+s}{l}\PY{l+s}{f}\PY{l+s}{\PYZdq{}}
+        \PY{k}{scalar} ate\PYZus{}treat\PYZus{}half = \PYZus{}b[Y]
+        \PY{k}{qui}\PY{k}{ mean} Y\PY{k}{ if} z\PYZus{}ind\PY{o}{==}\PY{l+m}{0} \PY{o}{\PYZam{}} z\PYZus{}zip\PY{o}{==}\PY{l+s}{\PYZdq{}}\PY{l+s}{h}\PY{l+s}{a}\PY{l+s}{l}\PY{l+s}{f}\PY{l+s}{\PYZdq{}}
+        \PY{k}{scalar} ate\PYZus{}untreat\PYZus{}half = \PYZus{}b[Y]
+        \PY{k}{qui}\PY{k}{ mean} Y\PY{k}{ if} z\PYZus{}ind\PY{o}{==}\PY{l+m}{0} \PY{o}{\PYZam{}} z\PYZus{}zip\PY{o}{==}\PY{l+s}{\PYZdq{}}\PY{l+s}{n}\PY{l+s}{o}\PY{l+s}{n}\PY{l+s}{e}\PY{l+s}{\PYZdq{}}
+        \PY{k}{scalar} ate\PYZus{}untreat\PYZus{}none = \PYZus{}b[Y]
+        \PY{k}{qui}\PY{k}{ mean} Y\PY{k}{ if} z\PYZus{}ind\PY{o}{==}\PY{l+m}{1} \PY{o}{\PYZam{}} z\PYZus{}zip\PY{o}{==}\PY{l+s}{\PYZdq{}}\PY{l+s}{a}\PY{l+s}{l}\PY{l+s}{l}\PY{l+s}{\PYZdq{}}
+        \PY{k}{scalar} ate\PYZus{}treat\PYZus{}all = \PYZus{}b[Y]
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}3}]:} \PY{c+c1}{//}\PY{c+c1}{ }\PY{c+c1}{a}\PY{c+c1}{t}\PY{c+c1}{e}\PY{c+c1}{.}\PY{c+c1}{f}\PY{c+c1}{r}\PY{c+c1}{i}\PY{c+c1}{s}\PY{c+c1}{t}\PY{c+c1}{h}\PY{c+c1}{a}\PY{c+c1}{n}\PY{c+c1}{d}\PY{c+c1}{.}\PY{c+c1}{h}\PY{c+c1}{a}\PY{c+c1}{l}\PY{c+c1}{f}
+        \PY{k}{disp} ate\PYZus{}treat\PYZus{}half \PY{o}{\PYZhy{}} ate\PYZus{}untreat\PYZus{}half
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+.05161591
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}4}]:} \PY{c+c1}{//}\PY{c+c1}{ }\PY{c+c1}{a}\PY{c+c1}{t}\PY{c+c1}{e}\PY{c+c1}{.}\PY{c+c1}{s}\PY{c+c1}{e}\PY{c+c1}{c}\PY{c+c1}{o}\PY{c+c1}{n}\PY{c+c1}{d}\PY{c+c1}{h}\PY{c+c1}{a}\PY{c+c1}{n}\PY{c+c1}{f}\PY{c+c1}{.}\PY{c+c1}{u}\PY{c+c1}{n}\PY{c+c1}{t}\PY{c+c1}{r}\PY{c+c1}{e}\PY{c+c1}{a}\PY{c+c1}{t}\PY{c+c1}{e}\PY{c+c1}{d}
+        \PY{k}{disp} ate\PYZus{}untreat\PYZus{}half \PY{o}{\PYZhy{}} ate\PYZus{}untreat\PYZus{}none
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+-.00560227
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}5}]:} \PY{c+c1}{//}\PY{c+c1}{ }\PY{c+c1}{a}\PY{c+c1}{t}\PY{c+c1}{e}\PY{c+c1}{.}\PY{c+c1}{s}\PY{c+c1}{e}\PY{c+c1}{c}\PY{c+c1}{o}\PY{c+c1}{n}\PY{c+c1}{d}\PY{c+c1}{h}\PY{c+c1}{a}\PY{c+c1}{n}\PY{c+c1}{d}\PY{c+c1}{.}\PY{c+c1}{t}\PY{c+c1}{r}\PY{c+c1}{e}\PY{c+c1}{a}\PY{c+c1}{t}\PY{c+c1}{e}\PY{c+c1}{d}
+        \PY{k}{disp} ate\PYZus{}treat\PYZus{}all \PY{o}{\PYZhy{}} ate\PYZus{}treat\PYZus{}half
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+-.00387413
+    \end{Verbatim}
+\end{kframe}
+\end{knitrout}
+
+Here, the firsthand effects can be estimated only for those in half-treated zip codes: 620/2949 - 526/3316 = 0.052, or 5.2 percentage points. One can assess spillover effect by way of two different comparisons. In order to assess the effects of spillover among subjects who receive no mail themselves, compare voting rates for those living in 50\% treated zip code to those living in the 0\% treated zip code: 526/3316 - 1021/6217 = -0.006, or negative 0.6 percentage points. In order to assess the effects of spillover among subjects who received mail themselves, compare voting rates for those living in 100\% treated zip codes to those living in 50\% treated zip codes:  1316/6377 - 620/2949 = -0.004, or negative 0.4 percentage points.  Although the estimated firsthand effect is strongly positive, both of the estimated spillover effects are close to zero.
+\end{enumerate}
+
+\section*{Question 6}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{verbatim}
+
+
+
+
+
+
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+
+\section*{Question 7}
+Lab experiments sometimes pair subjects together and have them play against one another in games where each subject is rewarded financially according to the game's outcome. One such game involves making monetary contributions to a public good (e.g., preserving the environment); the game can be arranged such that each player gains financially if both of them make a contribution, but each player is better off still if they contribute nothing while their partner in the game makes a contribution. The treatment is whether the pair of players is allowed to communicate prior to deciding whether to contribute. Suppose that a lab experimenter recruits four subjects and assigns them randomly as pairs to play this game. The outcome is whether each player makes a contribution: $Y_i$ is 1 if the player contributes and 0 otherwise. Each player has three potential outcomes: $Y_{0i}$ is the outcome if players are prevented from communicating, $Y_{1i}$ is the outcome if a player communicates with another player who is ``persuasive,'' and $Y_{2i}$ is the outcome if a player communicates with another player who is ``unpersuasive.'' The table below shows the schedule of potential outcomes for four players, two of whom are persuasive and two of whom are unpersuasive.
+
+% Table generated by Excel2LaTeX from sheet 'Sheet1'
+\begin{table}[H]
+  \centering
+  \caption{Question 7 Table}
+    \begin{tabular}{rrrrr}
+    \toprule
+    Subject  & Type  & $Y_{0i}$   & $Y_{1i}$   & $Y_{2i}$  \\
+    \midrule
+    1     & Persuasive  & 0     & 1     & 0 \\
+    2     & Persuasive  & 1     & 1     & 0 \\
+    3     & Unpersuasive  & 0     & 0     & 0 \\
+    4     & Unpersuasive  & 1     & 1     & 1 \\
+    \bottomrule
+    \end{tabular}%
+  \label{tab:addlabel}%
+\end{table}%
+
+\begin{enumerate}[a)]
+\item Calculate the average treatment effect of $Y_{1i} - Y_{0i}$. Calculate the average treatment effect of $Y_{2i} - Y_{0i}$.\\
+Answer:\\
+The ATE of talking with a persusaive person is (3/4) - (1/2) = (1/4). The ATE of talking with an unpersusaive person is (1/4) - (1/2) = -(1/4). 
+\item How many random pairings are possible with four subjects?\\
+Answer:\\
+There are $4!/(2!(4-2)!) = 6$ pairings.
+\item Suppose that the experimenter ignores the distinction between $Y_{1i}$ and $Y_{2i}$ and considers only two treatment conditions: the control condition prevents communication between pairs of players, and the treatment condition allows communication. Call the observed outcomes in the communication condition $Y^{*}_{1i}$. Across all possible random pairings of subjects, what is the average difference-in-means estimate when the average $Y^{*}_{1i}$ is compared to the average $Y_{0i}$ ? Does this number correspond to either of the two estimands defined in part (a)? Does it correspond to the average of these two estimands? \\
+Answer:\\
+The average difference-in-means estimate is $\frac{0 - 0.5 -1 + 0 + 0.5 + 0.5}{6} = -\frac{1}{12}$. This does not correspond to any of the estimands defined in part a), nor does it correspond to the average of this estimands.
+
+\item What is the probability that a persuasive subject is treated by communicating with an unpersuasive subject? What is the probability that an unpersuasive subject is treated by communicating with an unpersuasive subject? \\
+Answer:\\
+Subject 1 has a 1/6 chance of being assigned to communicate with a persuasive subject (subject 2) and has a 1/3 chance of being assigned to communicate with an unpersuasive subject (subjects 3 or 4). The same probabilities apply to Subject 2. Subject 3 has a 1/6 chance of communicating with an unpersuasive subject (subject 4).  The same probabilities apply to Subject 4.
+\item Briefly summarize why a violation of the non-interference assumption leads to biased difference-in-means estimates in this example. \\
+Answer:\\
+One's potential outcomes change depending on how the randomization happened to come out. Bias occurs because the probability of encountering a persuasive or unpersuasive partner is related to potential outcomes.
+
+\item Would bias be eliminated if the experimenter replicated this study (with four subjects) each day and averaged the results over a series of 100 daily studies? \\
+Answer:\\
+It depends. Replicating small experiments with the same combination of persuasive and unpersuasive subjects simply reproduces the bias described above, because each experiment is subject to the same bias.  On the other hand, if one imagines replicating this study with a random draw of the four subject types (see part G below), no bias results because selecting one subject for treatment does not prevent a subject of the same type from being assigned to control.
+\item Would bias be eliminated if the experimenter assembled 400 subjects at the same time (imagine 100 subjects for each of the four potential outcomes profiles in the table) and assigned them to pairs? Hint: Answer the question based on the intuition suggested by part (d). \\
+Answer:\\
+Bias becomes negligible as the size of a given experiment increases, because in a large experiment the probability of encountering a persuasive partner is nearly the same for both persuasive and unpersuasive subjects.
+\end{enumerate}
+
+\section*{Question 8}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{verbatim}
+
+
+
+
+
+
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+
+
+\section*{Question 9}
+Use data from the hotspots experiment in Table 8.4 (these data are also available at http:// isps.research.yale.edu/FEDAI) and the probabilities that each unit is exposed to immediate or spillover treatments (Table 8.5) to answer the following questions:
+
+
+
+\begin{enumerate}[a)]
+\item For the subset of 11 hotspot locations that lie outside the range of possible spillovers, calculate $E[Y_{01} - Y_{00}]$, the ATE of immediate police surveillance.
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}1}]:} \PY{k}{qui} import delimited \PY{l+s}{\PYZdq{}}\PY{l+s}{.}\PY{l+s}{/}\PY{l+s}{d}\PY{l+s}{a}\PY{l+s}{t}\PY{l+s}{a}\PY{l+s}{/}\PY{l+s}{c}\PY{l+s}{h}\PY{l+s}{a}\PY{l+s}{p}\PY{l+s}{t}\PY{l+s}{e}\PY{l+s}{r}\PY{l+s}{0}\PY{l+s}{8}\PY{l+s}{/}\PY{l+s}{G}\PY{l+s}{e}\PY{l+s}{r}\PY{l+s}{b}\PY{l+s}{e}\PY{l+s}{r}\PY{l+s}{G}\PY{l+s}{r}\PY{l+s}{e}\PY{l+s}{e}\PY{l+s}{n}\PY{l+s}{B}\PY{l+s}{o}\PY{l+s}{o}\PY{l+s}{k}\PY{l+s}{\PYZus{}}\PY{l+s}{C}\PY{l+s}{h}\PY{l+s}{a}\PY{l+s}{p}\PY{l+s}{t}\PY{l+s}{e}\PY{l+s}{r}\PY{l+s}{8}\PY{l+s}{\PYZus{}}\PY{l+s}{T}\PY{l+s}{a}\PY{l+s}{b}\PY{l+s}{l}\PY{l+s}{e}\PY{l+s}{\PYZus{}}\PY{l+s}{8}\PY{l+s}{\PYZus{}}\PY{l+s}{4}\PY{l+s}{\PYZus{}}\PY{l+s}{8}\PY{l+s}{\PYZus{}}\PY{l+s}{5}\PY{l+s}{.}\PY{l+s}{c}\PY{l+s}{s}\PY{l+s}{v}\PY{l+s}{\PYZdq{}},\PY{k}{ clear}
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}2}]:} \PY{k}{qui}\PY{k}{ mean} y01\PY{k}{ if} prox500\PY{o}{==}\PY{l+m}{0}
+        \PY{k}{scalar} mean\PYZus{}y01 = \PYZus{}b[y01]
+        \PY{k}{qui}\PY{k}{ mean} y00\PY{k}{ if} prox500\PY{o}{==}\PY{l+m}{0}
+        \PY{k}{scalar} mean\PYZus{}y00 = \PYZus{}b[y00]
+        \PY{k}{scalar} true\PYZus{}ate = mean\PYZus{}y01\PY{o}{\PYZhy{}}mean\PYZus{}y00
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}3}]:} \PY{k}{disp} true\PYZus{}ate
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+-5
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}4}]:} \PY{k}{qui}\PY{k}{ mean} y\PY{k}{ if} prox500\PY{o}{==}\PY{l+m}{0} \PY{o}{\PYZam{}} assignment \PY{o}{==}\PY{l+m}{1}
+        \PY{k}{scalar} mean\PYZus{}y = \PYZus{}b[y]
+        \PY{k}{qui}\PY{k}{ mean} y00\PY{k}{ if} prox500\PY{o}{==}\PY{l+m}{0} \PY{o}{\PYZam{}} assignment\PY{o}{==}\PY{l+m}{0}
+        \PY{k}{scalar} mean\PYZus{}y00\PYZus{}0 = \PYZus{}b[y00]
+        \PY{k}{scalar} ate\PYZus{}hat = mean\PYZus{}y \PY{o}{\PYZhy{}} mean\PYZus{}y00\PYZus{}0
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}5}]:} \PY{k}{disp} ate\PYZus{}hat
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+3.3333333
+    \end{Verbatim}
+\end{kframe}
+\end{knitrout}
+The true ATE for the observations that lie outside the range of possibile spillovers is -5. The estimated ATE using the observed random assignment is 3.33.
+
+\item For the remaining 19 hotspot locations that lie within the range of possible spillovers, calculate $E[Y_{01} - Y_{00}]$, $E[Y_{10} - Y_{00}]$, and $E[Y_{11} - Y_{00}]$.
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}6}]:} \PY{k}{qui}\PY{k}{ mean} y01\PY{k}{ if} prox500\PY{o}{==}\PY{l+m}{1}
+        \PY{k}{scalar} mean\PYZus{}y01 = \PYZus{}b[y01]
+        \PY{k}{qui}\PY{k}{ mean} y00\PY{k}{ if} prox500\PY{o}{==}\PY{l+m}{1}
+        \PY{k}{scalar} mean\PYZus{}y00 = \PYZus{}b[y00]
+        \PY{k}{qui}\PY{k}{ mean} y10\PY{k}{ if} prox500\PY{o}{==}\PY{l+m}{1}
+        \PY{k}{scalar} mean\PYZus{}y10 = \PYZus{}b[y10]
+        \PY{k}{qui}\PY{k}{ mean} y11\PY{k}{ if} prox500\PY{o}{==}\PY{l+m}{1}
+        \PY{k}{scalar} mean\PYZus{}y11 = \PYZus{}b[y11]
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}7}]:} \PY{k}{scalar} true\PYZus{}ate\PYZus{}01 = mean\PYZus{}y01 \PY{o}{\PYZhy{}} mean\PYZus{}y00
+        \PY{k}{scalar} true\PYZus{}ate\PYZus{}10 = mean\PYZus{}y10 \PY{o}{\PYZhy{}} mean\PYZus{}y00
+        \PY{k}{scalar} true\PYZus{}ate\PYZus{}11 = mean\PYZus{}y11 \PY{o}{\PYZhy{}} mean\PYZus{}y00
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}8}]:} \PY{k}{disp}  true\PYZus{}ate\PYZus{}01
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+-5
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}9}]:} \PY{k}{disp}  true\PYZus{}ate\PYZus{}10
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+5
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}10}]:} \PY{k}{disp}  true\PYZus{}ate\PYZus{}11
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+-7
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}11}]:} \PY{k}{qui}\PY{k}{ gen}\PY{k}{ q} =.
+         \PY{k}{qui}\PY{k}{ replace}\PY{k}{ q}=prob10\PY{k}{ if} exposure\PY{o}{==}\PY{l+m}{10}
+         \PY{k}{qui}\PY{k}{ replace}\PY{k}{ q}=prob11\PY{k}{ if} exposure\PY{o}{==}\PY{l+m}{11}
+         \PY{k}{qui}\PY{k}{ replace}\PY{k}{ q}=prob01\PY{k}{ if} exposure\PY{o}{==}\PY{l+m}{01}
+         \PY{k}{qui}\PY{k}{ replace}\PY{k}{ q}=prob00\PY{k}{ if} exposure\PY{o}{==}\PY{l+m}{00}
+         \PY{k}{qui}\PY{k}{ gen} weights = \PY{l+m}{1}\PY{o}{/}q
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}12}]:} \PY{c+c1}{//}\PY{c+c1}{ }\PY{c+c1}{f}\PY{c+c1}{i}\PY{c+c1}{t}\PY{c+c1}{.}\PY{c+c1}{0}\PY{c+c1}{1}
+         \PY{k}{qui}\PY{k}{ regress} y i\PY{l+m}{.}exposure\PY{k}{ if} \PY{c+cs}{///}\PY{c+cs}{ }
+         prox500\PY{o}{\PYZgt{}}\PY{l+m}{0} \PY{o}{\PYZam{}} (exposure\PY{o}{==}\PY{l+m}{0} | exposure\PY{o}{==}\PY{l+m}{1}) [aweight=weights]
+         \PY{k}{estimates} store m1, title(Model \PY{l+m}{1})
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}13}]:} \PY{c+c1}{//}\PY{c+c1}{ }\PY{c+c1}{f}\PY{c+c1}{i}\PY{c+c1}{t}\PY{c+c1}{.}\PY{c+c1}{1}\PY{c+c1}{0}
+         \PY{k}{qui}\PY{k}{ regress} y i\PY{l+m}{.}exposure\PY{k}{ if} \PY{c+cs}{///}
+         prox500\PY{o}{\PYZgt{}}\PY{l+m}{0} \PY{o}{\PYZam{}} (exposure\PY{o}{==}\PY{l+m}{0} | exposure\PY{o}{==}\PY{l+m}{10}) [pweight=weights]
+         \PY{k}{estimates} store m2, title(Model \PY{l+m}{2})
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}14}]:} \PY{c+c1}{//}\PY{c+c1}{ }\PY{c+c1}{f}\PY{c+c1}{i}\PY{c+c1}{t}\PY{c+c1}{.}\PY{c+c1}{1}\PY{c+c1}{1}
+         \PY{k}{qui}\PY{k}{ regress} y i\PY{l+m}{.}exposure\PY{k}{ if} \PY{c+cs}{///}
+         prox500\PY{o}{\PYZgt{}}\PY{l+m}{0} \PY{o}{\PYZam{}} (exposure\PY{o}{==}\PY{l+m}{0} | exposure\PY{o}{==}\PY{l+m}{11}) [pweight=weights]
+         \PY{k}{estimates} store m3, title(Model \PY{l+m}{3})
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}15}]:} estout m1 m2 m3, \PY{c+cs}{///}
+         cells(b(star fmt(\PY{l+m}{3}))\PY{k}{ se}(par fmt(\PY{l+m}{3}))) \PY{c+cs}{///}
+         legend\PY{k}{ label} varlabels(\PYZus{}cons Constant) \PY{c+cs}{///}
+         stats(N r2)
+\end{Verbatim}
+\end{kframe}
+\end{knitrout}
+
+Among observations that lie outside the range of possibile spillovers, the ATE of direct treatment is -5, the ate of indirect treatment is 5, and the ATE of direct and indirect treatment together is -7.
+
+
+% Table created by stargazer v.5.2 by Marek Hlavac, Harvard University. E-mail: hlavac at fas.harvard.edu
+% Date and time: Tue, Apr 10, 2018 - 15:37:27
+\begin{table}[!htbp] \centering 
+  \caption{Question 9c: Treatment Effect Estimates} 
+  \label{} 
+\begin{tabular}{@{\extracolsep{2pt}}lccc} 
+\\[-1.8ex]\hline \\[-1.8ex] 
+\\[-1.8ex] & \multicolumn{3}{c}{Crime Rate} \\ 
+\\[-1.8ex] & (1) & (2) & (3)\\ 
+\hline \\[-1.8ex] 
+ exposure01 & $-$16.033 &  &  \\ 
+  & (8.065) &  &  \\ 
+  exposure10 &  & $-$0.037 &  \\ 
+  &  & (9.074) &  \\ 
+  exposure11 &  &  & $-$9.606 \\ 
+  &  &  & (7.725) \\ 
+  Constant & 62.606 & 62.606 & 62.606 \\ 
+  & (5.222) & (4.976) & (4.918) \\ 
+ N & 12 & 14 & 11 \\ 
+R$^{2}$ & 0.283 & 0.00000 & 0.147 \\ 
+\hline \\[-1.8ex] 
+\multicolumn{4}{l}{} \\ 
+\end{tabular} 
+\end{table} 
+
+
+By comparing weighted averages, with weights equal to the inverse of the probability that an observation is assigned to its observed treatment condition, we obtain estimates for the three ATEs: -16.0, -0.04, -9.6, respectively.
+
+\item Use the data at http://isps.research.yale.edu/FEDAI to estimate the average effect of spillover on nonexperimental units. Note that your estimator must make use of the probability that each unit lies within 500 meters of a treated experimental unit; exclude from your analysis any units that have zero probability of experiencing spillovers.
+
+
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+   \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}16}]:} \PY{k}{clear}
+         \PY{k}{qui} import delimited \PY{l+s}{\PYZdq{}}\PY{l+s}{.}\PY{l+s}{/}\PY{l+s}{d}\PY{l+s}{a}\PY{l+s}{t}\PY{l+s}{a}\PY{l+s}{/}\PY{l+s}{c}\PY{l+s}{h}\PY{l+s}{a}\PY{l+s}{p}\PY{l+s}{t}\PY{l+s}{e}\PY{l+s}{r}\PY{l+s}{0}\PY{l+s}{8}\PY{l+s}{/}\PY{l+s}{G}\PY{l+s}{e}\PY{l+s}{r}\PY{l+s}{b}\PY{l+s}{e}\PY{l+s}{r}\PY{l+s}{G}\PY{l+s}{r}\PY{l+s}{e}\PY{l+s}{e}\PY{l+s}{n}\PY{l+s}{B}\PY{l+s}{o}\PY{l+s}{o}\PY{l+s}{k}\PY{l+s}{\PYZus{}}\PY{l+s}{C}\PY{l+s}{h}\PY{l+s}{a}\PY{l+s}{p}\PY{l+s}{t}\PY{l+s}{e}\PY{l+s}{r}\PY{l+s}{8}\PY{l+s}{\PYZus{}}\PY{l+s}{E}\PY{l+s}{x}\PY{l+s}{e}\PY{l+s}{r}\PY{l+s}{c}\PY{l+s}{i}\PY{l+s}{s}\PY{l+s}{e}\PY{l+s}{\PYZus{}}\PY{l+s}{9}\PY{l+s}{c}\PY{l+s}{.}\PY{l+s}{c}\PY{l+s}{s}\PY{l+s}{v}\PY{l+s}{\PYZdq{}},\PY{k}{ clear}
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}17}]:} \PY{k}{qui}\PY{k}{ gen}\PY{k}{ q}=.
+         \PY{k}{qui}\PY{k}{ replace}\PY{k}{ q}=prob10\PY{k}{ if} exposure\PY{o}{==}\PY{l+m}{10}
+         \PY{k}{qui}\PY{k}{ replace}\PY{k}{ q}=prob00\PY{k}{ if} exposure\PY{o}{==}\PY{l+m}{0}
+         \PY{k}{qui}\PY{k}{ gen} weights = \PY{l+m}{1}\PY{o}{/}q
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}18}]:} \PY{k}{regress} y i\PY{l+m}{.}exposure\PY{k}{ if} (prob10\PY{o}{\PYZgt{}}\PY{l+m}{0}) \PY{o}{\PYZam{}} (prob10\PY{o}{\PYZlt{}}\PY{l+m}{1}) [pweight=weights]
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+(sum of wgt is   1.5089e+02)
+
+Linear regression                               Number of obs     =         71
+                                                F(1, 69)          =      56.95
+                                                Prob > F          =     0.0000
+                                                R-squared         =     0.5496
+                                                Root MSE          =     2.0976
+
+------------------------------------------------------------------------------
+             |               Robust
+           y |      Coef.   Std. Err.      t    P>|t|     [95\% Conf. Interval]
+-------------+----------------------------------------------------------------
+ 10.exposure |   4.602226   .6098582     7.55   0.000     3.385592     5.81886
+       \_cons |   4.285784   .5233643     8.19   0.000     3.241701    5.329867
+------------------------------------------------------------------------------
+
+    \end{Verbatim}
+\end{kframe}
+\end{knitrout}
+ 
+\end{enumerate}
+
+The estimate of the spillover effects of treatment on the non-experimental units is 4.6.
+
+
+\section*{Question 10}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{verbatim}
+
+
+
+
+
+
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+
+\section*{Question 11}
+Return to the stepped-wedge advertising example in section 8.6 and the schedule of assigned treatments in Table 8.8.
+\begin{enumerate}[a)]
+\item Estimate $E[Y_{01}-Y_{00}]$ by restricting your attention to weeks 2 and 3. How does this estimate compare to the estimate of $E[Y_{11} - Y_{00}]$ presented in the text, which is also identified using observations from weeks 2 and 3?
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}1}]:} \PY{k}{clear}
+        \PY{k}{qui}\PY{k}{ set} obs \PY{l+m}{16}
+        \PY{c+c1}{//}\PY{c+c1}{(}\PY{c+c1}{u}\PY{c+c1}{n}\PY{c+c1}{c}\PY{c+c1}{o}\PY{c+c1}{m}\PY{c+c1}{m}\PY{c+c1}{e}\PY{c+c1}{n}\PY{c+c1}{t}\PY{c+c1}{ }\PY{c+c1}{t}\PY{c+c1}{o}\PY{c+c1}{ }\PY{c+c1}{i}\PY{c+c1}{n}\PY{c+c1}{s}\PY{c+c1}{t}\PY{c+c1}{a}\PY{c+c1}{l}\PY{c+c1}{l}\PY{c+c1}{ }\PY{c+c1}{t}\PY{c+c1}{h}\PY{c+c1}{e}\PY{c+c1}{ }\PY{c+c1}{p}\PY{c+c1}{a}\PY{c+c1}{c}\PY{c+c1}{k}\PY{c+c1}{a}\PY{c+c1}{g}\PY{c+c1}{e}\PY{c+c1}{)}
+        \PY{c+c1}{//}\PY{c+c1}{s}\PY{c+c1}{s}\PY{c+c1}{c}\PY{c+c1}{ }\PY{c+c1}{i}\PY{c+c1}{n}\PY{c+c1}{s}\PY{c+c1}{t}\PY{c+c1}{a}\PY{c+c1}{l}\PY{c+c1}{l}\PY{c+c1}{ }\PY{c+c1}{e}\PY{c+c1}{g}\PY{c+c1}{e}\PY{c+c1}{n}\PY{c+c1}{m}\PY{c+c1}{o}\PY{c+c1}{r}\PY{c+c1}{e}\PY{c+c1}{ }
+        \PY{k}{qui}\PY{k}{ egen} week =\PY{k}{ repeat}(), values(\PY{l+s}{\PYZdq{}}\PY{l+s}{2}\PY{l+s}{\PYZdq{}})
+        \PY{k}{qui}\PY{k}{ replace} week = \PY{l+s}{\PYZdq{}}\PY{l+s}{3}\PY{l+s}{\PYZdq{}}\PY{k}{ in} \PY{l+m}{9}\PY{o}{/}l
+        \PY{k}{qui}\PY{k}{ egen} prob00 = fill(\PY{l+m}{0.5},\PY{l+m}{0.5})
+        \PY{k}{qui}\PY{k}{ replace} prob00=\PY{l+m}{0.25}\PY{k}{ in} \PY{l+m}{9}\PY{o}{/}l
+        \PY{k}{qui}\PY{k}{ egen} prob01 = fill(\PY{l+m}{0.25},\PY{l+m}{0.25})
+        \PY{k}{qui}\PY{k}{ egen} prob11 = fill(\PY{l+m}{0.25},\PY{l+m}{0.25})
+        \PY{k}{qui}\PY{k}{ replace} prob11 = \PY{l+m}{0.5}\PY{k}{ in} \PY{l+m}{9}\PY{o}{/}l
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}5}]:} \PY{k}{input} int y str2 z
+        \PY{l+m}{9} \PY{l+s}{\PYZdq{}}\PY{l+s}{1}\PY{l+s}{1}\PY{l+s}{\PYZdq{}}
+        \PY{l+m}{5} \PY{l+s}{\PYZdq{}}\PY{l+s}{0}\PY{l+s}{0}\PY{l+s}{\PYZdq{}}
+        \PY{l+m}{2} \PY{l+s}{\PYZdq{}}\PY{l+s}{0}\PY{l+s}{1}\PY{l+s}{\PYZdq{}}
+        \PY{l+m}{3} \PY{l+s}{\PYZdq{}}\PY{l+s}{0}\PY{l+s}{0}\PY{l+s}{\PYZdq{}}	
+        \PY{l+m}{3} \PY{l+s}{\PYZdq{}}\PY{l+s}{0}\PY{l+s}{0}\PY{l+s}{\PYZdq{}}
+        \PY{l+m}{8} \PY{l+s}{\PYZdq{}}\PY{l+s}{1}\PY{l+s}{1}\PY{l+s}{\PYZdq{}}
+        \PY{l+m}{3} \PY{l+s}{\PYZdq{}}\PY{l+s}{0}\PY{l+s}{0}\PY{l+s}{\PYZdq{}}
+        \PY{l+m}{1} \PY{l+s}{\PYZdq{}}\PY{l+s}{0}\PY{l+s}{1}\PY{l+s}{\PYZdq{}}
+        \PY{l+m}{4} \PY{l+s}{\PYZdq{}}\PY{l+s}{1}\PY{l+s}{1}\PY{l+s}{\PYZdq{}}
+        \PY{l+m}{7} \PY{l+s}{\PYZdq{}}\PY{l+s}{0}\PY{l+s}{1}\PY{l+s}{\PYZdq{}}
+        \PY{l+m}{10} \PY{l+s}{\PYZdq{}}\PY{l+s}{1}\PY{l+s}{1}\PY{l+s}{\PYZdq{}}
+        \PY{l+m}{10} \PY{l+s}{\PYZdq{}}\PY{l+s}{0}\PY{l+s}{1}\PY{l+s}{\PYZdq{}}
+        \PY{l+m}{3} \PY{l+s}{\PYZdq{}}\PY{l+s}{0}\PY{l+s}{0}\PY{l+s}{\PYZdq{}}
+        \PY{l+m}{10} \PY{l+s}{\PYZdq{}}\PY{l+s}{1}\PY{l+s}{1}\PY{l+s}{\PYZdq{}}
+        \PY{l+m}{4} \PY{l+s}{\PYZdq{}}\PY{l+s}{0}\PY{l+s}{0}\PY{l+s}{\PYZdq{}}
+        \PY{l+m}{3} \PY{l+s}{\PYZdq{}}\PY{l+s}{1}\PY{l+s}{1}\PY{l+s}{\PYZdq{}} end
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}6}]:} \PY{k}{gen} prob01z = prob01\PY{k}{ if} z\PY{o}{==}\PY{l+s}{\PYZdq{}}\PY{l+s}{0}\PY{l+s}{1}\PY{l+s}{\PYZdq{}}
+        \PY{k}{replace} prob01z = prob01\PY{k}{ if} prob01z\PY{o}{==}.
+        \PY{c+c1}{//}\PY{c+c1}{d}\PY{c+c1}{i}\PY{c+c1}{f}\PY{c+c1}{f}\PY{c+c1}{e}\PY{c+c1}{r}\PY{c+c1}{e}\PY{c+c1}{n}\PY{c+c1}{c}\PY{c+c1}{e}\PY{c+c1}{ }\PY{c+c1}{i}\PY{c+c1}{n}\PY{c+c1}{ }\PY{c+c1}{t}\PY{c+c1}{h}\PY{c+c1}{e}\PY{c+c1}{ }\PY{c+c1}{w}\PY{c+c1}{a}\PY{c+c1}{y}\PY{c+c1}{ }\PY{c+c1}{t}\PY{c+c1}{h}\PY{c+c1}{a}\PY{c+c1}{t}\PY{c+c1}{ }\PY{c+c1}{R}\PY{c+c1}{ }\PY{c+c1}{a}\PY{c+c1}{n}\PY{c+c1}{d}\PY{c+c1}{ }\PY{c+c1}{S}\PY{c+c1}{T}\PY{c+c1}{A}\PY{c+c1}{T}\PY{c+c1}{A}\PY{c+c1}{ }\PY{c+c1}{w}\PY{c+c1}{e}\PY{c+c1}{i}\PY{c+c1}{g}\PY{c+c1}{h}\PY{c+c1}{t}\PY{c+c1}{e}\PY{c+c1}{d}\PY{c+c1}{ }\PY{c+c1}{m}\PY{c+c1}{e}\PY{c+c1}{a}\PY{c+c1}{n}\PY{c+c1}{ }\PY{c+c1}{f}\PY{c+c1}{u}\PY{c+c1}{n}\PY{c+c1}{c}\PY{c+c1}{t}\PY{c+c1}{i}\PY{c+c1}{o}\PY{c+c1}{n}\PY{c+c1}{s}
+        \PY{k}{gen} y01z = y\PY{k}{ if} z\PY{o}{==}\PY{l+s}{\PYZdq{}}\PY{l+s}{0}\PY{l+s}{1}\PY{l+s}{\PYZdq{}}
+        \PY{k}{egen} mean01 = wtmean(y01z), weight(\PY{l+m}{1}\PY{o}{/}prob01z)
+        \PY{k}{gen} prob00z = prob00\PY{k}{ if} z\PY{o}{==}\PY{l+s}{\PYZdq{}}\PY{l+s}{0}\PY{l+s}{0}\PY{l+s}{\PYZdq{}}
+        \PY{k}{replace} prob00z = prob00\PY{k}{ if} prob01z\PY{o}{==}.
+        \PY{k}{gen} y00z= y\PY{k}{ if} z\PY{o}{==}\PY{l+s}{\PYZdq{}}\PY{l+s}{0}\PY{l+s}{0}\PY{l+s}{\PYZdq{}}
+        \PY{k}{egen} mean00 = wtmean(y00z), weight(\PY{l+m}{1}\PY{o}{/}prob00z)
+        \PY{k}{gen} ate01\PYZus{}00 = mean01 \PY{o}{\PYZhy{}} mean00
+        \PY{k}{disp} ate01\PYZus{}00
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+1.5
+    \end{Verbatim}
+
+\end{kframe}
+\end{knitrout}
+The effect of immediate treatment appears to be 1.5, which is weaker than the effect mentioned in the text (4.13), possibly suggesting that the effect of immediate treatment is weaker than the effect of immediate and lagged treatment.
+
+\item Estimate $E[Y_{11} - Y_{00}]$ without imposing the assumption that treatment effects disappear after two weeks by restricting your attention to week 2.
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+   \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}7}]:} \PY{k}{gen} prob01z2 = prob01\PY{k}{ if} z\PY{o}{==}\PY{l+s}{\PYZdq{}}\PY{l+s}{0}\PY{l+s}{1}\PY{l+s}{\PYZdq{}} \PY{o}{\PYZam{}} week\PY{o}{==}\PY{l+s}{\PYZdq{}}\PY{l+s}{2}\PY{l+s}{\PYZdq{}}
+        \PY{k}{gen} y11z2 = y\PY{k}{ if} z\PY{o}{==}\PY{l+s}{\PYZdq{}}\PY{l+s}{1}\PY{l+s}{1}\PY{l+s}{\PYZdq{}} \PY{o}{\PYZam{}} week\PY{o}{==}\PY{l+s}{\PYZdq{}}\PY{l+s}{2}\PY{l+s}{\PYZdq{}}
+        \PY{k}{replace} prob01z2 = .\PY{l+m}{25}\PY{k}{ if} prob01z2\PY{o}{==}.
+        \PY{k}{egen} mean11 = wtmean(y11z2), weight(\PY{l+m}{1}\PY{o}{/}prob01z2)
+        \PY{k}{gen} prob00z2 = prob01\PY{k}{ if} z\PY{o}{==}\PY{l+s}{\PYZdq{}}\PY{l+s}{0}\PY{l+s}{0}\PY{l+s}{\PYZdq{}} \PY{o}{\PYZam{}} week\PY{o}{==}\PY{l+s}{\PYZdq{}}\PY{l+s}{2}\PY{l+s}{\PYZdq{}}
+        \PY{k}{replace} prob00z2 = prob01\PY{k}{ if} prob00z2\PY{o}{==}.
+        \PY{k}{gen} y00z2 = y\PY{k}{ if} z\PY{o}{==}\PY{l+s}{\PYZdq{}}\PY{l+s}{0}\PY{l+s}{0}\PY{l+s}{\PYZdq{}} \PY{o}{\PYZam{}} week\PY{o}{==}\PY{l+s}{\PYZdq{}}\PY{l+s}{2}\PY{l+s}{\PYZdq{}}
+        \PY{k}{drop} mean00
+        \PY{k}{egen} mean00 = wtmean(y00z2), weight(\PY{l+m}{1}\PY{o}{/}prob00z2)
+        
+        \PY{k}{gen} ate11\PYZus{}00 = mean11 \PY{o}{\PYZhy{}} mean00
+        \PY{k}{disp} ate11\PYZus{}00
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+5
+    \end{Verbatim}
+\end{kframe}
+\end{knitrout}
+
+Without imposing this assumption and focusing only on week two, the estimated ATE of immediate and lagged treatment is 5.
+\end{enumerate}
+
+\end{document}
+

@@ -99,14 +99,16 @@
 \usepackage{xcolor}
 \usepackage[printwatermark]{xwatermark}
 \newwatermark[allpages,color=black!50,angle=45,scale=1,xpos=0,ypos=0]{DO NOT DISTRIBUTE}
-
+\usepackage[utf8]{inputenc}
+\usepackage{textcomp}
+\input{pygments.tex}
 
 
 
 \title{Field Experiments: Design, Analysis and Interpretation \\
 Solutions for Chapter 6 Exercises}
 \author{Alan S. Gerber and Donald P. Green\footnote{Solutions prepared by Peter M. Aronow and revised by Alexander Coppock}}
-\date{\today}
+\date{\vspace{-5ex}}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \IfFileExists{upquote.sty}{\usepackage{upquote}}{}
@@ -157,14 +159,14 @@ This definition should be ``those who take the treatment if AND ONLY IF assigned
 \section*{Question 5}
 Suppose that a sample contains $30\%$ Always-Takers, $40\%$ Never-Takers, $15\%$ Compliers, and $15\%$ Defiers. What is the $ITT_D$? \\
 Answer:\\
-Recall from equation (6.19): $ITT_D= \pi_C+ \pi_AT- (\pi_D + \pi_AT) = \pi_C- \pi_D$, which in this case implies that the $ITT_D = 0$.
+Recall from equation (6.19): $ITT_D= \pi_{C}+ \pi_{AT}- (\pi_{D} + \pi_{AT}) = \pi_{C}- \pi_{D}$, which in this case implies that the $ITT_D = 0$.
 
 \section*{Question 6}
 Suppose that, in violation of the monotonicity assumption, a sample contains both Compliers and Defiers. Let $\pi_C$ be the proportion of subjects who are Compliers, and let $\pi_D$ be the proportion of subjects who are Defiers. Show that the CACE is nevertheless identified if (i) the ATE among Defiers equals the ATE among Compliers and (ii) $\pi_C \neq \pi_D$.\\
 Answer:\\
 Let's re-write equation (6.20) assuming that the two ATEs are the same and that the denominator is nonzero:
 \begin{equation*}
-\frac{ITT}{ITT_D} =\frac{(ATE│Compliers) \pi_C-(ATE|Defiers)\pi_D}{(\pi_C-\pi_D )}=\frac{(ATE│Compliers) (\pi_C- \pi_D)}{(\pi_C-\pi_D)}=(ATE│Compliers).
+\frac{\mathrm{ITT}}{\mathrm{ITT_D}} =\frac{\mathrm{(ATE\mid Compliers)} \pi_C-\mathrm{(ATE\mid Defiers)}\pi_D}{(\pi_C-\pi_D )}=\frac{\mathrm{(ATE\mid Compliers)} (\pi_C- \pi_D)}{(\pi_C-\pi_D)}=\mathrm{(ATE\mid Compliers)}.
 \end{equation*}
 
 \section*{Question 7}
@@ -204,44 +206,59 @@ Monotonicity implies that there are no subjects who would be arrested if assigne
 \item Assume that the core assumptions hold, and calculate the $\widehat{ITT_D}$, $\widehat{ITT}$, and $\widehat{CACE}$ given the simplified treatment categorization. Interpret the results.\\
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlstd{pi_at} \hlkwb{<-} \hlnum{2}\hlopt{/}\hlnum{398}
-\hlstd{pi_nt} \hlkwb{<-} \hlstd{(}\hlnum{3}\hlopt{+}\hlnum{1}\hlstd{)}\hlopt{/}\hlstd{(}\hlnum{404}\hlopt{+}\hlnum{398}\hlstd{)}
-\hlstd{pi_c} \hlkwb{<-} \hlnum{1} \hlopt{-} \hlstd{pi_at} \hlopt{-} \hlstd{pi_nt}
-\hlstd{itt_d} \hlkwb{<-} \hlstd{pi_c}
-\hlstd{itt_d}
-\end{alltt}
-\begin{verbatim}
-## [1] 0.99
-\end{verbatim}
-\begin{alltt}
-\hlstd{itt_hotline} \hlkwb{<-} \hlstd{(}\hlnum{296} \hlopt{+} \hlnum{301}\hlstd{)}\hlopt{/}\hlstd{(}\hlnum{404} \hlopt{+} \hlnum{398}\hlstd{)} \hlopt{-} \hlstd{(}\hlnum{261}\hlopt{/}\hlnum{398}\hlstd{)}
-\hlstd{itt_hotline}
-\end{alltt}
-\begin{verbatim}
-## [1] 0.08861
-\end{verbatim}
-\begin{alltt}
-\hlstd{cace_hotline} \hlkwb{<-} \hlstd{itt_hotline}\hlopt{/}\hlstd{itt_d}
-\hlstd{cace_hotline}
-\end{alltt}
-\begin{verbatim}
-## [1] 0.08951
-\end{verbatim}
-\begin{alltt}
-\hlstd{itt_arrest} \hlkwb{<-} \hlstd{(}\hlnum{303}\hlstd{)}\hlopt{/}\hlstd{(}\hlnum{802}\hlstd{)} \hlopt{-} \hlstd{(}\hlnum{151}\hlopt{/}\hlnum{398}\hlstd{)}
-\hlstd{itt_arrest}
-\end{alltt}
-\begin{verbatim}
-## [1] -0.001591
-\end{verbatim}
-\begin{alltt}
-\hlstd{cace_arrest} \hlkwb{<-} \hlstd{itt_arrest}\hlopt{/}\hlstd{itt_d}
-\hlstd{cace_arrest}
-\end{alltt}
-\begin{verbatim}
-## [1] -0.001608
-\end{verbatim}
+   \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}1}]:} \PY{k}{clear}
+        \PY{k}{scalar} pi\PYZus{}at = \PY{l+m}{2}\PY{o}{/}\PY{l+m}{398}
+        \PY{k}{scalar} pi\PYZus{}nt = (\PY{l+m}{3}\PY{l+m}{+1})\PY{o}{/}(\PY{l+m}{404}\PY{l+m}{+398})
+        \PY{k}{scalar} pi\PYZus{}c = \PY{l+m}{1}\PY{o}{\PYZhy{}} pi\PYZus{}at \PY{o}{\PYZhy{}} pi\PYZus{}nt
+        \PY{k}{scalar} itt\PYZus{}d = pi\PYZus{}c
+        \PY{k}{disp} \PY{n+nFormat}{\PYZpc{}8.2f} itt\PYZus{}d
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+    0.99
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}2}]:} \PY{k}{scalar} itt\PYZus{}hotline = (\PY{l+m}{296}\PY{l+m}{+301})\PY{o}{/}(\PY{l+m}{404}\PY{l+m}{+398}) \PY{o}{\PYZhy{}} (\PY{l+m}{261}\PY{o}{/}\PY{l+m}{398})
+        \PY{k}{disp} \PY{n+nFormat}{\PYZpc{}8.5f} itt\PYZus{}hotline
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+ 0.08861
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}3}]:} \PY{k}{scalar} cace\PYZus{}hotline = itt\PYZus{}hotline\PY{o}{/}itt\PYZus{}d
+        \PY{k}{disp} \PY{n+nFormat}{\PYZpc{}8.5f} cace\PYZus{}hotline
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+ 0.08951
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}4}]:} \PY{k}{scalar} itt\PYZus{}arrest = (\PY{l+m}{303})\PY{o}{/}(\PY{l+m}{802}) \PY{o}{\PYZhy{}} (\PY{l+m}{151}\PY{o}{/}\PY{l+m}{398})
+        \PY{k}{disp} \PY{n+nFormat}{\PYZpc{}8.6f} itt\PYZus{}arrest
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+-0.001591
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}5}]:} \PY{k}{scalar} cace\PYZus{}arrest = itt\PYZus{}arrest\PY{o}{/}itt\PYZus{}d
+        \PY{k}{disp} \PY{n+nFormat}{\PYZpc{}8.6f} cace\PYZus{}arrest
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+-0.001608
+
+    \end{Verbatim}
 \end{kframe}
 \end{knitrout}
 
@@ -346,34 +363,43 @@ Answer:\\
 Non-interference means that each polling station's potential outcomes respond only to whether the polling station itself is treated. This assumption would be jeopardized if monitors, for example, displace corruption when they monitor nearby polling stations. Under that scenario, the ``untreated'' potential outcome may rise when neighboring stations are treated, causing bias when treated and untreated stations are compared in order to gauge the ATE of treatment vs. no treatment.
 
 \item Download the sample dataset at http://isps.research.yale.edu/FEDAI and estimate the ITT and the CACE. Interpret the results.
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-
-
-{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in read.dta("{}/Users/Alex/Documents/Dropbox/Columbia/spring 2014/experiments2014/FEDAI AEC Data and R Programs/Chapter 6/Chapter 6\_Hyde (2010) Dataset.dta"{}): unable to open file: 'No such file or directory'}}\end{kframe}
-\end{knitrout}
 
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlstd{Z} \hlkwb{<-} \hlkwd{as.integer}\hlstd{(hyde}\hlopt{$}\hlstd{Sample)} \hlopt{-}\hlnum{1}   \hlcom{# monitoring treatment}
-\hlstd{Y} \hlkwb{<-} \hlstd{hyde}\hlopt{$}\hlstd{invalidballots}
-\hlstd{D} \hlkwb{<-} \hlkwd{as.numeric}\hlstd{(hyde}\hlopt{$}\hlstd{observed}\hlopt{==}\hlstr{"yes"}\hlstd{)}
-\hlstd{probs} \hlkwb{<-} \hlkwd{genprobexact}\hlstd{(Z)}
-\hlstd{ITT} \hlkwb{<-} \hlkwd{estate}\hlstd{(Y,Z,}\hlkwc{prob}\hlstd{=probs)}
-\hlstd{ITTd} \hlkwb{<-} \hlkwd{estate}\hlstd{(D,Z,}\hlkwc{prob}\hlstd{=probs)}
-\hlstd{CACE} \hlkwb{<-} \hlstd{ITT}\hlopt{/}\hlstd{ITTd}
-\hlstd{ITT}
-\end{alltt}
-\begin{verbatim}
-## [1] 4.824
-\end{verbatim}
-\begin{alltt}
-\hlstd{CACE}
-\end{alltt}
-\begin{verbatim}
-## [1] 31.57
-\end{verbatim}
+   \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}1}]:} \PY{k}{qui} import delim .\PY{o}{/}data\PY{o}{/}chapter06\PY{o}{/}Hyde\PYZus{}POP\PYZus{}2012,\PY{k}{ clear}
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}2}]:} \PY{k}{rename}\PY{k}{ sample} Z
+        \PY{k}{rename} invalidballots Y
+        \PY{k}{rename} observed D
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}3}]:} \PY{k}{qui}\PY{k}{ regress} Y Z
+        \PY{k}{scalar} ITT = \PYZus{}b[Z]		
+        \PY{k}{qui}\PY{k}{ regress} D Z
+        \PY{k}{scalar} ITTD = \PYZus{}b[Z]		
+        \PY{k}{scalar} CACE = ITT\PY{o}{/}ITTD
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}4}]:} \PY{k}{disp} \PY{n+nFormat}{\PYZpc{}8.3f} ITT
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+   4.824
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}5}]:} \PY{k}{disp} \PY{n+nFormat}{\PYZpc{}18.2f} CACE
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+    31.57
+    \end{Verbatim}
 \end{kframe}
 \end{knitrout}
 
@@ -383,23 +409,38 @@ The ITT is estimated by comparing means in the assigned control 81.33 and treatm
 
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlstd{perms} \hlkwb{<-} \hlkwd{genperms}\hlstd{(Z,}\hlkwc{maxiter}\hlstd{=}\hlnum{10000}\hlstd{)}
-\end{alltt}
-\begin{verbatim}
-## Too many permutations to use exact method.
-## Defaulting to approximate method.
-## Increase maxiter to at least Inf to perform exact estimation.
-\end{verbatim}
-\begin{alltt}
-\hlstd{Ys} \hlkwb{<-} \hlkwd{genouts}\hlstd{(Y,Z,}\hlkwc{ate}\hlstd{=}\hlnum{0}\hlstd{)}
-\hlstd{distout} \hlkwb{<-} \hlkwd{gendist}\hlstd{(Ys,perms,}\hlkwc{prob}\hlstd{=probs)}
-\hlstd{p.value.twosided} \hlkwb{<-} \hlkwd{mean}\hlstd{(}\hlkwd{abs}\hlstd{(distout)} \hlopt{>=} \hlkwd{abs}\hlstd{(ITT))}
-\hlstd{p.value.twosided}
-\end{alltt}
-\begin{verbatim}
-## [1] 0.4973
-\end{verbatim}
+   \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}6}]:} ritest Z \PYZus{}b[Z], reps(\PY{l+m}{10000}) nodots: \PY{c+cs}{///}
+        \PY{k}{regress} Y Z
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+  res. var(s):  Z
+   Resampling:  Permuting Z
+Clust. var(s):  \_\_000006
+     Clusters:  1971
+Strata var(s):  none
+       Strata:  1
+
+------------------------------------------------------------------------------
+T            |     T(obs)       c       n   p=c/n   SE(p) [95\% Conf. Interval]
+-------------+----------------------------------------------------------------
+       \_pm\_1 |   4.824097    4858   10000  0.4858  0.0050  .4759595   .4956488
+------------------------------------------------------------------------------
+Note: Confidence interval is with respect to p=c/n.
+Note: c = \#\{|T| >= |T(obs)|\}
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}7}]:} \PY{k}{di} \PY{n+nFormat}{\PYZpc{}8.4f} \PY{n+nf}{el}(\PY{n+nf}{r}(p), \PY{l+m}{1},\PY{l+m}{1})
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+  0.4858
+
+    \end{Verbatim}
+
 \end{kframe}
 \end{knitrout}
 \end{enumerate}

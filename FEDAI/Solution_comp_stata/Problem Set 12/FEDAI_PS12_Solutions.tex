@@ -97,14 +97,14 @@
 \usepackage{xcolor}
 \usepackage[printwatermark]{xwatermark}
 \newwatermark[allpages,color=black!50,angle=45,scale=1,xpos=0,ypos=0]{DO NOT DISTRIBUTE}
-
+\input{pygments.tex}
 
 
 
 \title{Field Experiments: Design, Analysis and Interpretation \\
 Solutions for Chapter 12 Exercises}
 \author{Alan S. Gerber and Donald P. Green\footnote{Solutions prepared by Peter M. Aronow and revised by Alexander Coppock}}
-\date{\today}
+\date{\vspace{-5ex}}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \IfFileExists{upquote.sty}{\usepackage{upquote}}{}
@@ -413,15 +413,26 @@ One reason for concern about attrition in the school voucher experiment describe
 Answer:\\
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlkwd{with}\hlstd{(howell,}\hlkwd{prop.table}\hlstd{(}\hlkwd{table}\hlstd{(missing_y1math, treat),} \hlnum{2}\hlstd{))}
-\end{alltt}
-\begin{verbatim}
-##               treat
-## missing_y1math         0         1
-##              0 0.7590090 0.8110073
-##              1 0.2409910 0.1889927
-\end{verbatim}
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}1}]:} import delim .\PY{o}{/}data\PY{o}{/}chapter12\PY{o}{/}Howell\PYZus{}Peterson\PYZus{}BIP\PYZus{}2002,\PY{k}{ clear}
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}2}]:} \PY{k}{tabulate} missing\PYZus{}y1math treat, column nof
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+
+missing\_y1 |         treat
+      math |         0          1 |     Total
+-----------+----------------------+----------
+         0 |     75.90      81.10 |     78.61 
+         1 |     24.10      18.90 |     21.39 
+-----------+----------------------+----------
+     Total |    100.00     100.00 |    100.00 
+
+
+    \end{Verbatim}
 \end{kframe}
 \end{knitrout}
 24\% of the control group has missing outcome data, compared with 19\% of the treatment group.
@@ -430,18 +441,22 @@ Answer:\\
 Answer:\\
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlkwd{with}\hlstd{(howell,} \hlkwd{mean}\hlstd{(y0_1math_change[treat}\hlopt{==}\hlnum{0}\hlstd{],}\hlkwc{na.rm}\hlstd{=}\hlnum{TRUE}\hlstd{))}
-\end{alltt}
-\begin{verbatim}
-## [1] 6.486647
-\end{verbatim}
-\begin{alltt}
-\hlkwd{with}\hlstd{(howell,} \hlkwd{mean}\hlstd{(y0_1math_change[treat}\hlopt{==}\hlnum{1}\hlstd{],}\hlkwc{na.rm}\hlstd{=}\hlnum{TRUE}\hlstd{))}
-\end{alltt}
-\begin{verbatim}
-## [1] 7.104994
-\end{verbatim}
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}3}]:} \PY{k}{tabstat} y0\PYZus{}1math\PYZus{}change,\PY{k}{ by}(treat) stat(mean) not
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+
+Summary for variables: y0\_1math\_change
+     by categories of: treat 
+
+   treat |      mean
+---------+----------
+       0 |  6.486647
+       1 |  7.104994
+--------------------
+
+    \end{Verbatim}
 \end{kframe}
 \end{knitrout}
 
@@ -453,46 +468,74 @@ Answer:\\
 
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlkwd{with}\hlstd{(howell,} \hlkwd{hist}\hlstd{(y0_1math_change[treat}\hlopt{==}\hlnum{1}\hlstd{],} \hlkwc{breaks}\hlstd{=}\hlnum{50}\hlstd{))}
-\hlkwd{with}\hlstd{(howell,} \hlkwd{c}\hlstd{(}\hlkwd{min}\hlstd{(y0_1math_change[treat}\hlopt{==}\hlnum{1}\hlstd{],} \hlkwc{na.rm} \hlstd{=} \hlnum{TRUE}\hlstd{),}
-               \hlkwd{max}\hlstd{(y0_1math_change[treat}\hlopt{==}\hlnum{1}\hlstd{],} \hlkwc{na.rm} \hlstd{=} \hlnum{TRUE}\hlstd{)))}
-\end{alltt}
-\begin{verbatim}
-## [1] -63  96
-\end{verbatim}
-\begin{alltt}
-\hlkwd{with}\hlstd{(howell,} \hlkwd{quantile}\hlstd{(y0_1math_change[treat}\hlopt{==}\hlnum{1}\hlstd{],}
-                      \hlkwc{probs} \hlstd{=} \hlkwd{c}\hlstd{(}\hlnum{.05}\hlstd{,} \hlnum{.10}\hlstd{,} \hlnum{.15}\hlstd{,} \hlnum{.25}\hlstd{,} \hlnum{.50}\hlstd{,} \hlnum{.75}\hlstd{,} \hlnum{.85}\hlstd{,} \hlnum{.90}\hlstd{,} \hlnum{.95}\hlstd{),}
-                      \hlkwc{na.rm}\hlstd{=}\hlnum{TRUE}\hlstd{))}
-\end{alltt}
-\begin{verbatim}
-##  5% 10% 15% 25% 50% 75% 85% 90% 95% 
-## -20 -13  -9  -4   4  16  25  32  43
-\end{verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}4}]:} \PY{k}{histogram} y0\PYZus{}1math\PYZus{}change\PY{k}{ if} treat\PY{o}{==}\PY{l+m}{1}, bin(\PY{l+m}{50}) freq \PY{c+cs}{///}
+        title(\PY{l+s}{\PYZdq{}}\PY{l+s}{H}\PY{l+s}{i}\PY{l+s}{s}\PY{l+s}{t}\PY{l+s}{o}\PY{l+s}{g}\PY{l+s}{r}\PY{l+s}{a}\PY{l+s}{m}\PY{l+s}{ }\PY{l+s}{o}\PY{l+s}{f}\PY{l+s}{ }\PY{l+s}{y}\PY{l+s}{0}\PY{l+s}{\PYZus{}}\PY{l+s}{1}\PY{l+s}{m}\PY{l+s}{a}\PY{l+s}{t}\PY{l+s}{h}\PY{l+s}{\PYZus{}}\PY{l+s}{c}\PY{l+s}{h}\PY{l+s}{a}\PY{l+s}{n}\PY{l+s}{g}\PY{l+s}{e}\PY{l+s}{[}\PY{l+s}{t}\PY{l+s}{r}\PY{l+s}{e}\PY{l+s}{a}\PY{l+s}{t}\PY{l+s}{ }\PY{l+s}{=}\PY{l+s}{=}\PY{l+s}{ }\PY{l+s}{1}\PY{l+s}{]}\PY{l+s}{\PYZdq{}})
+\end{Verbatim}
+    
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}5}]:} \PY{k}{tabstat} y0\PYZus{}1math\PYZus{}change\PY{k}{ if} treat\PY{o}{==}\PY{l+m}{1}, stat(min max)
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+
+    variable |       min       max
+-------------+--------------------
+y0\_1math\_c\textasciitilde{}e |       -63        96
+----------------------------------
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}6}]:} \PY{k}{centile} y0\PYZus{}1math\PYZus{}change\PY{k}{ if} treat\PY{o}{==}\PY{l+m}{1},\PY{k}{ centile}(\PY{l+m}{5} \PY{l+m}{10} \PY{l+m}{15} \PY{l+m}{25} \PY{l+m}{50} \PY{l+m}{75} \PY{l+m}{85} \PY{l+m}{90} \PY{l+m}{95})
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+
+                                                       -- Binom. Interp. --
+    Variable |       Obs  Percentile    Centile        [95\% Conf. Interval]
+-------------+-------------------------------------------------------------
+y0\_1math\_c\textasciitilde{}e |       781          5         -20             -23         -18
+             |                   10         -13             -16         -11
+             |                   15          -9             -11          -7
+             |                   25          -4              -5          -2
+             |                   50           4               3           5
+             |                   75          16              14          18
+             |                   85          25              22          27
+             |                   90          32              28          36
+             |                   95          43              40          48
+
+    \end{Verbatim}
 \end{kframe}
 
-{\centering \includegraphics[width=4in,height=4in]{figure/PS12-unnamed-chunk-4-1} 
+
+{\centering \includegraphics[width=5in,height=4in]{figure/PS12-unnamed-chunk-4-1} 
 
 }
 
-
-
 \end{knitrout}
+
 
 
 \item To trim the top portion of the treatment group distribution, what value of $Y_i$ is the 93.6 percentile of the treatment group? (The value 93.6 is the control group reporting rate divided by the treatment group reporting rate.)\\
 Answer:\\
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlkwd{with}\hlstd{(howell,} \hlkwd{quantile}\hlstd{(y0_1math_change[treat}\hlopt{==}\hlnum{1}\hlstd{],}
-                      \hlkwc{probs} \hlstd{=} \hlkwd{c}\hlstd{(}\hlnum{.936}\hlstd{),}\hlkwc{na.rm}\hlstd{=}\hlnum{TRUE}\hlstd{))}
-\end{alltt}
-\begin{verbatim}
-## 93.6% 
-##    40
-\end{verbatim}
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}7}]:} \PY{k}{centile} y0\PYZus{}1math\PYZus{}change\PY{k}{ if} treat\PY{o}{==}\PY{l+m}{1},\PY{k}{ centile}(\PY{l+m}{93.6})
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+
+                                                       -- Binom. Interp. --
+    Variable |       Obs  Percentile    Centile        [95\% Conf. Interval]
+-------------+-------------------------------------------------------------
+y0\_1math\_c\textasciitilde{}e |       781       93.6          40              36          44
+
+    \end{Verbatim}
+
 \end{kframe}
 \end{knitrout}
 
@@ -502,23 +545,32 @@ The 93.6 percentile value of Y is 40.
 Answer:\\
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlstd{howell} \hlkwb{<-} \hlkwd{within}\hlstd{(howell,\{}
-  \hlstd{treat_less_than_40} \hlkwb{<-} \hlkwd{as.numeric}\hlstd{(treat} \hlopt{==} \hlnum{1} \hlopt{&} \hlstd{y0_1math_change} \hlopt{<}\hlnum{40} \hlopt{&} \hlstd{missing_y1math}\hlopt{==}\hlnum{0}\hlstd{)}
-\hlstd{\})}
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}8}]:} \PY{k}{qui}\PY{k}{ mean} y0\PYZus{}1math\PYZus{}change\PY{k}{ if} treat\PY{o}{==}\PY{l+m}{1} \PY{o}{\PYZam{}} missing\PYZus{}y1math\PY{o}{==}\PY{l+m}{0} \PY{o}{\PYZam{}} y0\PYZus{}1math\PYZus{}change \PY{o}{\PYZlt{}} \PY{l+m}{40}
+        \PY{k}{scalar} l\PYZus{}b = \PYZus{}b[y0\PYZus{}1math\PYZus{}change]
+        \PY{k}{qui}\PY{k}{ count}\PY{k}{ if} treat\PY{o}{==}\PY{l+m}{1} \PY{o}{\PYZam{}} missing\PYZus{}y1math\PY{o}{==}\PY{l+m}{0} \PY{o}{\PYZam{}} y0\PYZus{}1math\PYZus{}change \PY{o}{\PYZlt{}} \PY{l+m}{40}
+        \PY{k}{scalar} l\PYZus{}b\PYZus{}count = \PY{n+nf}{r}(N)
+        \PY{k}{qui}\PY{k}{ count}\PY{k}{ if} treat\PY{o}{==}\PY{l+m}{1}
+\end{Verbatim}
 
-\hlstd{L_B} \hlkwb{<-} \hlkwd{with}\hlstd{(howell,} \hlkwd{mean}\hlstd{(y0_1math_change[treat}\hlopt{==}\hlnum{1} \hlopt{&} \hlstd{treat_less_than_40}\hlopt{==}\hlnum{1}\hlstd{]))}
-\hlstd{L_B}
-\end{alltt}
-\begin{verbatim}
-## [1] 3.701513
-\end{verbatim}
-\begin{alltt}
-\hlkwd{with}\hlstd{(howell,} \hlkwd{mean}\hlstd{(treat_less_than_40[treat}\hlopt{==}\hlnum{1}\hlstd{]}\hlopt{==}\hlnum{0}\hlstd{))}
-\end{alltt}
-\begin{verbatim}
-## [1] 0.2450675
-\end{verbatim}
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}9}]:} \PY{k}{disp} \PY{n+nFormat}{\PYZpc{}8.6f} l\PYZus{}b
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+3.701513
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}10}]:} \PY{k}{disp} \PY{n+nFormat}{\PYZpc{}8.7f} \PY{l+m}{1}\PY{o}{\PYZhy{}}l\PYZus{}b\PYZus{}count\PY{o}{/}\PY{n+nf}{r}(N)
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+0.2450675
+
+    \end{Verbatim}
+
 \end{kframe}
 \end{knitrout}
 
@@ -529,12 +581,13 @@ The average value of the observations less than or equal to 40 is 3.70. There ar
 Answer:\\
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlstd{L_B} \hlopt{-} \hlkwd{with}\hlstd{(howell,} \hlkwd{mean}\hlstd{(y0_1math_change[treat}\hlopt{==}\hlnum{0}\hlstd{],} \hlkwc{na.rm}\hlstd{=}\hlnum{TRUE}\hlstd{))}
-\end{alltt}
-\begin{verbatim}
-## [1] -2.785134
-\end{verbatim}
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}11}]:} \PY{k}{qui}\PY{k}{ mean} y0\PYZus{}1math\PYZus{}change\PY{k}{ if} treat\PY{o}{==}\PY{l+m}{0} 
+         \PY{k}{disp} \PY{n+nFormat}{\PYZpc{}18.6f} l\PYZus{}b \PY{o}{\PYZhy{}} \PYZus{}b[y0\PYZus{}1math\PYZus{}change]
+\end{Verbatim}
+    \begin{Verbatim}[commandchars=\\\{\}]
+         -2.785134
+    \end{Verbatim}
 \end{kframe}
 \end{knitrout}
 
@@ -543,14 +596,18 @@ Answer:\\
 Answer:\\
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlkwd{with}\hlstd{(howell,} \hlkwd{quantile}\hlstd{(y0_1math_change[treat}\hlopt{==}\hlnum{1}\hlstd{],}
-                      \hlkwc{probs} \hlstd{=} \hlkwd{c}\hlstd{(}\hlnum{0.064}\hlstd{),}\hlkwc{na.rm}\hlstd{=}\hlnum{TRUE}\hlstd{))}
-\end{alltt}
-\begin{verbatim}
-## 6.4% 
-##  -18
-\end{verbatim}
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}12}]:} \PY{k}{centile} y0\PYZus{}1math\PYZus{}change\PY{k}{ if} treat\PY{o}{==}\PY{l+m}{1},\PY{k}{ centile}(\PY{l+m}{6.4})
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+
+                                                       -- Binom. Interp. --
+    Variable |       Obs  Percentile    Centile        [95\% Conf. Interval]
+-------------+-------------------------------------------------------------
+y0\_1math\_c\textasciitilde{}e |       781        6.4         -18             -21         -16
+
+    \end{Verbatim}
 \end{kframe}
 \end{knitrout}
 The 6.4 percentile value is -18. 
@@ -560,23 +617,28 @@ Answer:\\
 
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlstd{howell} \hlkwb{<-} \hlkwd{within}\hlstd{(howell,\{}
-  \hlstd{treat_greater_than_18} \hlkwb{<-} \hlkwd{as.numeric}\hlstd{(treat} \hlopt{==} \hlnum{1} \hlopt{&} \hlstd{y0_1math_change} \hlopt{>-}\hlnum{18} \hlopt{&} \hlstd{missing_y1math}\hlopt{==}\hlnum{0}\hlstd{)}
-\hlstd{\})}
+   \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}13}]:} \PY{k}{qui}\PY{k}{ mean} y0\PYZus{}1math\PYZus{}change\PY{k}{ if} treat\PY{o}{==}\PY{l+m}{1} \PY{o}{\PYZam{}} missing\PYZus{}y1math\PY{o}{==}\PY{l+m}{0} \PY{o}{\PYZam{}} y0\PYZus{}1math\PYZus{}change \PY{o}{\PYZgt{}} \PY{o}{\PYZhy{}}\PY{l+m}{18}
+         \PY{k}{scalar} u\PYZus{}b = \PYZus{}b[y0\PYZus{}1math\PYZus{}change]
+         \PY{k}{disp} \PY{n+nFormat}{\PYZpc{}8.6f} u\PYZus{}b
+\end{Verbatim}
 
-\hlstd{U_B} \hlkwb{<-} \hlkwd{with}\hlstd{(howell,} \hlkwd{mean}\hlstd{(y0_1math_change[treat}\hlopt{==}\hlnum{1} \hlopt{&} \hlstd{treat_greater_than_18}\hlopt{==}\hlnum{1}\hlstd{]))}
-\hlstd{U_B}
-\end{alltt}
-\begin{verbatim}
-## [1] 9.707586
-\end{verbatim}
-\begin{alltt}
-\hlkwd{with}\hlstd{(howell,} \hlkwd{mean}\hlstd{(treat_greater_than_18[treat}\hlopt{==}\hlnum{1}\hlstd{]}\hlopt{==}\hlnum{0}\hlstd{))}
-\end{alltt}
-\begin{verbatim}
-## [1] 0.2471443
-\end{verbatim}
+    \begin{Verbatim}[commandchars=\\\{\}]
+9.707586
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}14}]:} \PY{k}{qui}\PY{k}{ count}\PY{k}{ if} treat\PY{o}{==}\PY{l+m}{1} \PY{o}{\PYZam{}} missing\PYZus{}y1math\PY{o}{==}\PY{l+m}{0} \PY{o}{\PYZam{}} y0\PYZus{}1math\PYZus{}change \PY{o}{\PYZgt{}} \PY{o}{\PYZhy{}}\PY{l+m}{18}
+         \PY{k}{scalar} u\PYZus{}b\PYZus{}count = \PY{n+nf}{r}(N)
+         \PY{k}{qui}\PY{k}{ count}\PY{k}{ if} treat\PY{o}{==}\PY{l+m}{1}
+         \PY{k}{disp} \PY{n+nFormat}{\PYZpc{}8.7f} \PY{l+m}{1}\PY{o}{\PYZhy{}}u\PYZus{}b\PYZus{}count\PY{o}{/}\PY{n+nf}{r}(N)
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+0.2471443
+
+    \end{Verbatim}
 \end{kframe}
 \end{knitrout}
 
@@ -586,12 +648,14 @@ The average of the values that remain after trimming off the lower 6.4\% is 9.71
 Answer:\\
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlstd{U_B} \hlopt{-} \hlkwd{with}\hlstd{(howell,} \hlkwd{mean}\hlstd{(y0_1math_change[treat}\hlopt{==}\hlnum{0}\hlstd{],} \hlkwc{na.rm}\hlstd{=}\hlnum{TRUE}\hlstd{))}
-\end{alltt}
-\begin{verbatim}
-## [1] 3.220939
-\end{verbatim}
+   \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}15}]:} \PY{k}{qui}\PY{k}{ mean} y0\PYZus{}1math\PYZus{}change\PY{k}{ if} treat\PY{o}{==}\PY{l+m}{0} 
+         \PY{k}{disp} \PY{n+nFormat}{\PYZpc{}8.6f} u\PYZus{}b \PY{o}{\PYZhy{}} \PYZus{}b[y0\PYZus{}1math\PYZus{}change]
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+3.220939
+    \end{Verbatim}
 \end{kframe}
 \end{knitrout}
 

@@ -98,14 +98,14 @@
 \usepackage{xcolor}
 \usepackage[printwatermark]{xwatermark}
 \newwatermark[allpages,color=black!50,angle=45,scale=1,xpos=0,ypos=0]{DO NOT DISTRIBUTE}
-
+\input{pygments.tex}
 
 
 
 \title{Field Experiments: Design, Analysis and Interpretation \\
 Solutions for Chapter 8 Exercises}
 \author{Alan S. Gerber and Donald P. Green\footnote{Solutions prepared by Peter M. Aronow and revised by Alexander Coppock}}
-\date{\today}
+\date{\vspace{-5ex}}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \IfFileExists{upquote.sty}{\usepackage{upquote}}{}
@@ -184,39 +184,63 @@ The firsthand effects can be estimated only for those in half-treated zip codes 
 
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlstd{Z_ind} \hlkwb{<-} \hlkwd{c}\hlstd{(}\hlkwd{rep}\hlstd{(}\hlnum{0}\hlstd{,} \hlnum{6217}\hlstd{),} \hlkwd{rep}\hlstd{(}\hlnum{0}\hlstd{,} \hlnum{3316}\hlstd{),} \hlkwd{rep}\hlstd{(}\hlnum{1}\hlstd{,} \hlnum{2949}\hlstd{),} \hlkwd{rep}\hlstd{(}\hlnum{1}\hlstd{,} \hlnum{6377}\hlstd{))}
-\hlstd{Z_zip} \hlkwb{<-} \hlkwd{c}\hlstd{(}\hlkwd{rep}\hlstd{(}\hlstr{"none"}\hlstd{,} \hlnum{6217}\hlstd{),} \hlkwd{rep}\hlstd{(}\hlstr{"half"}\hlstd{,} \hlnum{3316}\hlstd{),} \hlkwd{rep}\hlstd{(}\hlstr{"half"}\hlstd{,} \hlnum{2949}\hlstd{),} \hlkwd{rep}\hlstd{(}\hlstr{"all"}\hlstd{,} \hlnum{6377}\hlstd{))}
-\hlstd{Y} \hlkwb{<-} \hlkwd{c}\hlstd{(}\hlkwd{rep}\hlstd{(}\hlnum{1}\hlstd{,} \hlnum{1021}\hlstd{),} \hlkwd{rep}\hlstd{(}\hlnum{0}\hlstd{,} \hlnum{6217}\hlopt{-}\hlnum{1021}\hlstd{),}
-       \hlkwd{rep}\hlstd{(}\hlnum{1}\hlstd{,} \hlnum{526}\hlstd{),} \hlkwd{rep}\hlstd{(}\hlnum{0}\hlstd{,} \hlnum{3316}\hlopt{-}\hlnum{526}\hlstd{),}
-       \hlkwd{rep}\hlstd{(}\hlnum{1}\hlstd{,} \hlnum{620}\hlstd{),} \hlkwd{rep}\hlstd{(}\hlnum{0}\hlstd{,} \hlnum{2949}\hlopt{-}\hlnum{620}\hlstd{),}
-       \hlkwd{rep}\hlstd{(}\hlnum{1}\hlstd{,} \hlnum{1316}\hlstd{),} \hlkwd{rep}\hlstd{(}\hlnum{0}\hlstd{,} \hlnum{6377}\hlopt{-}\hlnum{1316}\hlstd{))}
-\hlstd{ate.firsthand.half} \hlkwb{<-}
-  \hlkwd{mean}\hlstd{(Y[Z_ind}\hlopt{==}\hlnum{1} \hlopt{&} \hlstd{Z_zip}\hlopt{==}\hlstr{"half"}\hlstd{])} \hlopt{-}
-  \hlkwd{mean}\hlstd{(Y[Z_ind}\hlopt{==}\hlnum{0} \hlopt{&} \hlstd{Z_zip}\hlopt{==}\hlstr{"half"}\hlstd{])}
-\hlstd{ate.secondhand.untreated} \hlkwb{<-}
-  \hlkwd{mean}\hlstd{(Y[Z_ind}\hlopt{==}\hlnum{0} \hlopt{&} \hlstd{Z_zip}\hlopt{==}\hlstr{"half"}\hlstd{])} \hlopt{-}
-  \hlkwd{mean}\hlstd{(Y[Z_ind}\hlopt{==}\hlnum{0} \hlopt{&} \hlstd{Z_zip}\hlopt{==}\hlstr{"none"}\hlstd{])}
-\hlstd{ate.secondhand.treated} \hlkwb{<-}
-  \hlkwd{mean}\hlstd{(Y[Z_ind}\hlopt{==}\hlnum{1} \hlopt{&} \hlstd{Z_zip}\hlopt{==}\hlstr{"all"}\hlstd{])} \hlopt{-}
-  \hlkwd{mean}\hlstd{(Y[Z_ind}\hlopt{==}\hlnum{1} \hlopt{&} \hlstd{Z_zip}\hlopt{==}\hlstr{"half"}\hlstd{])}
-\hlstd{ate.firsthand.half}
-\end{alltt}
-\begin{verbatim}
-## [1] 0.05161591
-\end{verbatim}
-\begin{alltt}
-\hlstd{ate.secondhand.untreated}
-\end{alltt}
-\begin{verbatim}
-## [1] -0.00560227
-\end{verbatim}
-\begin{alltt}
-\hlstd{ate.secondhand.treated}
-\end{alltt}
-\begin{verbatim}
-## [1] -0.00387413
-\end{verbatim}
+   \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}1}]:} \PY{k}{clear} 
+        \PY{k}{qui}\PY{k}{ set} obs \PY{l+m}{18859}
+        \PY{k}{qui}\PY{k}{ egen} z\PYZus{}ind = fill(\PY{l+m}{0},\PY{l+m}{0})
+        \PY{k}{qui}\PY{k}{ replace} z\PYZus{}ind = \PY{l+m}{1}\PY{k}{ in} \PY{l+m}{9534}\PY{o}{/}\PY{l+m}{18859}
+        
+        \PY{c+c1}{//}\PY{c+c1}{ }\PY{c+c1}{s}\PY{c+c1}{s}\PY{c+c1}{c}\PY{c+c1}{ }\PY{c+c1}{i}\PY{c+c1}{n}\PY{c+c1}{s}\PY{c+c1}{t}\PY{c+c1}{a}\PY{c+c1}{l}\PY{c+c1}{l}\PY{c+c1}{ }\PY{c+c1}{e}\PY{c+c1}{g}\PY{c+c1}{e}\PY{c+c1}{n}\PY{c+c1}{m}\PY{c+c1}{o}\PY{c+c1}{r}\PY{c+c1}{e}\PY{c+c1}{ }\PY{c+c1}{(}\PY{c+c1}{u}\PY{c+c1}{n}\PY{c+c1}{c}\PY{c+c1}{o}\PY{c+c1}{m}\PY{c+c1}{m}\PY{c+c1}{e}\PY{c+c1}{n}\PY{c+c1}{t}\PY{c+c1}{ }\PY{c+c1}{t}\PY{c+c1}{o}\PY{c+c1}{ }\PY{c+c1}{i}\PY{c+c1}{n}\PY{c+c1}{s}\PY{c+c1}{t}\PY{c+c1}{a}\PY{c+c1}{l}\PY{c+c1}{l}\PY{c+c1}{ }\PY{c+c1}{t}\PY{c+c1}{h}\PY{c+c1}{e}\PY{c+c1}{ }\PY{c+c1}{p}\PY{c+c1}{a}\PY{c+c1}{c}\PY{c+c1}{k}\PY{c+c1}{a}\PY{c+c1}{g}\PY{c+c1}{e}\PY{c+c1}{)}
+        \PY{k}{qui}\PY{k}{ egen} z\PYZus{}zip =\PY{k}{ repeat}(), values(\PY{l+s}{\PYZdq{}}\PY{l+s}{n}\PY{l+s}{o}\PY{l+s}{n}\PY{l+s}{e}\PY{l+s}{\PYZdq{}})
+        \PY{k}{qui}\PY{k}{ replace} z\PYZus{}zip = \PY{l+s}{\PYZdq{}}\PY{l+s}{h}\PY{l+s}{a}\PY{l+s}{l}\PY{l+s}{f}\PY{l+s}{\PYZdq{}}\PY{k}{ in} \PY{l+m}{6218}\PY{o}{/}\PY{l+m}{12482}
+        \PY{k}{qui}\PY{k}{ replace} z\PYZus{}zip = \PY{l+s}{\PYZdq{}}\PY{l+s}{a}\PY{l+s}{l}\PY{l+s}{l}\PY{l+s}{\PYZdq{}}\PY{k}{ in} \PY{l+m}{12483}\PY{o}{/}\PY{l+m}{18859}
+        
+        \PY{k}{qui}\PY{k}{ egen} Y = fill(\PY{l+m}{1},\PY{l+m}{1})
+        \PY{k}{qui}\PY{k}{ replace} Y=\PY{l+m}{0}\PY{k}{ in} \PY{l+m}{1022}\PY{o}{/}\PY{l+m}{6217}
+        \PY{k}{qui}\PY{k}{ replace} Y = \PY{l+m}{0}\PY{k}{ in} \PY{l+m}{6744}\PY{o}{/}\PY{l+m}{9533}
+        \PY{k}{qui}\PY{k}{ replace} Y=\PY{l+m}{0}\PY{k}{ in} \PY{l+m}{10154}\PY{o}{/}\PY{l+m}{12482}
+        \PY{k}{qui}\PY{k}{ replace} Y=\PY{l+m}{0}\PY{k}{ in} \PY{l+m}{13799}\PY{o}{/}\PY{l+m}{18859}
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}2}]:} \PY{k}{qui}\PY{k}{ mean} Y\PY{k}{ if} z\PYZus{}ind\PY{o}{==}\PY{l+m}{1} \PY{o}{\PYZam{}} z\PYZus{}zip\PY{o}{==}\PY{l+s}{\PYZdq{}}\PY{l+s}{h}\PY{l+s}{a}\PY{l+s}{l}\PY{l+s}{f}\PY{l+s}{\PYZdq{}}
+        \PY{k}{scalar} ate\PYZus{}treat\PYZus{}half = \PYZus{}b[Y]
+        \PY{k}{qui}\PY{k}{ mean} Y\PY{k}{ if} z\PYZus{}ind\PY{o}{==}\PY{l+m}{0} \PY{o}{\PYZam{}} z\PYZus{}zip\PY{o}{==}\PY{l+s}{\PYZdq{}}\PY{l+s}{h}\PY{l+s}{a}\PY{l+s}{l}\PY{l+s}{f}\PY{l+s}{\PYZdq{}}
+        \PY{k}{scalar} ate\PYZus{}untreat\PYZus{}half = \PYZus{}b[Y]
+        \PY{k}{qui}\PY{k}{ mean} Y\PY{k}{ if} z\PYZus{}ind\PY{o}{==}\PY{l+m}{0} \PY{o}{\PYZam{}} z\PYZus{}zip\PY{o}{==}\PY{l+s}{\PYZdq{}}\PY{l+s}{n}\PY{l+s}{o}\PY{l+s}{n}\PY{l+s}{e}\PY{l+s}{\PYZdq{}}
+        \PY{k}{scalar} ate\PYZus{}untreat\PYZus{}none = \PYZus{}b[Y]
+        \PY{k}{qui}\PY{k}{ mean} Y\PY{k}{ if} z\PYZus{}ind\PY{o}{==}\PY{l+m}{1} \PY{o}{\PYZam{}} z\PYZus{}zip\PY{o}{==}\PY{l+s}{\PYZdq{}}\PY{l+s}{a}\PY{l+s}{l}\PY{l+s}{l}\PY{l+s}{\PYZdq{}}
+        \PY{k}{scalar} ate\PYZus{}treat\PYZus{}all = \PYZus{}b[Y]
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}3}]:} \PY{c+c1}{//}\PY{c+c1}{ }\PY{c+c1}{a}\PY{c+c1}{t}\PY{c+c1}{e}\PY{c+c1}{.}\PY{c+c1}{f}\PY{c+c1}{r}\PY{c+c1}{i}\PY{c+c1}{s}\PY{c+c1}{t}\PY{c+c1}{h}\PY{c+c1}{a}\PY{c+c1}{n}\PY{c+c1}{d}\PY{c+c1}{.}\PY{c+c1}{h}\PY{c+c1}{a}\PY{c+c1}{l}\PY{c+c1}{f}
+        \PY{k}{disp} ate\PYZus{}treat\PYZus{}half \PY{o}{\PYZhy{}} ate\PYZus{}untreat\PYZus{}half
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+.05161591
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}4}]:} \PY{c+c1}{//}\PY{c+c1}{ }\PY{c+c1}{a}\PY{c+c1}{t}\PY{c+c1}{e}\PY{c+c1}{.}\PY{c+c1}{s}\PY{c+c1}{e}\PY{c+c1}{c}\PY{c+c1}{o}\PY{c+c1}{n}\PY{c+c1}{d}\PY{c+c1}{h}\PY{c+c1}{a}\PY{c+c1}{n}\PY{c+c1}{f}\PY{c+c1}{.}\PY{c+c1}{u}\PY{c+c1}{n}\PY{c+c1}{t}\PY{c+c1}{r}\PY{c+c1}{e}\PY{c+c1}{a}\PY{c+c1}{t}\PY{c+c1}{e}\PY{c+c1}{d}
+        \PY{k}{disp} ate\PYZus{}untreat\PYZus{}half \PY{o}{\PYZhy{}} ate\PYZus{}untreat\PYZus{}none
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+-.00560227
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}5}]:} \PY{c+c1}{//}\PY{c+c1}{ }\PY{c+c1}{a}\PY{c+c1}{t}\PY{c+c1}{e}\PY{c+c1}{.}\PY{c+c1}{s}\PY{c+c1}{e}\PY{c+c1}{c}\PY{c+c1}{o}\PY{c+c1}{n}\PY{c+c1}{d}\PY{c+c1}{h}\PY{c+c1}{a}\PY{c+c1}{n}\PY{c+c1}{d}\PY{c+c1}{.}\PY{c+c1}{t}\PY{c+c1}{r}\PY{c+c1}{e}\PY{c+c1}{a}\PY{c+c1}{t}\PY{c+c1}{e}\PY{c+c1}{d}
+        \PY{k}{disp} ate\PYZus{}treat\PYZus{}all \PY{o}{\PYZhy{}} ate\PYZus{}treat\PYZus{}half
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+-.00387413
+    \end{Verbatim}
 \end{kframe}
 \end{knitrout}
 
@@ -312,21 +336,41 @@ Use data from the hotspots experiment in Table 8.4 (these data are also availabl
 \item For the subset of 11 hotspot locations that lie outside the range of possible spillovers, calculate $E[Y_{01} - Y_{00}]$, the ATE of immediate police surveillance.
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlstd{true_ate} \hlkwb{<-} \hlkwd{with}\hlstd{(hotspots,} \hlkwd{mean}\hlstd{(y01[prox500}\hlopt{==}\hlnum{0}\hlstd{])} \hlopt{-} \hlkwd{mean}\hlstd{(y00[prox500}\hlopt{==}\hlnum{0}\hlstd{]))}
-\hlstd{true_ate}
-\end{alltt}
-\begin{verbatim}
-## [1] -5
-\end{verbatim}
-\begin{alltt}
-\hlstd{ate_hat} \hlkwb{<-} \hlkwd{with}\hlstd{(hotspots,} \hlkwd{mean}\hlstd{(y[prox500}\hlopt{==}\hlnum{0} \hlopt{&} \hlstd{assignment}\hlopt{==}\hlnum{1}\hlstd{])} \hlopt{-}
-                  \hlkwd{mean}\hlstd{(y00[prox500}\hlopt{==}\hlnum{0} \hlopt{&} \hlstd{assignment}\hlopt{==}\hlnum{0}\hlstd{]))}
-\hlstd{ate_hat}
-\end{alltt}
-\begin{verbatim}
-## [1] 3.333333
-\end{verbatim}
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}1}]:} \PY{k}{qui} import delimited \PY{l+s}{\PYZdq{}}\PY{l+s}{.}\PY{l+s}{/}\PY{l+s}{d}\PY{l+s}{a}\PY{l+s}{t}\PY{l+s}{a}\PY{l+s}{/}\PY{l+s}{c}\PY{l+s}{h}\PY{l+s}{a}\PY{l+s}{p}\PY{l+s}{t}\PY{l+s}{e}\PY{l+s}{r}\PY{l+s}{0}\PY{l+s}{8}\PY{l+s}{/}\PY{l+s}{G}\PY{l+s}{e}\PY{l+s}{r}\PY{l+s}{b}\PY{l+s}{e}\PY{l+s}{r}\PY{l+s}{G}\PY{l+s}{r}\PY{l+s}{e}\PY{l+s}{e}\PY{l+s}{n}\PY{l+s}{B}\PY{l+s}{o}\PY{l+s}{o}\PY{l+s}{k}\PY{l+s}{\PYZus{}}\PY{l+s}{C}\PY{l+s}{h}\PY{l+s}{a}\PY{l+s}{p}\PY{l+s}{t}\PY{l+s}{e}\PY{l+s}{r}\PY{l+s}{8}\PY{l+s}{\PYZus{}}\PY{l+s}{T}\PY{l+s}{a}\PY{l+s}{b}\PY{l+s}{l}\PY{l+s}{e}\PY{l+s}{\PYZus{}}\PY{l+s}{8}\PY{l+s}{\PYZus{}}\PY{l+s}{4}\PY{l+s}{\PYZus{}}\PY{l+s}{8}\PY{l+s}{\PYZus{}}\PY{l+s}{5}\PY{l+s}{.}\PY{l+s}{c}\PY{l+s}{s}\PY{l+s}{v}\PY{l+s}{\PYZdq{}},\PY{k}{ clear}
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}2}]:} \PY{k}{qui}\PY{k}{ mean} y01\PY{k}{ if} prox500\PY{o}{==}\PY{l+m}{0}
+        \PY{k}{scalar} mean\PYZus{}y01 = \PYZus{}b[y01]
+        \PY{k}{qui}\PY{k}{ mean} y00\PY{k}{ if} prox500\PY{o}{==}\PY{l+m}{0}
+        \PY{k}{scalar} mean\PYZus{}y00 = \PYZus{}b[y00]
+        \PY{k}{scalar} true\PYZus{}ate = mean\PYZus{}y01\PY{o}{\PYZhy{}}mean\PYZus{}y00
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}3}]:} \PY{k}{disp} true\PYZus{}ate
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+-5
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}4}]:} \PY{k}{qui}\PY{k}{ mean} y\PY{k}{ if} prox500\PY{o}{==}\PY{l+m}{0} \PY{o}{\PYZam{}} assignment \PY{o}{==}\PY{l+m}{1}
+        \PY{k}{scalar} mean\PYZus{}y = \PYZus{}b[y]
+        \PY{k}{qui}\PY{k}{ mean} y00\PY{k}{ if} prox500\PY{o}{==}\PY{l+m}{0} \PY{o}{\PYZam{}} assignment\PY{o}{==}\PY{l+m}{0}
+        \PY{k}{scalar} mean\PYZus{}y00\PYZus{}0 = \PYZus{}b[y00]
+        \PY{k}{scalar} ate\PYZus{}hat = mean\PYZus{}y \PY{o}{\PYZhy{}} mean\PYZus{}y00\PYZus{}0
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}5}]:} \PY{k}{disp} ate\PYZus{}hat
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+3.3333333
+    \end{Verbatim}
 \end{kframe}
 \end{knitrout}
 The true ATE for the observations that lie outside the range of possibile spillovers is -5. The estimated ATE using the observed random assignment is 3.33.
@@ -334,57 +378,83 @@ The true ATE for the observations that lie outside the range of possibile spillo
 \item For the remaining 19 hotspot locations that lie within the range of possible spillovers, calculate $E[Y_{01} - Y_{00}]$, $E[Y_{10} - Y_{00}]$, and $E[Y_{11} - Y_{00}]$.
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlstd{true_ate_01} \hlkwb{<-} \hlkwd{with}\hlstd{(hotspots,} \hlkwd{mean}\hlstd{(y01[prox500}\hlopt{==}\hlnum{1}\hlstd{])} \hlopt{-} \hlkwd{mean}\hlstd{(y00[prox500}\hlopt{==}\hlnum{1}\hlstd{]))}
-\hlstd{true_ate_10} \hlkwb{<-} \hlkwd{with}\hlstd{(hotspots,} \hlkwd{mean}\hlstd{(y10[prox500}\hlopt{==}\hlnum{1}\hlstd{])} \hlopt{-} \hlkwd{mean}\hlstd{(y00[prox500}\hlopt{==}\hlnum{1}\hlstd{]))}
-\hlstd{true_ate_11} \hlkwb{<-} \hlkwd{with}\hlstd{(hotspots,} \hlkwd{mean}\hlstd{(y11[prox500}\hlopt{==}\hlnum{1}\hlstd{])} \hlopt{-} \hlkwd{mean}\hlstd{(y00[prox500}\hlopt{==}\hlnum{1}\hlstd{]))}
-\hlstd{true_ate_01}
-\end{alltt}
-\begin{verbatim}
-## [1] -5
-\end{verbatim}
-\begin{alltt}
-\hlstd{true_ate_10}
-\end{alltt}
-\begin{verbatim}
-## [1] 5
-\end{verbatim}
-\begin{alltt}
-\hlstd{true_ate_11}
-\end{alltt}
-\begin{verbatim}
-## [1] -7
-\end{verbatim}
-\begin{alltt}
-\hlstd{hotspots} \hlkwb{<-} \hlkwd{within}\hlstd{(hotspots,\{}
-  \hlstd{exposure[exposure} \hlopt{==} \hlnum{11}\hlstd{]} \hlkwb{<-} \hlstr{"11"}  \hlcom{# Indirect and Direct Treatment}
-  \hlstd{exposure[exposure} \hlopt{==} \hlnum{10}\hlstd{]} \hlkwb{<-} \hlstr{"10"}  \hlcom{# Indirect Treatment}
-  \hlstd{exposure[exposure} \hlopt{==} \hlnum{01}\hlstd{]} \hlkwb{<-} \hlstr{"01"}  \hlcom{# Direct Treatment}
-  \hlstd{exposure[exposure} \hlopt{==} \hlnum{00}\hlstd{]} \hlkwb{<-} \hlstr{"00"}  \hlcom{# Control}
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}6}]:} \PY{k}{qui}\PY{k}{ mean} y01\PY{k}{ if} prox500\PY{o}{==}\PY{l+m}{1}
+        \PY{k}{scalar} mean\PYZus{}y01 = \PYZus{}b[y01]
+        \PY{k}{qui}\PY{k}{ mean} y00\PY{k}{ if} prox500\PY{o}{==}\PY{l+m}{1}
+        \PY{k}{scalar} mean\PYZus{}y00 = \PYZus{}b[y00]
+        \PY{k}{qui}\PY{k}{ mean} y10\PY{k}{ if} prox500\PY{o}{==}\PY{l+m}{1}
+        \PY{k}{scalar} mean\PYZus{}y10 = \PYZus{}b[y10]
+        \PY{k}{qui}\PY{k}{ mean} y11\PY{k}{ if} prox500\PY{o}{==}\PY{l+m}{1}
+        \PY{k}{scalar} mean\PYZus{}y11 = \PYZus{}b[y11]
+\end{Verbatim}
 
-  \hlcom{# Calculate probability of assignment to exposure condition}
-  \hlstd{Q} \hlkwb{<-} \hlnum{NA}
-  \hlstd{Q[exposure} \hlopt{==} \hlstr{"11"}\hlstd{]} \hlkwb{<-} \hlstd{prob11[exposure} \hlopt{==} \hlstr{"11"}\hlstd{]}
-  \hlstd{Q[exposure} \hlopt{==} \hlstr{"10"}\hlstd{]} \hlkwb{<-} \hlstd{prob10[exposure} \hlopt{==} \hlstr{"10"}\hlstd{]}
-  \hlstd{Q[exposure} \hlopt{==} \hlstr{"01"}\hlstd{]} \hlkwb{<-} \hlstd{prob01[exposure} \hlopt{==} \hlstr{"01"}\hlstd{]}
-  \hlstd{Q[exposure} \hlopt{==} \hlstr{"00"}\hlstd{]} \hlkwb{<-} \hlstd{prob00[exposure} \hlopt{==} \hlstr{"00"}\hlstd{]}
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}7}]:} \PY{k}{scalar} true\PYZus{}ate\PYZus{}01 = mean\PYZus{}y01 \PY{o}{\PYZhy{}} mean\PYZus{}y00
+        \PY{k}{scalar} true\PYZus{}ate\PYZus{}10 = mean\PYZus{}y10 \PY{o}{\PYZhy{}} mean\PYZus{}y00
+        \PY{k}{scalar} true\PYZus{}ate\PYZus{}11 = mean\PYZus{}y11 \PY{o}{\PYZhy{}} mean\PYZus{}y00
+\end{Verbatim}
 
-  \hlcom{# Generate weights}
-  \hlstd{weights} \hlkwb{<-} \hlnum{1}\hlopt{/}\hlstd{Q}
-\hlstd{\})}
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}8}]:} \PY{k}{disp}  true\PYZus{}ate\PYZus{}01
+\end{Verbatim}
 
-\hlcom{# Estimate E[Y_\{01\} - Y_\{00\}]:}
-\hlstd{fit.01} \hlkwb{<-} \hlkwd{lm}\hlstd{(y} \hlopt{~} \hlstd{exposure,} \hlkwc{weights}\hlstd{=weights,}
-             \hlkwd{subset}\hlstd{(hotspots, prox500} \hlopt{>} \hlnum{0} \hlopt{&} \hlstd{exposure} \hlopt{%in%} \hlkwd{c}\hlstd{(}\hlstr{"00"}\hlstd{,} \hlstr{"01"}\hlstd{)))}
+    \begin{Verbatim}[commandchars=\\\{\}]
+-5
+    \end{Verbatim}
 
-\hlcom{# Estimate E[Y_\{10\} - Y_\{00\}]:}
-\hlstd{fit.10} \hlkwb{<-} \hlkwd{lm}\hlstd{(y} \hlopt{~} \hlstd{exposure,} \hlkwc{weights}\hlstd{=weights,}
-             \hlkwd{subset}\hlstd{(hotspots, prox500} \hlopt{>} \hlnum{0} \hlopt{&} \hlstd{exposure} \hlopt{%in%} \hlkwd{c}\hlstd{(}\hlstr{"00"}\hlstd{,} \hlstr{"10"}\hlstd{)))}
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}9}]:} \PY{k}{disp}  true\PYZus{}ate\PYZus{}10
+\end{Verbatim}
 
-\hlcom{# Estimate E[Y_\{11\} - Y_\{00\}]:}
-\hlstd{fit.11} \hlkwb{<-} \hlkwd{lm}\hlstd{(y} \hlopt{~} \hlstd{exposure,} \hlkwc{weights}\hlstd{=weights,}
-             \hlkwd{subset}\hlstd{(hotspots, prox500} \hlopt{>} \hlnum{0} \hlopt{&} \hlstd{exposure} \hlopt{%in%} \hlkwd{c}\hlstd{(}\hlstr{"00"}\hlstd{,} \hlstr{"11"}\hlstd{)))}
-\end{alltt}
+    \begin{Verbatim}[commandchars=\\\{\}]
+5
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}10}]:} \PY{k}{disp}  true\PYZus{}ate\PYZus{}11
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+-7
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}11}]:} \PY{k}{qui}\PY{k}{ gen}\PY{k}{ q} =.
+         \PY{k}{qui}\PY{k}{ replace}\PY{k}{ q}=prob10\PY{k}{ if} exposure\PY{o}{==}\PY{l+m}{10}
+         \PY{k}{qui}\PY{k}{ replace}\PY{k}{ q}=prob11\PY{k}{ if} exposure\PY{o}{==}\PY{l+m}{11}
+         \PY{k}{qui}\PY{k}{ replace}\PY{k}{ q}=prob01\PY{k}{ if} exposure\PY{o}{==}\PY{l+m}{01}
+         \PY{k}{qui}\PY{k}{ replace}\PY{k}{ q}=prob00\PY{k}{ if} exposure\PY{o}{==}\PY{l+m}{00}
+         \PY{k}{qui}\PY{k}{ gen} weights = \PY{l+m}{1}\PY{o}{/}q
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}12}]:} \PY{c+c1}{//}\PY{c+c1}{ }\PY{c+c1}{f}\PY{c+c1}{i}\PY{c+c1}{t}\PY{c+c1}{.}\PY{c+c1}{0}\PY{c+c1}{1}
+         \PY{k}{qui}\PY{k}{ regress} y i\PY{l+m}{.}exposure\PY{k}{ if} \PY{c+cs}{///}\PY{c+cs}{ }
+         prox500\PY{o}{\PYZgt{}}\PY{l+m}{0} \PY{o}{\PYZam{}} (exposure\PY{o}{==}\PY{l+m}{0} | exposure\PY{o}{==}\PY{l+m}{1}) [aweight=weights]
+         \PY{k}{estimates} store m1, title(Model \PY{l+m}{1})
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}13}]:} \PY{c+c1}{//}\PY{c+c1}{ }\PY{c+c1}{f}\PY{c+c1}{i}\PY{c+c1}{t}\PY{c+c1}{.}\PY{c+c1}{1}\PY{c+c1}{0}
+         \PY{k}{qui}\PY{k}{ regress} y i\PY{l+m}{.}exposure\PY{k}{ if} \PY{c+cs}{///}
+         prox500\PY{o}{\PYZgt{}}\PY{l+m}{0} \PY{o}{\PYZam{}} (exposure\PY{o}{==}\PY{l+m}{0} | exposure\PY{o}{==}\PY{l+m}{10}) [pweight=weights]
+         \PY{k}{estimates} store m2, title(Model \PY{l+m}{2})
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}14}]:} \PY{c+c1}{//}\PY{c+c1}{ }\PY{c+c1}{f}\PY{c+c1}{i}\PY{c+c1}{t}\PY{c+c1}{.}\PY{c+c1}{1}\PY{c+c1}{1}
+         \PY{k}{qui}\PY{k}{ regress} y i\PY{l+m}{.}exposure\PY{k}{ if} \PY{c+cs}{///}
+         prox500\PY{o}{\PYZgt{}}\PY{l+m}{0} \PY{o}{\PYZam{}} (exposure\PY{o}{==}\PY{l+m}{0} | exposure\PY{o}{==}\PY{l+m}{11}) [pweight=weights]
+         \PY{k}{estimates} store m3, title(Model \PY{l+m}{3})
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}15}]:} estout m1 m2 m3, \PY{c+cs}{///}
+         cells(b(star fmt(\PY{l+m}{3}))\PY{k}{ se}(par fmt(\PY{l+m}{3}))) \PY{c+cs}{///}
+         legend\PY{k}{ label} varlabels(\PYZus{}cons Constant) \PY{c+cs}{///}
+         stats(N r2)
+\end{Verbatim}
 \end{kframe}
 \end{knitrout}
 
@@ -425,33 +495,40 @@ By comparing weighted averages, with weights equal to the inverse of the probabi
 
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlstd{hotspot_nonexp} \hlkwb{<-} \hlkwd{within}\hlstd{(hotspot_nonexp,\{}
-  \hlstd{exposure[exposure}\hlopt{==}\hlnum{10}\hlstd{]} \hlkwb{<-} \hlstr{"10"}
-  \hlstd{exposure[exposure}\hlopt{==}\hlnum{0}\hlstd{]} \hlkwb{<-} \hlstr{"00"}
+   \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}16}]:} \PY{k}{clear}
+         \PY{k}{qui} import delimited \PY{l+s}{\PYZdq{}}\PY{l+s}{.}\PY{l+s}{/}\PY{l+s}{d}\PY{l+s}{a}\PY{l+s}{t}\PY{l+s}{a}\PY{l+s}{/}\PY{l+s}{c}\PY{l+s}{h}\PY{l+s}{a}\PY{l+s}{p}\PY{l+s}{t}\PY{l+s}{e}\PY{l+s}{r}\PY{l+s}{0}\PY{l+s}{8}\PY{l+s}{/}\PY{l+s}{G}\PY{l+s}{e}\PY{l+s}{r}\PY{l+s}{b}\PY{l+s}{e}\PY{l+s}{r}\PY{l+s}{G}\PY{l+s}{r}\PY{l+s}{e}\PY{l+s}{e}\PY{l+s}{n}\PY{l+s}{B}\PY{l+s}{o}\PY{l+s}{o}\PY{l+s}{k}\PY{l+s}{\PYZus{}}\PY{l+s}{C}\PY{l+s}{h}\PY{l+s}{a}\PY{l+s}{p}\PY{l+s}{t}\PY{l+s}{e}\PY{l+s}{r}\PY{l+s}{8}\PY{l+s}{\PYZus{}}\PY{l+s}{E}\PY{l+s}{x}\PY{l+s}{e}\PY{l+s}{r}\PY{l+s}{c}\PY{l+s}{i}\PY{l+s}{s}\PY{l+s}{e}\PY{l+s}{\PYZus{}}\PY{l+s}{9}\PY{l+s}{c}\PY{l+s}{.}\PY{l+s}{c}\PY{l+s}{s}\PY{l+s}{v}\PY{l+s}{\PYZdq{}},\PY{k}{ clear}
+\end{Verbatim}
 
-  \hlstd{Q} \hlkwb{<-} \hlnum{NA}
-  \hlstd{Q[exposure}\hlopt{==}\hlstr{"10"}\hlstd{]} \hlkwb{<-} \hlstd{prob10[exposure}\hlopt{==}\hlstr{"10"}\hlstd{]}
-  \hlstd{Q[exposure}\hlopt{==}\hlstr{"00"}\hlstd{]} \hlkwb{<-} \hlstd{prob00[exposure}\hlopt{==}\hlstr{"00"}\hlstd{]}
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}17}]:} \PY{k}{qui}\PY{k}{ gen}\PY{k}{ q}=.
+         \PY{k}{qui}\PY{k}{ replace}\PY{k}{ q}=prob10\PY{k}{ if} exposure\PY{o}{==}\PY{l+m}{10}
+         \PY{k}{qui}\PY{k}{ replace}\PY{k}{ q}=prob00\PY{k}{ if} exposure\PY{o}{==}\PY{l+m}{0}
+         \PY{k}{qui}\PY{k}{ gen} weights = \PY{l+m}{1}\PY{o}{/}q
+\end{Verbatim}
 
-  \hlstd{weights} \hlkwb{<-} \hlnum{1}\hlopt{/}\hlstd{Q}
-  \hlstd{\})}
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}18}]:} \PY{k}{regress} y i\PY{l+m}{.}exposure\PY{k}{ if} (prob10\PY{o}{\PYZgt{}}\PY{l+m}{0}) \PY{o}{\PYZam{}} (prob10\PY{o}{\PYZlt{}}\PY{l+m}{1}) [pweight=weights]
+\end{Verbatim}
 
-\hlstd{fit.nonexp} \hlkwb{<-} \hlkwd{lm}\hlstd{(y} \hlopt{~} \hlstd{exposure,} \hlkwc{weights}\hlstd{=weights,}
-                 \hlkwc{data}\hlstd{=}\hlkwd{subset}\hlstd{(hotspot_nonexp, prob10} \hlopt{>} \hlnum{0} \hlopt{&} \hlstd{prob10} \hlopt{<} \hlnum{1}\hlstd{))}
+    \begin{Verbatim}[commandchars=\\\{\}]
+(sum of wgt is   1.5089e+02)
 
-\hlstd{fit.nonexp}
-\end{alltt}
-\begin{verbatim}
-## 
-## Call:
-## lm(formula = y ~ exposure, data = subset(hotspot_nonexp, prob10 > 
-##     0 & prob10 < 1), weights = weights)
-## 
-## Coefficients:
-## (Intercept)   exposure10  
-##       4.286        4.602
-\end{verbatim}
+Linear regression                               Number of obs     =         71
+                                                F(1, 69)          =      56.95
+                                                Prob > F          =     0.0000
+                                                R-squared         =     0.5496
+                                                Root MSE          =     2.0976
+
+------------------------------------------------------------------------------
+             |               Robust
+           y |      Coef.   Std. Err.      t    P>|t|     [95\% Conf. Interval]
+-------------+----------------------------------------------------------------
+ 10.exposure |   4.602226   .6098582     7.55   0.000     3.385592     5.81886
+       \_cons |   4.285784   .5233643     8.19   0.000     3.241701    5.329867
+------------------------------------------------------------------------------
+
+    \end{Verbatim}
 \end{kframe}
 \end{knitrout}
  
@@ -514,89 +591,170 @@ Suppose the effect were defined as $Y_i (1)$ and $Y_i (0)$, where the subscript 
 
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlkwd{library}\hlstd{(ri)}
-\hlstd{Y} \hlkwb{<-} \hlstd{hough}\hlopt{$}\hlstd{tetris}
-\hlstd{Z} \hlkwb{<-} \hlstd{hough}\hlopt{$}\hlstd{run}
-\hlstd{N} \hlkwb{<-} \hlkwd{length}\hlstd{(Z)}
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}1}]:} \PY{k}{set}\PY{k}{ more} off
+        \PY{k}{clear}
+        \PY{k}{macro}\PY{k}{ drop} \PYZus{}all
+        \PY{k}{qui} import delim .\PY{o}{/}data\PY{o}{/}chapter08\PY{o}{/}Hough\PYZus{}WorkingPaper\PYZus{}2010,\PY{k}{ clear}
+        \PY{k}{set} seed \PY{l+m}{1234567}
+\end{Verbatim}
 
-\hlcom{# exclude day 1 from analysis}
-\hlstd{Zlag} \hlkwb{<-} \hlkwd{c}\hlstd{(}\hlnum{NA}\hlstd{,Z[}\hlnum{1}\hlopt{:}\hlstd{N}\hlopt{-}\hlnum{1}\hlstd{])}
-\hlstd{Ylag} \hlkwb{<-} \hlkwd{c}\hlstd{(}\hlnum{NA}\hlstd{,Y[}\hlnum{1}\hlopt{:}\hlstd{N}\hlopt{-}\hlnum{1}\hlstd{])}
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}2}]:} \PY{k}{rename} tetris Y
+        \PY{k}{rename}\PY{k}{ run} Z
+        
+        \PY{c+c1}{//}\PY{c+c1}{ }\PY{c+c1}{s}\PY{c+c1}{e}\PY{c+c1}{t}\PY{c+c1}{ }\PY{c+c1}{t}\PY{c+c1}{i}\PY{c+c1}{m}\PY{c+c1}{e}\PY{c+c1}{ }\PY{c+c1}{v}\PY{c+c1}{a}\PY{c+c1}{r}\PY{c+c1}{i}\PY{c+c1}{a}\PY{c+c1}{b}\PY{c+c1}{l}\PY{c+c1}{e}
+        \PY{k}{qui}\PY{k}{ tsset} day
+        \PY{k}{qui}\PY{k}{ gen} Zlag =\PY{k}{ l}\PY{l+m}{.}Z
+        \PY{k}{qui}\PY{k}{ gen} Ylag =\PY{k}{ l}\PY{l+m}{.}Y
+\end{Verbatim}
 
-\hlcom{# simple random assignment based on coin flips}
-\hlstd{randfun} \hlkwb{<-} \hlkwa{function}\hlstd{()} \hlkwd{rbinom}\hlstd{(N,}\hlnum{1}\hlstd{,}\hlnum{.5}\hlstd{)}
-\hlstd{numiter} \hlkwb{<-} \hlnum{10000}
-\hlkwd{set.seed}\hlstd{(}\hlnum{343}\hlstd{)}
-\hlcom{# random assignment follows the custom function "randfun"}
-\hlstd{perms} \hlkwb{<-} \hlkwd{genperms.custom}\hlstd{(}\hlkwc{numiter} \hlstd{= numiter,} \hlkwc{randfun} \hlstd{= randfun)}
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}3}]:} \PY{c+cm}{/*}\PY{c+cm}{\PYZhy{}}\PY{c+cm}{\PYZhy{}}\PY{c+cm}{\PYZhy{}}\PY{c+cm}{\PYZhy{}}\PY{c+cm}{f}\PY{c+cm}{i}\PY{c+cm}{t}\PY{c+cm}{1}\PY{c+cm}{\PYZhy{}}\PY{c+cm}{\PYZhy{}}\PY{c+cm}{\PYZhy{}}\PY{c+cm}{\PYZhy{}}\PY{c+cm}{*/}
+        \PY{k}{qui}\PY{k}{ reg} Y Z
+        \PY{k}{global} fit1 = \PYZus{}b[Z]
+\end{Verbatim}
 
-\hlcom{## note on missing data: the default for LM is NA.omit=TRUE}
-\hlcom{## This default eliminates the first lag, and the two days with missing outcomes}
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}4}]:} \PY{c+cm}{/*}\PY{c+cm}{\PYZhy{}}\PY{c+cm}{\PYZhy{}}\PY{c+cm}{\PYZhy{}}\PY{c+cm}{\PYZhy{}}\PY{c+cm}{f}\PY{c+cm}{i}\PY{c+cm}{t}\PY{c+cm}{2}\PY{c+cm}{\PYZhy{}}\PY{c+cm}{\PYZhy{}}\PY{c+cm}{\PYZhy{}}\PY{c+cm}{\PYZhy{}}\PY{c+cm}{*/}
+        \PY{k}{qui}\PY{k}{ reg} Y Z Zlag
+        \PY{k}{global} fit2=\PY{n+nf}{e}(F)
+\end{Verbatim}
 
-\hlcom{### This code performs the estimation for parts b, c, and d}
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}5}]:} \PY{c+cm}{/*}\PY{c+cm}{\PYZhy{}}\PY{c+cm}{\PYZhy{}}\PY{c+cm}{\PYZhy{}}\PY{c+cm}{\PYZhy{}}\PY{c+cm}{f}\PY{c+cm}{i}\PY{c+cm}{t}\PY{c+cm}{3}\PY{c+cm}{\PYZhy{}}\PY{c+cm}{\PYZhy{}}\PY{c+cm}{\PYZhy{}}\PY{c+cm}{\PYZhy{}}\PY{c+cm}{*/}
+        \PY{k}{qui}\PY{k}{ reg} Ylag Z
+        \PY{k}{global} fit3=\PYZus{}b[Z]
+\end{Verbatim}
 
-\hlstd{fit1} \hlkwb{<-} \hlkwd{lm}\hlstd{(Y} \hlopt{~} \hlstd{Z)}\hlopt{$}\hlstd{coefficients[}\hlstr{"Z"}\hlstd{]}               \hlcom{# regress Y on current Z}
-\hlstd{fit2} \hlkwb{<-} \hlkwd{summary}\hlstd{(}\hlkwd{lm}\hlstd{(Y} \hlopt{~} \hlstd{Z} \hlopt{+} \hlstd{Zlag))}\hlopt{$}\hlstd{fstatistic[}\hlnum{1}\hlstd{]}   \hlcom{# regress Y on current and lagged Z}
-\hlstd{fit3} \hlkwb{<-} \hlkwd{lm}\hlstd{(Ylag} \hlopt{~} \hlstd{Z)}\hlopt{$}\hlstd{coefficients[}\hlstr{"Z"}\hlstd{]}            \hlcom{# placebo fit: regress lagged Y on Z}
-\hlstd{fit4} \hlkwb{<-} \hlkwd{lm}\hlstd{(hough}\hlopt{$}\hlstd{energy} \hlopt{~} \hlstd{Z)}\hlopt{$}\hlstd{coefficients[}\hlstr{"Z"}\hlstd{]}    \hlcom{# consider current Z's effects on energy}
-\hlstd{fit5} \hlkwb{<-} \hlkwd{lm}\hlstd{(hough}\hlopt{$}\hlstd{gre} \hlopt{~} \hlstd{Z)}\hlopt{$}\hlstd{coefficients[}\hlstr{"Z"}\hlstd{]}       \hlcom{# consider current Z's effects on GRE}
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}6}]:} \PY{c+cm}{/*}\PY{c+cm}{\PYZhy{}}\PY{c+cm}{\PYZhy{}}\PY{c+cm}{\PYZhy{}}\PY{c+cm}{\PYZhy{}}\PY{c+cm}{f}\PY{c+cm}{i}\PY{c+cm}{t}\PY{c+cm}{4}\PY{c+cm}{\PYZhy{}}\PY{c+cm}{\PYZhy{}}\PY{c+cm}{\PYZhy{}}\PY{c+cm}{\PYZhy{}}\PY{c+cm}{*/}
+        \PY{k}{qui}\PY{k}{ reg} energy Z
+        \PY{k}{global} fit4=\PYZus{}b[Z]
+\end{Verbatim}
 
-\hlcom{# initialize the five vectors of results}
-\hlstd{dist1} \hlkwb{<-} \hlstd{dist2} \hlkwb{<-} \hlstd{dist3} \hlkwb{<-} \hlstd{dist4} \hlkwb{<-} \hlstd{dist5} \hlkwb{<-} \hlkwd{rep}\hlstd{(}\hlnum{NA}\hlstd{,numiter)}
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}7}]:} \PY{c+cm}{/*}\PY{c+cm}{\PYZhy{}}\PY{c+cm}{\PYZhy{}}\PY{c+cm}{\PYZhy{}}\PY{c+cm}{\PYZhy{}}\PY{c+cm}{f}\PY{c+cm}{i}\PY{c+cm}{t}\PY{c+cm}{5}\PY{c+cm}{\PYZhy{}}\PY{c+cm}{\PYZhy{}}\PY{c+cm}{\PYZhy{}}\PY{c+cm}{\PYZhy{}}\PY{c+cm}{*/}
+        \PY{k}{qui}\PY{k}{ reg} gre Z
+        \PY{k}{global} fit5=\PYZus{}b[Z]
+\end{Verbatim}
 
-\hlkwa{for} \hlstd{(i} \hlkwa{in} \hlnum{1}\hlopt{:}\hlstd{numiter) \{}
-  \hlstd{Zri} \hlkwb{<-} \hlstd{perms[,i]}
-  \hlstd{Zlagri} \hlkwb{<-} \hlkwd{c}\hlstd{(}\hlnum{NA}\hlstd{, Zri[}\hlnum{1}\hlopt{:}\hlstd{N} \hlopt{-} \hlnum{1}\hlstd{])} \hlcom{# exclude day 1 from analysis}
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}8}]:} \PY{k}{cap}\PY{k}{ program}\PY{k}{ drop} coeff\PYZus{}Z
+        \PY{k}{program} define coeff\PYZus{}Z, rclass
+        \PY{k}{	args} Y
+        \PY{k}{	tempvar} rannum Zri
+        \PY{k}{	gen} \PY{n+nv}{`}\PY{n+nv}{r}\PY{n+nv}{a}\PY{n+nv}{n}\PY{n+nv}{n}\PY{n+nv}{u}\PY{n+nv}{m}\PY{n+nv}{\PYZsq{}} = \PY{n+nf}{uniform}()
+        \PY{k}{	egen} \PY{n+nv}{`}\PY{n+nv}{Z}\PY{n+nv}{r}\PY{n+nv}{i}\PY{n+nv}{\PYZsq{}} = cut(\PY{n+nv}{`}\PY{n+nv}{r}\PY{n+nv}{a}\PY{n+nv}{n}\PY{n+nv}{n}\PY{n+nv}{u}\PY{n+nv}{m}\PY{n+nv}{\PYZsq{}}), \PY{n+nf}{group}(\PY{l+m}{2})
+        \PY{k}{	qui}\PY{k}{ reg} \PY{n+nv}{`}\PY{n+nv}{Y}\PY{n+nv}{\PYZsq{}} \PY{n+nv}{`}\PY{n+nv}{Z}\PY{n+nv}{r}\PY{n+nv}{i}\PY{n+nv}{\PYZsq{}}
+        \PY{k}{	return}\PY{k}{ scalar} coef\PYZus{}Z = \PYZus{}b[\PY{n+nv}{`}\PY{n+nv}{Z}\PY{n+nv}{r}\PY{n+nv}{i}\PY{n+nv}{\PYZsq{}}]
+        end
+\end{Verbatim}
 
-  \hlstd{dist1[i]} \hlkwb{<-} \hlkwd{lm}\hlstd{(Y} \hlopt{~} \hlstd{Zri)}\hlopt{$}\hlstd{coefficients[}\hlstr{"Zri"}\hlstd{]}
-  \hlstd{dist2[i]} \hlkwb{<-} \hlkwd{summary}\hlstd{(}\hlkwd{lm}\hlstd{(Y} \hlopt{~} \hlstd{Zri} \hlopt{+} \hlstd{Zlagri))}\hlopt{$}\hlstd{fstatistic[}\hlnum{1}\hlstd{]}
-  \hlstd{dist3[i]} \hlkwb{<-} \hlkwd{lm}\hlstd{(Ylag} \hlopt{~} \hlstd{Zri)}\hlopt{$}\hlstd{coefficients[}\hlstr{"Zri"}\hlstd{]}
-  \hlstd{dist4[i]} \hlkwb{<-} \hlkwd{lm}\hlstd{(hough}\hlopt{$}\hlstd{energy} \hlopt{~} \hlstd{Zri)}\hlopt{$}\hlstd{coefficients[}\hlstr{"Zri"}\hlstd{]}
-  \hlstd{dist5[i]} \hlkwb{<-} \hlkwd{lm}\hlstd{(hough}\hlopt{$}\hlstd{gre} \hlopt{~} \hlstd{Zri)}\hlopt{$}\hlstd{coefficients[}\hlstr{"Zri"}\hlstd{]}
-        \hlstd{\}}
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}9}]:} \PY{k}{cap}\PY{k}{ program}\PY{k}{ drop} F\PYZus{}stat
+        \PY{k}{program} define F\PYZus{}stat, rclass
+        \PY{k}{	args} Y day
+        \PY{k}{	tsset} \PY{n+nv}{`}\PY{n+nv}{d}\PY{n+nv}{a}\PY{n+nv}{y}\PY{n+nv}{\PYZsq{}}
+        \PY{k}{	tempvar} rannum Zri
+        \PY{k}{	gen} \PY{n+nv}{`}\PY{n+nv}{r}\PY{n+nv}{a}\PY{n+nv}{n}\PY{n+nv}{n}\PY{n+nv}{u}\PY{n+nv}{m}\PY{n+nv}{\PYZsq{}} = \PY{n+nf}{uniform}()
+        \PY{k}{	egen} \PY{n+nv}{`}\PY{n+nv}{Z}\PY{n+nv}{r}\PY{n+nv}{i}\PY{n+nv}{\PYZsq{}} = cut(\PY{n+nv}{`}\PY{n+nv}{r}\PY{n+nv}{a}\PY{n+nv}{n}\PY{n+nv}{n}\PY{n+nv}{u}\PY{n+nv}{m}\PY{n+nv}{\PYZsq{}}), \PY{n+nf}{group}(\PY{l+m}{2})
+        \PY{k}{	qui}\PY{k}{ reg} \PY{n+nv}{`}\PY{n+nv}{Y}\PY{n+nv}{\PYZsq{}} \PY{n+nv}{`}\PY{n+nv}{Z}\PY{n+nv}{r}\PY{n+nv}{i}\PY{n+nv}{\PYZsq{}}\PY{k}{ l}.\PY{n+nv}{`}\PY{n+nv}{Z}\PY{n+nv}{r}\PY{n+nv}{i}\PY{n+nv}{\PYZsq{}}
+        \PY{k}{	return}\PY{k}{ scalar} fstat =\PY{k}{ e}(F)
+        end
+\end{Verbatim}
 
-\hlkwd{mean}\hlstd{(dist1} \hlopt{>=} \hlstd{fit1)}      \hlcom{# one-tailed p-value: does running increase Tetris scores}
-\end{alltt}
-\begin{verbatim}
-## [1] 0.0068
-\end{verbatim}
-\begin{alltt}
-\hlkwd{mean}\hlstd{(dist2} \hlopt{>=} \hlstd{fit2)}      \hlcom{# one-tailed p-value: does running increase Tetris scores}
-\end{alltt}
-\begin{verbatim}
-## [1] 0.019
-\end{verbatim}
-\begin{alltt}
-\hlkwd{mean}\hlstd{(}\hlkwd{abs}\hlstd{(dist3)} \hlopt{>=} \hlkwd{abs}\hlstd{(fit3))}  \hlcom{# two-tailed p-value: placebo fit}
-\end{alltt}
-\begin{verbatim}
-## [1] 0.8994
-\end{verbatim}
-\begin{alltt}
-\hlkwd{mean}\hlstd{(dist4} \hlopt{>=} \hlstd{fit4)}      \hlcom{# one-tailed p-value: does running improve energy}
-\end{alltt}
-\begin{verbatim}
-## [1] 0.4563
-\end{verbatim}
-\begin{alltt}
-\hlkwd{mean}\hlstd{(dist5} \hlopt{>=} \hlstd{fit5)}      \hlcom{# one-tailed p-value: does running improve GRE}
-\end{alltt}
-\begin{verbatim}
-## [1] 0.8164
-\end{verbatim}
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}10}]:} \PY{c+cm}{/*}\PY{c+cm}{\PYZhy{}}\PY{c+cm}{\PYZhy{}}\PY{c+cm}{\PYZhy{}}\PY{c+cm}{\PYZhy{}}\PY{c+cm}{ }\PY{c+cm}{d}\PY{c+cm}{i}\PY{c+cm}{s}\PY{c+cm}{t}\PY{c+cm}{1}\PY{c+cm}{ }\PY{c+cm}{\PYZhy{}}\PY{c+cm}{\PYZhy{}}\PY{c+cm}{\PYZhy{}}\PY{c+cm}{\PYZhy{}}\PY{c+cm}{*/}
+         \PY{k}{preserve}	
+         \PY{k}{simulate}  coef\PYZus{}Z=\PY{n+nf}{r}(coef\PYZus{}Z), reps(\PY{l+m}{10000}) nodots: coeff\PYZus{}Z Y	
+         \PY{k}{qui}\PY{k}{ count}\PY{k}{ if} coef\PYZus{}Z \PY{o}{\PYZgt{}=} \PY{n+nv+vg}{\PYZdl{}}\PY{n+nv+vg}{fit1}
+         
+         \PY{c+c1}{//}\PY{c+c1}{ }\PY{c+c1}{o}\PY{c+c1}{n}\PY{c+c1}{e}\PY{c+c1}{\PYZhy{}}\PY{c+c1}{t}\PY{c+c1}{a}\PY{c+c1}{i}\PY{c+c1}{l}\PY{c+c1}{e}\PY{c+c1}{d}\PY{c+c1}{ }\PY{c+c1}{p}\PY{c+c1}{\PYZhy{}}\PY{c+c1}{v}\PY{c+c1}{a}\PY{c+c1}{l}\PY{c+c1}{u}\PY{c+c1}{e}\PY{c+c1}{:}\PY{c+c1}{ }\PY{c+c1}{d}\PY{c+c1}{o}\PY{c+c1}{e}\PY{c+c1}{s}\PY{c+c1}{ }\PY{c+c1}{r}\PY{c+c1}{u}\PY{c+c1}{n}\PY{c+c1}{n}\PY{c+c1}{i}\PY{c+c1}{n}\PY{c+c1}{g}\PY{c+c1}{ }\PY{c+c1}{i}\PY{c+c1}{n}\PY{c+c1}{c}\PY{c+c1}{r}\PY{c+c1}{e}\PY{c+c1}{a}\PY{c+c1}{s}\PY{c+c1}{e}\PY{c+c1}{ }\PY{c+c1}{T}\PY{c+c1}{e}\PY{c+c1}{t}\PY{c+c1}{r}\PY{c+c1}{i}\PY{c+c1}{s}\PY{c+c1}{ }\PY{c+c1}{s}\PY{c+c1}{c}\PY{c+c1}{o}\PY{c+c1}{r}\PY{c+c1}{e}\PY{c+c1}{s}
+         \PY{c+c1}{//}\PY{c+c1}{ }\PY{c+c1}{m}\PY{c+c1}{e}\PY{c+c1}{a}\PY{c+c1}{n}\PY{c+c1}{(}\PY{c+c1}{d}\PY{c+c1}{i}\PY{c+c1}{s}\PY{c+c1}{t}\PY{c+c1}{1}\PY{c+c1}{ }\PY{c+c1}{\PYZgt{}}\PY{c+c1}{=}\PY{c+c1}{ }\PY{c+c1}{f}\PY{c+c1}{i}\PY{c+c1}{t}\PY{c+c1}{1}\PY{c+c1}{)}\PY{c+c1}{ }
+         \PY{k}{disp} \PY{n+nf}{r}(N)\PY{o}{/}\PYZus{}N
+         \PY{k}{restore}
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+.004
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}11}]:} \PY{c+cm}{/*}\PY{c+cm}{\PYZhy{}}\PY{c+cm}{\PYZhy{}}\PY{c+cm}{\PYZhy{}}\PY{c+cm}{\PYZhy{}}\PY{c+cm}{ }\PY{c+cm}{d}\PY{c+cm}{i}\PY{c+cm}{s}\PY{c+cm}{t}\PY{c+cm}{2}\PY{c+cm}{ }\PY{c+cm}{\PYZhy{}}\PY{c+cm}{\PYZhy{}}\PY{c+cm}{\PYZhy{}}\PY{c+cm}{\PYZhy{}}\PY{c+cm}{*/}
+         \PY{k}{preserve}	
+         \PY{k}{simulate}  fstat=\PY{n+nf}{r}(fstat), reps(\PY{l+m}{10000}) nodots: F\PYZus{}stat Y day
+         \PY{k}{qui}\PY{k}{ count}\PY{k}{ if} fstat \PY{o}{\PYZgt{}=} \PY{n+nv+vg}{\PYZdl{}}\PY{n+nv+vg}{fit2}
+         
+         \PY{c+c1}{//}\PY{c+c1}{ }\PY{c+c1}{o}\PY{c+c1}{n}\PY{c+c1}{e}\PY{c+c1}{\PYZhy{}}\PY{c+c1}{t}\PY{c+c1}{a}\PY{c+c1}{i}\PY{c+c1}{l}\PY{c+c1}{e}\PY{c+c1}{d}\PY{c+c1}{ }\PY{c+c1}{p}\PY{c+c1}{\PYZhy{}}\PY{c+c1}{v}\PY{c+c1}{a}\PY{c+c1}{l}\PY{c+c1}{u}\PY{c+c1}{e}\PY{c+c1}{:}\PY{c+c1}{ }\PY{c+c1}{d}\PY{c+c1}{o}\PY{c+c1}{e}\PY{c+c1}{s}\PY{c+c1}{ }\PY{c+c1}{r}\PY{c+c1}{u}\PY{c+c1}{n}\PY{c+c1}{n}\PY{c+c1}{i}\PY{c+c1}{n}\PY{c+c1}{g}\PY{c+c1}{ }\PY{c+c1}{i}\PY{c+c1}{n}\PY{c+c1}{c}\PY{c+c1}{r}\PY{c+c1}{e}\PY{c+c1}{a}\PY{c+c1}{s}\PY{c+c1}{e}\PY{c+c1}{ }\PY{c+c1}{T}\PY{c+c1}{e}\PY{c+c1}{t}\PY{c+c1}{r}\PY{c+c1}{i}\PY{c+c1}{s}\PY{c+c1}{ }\PY{c+c1}{s}\PY{c+c1}{c}\PY{c+c1}{o}\PY{c+c1}{r}\PY{c+c1}{e}\PY{c+c1}{s}
+         \PY{c+cm}{/*}\PY{c+cm}{ }\PY{c+cm}{m}\PY{c+cm}{e}\PY{c+cm}{a}\PY{c+cm}{n}\PY{c+cm}{(}\PY{c+cm}{d}\PY{c+cm}{i}\PY{c+cm}{s}\PY{c+cm}{t}\PY{c+cm}{2}\PY{c+cm}{ }\PY{c+cm}{\PYZgt{}}\PY{c+cm}{=}\PY{c+cm}{ }\PY{c+cm}{f}\PY{c+cm}{i}\PY{c+cm}{t}\PY{c+cm}{2}\PY{c+cm}{)}\PY{c+cm}{ }\PY{c+cm}{*/}
+         \PY{k}{disp} \PY{n+nf}{r}(N)\PY{o}{/}\PYZus{}N
+         \PY{k}{restore}
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+.0146
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}12}]:} \PY{c+cm}{/*}\PY{c+cm}{\PYZhy{}}\PY{c+cm}{\PYZhy{}}\PY{c+cm}{\PYZhy{}}\PY{c+cm}{\PYZhy{}}\PY{c+cm}{ }\PY{c+cm}{d}\PY{c+cm}{i}\PY{c+cm}{s}\PY{c+cm}{t}\PY{c+cm}{3}\PY{c+cm}{ }\PY{c+cm}{\PYZhy{}}\PY{c+cm}{\PYZhy{}}\PY{c+cm}{\PYZhy{}}\PY{c+cm}{\PYZhy{}}\PY{c+cm}{*/}
+         \PY{k}{preserve}	
+         \PY{k}{simulate}  coef\PYZus{}Z=\PY{n+nf}{r}(coef\PYZus{}Z), reps(\PY{l+m}{10000}) nodots: coeff\PYZus{}Z Ylag
+         \PY{k}{qui}\PY{k}{ count}\PY{k}{ if} \PY{n+nf}{abs}(coef\PYZus{}Z) \PY{o}{\PYZgt{}=} \PY{n+nf}{abs}(\PY{n+nv+vg}{\PYZdl{}}\PY{n+nv+vg}{fit3})
+         
+         \PY{c+c1}{//}\PY{c+c1}{ }\PY{c+c1}{t}\PY{c+c1}{w}\PY{c+c1}{o}\PY{c+c1}{\PYZhy{}}\PY{c+c1}{t}\PY{c+c1}{a}\PY{c+c1}{i}\PY{c+c1}{l}\PY{c+c1}{e}\PY{c+c1}{d}\PY{c+c1}{ }\PY{c+c1}{p}\PY{c+c1}{\PYZhy{}}\PY{c+c1}{v}\PY{c+c1}{a}\PY{c+c1}{l}\PY{c+c1}{u}\PY{c+c1}{e}\PY{c+c1}{:}\PY{c+c1}{ }\PY{c+c1}{p}\PY{c+c1}{l}\PY{c+c1}{a}\PY{c+c1}{c}\PY{c+c1}{e}\PY{c+c1}{b}\PY{c+c1}{o}\PY{c+c1}{ }\PY{c+c1}{f}\PY{c+c1}{i}\PY{c+c1}{t}
+         \PY{c+c1}{//}\PY{c+c1}{ }\PY{c+c1}{m}\PY{c+c1}{e}\PY{c+c1}{a}\PY{c+c1}{n}\PY{c+c1}{(}\PY{c+c1}{d}\PY{c+c1}{i}\PY{c+c1}{s}\PY{c+c1}{t}\PY{c+c1}{3}\PY{c+c1}{ }\PY{c+c1}{\PYZgt{}}\PY{c+c1}{=}\PY{c+c1}{ }\PY{c+c1}{f}\PY{c+c1}{i}\PY{c+c1}{t}\PY{c+c1}{3}\PY{c+c1}{)}\PY{c+c1}{ }
+         \PY{k}{disp} \PY{n+nf}{r}(N)\PY{o}{/}\PYZus{}N
+         \PY{k}{restore}
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+.8879
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}13}]:} \PY{c+cm}{/*}\PY{c+cm}{\PYZhy{}}\PY{c+cm}{\PYZhy{}}\PY{c+cm}{\PYZhy{}}\PY{c+cm}{\PYZhy{}}\PY{c+cm}{ }\PY{c+cm}{d}\PY{c+cm}{i}\PY{c+cm}{s}\PY{c+cm}{t}\PY{c+cm}{4}\PY{c+cm}{ }\PY{c+cm}{\PYZhy{}}\PY{c+cm}{\PYZhy{}}\PY{c+cm}{\PYZhy{}}\PY{c+cm}{\PYZhy{}}\PY{c+cm}{*/}
+         \PY{k}{preserve}	
+         \PY{k}{simulate}  coef\PYZus{}Z=\PY{n+nf}{r}(coef\PYZus{}Z), reps(\PY{l+m}{10000}) nodots: coeff\PYZus{}Z energy 
+         \PY{k}{qui}\PY{k}{ count}\PY{k}{ if} coef\PYZus{}Z \PY{o}{\PYZgt{}=} \PY{n+nv+vg}{\PYZdl{}}\PY{n+nv+vg}{fit4}
+         
+         \PY{c+c1}{//}\PY{c+c1}{ }\PY{c+c1}{o}\PY{c+c1}{n}\PY{c+c1}{e}\PY{c+c1}{\PYZhy{}}\PY{c+c1}{t}\PY{c+c1}{a}\PY{c+c1}{i}\PY{c+c1}{l}\PY{c+c1}{e}\PY{c+c1}{d}\PY{c+c1}{ }\PY{c+c1}{p}\PY{c+c1}{\PYZhy{}}\PY{c+c1}{v}\PY{c+c1}{a}\PY{c+c1}{l}\PY{c+c1}{u}\PY{c+c1}{e}\PY{c+c1}{:}\PY{c+c1}{ }\PY{c+c1}{d}\PY{c+c1}{o}\PY{c+c1}{e}\PY{c+c1}{s}\PY{c+c1}{ }\PY{c+c1}{r}\PY{c+c1}{u}\PY{c+c1}{n}\PY{c+c1}{n}\PY{c+c1}{i}\PY{c+c1}{n}\PY{c+c1}{g}\PY{c+c1}{ }\PY{c+c1}{i}\PY{c+c1}{m}\PY{c+c1}{p}\PY{c+c1}{r}\PY{c+c1}{o}\PY{c+c1}{v}\PY{c+c1}{e}\PY{c+c1}{ }\PY{c+c1}{e}\PY{c+c1}{n}\PY{c+c1}{e}\PY{c+c1}{r}\PY{c+c1}{g}\PY{c+c1}{y}
+         \PY{c+c1}{//}\PY{c+c1}{ }\PY{c+c1}{m}\PY{c+c1}{e}\PY{c+c1}{a}\PY{c+c1}{n}\PY{c+c1}{(}\PY{c+c1}{d}\PY{c+c1}{i}\PY{c+c1}{s}\PY{c+c1}{t}\PY{c+c1}{4}\PY{c+c1}{ }\PY{c+c1}{\PYZgt{}}\PY{c+c1}{=}\PY{c+c1}{ }\PY{c+c1}{f}\PY{c+c1}{i}\PY{c+c1}{t}\PY{c+c1}{4}\PY{c+c1}{)}
+         \PY{k}{disp} \PY{n+nf}{r}(N)\PY{o}{/}\PYZus{}N
+         \PY{k}{restore}
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+.5033
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}14}]:} \PY{c+cm}{/*}\PY{c+cm}{\PYZhy{}}\PY{c+cm}{\PYZhy{}}\PY{c+cm}{\PYZhy{}}\PY{c+cm}{\PYZhy{}}\PY{c+cm}{ }\PY{c+cm}{d}\PY{c+cm}{i}\PY{c+cm}{s}\PY{c+cm}{t}\PY{c+cm}{5}\PY{c+cm}{ }\PY{c+cm}{\PYZhy{}}\PY{c+cm}{\PYZhy{}}\PY{c+cm}{\PYZhy{}}\PY{c+cm}{\PYZhy{}}\PY{c+cm}{*/}
+         \PY{k}{preserve}	
+         \PY{k}{simulate}  coef\PYZus{}Z=\PY{n+nf}{r}(coef\PYZus{}Z), reps(\PY{l+m}{10000}) nodots: coeff\PYZus{}Z gre 
+         \PY{k}{qui}\PY{k}{ count}\PY{k}{ if} coef\PYZus{}Z \PY{o}{\PYZgt{}=} \PY{n+nv+vg}{\PYZdl{}}\PY{n+nv+vg}{fit5}
+         
+         \PY{c+c1}{//}\PY{c+c1}{ }\PY{c+c1}{o}\PY{c+c1}{n}\PY{c+c1}{e}\PY{c+c1}{\PYZhy{}}\PY{c+c1}{t}\PY{c+c1}{a}\PY{c+c1}{i}\PY{c+c1}{l}\PY{c+c1}{e}\PY{c+c1}{d}\PY{c+c1}{ }\PY{c+c1}{p}\PY{c+c1}{\PYZhy{}}\PY{c+c1}{v}\PY{c+c1}{a}\PY{c+c1}{l}\PY{c+c1}{u}\PY{c+c1}{e}\PY{c+c1}{:}\PY{c+c1}{ }\PY{c+c1}{d}\PY{c+c1}{o}\PY{c+c1}{e}\PY{c+c1}{s}\PY{c+c1}{ }\PY{c+c1}{r}\PY{c+c1}{u}\PY{c+c1}{n}\PY{c+c1}{n}\PY{c+c1}{i}\PY{c+c1}{n}\PY{c+c1}{g}\PY{c+c1}{ }\PY{c+c1}{i}\PY{c+c1}{m}\PY{c+c1}{p}\PY{c+c1}{r}\PY{c+c1}{o}\PY{c+c1}{v}\PY{c+c1}{e}\PY{c+c1}{ }\PY{c+c1}{G}\PY{c+c1}{R}\PY{c+c1}{E}
+         \PY{c+c1}{//}\PY{c+c1}{ }\PY{c+c1}{m}\PY{c+c1}{e}\PY{c+c1}{a}\PY{c+c1}{n}\PY{c+c1}{(}\PY{c+c1}{d}\PY{c+c1}{i}\PY{c+c1}{s}\PY{c+c1}{t}\PY{c+c1}{5}\PY{c+c1}{ }\PY{c+c1}{\PYZgt{}}\PY{c+c1}{=}\PY{c+c1}{ }\PY{c+c1}{f}\PY{c+c1}{i}\PY{c+c1}{t}\PY{c+c1}{5}\PY{c+c1}{)}\PY{c+c1}{ }
+         \PY{k}{disp} \PY{n+nf}{r}(N)\PY{o}{/}\PYZus{}N
+         \PY{k}{restore}
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+.8137
+    \end{Verbatim}
 \end{kframe}
 \end{knitrout}
 
-Focusing solely on the immediate effect of running that day's tetris scores, we see that on non-running days the average tetris score is 12,806, as compared to 26,419 on running days, for a difference of 13,613. Randomization inference indicates that this observed difference has a one-tailed $p$-value of 0.0068. Using the F-statistic to assess the joint significance of immediate and one-period lagged effects, we obtain a $p$-value of 0.019, again allowing us to reject the null hypothesis of no effect.
+Focusing solely on the immediate effect of running that day's tetris scores, we see that on non-running days the average tetris score is 12,806, as compared to 26,419 on running days, for a difference of 13,613. Randomization inference indicates that this observed difference has a one-tailed $p$-value of 0.004. Using the F-statistic to assess the joint significance of immediate and one-period lagged effects, we obtain a $p$-value of 0.0146, again allowing us to reject the null hypothesis of no effect.
 
 \item One way to lend credibility to within-subjects results is to verify the no-anticipation assumption. Use the variable Run to predict the Tetris score \textit{on the preceding day}. Presumably, the true effect is zero. Does randomization inference confirm this prediction? \\
 Answer:\\
-See code block above for calculations. As expected, the means are similar (18,903 for control and 19,549 for treatment), and the two-tailed $p$-value is 0.8994.
+See code block above for calculations. As expected, the means are similar (18,903 for control and 19,549 for treatment), and the two-tailed $p$-value is 0.8879.
 
 \item If Tetris responds to exercise, one might suppose that energy levels and GRE scores would as well. Are these hypotheses borne out by the data?\\
 Answer:\\
-No, energy has a difference-in-means of just 0.07 and a $p$-value of 0.4563; and GRE's effect goes (insignificantly, $p$=0.8164) in the wrong direction, with the treatment diminishing the probability of a right answer by 0.175.
+No, energy has a difference-in-means of just 0.07 and a $p$-value of 0.5033; and GRE's effect goes (insignificantly, $p$=0.8137) in the wrong direction, with the treatment diminishing the probability of a right answer by 0.175.
 \end{enumerate}
 
 \section*{Question 11}
@@ -606,26 +764,60 @@ Return to the stepped-wedge advertising example in section 8.6 and the schedule 
 
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlcom{# Recreate dataset}
-\hlstd{week} \hlkwb{<-} \hlkwd{c}\hlstd{(}\hlkwd{rep}\hlstd{(}\hlstr{"2"}\hlstd{,} \hlnum{8}\hlstd{),} \hlkwd{rep}\hlstd{(}\hlstr{"3"}\hlstd{,} \hlnum{8}\hlstd{))}
-\hlstd{prob00} \hlkwb{<-} \hlkwd{c}\hlstd{(}\hlkwd{rep}\hlstd{(}\hlnum{0.5}\hlstd{,} \hlnum{8}\hlstd{),} \hlkwd{rep}\hlstd{(}\hlnum{0.25}\hlstd{,} \hlnum{8}\hlstd{))}
-\hlstd{prob01} \hlkwb{<-} \hlkwd{c}\hlstd{(}\hlkwd{rep}\hlstd{(}\hlnum{0.25}\hlstd{,} \hlnum{8}\hlstd{),} \hlkwd{rep}\hlstd{(}\hlnum{0.25}\hlstd{,} \hlnum{8}\hlstd{))}
-\hlstd{prob11} \hlkwb{<-} \hlkwd{c}\hlstd{(}\hlkwd{rep}\hlstd{(}\hlnum{0.25}\hlstd{,} \hlnum{8}\hlstd{),} \hlkwd{rep}\hlstd{(}\hlnum{0.50}\hlstd{,} \hlnum{8}\hlstd{))}
-\hlstd{Y} \hlkwb{<-} \hlkwd{c}\hlstd{(}\hlnum{9}\hlstd{,}\hlnum{5}\hlstd{,}\hlnum{2}\hlstd{,}\hlnum{3}\hlstd{,}\hlnum{3}\hlstd{,}\hlnum{8}\hlstd{,}\hlnum{3}\hlstd{,}\hlnum{1}\hlstd{,}
-       \hlnum{4}\hlstd{,}\hlnum{7}\hlstd{,}\hlnum{10}\hlstd{,}\hlnum{10}\hlstd{,}\hlnum{3}\hlstd{,}\hlnum{10}\hlstd{,}\hlnum{4}\hlstd{,}\hlnum{3}\hlstd{)}
-\hlstd{Z} \hlkwb{<-} \hlkwd{c}\hlstd{(}\hlstr{"11"}\hlstd{,} \hlstr{"00"}\hlstd{,} \hlstr{"01"}\hlstd{,} \hlstr{"00"}\hlstd{,} \hlstr{"00"}\hlstd{,} \hlstr{"11"}\hlstd{,} \hlstr{"00"}\hlstd{,} \hlstr{"01"}\hlstd{,}
-       \hlstr{"11"}\hlstd{,} \hlstr{"01"}\hlstd{,} \hlstr{"11"}\hlstd{,} \hlstr{"01"}\hlstd{,} \hlstr{"00"}\hlstd{,} \hlstr{"11"}\hlstd{,} \hlstr{"00"}\hlstd{,} \hlstr{"11"}\hlstd{)}
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}1}]:} \PY{k}{clear}
+        \PY{k}{qui}\PY{k}{ set} obs \PY{l+m}{16}
+        \PY{c+c1}{//}\PY{c+c1}{(}\PY{c+c1}{u}\PY{c+c1}{n}\PY{c+c1}{c}\PY{c+c1}{o}\PY{c+c1}{m}\PY{c+c1}{m}\PY{c+c1}{e}\PY{c+c1}{n}\PY{c+c1}{t}\PY{c+c1}{ }\PY{c+c1}{t}\PY{c+c1}{o}\PY{c+c1}{ }\PY{c+c1}{i}\PY{c+c1}{n}\PY{c+c1}{s}\PY{c+c1}{t}\PY{c+c1}{a}\PY{c+c1}{l}\PY{c+c1}{l}\PY{c+c1}{ }\PY{c+c1}{t}\PY{c+c1}{h}\PY{c+c1}{e}\PY{c+c1}{ }\PY{c+c1}{p}\PY{c+c1}{a}\PY{c+c1}{c}\PY{c+c1}{k}\PY{c+c1}{a}\PY{c+c1}{g}\PY{c+c1}{e}\PY{c+c1}{)}
+        \PY{c+c1}{//}\PY{c+c1}{s}\PY{c+c1}{s}\PY{c+c1}{c}\PY{c+c1}{ }\PY{c+c1}{i}\PY{c+c1}{n}\PY{c+c1}{s}\PY{c+c1}{t}\PY{c+c1}{a}\PY{c+c1}{l}\PY{c+c1}{l}\PY{c+c1}{ }\PY{c+c1}{e}\PY{c+c1}{g}\PY{c+c1}{e}\PY{c+c1}{n}\PY{c+c1}{m}\PY{c+c1}{o}\PY{c+c1}{r}\PY{c+c1}{e}\PY{c+c1}{ }
+        \PY{k}{qui}\PY{k}{ egen} week =\PY{k}{ repeat}(), values(\PY{l+s}{\PYZdq{}}\PY{l+s}{2}\PY{l+s}{\PYZdq{}})
+        \PY{k}{qui}\PY{k}{ replace} week = \PY{l+s}{\PYZdq{}}\PY{l+s}{3}\PY{l+s}{\PYZdq{}}\PY{k}{ in} \PY{l+m}{9}\PY{o}{/}l
+        \PY{k}{qui}\PY{k}{ egen} prob00 = fill(\PY{l+m}{0.5},\PY{l+m}{0.5})
+        \PY{k}{qui}\PY{k}{ replace} prob00=\PY{l+m}{0.25}\PY{k}{ in} \PY{l+m}{9}\PY{o}{/}l
+        \PY{k}{qui}\PY{k}{ egen} prob01 = fill(\PY{l+m}{0.25},\PY{l+m}{0.25})
+        \PY{k}{qui}\PY{k}{ egen} prob11 = fill(\PY{l+m}{0.25},\PY{l+m}{0.25})
+        \PY{k}{qui}\PY{k}{ replace} prob11 = \PY{l+m}{0.5}\PY{k}{ in} \PY{l+m}{9}\PY{o}{/}l
+\end{Verbatim}
 
-\hlcom{# Estimate E[Y_\{01\}-Y_\{00\}]}
-\hlstd{mean01} \hlkwb{<-} \hlkwd{weighted.mean}\hlstd{(Y[Z}\hlopt{==}\hlstr{"01"}\hlstd{],} \hlkwc{w}\hlstd{=}\hlnum{1}\hlopt{/}\hlstd{prob01[Z}\hlopt{==}\hlstr{"01"}\hlstd{])}
-\hlstd{mean00} \hlkwb{<-} \hlkwd{weighted.mean}\hlstd{(Y[Z}\hlopt{==}\hlstr{"00"}\hlstd{],} \hlkwc{w}\hlstd{=}\hlnum{1}\hlopt{/}\hlstd{prob01[Z}\hlopt{==}\hlstr{"00"}\hlstd{])}
-\hlstd{ate01_00} \hlkwb{<-} \hlstd{mean01} \hlopt{-} \hlstd{mean00}
-\hlstd{ate01_00}
-\end{alltt}
-\begin{verbatim}
-## [1] 1.5
-\end{verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}5}]:} \PY{k}{input} int y str2 z
+        \PY{l+m}{9} \PY{l+s}{\PYZdq{}}\PY{l+s}{1}\PY{l+s}{1}\PY{l+s}{\PYZdq{}}
+        \PY{l+m}{5} \PY{l+s}{\PYZdq{}}\PY{l+s}{0}\PY{l+s}{0}\PY{l+s}{\PYZdq{}}
+        \PY{l+m}{2} \PY{l+s}{\PYZdq{}}\PY{l+s}{0}\PY{l+s}{1}\PY{l+s}{\PYZdq{}}
+        \PY{l+m}{3} \PY{l+s}{\PYZdq{}}\PY{l+s}{0}\PY{l+s}{0}\PY{l+s}{\PYZdq{}}	
+        \PY{l+m}{3} \PY{l+s}{\PYZdq{}}\PY{l+s}{0}\PY{l+s}{0}\PY{l+s}{\PYZdq{}}
+        \PY{l+m}{8} \PY{l+s}{\PYZdq{}}\PY{l+s}{1}\PY{l+s}{1}\PY{l+s}{\PYZdq{}}
+        \PY{l+m}{3} \PY{l+s}{\PYZdq{}}\PY{l+s}{0}\PY{l+s}{0}\PY{l+s}{\PYZdq{}}
+        \PY{l+m}{1} \PY{l+s}{\PYZdq{}}\PY{l+s}{0}\PY{l+s}{1}\PY{l+s}{\PYZdq{}}
+        \PY{l+m}{4} \PY{l+s}{\PYZdq{}}\PY{l+s}{1}\PY{l+s}{1}\PY{l+s}{\PYZdq{}}
+        \PY{l+m}{7} \PY{l+s}{\PYZdq{}}\PY{l+s}{0}\PY{l+s}{1}\PY{l+s}{\PYZdq{}}
+        \PY{l+m}{10} \PY{l+s}{\PYZdq{}}\PY{l+s}{1}\PY{l+s}{1}\PY{l+s}{\PYZdq{}}
+        \PY{l+m}{10} \PY{l+s}{\PYZdq{}}\PY{l+s}{0}\PY{l+s}{1}\PY{l+s}{\PYZdq{}}
+        \PY{l+m}{3} \PY{l+s}{\PYZdq{}}\PY{l+s}{0}\PY{l+s}{0}\PY{l+s}{\PYZdq{}}
+        \PY{l+m}{10} \PY{l+s}{\PYZdq{}}\PY{l+s}{1}\PY{l+s}{1}\PY{l+s}{\PYZdq{}}
+        \PY{l+m}{4} \PY{l+s}{\PYZdq{}}\PY{l+s}{0}\PY{l+s}{0}\PY{l+s}{\PYZdq{}}
+        \PY{l+m}{3} \PY{l+s}{\PYZdq{}}\PY{l+s}{1}\PY{l+s}{1}\PY{l+s}{\PYZdq{}} end
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}6}]:} \PY{k}{gen} prob01z = prob01\PY{k}{ if} z\PY{o}{==}\PY{l+s}{\PYZdq{}}\PY{l+s}{0}\PY{l+s}{1}\PY{l+s}{\PYZdq{}}
+        \PY{k}{replace} prob01z = prob01\PY{k}{ if} prob01z\PY{o}{==}.
+        \PY{c+c1}{//}\PY{c+c1}{d}\PY{c+c1}{i}\PY{c+c1}{f}\PY{c+c1}{f}\PY{c+c1}{e}\PY{c+c1}{r}\PY{c+c1}{e}\PY{c+c1}{n}\PY{c+c1}{c}\PY{c+c1}{e}\PY{c+c1}{ }\PY{c+c1}{i}\PY{c+c1}{n}\PY{c+c1}{ }\PY{c+c1}{t}\PY{c+c1}{h}\PY{c+c1}{e}\PY{c+c1}{ }\PY{c+c1}{w}\PY{c+c1}{a}\PY{c+c1}{y}\PY{c+c1}{ }\PY{c+c1}{t}\PY{c+c1}{h}\PY{c+c1}{a}\PY{c+c1}{t}\PY{c+c1}{ }\PY{c+c1}{R}\PY{c+c1}{ }\PY{c+c1}{a}\PY{c+c1}{n}\PY{c+c1}{d}\PY{c+c1}{ }\PY{c+c1}{S}\PY{c+c1}{T}\PY{c+c1}{A}\PY{c+c1}{T}\PY{c+c1}{A}\PY{c+c1}{ }\PY{c+c1}{w}\PY{c+c1}{e}\PY{c+c1}{i}\PY{c+c1}{g}\PY{c+c1}{h}\PY{c+c1}{t}\PY{c+c1}{e}\PY{c+c1}{d}\PY{c+c1}{ }\PY{c+c1}{m}\PY{c+c1}{e}\PY{c+c1}{a}\PY{c+c1}{n}\PY{c+c1}{ }\PY{c+c1}{f}\PY{c+c1}{u}\PY{c+c1}{n}\PY{c+c1}{c}\PY{c+c1}{t}\PY{c+c1}{i}\PY{c+c1}{o}\PY{c+c1}{n}\PY{c+c1}{s}
+        \PY{k}{gen} y01z = y\PY{k}{ if} z\PY{o}{==}\PY{l+s}{\PYZdq{}}\PY{l+s}{0}\PY{l+s}{1}\PY{l+s}{\PYZdq{}}
+        \PY{k}{egen} mean01 = wtmean(y01z), weight(\PY{l+m}{1}\PY{o}{/}prob01z)
+        \PY{k}{gen} prob00z = prob00\PY{k}{ if} z\PY{o}{==}\PY{l+s}{\PYZdq{}}\PY{l+s}{0}\PY{l+s}{0}\PY{l+s}{\PYZdq{}}
+        \PY{k}{replace} prob00z = prob00\PY{k}{ if} prob01z\PY{o}{==}.
+        \PY{k}{gen} y00z= y\PY{k}{ if} z\PY{o}{==}\PY{l+s}{\PYZdq{}}\PY{l+s}{0}\PY{l+s}{0}\PY{l+s}{\PYZdq{}}
+        \PY{k}{egen} mean00 = wtmean(y00z), weight(\PY{l+m}{1}\PY{o}{/}prob00z)
+        \PY{k}{gen} ate01\PYZus{}00 = mean01 \PY{o}{\PYZhy{}} mean00
+        \PY{k}{disp} ate01\PYZus{}00
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+1.5
+    \end{Verbatim}
+
 \end{kframe}
 \end{knitrout}
 The effect of immediate treatment appears to be 1.5, which is weaker than the effect mentioned in the text (4.13), possibly suggesting that the effect of immediate treatment is weaker than the effect of immediate and lagged treatment.
@@ -634,16 +826,24 @@ The effect of immediate treatment appears to be 1.5, which is weaker than the ef
 
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlcom{# Estimate E[Y_\{11\}-Y_\{00\}]}
-\hlstd{mean11} \hlkwb{<-} \hlkwd{weighted.mean}\hlstd{(Y[Z}\hlopt{==}\hlstr{"11"} \hlopt{&} \hlstd{week}\hlopt{==}\hlstr{"2"}\hlstd{],} \hlkwc{w}\hlstd{=}\hlnum{1}\hlopt{/}\hlstd{prob01[Z}\hlopt{==}\hlstr{"01"} \hlopt{&} \hlstd{week}\hlopt{==}\hlstr{"2"}\hlstd{])}
-\hlstd{mean00} \hlkwb{<-} \hlkwd{weighted.mean}\hlstd{(Y[Z}\hlopt{==}\hlstr{"00"} \hlopt{&} \hlstd{week}\hlopt{==}\hlstr{"2"}\hlstd{],} \hlkwc{w}\hlstd{=}\hlnum{1}\hlopt{/}\hlstd{prob01[Z}\hlopt{==}\hlstr{"00"} \hlopt{&} \hlstd{week}\hlopt{==}\hlstr{"2"}\hlstd{])}
-\hlstd{ate11_00} \hlkwb{<-} \hlstd{mean11} \hlopt{-} \hlstd{mean00}
-\hlstd{ate11_00}
-\end{alltt}
-\begin{verbatim}
-## [1] 5
-\end{verbatim}
+   \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}7}]:} \PY{k}{gen} prob01z2 = prob01\PY{k}{ if} z\PY{o}{==}\PY{l+s}{\PYZdq{}}\PY{l+s}{0}\PY{l+s}{1}\PY{l+s}{\PYZdq{}} \PY{o}{\PYZam{}} week\PY{o}{==}\PY{l+s}{\PYZdq{}}\PY{l+s}{2}\PY{l+s}{\PYZdq{}}
+        \PY{k}{gen} y11z2 = y\PY{k}{ if} z\PY{o}{==}\PY{l+s}{\PYZdq{}}\PY{l+s}{1}\PY{l+s}{1}\PY{l+s}{\PYZdq{}} \PY{o}{\PYZam{}} week\PY{o}{==}\PY{l+s}{\PYZdq{}}\PY{l+s}{2}\PY{l+s}{\PYZdq{}}
+        \PY{k}{replace} prob01z2 = .\PY{l+m}{25}\PY{k}{ if} prob01z2\PY{o}{==}.
+        \PY{k}{egen} mean11 = wtmean(y11z2), weight(\PY{l+m}{1}\PY{o}{/}prob01z2)
+        \PY{k}{gen} prob00z2 = prob01\PY{k}{ if} z\PY{o}{==}\PY{l+s}{\PYZdq{}}\PY{l+s}{0}\PY{l+s}{0}\PY{l+s}{\PYZdq{}} \PY{o}{\PYZam{}} week\PY{o}{==}\PY{l+s}{\PYZdq{}}\PY{l+s}{2}\PY{l+s}{\PYZdq{}}
+        \PY{k}{replace} prob00z2 = prob01\PY{k}{ if} prob00z2\PY{o}{==}.
+        \PY{k}{gen} y00z2 = y\PY{k}{ if} z\PY{o}{==}\PY{l+s}{\PYZdq{}}\PY{l+s}{0}\PY{l+s}{0}\PY{l+s}{\PYZdq{}} \PY{o}{\PYZam{}} week\PY{o}{==}\PY{l+s}{\PYZdq{}}\PY{l+s}{2}\PY{l+s}{\PYZdq{}}
+        \PY{k}{drop} mean00
+        \PY{k}{egen} mean00 = wtmean(y00z2), weight(\PY{l+m}{1}\PY{o}{/}prob00z2)
+        
+        \PY{k}{gen} ate11\PYZus{}00 = mean11 \PY{o}{\PYZhy{}} mean00
+        \PY{k}{disp} ate11\PYZus{}00
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+5
+    \end{Verbatim}
 \end{kframe}
 \end{knitrout}
 

@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2018) (preloaded format=pdflatex 2018.4.16)  11 APR 2019 14:07
+This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2018) (preloaded format=pdflatex 2018.4.16)  18 APR 2019 18:48
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -869,25 +869,26 @@ Package textcomp Info: Setting pplj sub-encoding to TS1/3 on input line 407.
 Package textcomp Info: Setting ptmx sub-encoding to TS1/4 on input line 408.
 Package textcomp Info: Setting ptmj sub-encoding to TS1/4 on input line 409.
 ))
-No file FEDAI_PS8_Solutions.aux.
+(./FEDAI_PS8_Solutions.aux)
 \openout1 = `FEDAI_PS8_Solutions.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 112.
-LaTeX Font Info:    ... okay on input line 112.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 112.
-LaTeX Font Info:    ... okay on input line 112.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 112.
-LaTeX Font Info:    ... okay on input line 112.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 112.
-LaTeX Font Info:    ... okay on input line 112.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 112.
-LaTeX Font Info:    ... okay on input line 112.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 112.
-LaTeX Font Info:    ... okay on input line 112.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 112.
-LaTeX Font Info:    ... okay on input line 112.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 112.
-LaTeX Font Info:    ... okay on input line 112.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 113.
+LaTeX Font Info:    ... okay on input line 113.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 113.
+LaTeX Font Info:    ... okay on input line 113.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 113.
+LaTeX Font Info:    ... okay on input line 113.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 113.
+LaTeX Font Info:    ... okay on input line 113.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 113.
+LaTeX Font Info:    ... okay on input line 113.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 113.
+LaTeX Font Info:    ... okay on input line 113.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 113.
+LaTeX Font Info:    ... okay on input line 113.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 113.
+LaTeX Font Info:    ... okay on input line 113.
+
 (/usr/local/texlive/2018/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
 \scratchcounter=\count279
@@ -933,7 +934,7 @@ Package caption Info: End \AtBeginDocument code.
 Package hyperref Warning: Height of page (\stockheight) is invalid (0.0pt),
 (hyperref)                using 11in.
 
-Package hyperref Info: Link coloring OFF on input line 112.
+Package hyperref Info: Link coloring OFF on input line 113.
 (/usr/local/texlive/2018/texmf-dist/tex/latex/hyperref/nameref.sty
 Package: nameref 2016/05/21 v2.44 Cross-referencing by name of section
 
@@ -942,15 +943,17 @@ Package: gettitlestring 2016/05/16 v1.5 Cleanup title references (HO)
 )
 \c@section@level=\count285
 )
-LaTeX Info: Redefining \ref on input line 112.
-LaTeX Info: Redefining \pageref on input line 112.
-LaTeX Info: Redefining \nameref on input line 112.
+LaTeX Info: Redefining \ref on input line 113.
+LaTeX Info: Redefining \pageref on input line 113.
+LaTeX Info: Redefining \nameref on input line 113.
+
+(./FEDAI_PS8_Solutions.out) (./FEDAI_PS8_Solutions.out)
 \@outlinefile=\write4
 \openout4 = `FEDAI_PS8_Solutions.out'.
 
 
 
-Package layouts Warning: Layout scale set to 0.5 on input line 112.
+Package layouts Warning: Layout scale set to 0.5 on input line 113.
 
 *geometry* driver: auto-detecting
 *geometry* detected driver: pdftex
@@ -986,115 +989,101 @@ Package layouts Warning: Layout scale set to 0.5 on input line 112.
 * \@reversemarginfalse
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
-LaTeX Font Info:    Try loading font information for U+msa on input line 115.
+LaTeX Font Info:    Try loading font information for U+msa on input line 116.
 (/usr/local/texlive/2018/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Try loading font information for U+msb on input line 115.
+LaTeX Font Info:    Try loading font information for U+msb on input line 116.
 
 (/usr/local/texlive/2018/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
 
-Package xcolor Warning: Incompatible color definition on input line 138.
+Package xcolor Warning: Incompatible color definition on input line 139.
 
 [1
 
 {/usr/local/texlive/2018/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
 
-Package xcolor Warning: Incompatible color definition on input line 162.
+Package xcolor Warning: Incompatible color definition on input line 163.
 
 [2]
-Underfull \hbox (badness 10000) in paragraph at lines 186--187
+Underfull \hbox (badness 10000) in paragraph at lines 187--188
 
  []
 
 [3]
 
-Package xcolor Warning: Incompatible color definition on input line 189.
+Package xcolor Warning: Incompatible color definition on input line 190.
 
 
 LaTeX Font Warning: Font shape `T1/cmtt/bx/n' in size <10.95> not available
-(Font)              Font shape `T1/cmtt/m/n' tried instead on input line 191.
+(Font)              Font shape `T1/cmtt/m/n' tried instead on input line 192.
 
 
-Overfull \hbox (33.97394pt too wide) in paragraph at lines 192--192
+Overfull \hbox (33.97394pt too wide) in paragraph at lines 193--193
 [][]\T1/cmtt/m/n/10.95 Z_zip[] []<-[] []c[][]([][]rep[][]([][]"none"[][],[] []6
 217[][]),[] []rep[][]([][]"half"[][],[] []3316[][]),[] []rep[][]([][]"half"[][]
 ,[] []2949[][]),[] []rep[][]([][]"all"[][],[] []6377[][]))[][] 
  []
 
 
-Package xcolor Warning: Incompatible color definition on input line 231.
+Package xcolor Warning: Incompatible color definition on input line 232.
 
 [4] [5]
 
-Package xcolor Warning: Incompatible color definition on input line 291.
+Package xcolor Warning: Incompatible color definition on input line 292.
 
 
-Package xcolor Warning: Incompatible color definition on input line 311.
+Package xcolor Warning: Incompatible color definition on input line 312.
 
 [6]
 
-Package xcolor Warning: Incompatible color definition on input line 333.
+Package xcolor Warning: Incompatible color definition on input line 334.
 
 [7]
 
-Package xcolor Warning: Incompatible color definition on input line 424.
+Package xcolor Warning: Incompatible color definition on input line 425.
 
 [8]
 
-Package xcolor Warning: Incompatible color definition on input line 462.
+Package xcolor Warning: Incompatible color definition on input line 463.
 
 
-Package xcolor Warning: Incompatible color definition on input line 479.
+Package xcolor Warning: Incompatible color definition on input line 480.
 
 [9]
 
-Package xcolor Warning: Incompatible color definition on input line 507.
+Package xcolor Warning: Incompatible color definition on input line 508.
 
 
-Overfull \hbox (5.23729pt too wide) in paragraph at lines 510--510
+Overfull \hbox (5.23729pt too wide) in paragraph at lines 511--511
 [][]\T1/cmtt/m/n/10.95 mean11[] []<-[] []weighted.mean[][](Y[Z[][]==[][]"11"[] 
 []&[] []week[][]==[][]"2"[][]],[] []w[][]=[][]1[][]/[][]prob01[Z[][]==[][]"01"[
 ] []&[] []week[][]==[][]"2"[][]])[][] 
  []
 
 
-Overfull \hbox (5.23729pt too wide) in paragraph at lines 511--511
+Overfull \hbox (5.23729pt too wide) in paragraph at lines 512--512
 [][]\T1/cmtt/m/n/10.95 mean00[] []<-[] []weighted.mean[][](Y[Z[][]==[][]"00"[] 
 []&[] []week[][]==[][]"2"[][]],[] []w[][]=[][]1[][]/[][]prob01[Z[][]==[][]"00"[
 ] []&[] []week[][]==[][]"2"[][]])[][] 
  []
 
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 524.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 525.
 [10]
-Package atveryend Info: Executing hook `AfterLastShipout' on input line 524.
- (./FEDAI_PS8_Solutions.xwm)
-
-LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
-
-(./FEDAI_PS8_Solutions.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 524.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 524.
-
-
-Package rerunfilecheck Warning: File `FEDAI_PS8_Solutions.out' has changed.
-(rerunfilecheck)                Rerun to get outlines right
-(rerunfilecheck)                or use package `bookmark'.
-
-Package rerunfilecheck Info: Checksums for `FEDAI_PS8_Solutions.out':
-(rerunfilecheck)             Before: <no file>
-(rerunfilecheck)             After:  D41D8CD98F00B204E9800998ECF8427E;0.
-
-LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
-
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 524.
+Package atveryend Info: Executing hook `AfterLastShipout' on input line 525.
+ (./FEDAI_PS8_Solutions.xwm) (./FEDAI_PS8_Solutions.aux)
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 525.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 525.
+Package rerunfilecheck Info: File `FEDAI_PS8_Solutions.out' has not changed.
+(rerunfilecheck)             Checksum: D41D8CD98F00B204E9800998ECF8427E;0.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 525.
  ) 
 Here is how much of TeX's memory you used:
- 15061 strings out of 492649
- 235675 string characters out of 6129622
- 416485 words of memory out of 5000000
+ 15067 strings out of 492649
+ 235819 string characters out of 6129622
+ 417709 words of memory out of 5000000
  18659 multiletter control sequences out of 15000+600000
  22409 words of font info for 71 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
@@ -1117,7 +1106,7 @@ ve/2018/texmf-dist/fonts/type1/public/cm-super/sfrm0600.pfb></usr/local/texlive
 texmf-dist/fonts/type1/public/cm-super/sfrm1200.pfb></usr/local/texlive/2018/te
 xmf-dist/fonts/type1/public/cm-super/sfrm1728.pfb></usr/local/texlive/2018/texm
 f-dist/fonts/type1/public/cm-super/sftt1000.pfb>
-Output written on FEDAI_PS8_Solutions.pdf (10 pages, 244040 bytes).
+Output written on FEDAI_PS8_Solutions.pdf (10 pages, 241061 bytes).
 PDF statistics:
  169 PDF objects out of 1000 (max. 8388607)
  139 compressed objects within 2 object streams

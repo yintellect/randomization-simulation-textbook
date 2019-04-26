@@ -98,14 +98,14 @@
 \usepackage{xcolor}
 \usepackage[printwatermark]{xwatermark}
 \newwatermark[allpages,color=black!50,angle=45,scale=1,xpos=0,ypos=0]{DO NOT DISTRIBUTE}
-
+\input{pygments.tex}
 
 
 
 \title{Field Experiments: Design, Analysis and Interpretation \\
 Solutions for Chapter 7 Exercises}
 \author{Alan S. Gerber and Donald P. Green\footnote{Solutions prepared by Peter M. Aronow and revised by Alexander Coppock}}
-\date{\today}
+\date{\vspace{-5ex}}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \IfFileExists{upquote.sty}{\usepackage{upquote}}{}
@@ -272,43 +272,70 @@ From the online appendix (http://isps.research.yale.edu/FEDAI), download the dat
 
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlstd{angrist} \hlkwb{<-} \hlkwd{within}\hlstd{(angrist,\{}
-  \hlstd{read[}\hlkwd{is.na}\hlstd{(read)]} \hlkwb{<-} \hlnum{0}
-  \hlstd{sex} \hlkwb{<-} \hlstd{sex_name}
-  \hlstd{observed} \hlkwb{<-} \hlnum{1} \hlopt{-} \hlstd{(read} \hlopt{==} \hlnum{0}\hlstd{)}
-  \hlstd{probobs} \hlkwb{<-} \hlkwd{glm}\hlstd{(observed}\hlopt{~}\hlstd{(vouch0}\hlopt{*}\hlstd{sex)}\hlopt{+}\hlstd{(vouch0}\hlopt{*}\hlstd{phone),}
-                 \hlkwc{family}\hlstd{=}\hlkwd{binomial}\hlstd{(}\hlkwc{link}\hlstd{=}\hlstr{"logit"}\hlstd{))}\hlopt{$}\hlstd{fitted}
-  \hlstd{weights} \hlkwb{<-} \hlnum{1}\hlopt{/}\hlstd{probobs}
-\hlstd{\})}
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}1}]:} \PY{k}{qui} import delim .\PY{o}{/}data\PY{o}{/}chapter07\PY{o}{/}Angrist\PYZus{}et\PYZus{}al\PYZus{}AER\PYZus{}2006,\PY{k}{ clear}
+\end{Verbatim}
 
-\hlcom{# Verify that all probabilities are less than one and greater than zero}
-\hlkwd{with}\hlstd{(angrist, \{}
-\hlkwd{rbind}\hlstd{(}\hlkwd{summary}\hlstd{(probobs[vouch0}\hlopt{==}\hlnum{0}\hlstd{]),}
-\hlkwd{summary}\hlstd{(probobs[vouch0}\hlopt{==}\hlnum{1}\hlstd{]))}
-\hlstd{\})}
-\end{alltt}
-\begin{verbatim}
-##           Min.   1st Qu.    Median      Mean   3rd Qu.      Max.
-## [1,] 0.2318797 0.2318797 0.2905849 0.2665066 0.2905849 0.3271479
-## [2,] 0.2846098 0.3141727 0.3158772 0.3275862 0.3471120 0.3471120
-\end{verbatim}
-\begin{alltt}
-\hlcom{# Coefficients for unweighted regression (restricting analysis to observed subjects)}
-\hlkwd{lm}\hlstd{(read}\hlopt{~}\hlstd{vouch0,} \hlkwc{data}\hlstd{=}\hlkwd{subset}\hlstd{(angrist, observed}\hlopt{==}\hlnum{1}\hlstd{))}\hlopt{$}\hlstd{coefficients}
-\end{alltt}
-\begin{verbatim}
-## (Intercept)      vouch0 
-##  46.9208148   0.6827378
-\end{verbatim}
-\begin{alltt}
-\hlcom{# Coefficients for IPW regression (restricting analysis to observed subjects)}
-\hlkwd{lm}\hlstd{(read}\hlopt{~}\hlstd{vouch0,} \hlkwc{weights}\hlstd{=weights,} \hlkwc{data}\hlstd{=}\hlkwd{subset}\hlstd{(angrist, observed}\hlopt{==}\hlnum{1}\hlstd{))}\hlopt{$}\hlstd{coefficients}
-\end{alltt}
-\begin{verbatim}
-## (Intercept)      vouch0 
-##  46.9654430   0.6580337
-\end{verbatim}
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}2}]:} \PY{k}{qui}\PY{k}{ replace}\PY{k}{ read} = \PY{l+m}{0}\PY{k}{ if} \PY{n+nf}{missing}(read)
+        \PY{k}{rename} sex\PYZus{}name sex
+        \PY{k}{gen} observed = \PY{l+m}{1}
+        \PY{k}{qui}\PY{k}{ replace} observed = \PY{l+m}{0}\PY{k}{ if}\PY{k}{ read} \PY{o}{==} \PY{l+m}{0}
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}3}]:} \PY{k}{qui}\PY{k}{ logit} observed vouch0 sex phone vouch0\PYZsh{}sex vouch0\PYZsh{}phone
+        \PY{k}{qui}\PY{k}{ predict} probobs
+        \PY{k}{gen} weights = \PY{l+m}{1}\PY{o}{/}probobs
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}4}]:} \PY{c+c1}{//}\PY{c+c1}{V}\PY{c+c1}{e}\PY{c+c1}{r}\PY{c+c1}{i}\PY{c+c1}{f}\PY{c+c1}{y}\PY{c+c1}{ }\PY{c+c1}{t}\PY{c+c1}{h}\PY{c+c1}{a}\PY{c+c1}{t}\PY{c+c1}{ }\PY{c+c1}{a}\PY{c+c1}{l}\PY{c+c1}{l}\PY{c+c1}{ }\PY{c+c1}{p}\PY{c+c1}{r}\PY{c+c1}{o}\PY{c+c1}{b}\PY{c+c1}{a}\PY{c+c1}{b}\PY{c+c1}{i}\PY{c+c1}{l}\PY{c+c1}{i}\PY{c+c1}{t}\PY{c+c1}{i}\PY{c+c1}{e}\PY{c+c1}{s}\PY{c+c1}{ }\PY{c+c1}{a}\PY{c+c1}{r}\PY{c+c1}{e}\PY{c+c1}{ }
+        \PY{c+c1}{//}\PY{c+c1}{ }\PY{c+c1}{l}\PY{c+c1}{e}\PY{c+c1}{s}\PY{c+c1}{s}\PY{c+c1}{ }\PY{c+c1}{t}\PY{c+c1}{h}\PY{c+c1}{a}\PY{c+c1}{n}\PY{c+c1}{ }\PY{c+c1}{o}\PY{c+c1}{n}\PY{c+c1}{e}\PY{c+c1}{ }\PY{c+c1}{a}\PY{c+c1}{n}\PY{c+c1}{d}\PY{c+c1}{ }\PY{c+c1}{g}\PY{c+c1}{r}\PY{c+c1}{e}\PY{c+c1}{a}\PY{c+c1}{t}\PY{c+c1}{e}\PY{c+c1}{r}\PY{c+c1}{ }\PY{c+c1}{t}\PY{c+c1}{h}\PY{c+c1}{a}\PY{c+c1}{n}\PY{c+c1}{ }\PY{c+c1}{z}\PY{c+c1}{e}\PY{c+c1}{r}\PY{c+c1}{o}
+        \PY{k}{tabstat} probobs,\PY{k}{ by}(vouch0) stat(min p25 med\PY{k}{ mean} p75 max)\PY{k}{ save}
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+
+Summary for variables: probobs
+     by categories of: vouch0 
+
+  vouch0 |       min       p25       p50      mean       p75       max
+---------+------------------------------------------------------------
+       0 |  .2318797  .2318797  .2905849  .2665066  .2905849  .3271479
+       1 |  .2846098  .3141727  .3158772  .3275862   .347112   .347112
+---------+------------------------------------------------------------
+   Total |  .2318797  .2905849  .3141727  .3024233   .347112   .347112
+----------------------------------------------------------------------
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}5}]:} \PY{c+c1}{//}\PY{c+c1}{ }\PY{c+c1}{C}\PY{c+c1}{o}\PY{c+c1}{e}\PY{c+c1}{f}\PY{c+c1}{f}\PY{c+c1}{i}\PY{c+c1}{c}\PY{c+c1}{i}\PY{c+c1}{e}\PY{c+c1}{n}\PY{c+c1}{t}\PY{c+c1}{s}\PY{c+c1}{ }\PY{c+c1}{f}\PY{c+c1}{o}\PY{c+c1}{r}\PY{c+c1}{ }\PY{c+c1}{u}\PY{c+c1}{n}\PY{c+c1}{w}\PY{c+c1}{e}\PY{c+c1}{i}\PY{c+c1}{g}\PY{c+c1}{h}\PY{c+c1}{t}\PY{c+c1}{e}\PY{c+c1}{d}\PY{c+c1}{ }\PY{c+c1}{r}\PY{c+c1}{e}\PY{c+c1}{g}\PY{c+c1}{r}\PY{c+c1}{e}\PY{c+c1}{s}\PY{c+c1}{s}\PY{c+c1}{i}\PY{c+c1}{o}\PY{c+c1}{n}\PY{c+c1}{ }
+        \PY{c+c1}{//}\PY{c+c1}{ }\PY{c+c1}{(}\PY{c+c1}{r}\PY{c+c1}{e}\PY{c+c1}{s}\PY{c+c1}{t}\PY{c+c1}{r}\PY{c+c1}{i}\PY{c+c1}{c}\PY{c+c1}{t}\PY{c+c1}{i}\PY{c+c1}{n}\PY{c+c1}{g}\PY{c+c1}{ }\PY{c+c1}{a}\PY{c+c1}{n}\PY{c+c1}{a}\PY{c+c1}{l}\PY{c+c1}{y}\PY{c+c1}{s}\PY{c+c1}{i}\PY{c+c1}{s}\PY{c+c1}{ }\PY{c+c1}{t}\PY{c+c1}{o}\PY{c+c1}{ }\PY{c+c1}{o}\PY{c+c1}{b}\PY{c+c1}{s}\PY{c+c1}{e}\PY{c+c1}{r}\PY{c+c1}{v}\PY{c+c1}{e}\PY{c+c1}{d}\PY{c+c1}{ }\PY{c+c1}{s}\PY{c+c1}{u}\PY{c+c1}{b}\PY{c+c1}{j}\PY{c+c1}{e}\PY{c+c1}{c}\PY{c+c1}{t}\PY{c+c1}{s}\PY{c+c1}{)}
+        \PY{k}{qui}\PY{k}{ regress}\PY{k}{ read} vouch0\PY{k}{ if} observed\PY{o}{==}\PY{l+m}{1}
+        \PY{k}{mat}\PY{k}{ li}\PY{k}{ e}(b)
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+e(b)[1,2]
+       vouch0      \_cons
+y1  .68273776  46.920815
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}6}]:} \PY{k}{qui}\PY{k}{ regress}\PY{k}{ read} vouch0 [pw=weights]if observed\PY{o}{==}\PY{l+m}{1}
+        \PY{k}{mat}\PY{k}{ li}\PY{k}{ e}(b)
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+e(b)[1,2]
+       vouch0      \_cons
+y1  .65803373  46.965443
+
+    \end{Verbatim}
 \end{kframe}
 \end{knitrout}
 
@@ -401,27 +428,70 @@ Thus, the trimming bounds range from 4.2 percentage points to 18.8 percentage po
 
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlstd{Z} \hlkwb{<-} \hlkwd{c}\hlstd{(}\hlkwd{rep}\hlstd{(}\hlnum{0}\hlstd{,} \hlnum{106}\hlstd{),} \hlkwd{rep}\hlstd{(}\hlnum{1}\hlstd{,} \hlnum{111}\hlstd{))} \hlcom{#W =0, H=1}
-\hlstd{y} \hlkwb{<-} \hlkwd{c}\hlstd{(}\hlkwd{rep}\hlstd{(}\hlnum{NA}\hlstd{,} \hlnum{28}\hlstd{),} \hlkwd{rep}\hlstd{(}\hlnum{1}\hlstd{,} \hlnum{50}\hlstd{),} \hlkwd{rep}\hlstd{(}\hlnum{0}\hlstd{,} \hlnum{28}\hlstd{),}
-       \hlkwd{rep}\hlstd{(}\hlnum{NA}\hlstd{,} \hlnum{17}\hlstd{),} \hlkwd{rep}\hlstd{(}\hlnum{1}\hlstd{,}\hlnum{68}\hlstd{),} \hlkwd{rep}\hlstd{(}\hlnum{0}\hlstd{,} \hlnum{26}\hlstd{))}
 
-\hlstd{prob.na.treated} \hlkwb{<-} \hlkwd{sum}\hlstd{(}\hlkwd{is.na}\hlstd{(y[Z}\hlopt{==}\hlnum{1}\hlstd{]))}\hlopt{/}\hlkwd{length}\hlstd{(y[Z}\hlopt{==}\hlnum{1}\hlstd{])}
-\hlstd{prob.na.control} \hlkwb{<-} \hlkwd{sum}\hlstd{(}\hlkwd{is.na}\hlstd{(y[Z}\hlopt{==}\hlnum{0}\hlstd{]))}\hlopt{/}\hlkwd{length}\hlstd{(y[Z}\hlopt{==}\hlnum{0}\hlstd{])}
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}1}]:} \PY{k}{clear}
+\end{Verbatim}
 
-\hlstd{Q} \hlkwb{<-} \hlstd{((}\hlnum{1} \hlopt{-} \hlstd{prob.na.treated)} \hlopt{-} \hlstd{(}\hlnum{1}\hlopt{-} \hlstd{prob.na.control))}\hlopt{/}\hlstd{(}\hlnum{1} \hlopt{-} \hlstd{prob.na.treated)}
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}2}]:} \PY{k}{qui}\PY{k}{ set} obs \PY{l+m}{217}
+        \PY{k}{qui}\PY{k}{ egen} z = fill (\PY{l+m}{1} \PY{l+m}{1})
+        \PY{k}{qui}\PY{k}{ replace} z = \PY{l+m}{0}\PY{k}{ in} \PY{l+m}{1}\PY{o}{/}\PY{l+m}{106}
+        \PY{k}{qui}\PY{k}{ egen} y = fill (\PY{l+m}{0} \PY{l+m}{0})
+        \PY{k}{qui}\PY{k}{ replace} y =.\PY{k}{ in} \PY{l+m}{1}\PY{o}{/}\PY{l+m}{28}
+        
+        \PY{k}{qui}\PY{k}{ replace} y = \PY{l+m}{1}\PY{k}{ in} \PY{l+m}{29}\PY{o}{/}\PY{l+m}{78}
+        \PY{k}{qui}\PY{k}{ replace} y =\PY{l+m}{0}\PY{k}{ in} \PY{l+m}{79}\PY{o}{/}\PY{l+m}{106}
+        \PY{k}{qui}\PY{k}{ replace} y =.\PY{k}{ in} \PY{l+m}{107}\PY{o}{/}\PY{l+m}{123}
+        \PY{k}{qui}\PY{k}{ replace} y = \PY{l+m}{1}\PY{k}{ in} \PY{l+m}{124}\PY{o}{/}\PY{l+m}{191}
+        
+        \PY{k}{qui}\PY{k}{ count}\PY{k}{ if} z\PY{o}{==}\PY{l+m}{1} \PY{o}{\PYZam{}} y\PY{o}{==}.
+        \PY{k}{scalar} isna\PYZus{}treated = \PY{n+nf}{r}(N)
+        \PY{k}{qui}\PY{k}{ count}\PY{k}{ if} z\PY{o}{==}\PY{l+m}{0} \PY{o}{\PYZam{}} y\PY{o}{==}.
+        \PY{k}{scalar} isna\PYZus{}control= \PY{n+nf}{r}(N)
+        \PY{k}{qui}\PY{k}{ count}\PY{k}{ if} z\PY{o}{==}\PY{l+m}{1}
+        \PY{k}{scalar} count\PYZus{}treated = \PY{n+nf}{r}(N)
+        \PY{k}{qui}\PY{k}{ count}\PY{k}{ if} z\PY{o}{==}\PY{l+m}{0}
+        \PY{k}{scalar} count\PYZus{}control = \PY{n+nf}{r}(N)
+        
+        \PY{k}{scalar} prob\PYZus{}na\PYZus{}treated = isna\PYZus{}treated\PY{o}{/}count\PYZus{}treated
+        \PY{k}{scalar} prob\PYZus{}na\PYZus{}control= isna\PYZus{}control\PY{o}{/}count\PYZus{}control
+        
+        \PY{k}{scalar} Q = ((\PY{l+m}{1}\PY{o}{\PYZhy{}}prob\PYZus{}na\PYZus{}treated)\PY{o}{\PYZhy{}}(\PY{l+m}{1}\PY{o}{\PYZhy{}}prob\PYZus{}na\PYZus{}control))\PY{o}{/}(\PY{l+m}{1}\PY{o}{\PYZhy{}}prob\PYZus{}na\PYZus{}treated)
+        
+        
+        \PY{k}{gen} y\PYZus{}z1 = y
+        \PY{k}{replace} y\PYZus{}z1 =.\PY{k}{ if} z\PY{o}{!=}\PY{l+m}{1}
+        \PY{k}{qui}\PY{k}{ sort} y\PYZus{}z1
+        
+        \PY{k}{qui}\PY{k}{ count}\PY{k}{ if} z\PY{o}{==}\PY{l+m}{1} \PY{o}{\PYZam{}} y\PY{o}{!=}.
+        \PY{k}{scalar} low\PYZus{}ceiling = \PY{n+nf}{ceil}(\PY{n+nf}{r}(N)\PY{o}{*}(\PY{l+m}{1}\PY{o}{\PYZhy{}}Q))
+        \PY{k}{scalar} high\PYZus{}ceiling = \PY{n+nf}{ceil}(\PY{n+nf}{r}(N)\PY{o}{*}Q)
+        
+        \PY{k}{gen} id = \PYZus{}n
+        \PY{k}{gen} y\PYZus{}z1\PYZus{}low = y\PYZus{}z1
+        \PY{k}{qui}\PY{k}{ replace} y\PYZus{}z1\PYZus{}low=.\PY{k}{ if} id\PY{o}{\PYZgt{}}low\PYZus{}ceiling
+        \PY{k}{gen} y\PYZus{}z1\PYZus{}high = y\PYZus{}z1
+        \PY{k}{qui}\PY{k}{ replace} y\PYZus{}z1\PYZus{}high=.\PY{k}{ if} id\PY{o}{\PYZlt{}}high\PYZus{}ceiling
+        
+        \PY{k}{qui}\PY{k}{ mean} y\PYZus{}z1\PYZus{}low
+        \PY{k}{scalar} y\PYZus{}z1\PYZus{}low\PYZus{}mean = \PYZus{}b[y\PYZus{}z1\PYZus{}low]
+        \PY{k}{qui}\PY{k}{ mean} y\PYZus{}z1\PYZus{}high
+        \PY{k}{scalar} y\PYZus{}z1\PYZus{}high\PYZus{}mean = \PYZus{}b[y\PYZus{}z1\PYZus{}high]
+        
+        \PY{k}{qui}\PY{k}{ mean} y\PY{k}{ if} z\PY{o}{==}\PY{l+m}{0}
+        \PY{k}{scalar} y\PYZus{}mean = \PYZus{}b[y]
+        \PY{k}{ }
+        \PY{k}{disp} y\PYZus{}z1\PYZus{}low\PYZus{}mean \PY{o}{\PYZhy{}} y\PYZus{}mean
+        \PY{k}{disp} y\PYZus{}z1\PYZus{}high\PYZus{}mean \PY{o}{\PYZhy{}} y\PYZus{}mean
+\end{Verbatim}
 
-\hlstd{Y.Z1} \hlkwb{<-} \hlkwd{sort}\hlstd{(y[Z}\hlopt{==}\hlnum{1}\hlstd{])}
-\hlstd{Y.Z1.low} \hlkwb{<-} \hlstd{Y.Z1[}\hlnum{1}\hlopt{:}\hlkwd{ceiling}\hlstd{(}\hlkwd{length}\hlstd{(Y.Z1)}\hlopt{*}\hlstd{(}\hlnum{1}\hlopt{-}\hlstd{Q))]}
-\hlstd{Y.Z1.high} \hlkwb{<-} \hlstd{Y.Z1[}\hlkwd{ceiling}\hlstd{(}\hlkwd{length}\hlstd{(Y.Z1)}\hlopt{*}\hlstd{Q)}\hlopt{:}\hlkwd{length}\hlstd{(Y.Z1)]}
+    \begin{Verbatim}[commandchars=\\\{\}]
+.04190119
 
-\hlstd{trim} \hlkwb{<-} \hlkwd{c}\hlstd{(}\hlkwd{mean}\hlstd{(Y.Z1.low)} \hlopt{-} \hlkwd{mean}\hlstd{(y[Z}\hlopt{==}\hlnum{0}\hlstd{],} \hlkwc{na.rm}\hlstd{=}\hlnum{TRUE}\hlstd{),}
-          \hlkwd{mean}\hlstd{(Y.Z1.high)} \hlopt{-} \hlkwd{mean}\hlstd{(y[Z}\hlopt{==}\hlnum{0}\hlstd{],} \hlkwc{na.rm}\hlstd{=}\hlnum{TRUE}\hlstd{))}
-\hlstd{trim}
-\end{alltt}
-\begin{verbatim}
-## [1] 0.04190119 0.18824265
-\end{verbatim}
+.18824265
+
+    \end{Verbatim}
 \end{kframe}
 \end{knitrout}
 

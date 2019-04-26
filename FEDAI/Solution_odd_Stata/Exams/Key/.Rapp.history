@@ -1,0 +1,1932 @@
+mat <- matrix(1:12, nrow=3, ncol=4)
+mat
+mat <- matrix(1:12, nrow=3, ncol=4)#
+mat#
+#
+for(i in 1:nrow(mat)){#
+	for(j in 1:ncol(mat)){#
+		print(paste("Let's print the number in row",i,"and column",j,sep=" "))#
+		print(mat[i,j])#
+	}#
+}
+Set number of iterations#
+nsims <- 1000#
+#
+# Define subjects and their potential outcomes outside of the loops#
+#
+N <- 500#
+m <- 250#
+#
+id <- 1:N#
+Y0 <- sample(1:50, size=N, replace=T)		# generate some fake data#
+Y1 <- sample(10:150, size=N, replace=T)	# generate some fake data#
+#
+# Create a vector with length equal to the number of simulated iterations#
+# in which to store each estimated ATE, by iteration#
+ate.vec <- rep(NA, nsims)#
+#
+# Let's also save each random allocation vector, by randomization#
+# We create a matrix; each column is a randomization (i.e. vector of treatments)#
+d.sim <- matrix(NA, nrow=N, ncol=nsims)#
+#
+#---Inside the loop---#
+#
+for(i in 1:nsims){#
+	# conduct complete random assignment, store#
+	d <- ifelse(1:N %in% sample(1:N, m), 1, 0)#
+	d.sim[,i] <- d#
+	# switching equation -- determine what's observed#
+	Yobs <- d*Y1 + (1-d)*Y0#
+	# create your "data"#
+	dat <- as.data.frame(cbind(id,Yobs,d))#
+	# estimate ATE#
+	# ATE = E[Y(1)] - E[Y(0)]#
+	ate.vec[i] <- mean(data$Yobs[data$d==1]) - mean(data$Yobs[data$d==0])#
+}
+Set number of iterations#
+nsims <- 1000#
+#
+# Define subjects and their potential outcomes outside of the loops#
+#
+N <- 500#
+m <- 250#
+#
+id <- 1:N#
+Y0 <- sample(1:50, size=N, replace=T)		# generate some fake data#
+Y1 <- sample(10:150, size=N, replace=T)	# generate some fake data#
+#
+# Create a vector with length equal to the number of simulated iterations#
+# in which to store each estimated ATE, by iteration#
+ate.vec <- rep(NA, nsims)#
+#
+# Let's also save each random allocation vector, by randomization#
+# We create a matrix; each column is a randomization (i.e. vector of treatments)#
+d.sim <- matrix(NA, nrow=N, ncol=nsims)#
+#
+#---Inside the loop---#
+#
+for(i in 1:nsims){#
+	# conduct complete random assignment, store#
+	d <- ifelse(1:N %in% sample(1:N, m), 1, 0)#
+	d.sim[,i] <- d#
+	# switching equation -- determine what's observed#
+	Yobs <- d*Y1 + (1-d)*Y0#
+	# create your "data"#
+	dat <- as.data.frame(cbind(id,Yobs,d))#
+	# estimate ATE#
+	# ATE = E[Y(1)] - E[Y(0)]#
+	ate.vec[i] <- mean(dat$Yobs[dat$d==1]) - mean(dat$Yobs[dat$d==0])#
+}
+d.sim
+N
+ate.vec
+hist(ate.vec)
+choose(500,250)
+hist(ate.vec, breaks=55)		# histogram of distribution of ATEs#
+mean(ate.vec)					# calculate the expectation of the estimated ATEs
+hist(ate.vec, breaks=55)#
+abline(h=mean(ate.vec), col="red")
+mean(ate.vec)#
+meanATE <- mean(ate.vec)#
+#
+# histogram of distribution of ATEs#
+hist(ate.vec, breaks=55)#
+abline(h=meanATE, col="red")
+mean(ate.vec)#
+#
+# histogram of distribution of ATEs#
+hist(ate.vec, breaks=55)#
+abline(v=mean(ate.vec), col="red")
+hist(ate.vec, breaks=55, main="Distribution of estimated ATEs")#
+abline(v=mean(ate.vec), col="red")
+---Outside the loop---#
+#
+# Set number of iterations#
+nsims <- 10000#
+#
+# Define subjects and their potential outcomes outside of the loops#
+#
+N <- 500#
+m <- 250#
+#
+id <- 1:N#
+Y0 <- sample(1:50, size=N, replace=T)	# generate some fake data#
+Y1 <- sample(10:150, size=N, replace=T)	# generate some fake data#
+#
+# Create a vector with length equal to the number of simulated iterations#
+# in which to store each estimated ATE, by iteration#
+ate.vec <- rep(NA, nsims)#
+#
+# Let's also save each random allocation vector, by randomization#
+# We create a matrix; each column is a randomization (i.e. vector of treatments)#
+d.sim <- matrix(NA, nrow=N, ncol=nsims)#
+#
+#---Inside the loop---#
+#
+for(i in 1:nsims){#
+	# conduct complete random assignment, store in matrix#
+	d <- ifelse(1:N %in% sample(1:N, m), 1, 0)#
+	d.sim[,i] <- d#
+	# switching equation -- determine what's observed#
+	Yobs <- d*Y1 + (1-d)*Y0#
+	# create your "data"#
+	dat <- as.data.frame(cbind(id,Yobs,d))#
+	# estimate ATE#
+	# ATE = E[Y(1)] - E[Y(0)]#
+	ate.vec[i] <- mean(dat$Yobs[dat$d==1]) - mean(dat$Yobs[dat$d==0])#
+}#
+#
+#---Let's look at output#
+#
+ate.vec#
+#
+# calculate the expectation of the estimated ATEs over randomizations#
+mean(ate.vec)#
+#
+# histogram of distribution of ATEs#
+hist(ate.vec, breaks=55, main="Distribution of estimated ATEs")#
+abline(v=mean(ate.vec), col="red")#
+#
+# is this an exact distribution? we did 1000 simulated randomizations.#
+# 500 choose 250 is a big number. is 1000 enough?#
+choose(500,250)
+Set number of iterations#
+nsims <- 5000#
+#
+# Define subjects and their potential outcomes outside of the loops#
+#
+N <- 500#
+m <- 250#
+#
+id <- 1:N#
+Y0 <- sample(1:50, size=N, replace=T)	# generate some fake data#
+Y1 <- sample(10:150, size=N, replace=T)	# generate some fake data#
+#
+# Create a vector with length equal to the number of simulated iterations#
+# in which to store each estimated ATE, by iteration#
+ate.vec <- rep(NA, nsims)#
+#
+# Let's also save each random allocation vector, by randomization#
+# We create a matrix; each column is a randomization (i.e. vector of treatments)#
+d.sim <- matrix(NA, nrow=N, ncol=nsims)#
+#
+#---Inside the loop---#
+#
+for(i in 1:nsims){#
+	# conduct complete random assignment, store in matrix#
+	d <- ifelse(1:N %in% sample(1:N, m), 1, 0)#
+	d.sim[,i] <- d#
+	# switching equation -- determine what's observed#
+	Yobs <- d*Y1 + (1-d)*Y0#
+	# create your "data"#
+	dat <- as.data.frame(cbind(id,Yobs,d))#
+	# estimate ATE#
+	# ATE = E[Y(1)] - E[Y(0)]#
+	ate.vec[i] <- mean(dat$Yobs[dat$d==1]) - mean(dat$Yobs[dat$d==0])#
+}#
+#
+#---Let's look at output#
+#
+ate.vec#
+#
+# calculate the expectation of the estimated ATEs over randomizations#
+mean(ate.vec)#
+#
+# histogram of distribution of ATEs#
+hist(ate.vec, breaks=55, main="Distribution of estimated ATEs")#
+abline(v=mean(ate.vec), col="red")
+choose(500,250)
+Set number of iterations#
+nsims <- 5000#
+#
+# Define subjects and their potential outcomes outside of the loops#
+#
+N <- 500#
+m <- 100#
+#
+id <- 1:N#
+Y0 <- sample(1:50, size=N, replace=T)	# generate some fake data#
+Y1 <- sample(10:150, size=N, replace=T)	# generate some fake data#
+#
+# Create a vector with length equal to the number of simulated iterations#
+# in which to store each estimated ATE, by iteration#
+ate.vec <- rep(NA, nsims)#
+#
+# Let's also save each random allocation vector, by randomization#
+# We create a matrix; each column is a randomization (i.e. vector of treatments)#
+d.sim <- matrix(NA, nrow=N, ncol=nsims)#
+#
+#---Inside the loop---#
+#
+for(i in 1:nsims){#
+	# conduct complete random assignment, store in matrix#
+	d <- ifelse(1:N %in% sample(1:N, m), 1, 0)#
+	d.sim[,i] <- d#
+	# switching equation -- determine what's observed#
+	Yobs <- d*Y1 + (1-d)*Y0#
+	# create your "data"#
+	dat <- as.data.frame(cbind(id,Yobs,d))#
+	# estimate ATE#
+	# ATE = E[Y(1)] - E[Y(0)]#
+	ate.vec[i] <- mean(dat$Yobs[dat$d==1]) - mean(dat$Yobs[dat$d==0])#
+}#
+#
+#---Let's look at output#
+#
+ate.vec#
+#
+# calculate the expectation of the estimated ATEs over randomizations#
+mean(ate.vec)#
+#
+# histogram of distribution of ATEs#
+hist(ate.vec, breaks=55, main="Distribution of estimated ATEs")#
+abline(v=mean(ate.vec), col="red")
+Set number of iterations#
+nsims <- 5000#
+#
+# Define subjects and their potential outcomes outside of the loops#
+#
+N <- 500#
+m <- 200#
+#
+id <- 1:N#
+Y0 <- sample(1:50, size=N, replace=T)	# generate some fake data#
+Y1 <- sample(10:150, size=N, replace=T)	# generate some fake data#
+#
+# Create a vector with length equal to the number of simulated iterations#
+# in which to store each estimated ATE, by iteration#
+ate.vec <- rep(NA, nsims)#
+#
+# Let's also save each random allocation vector, by randomization#
+# We create a matrix; each column is a randomization (i.e. vector of treatments)#
+d.sim <- matrix(NA, nrow=N, ncol=nsims)#
+#
+#---Inside the loop---#
+#
+for(i in 1:nsims){#
+	# conduct complete random assignment, store in matrix#
+	d <- ifelse(1:N %in% sample(1:N, m), 1, 0)#
+	d.sim[,i] <- d#
+	# switching equation -- determine what's observed#
+	Yobs <- d*Y1 + (1-d)*Y0#
+	# create your "data"#
+	dat <- as.data.frame(cbind(id,Yobs,d))#
+	# estimate ATE#
+	# ATE = E[Y(1)] - E[Y(0)]#
+	ate.vec[i] <- mean(dat$Yobs[dat$d==1]) - mean(dat$Yobs[dat$d==0])#
+}#
+#
+#---Let's look at output#
+#
+ate.vec#
+#
+# calculate the expectation of the estimated ATEs over randomizations#
+mean(ate.vec)#
+#
+# histogram of distribution of ATEs#
+hist(ate.vec, breaks=55, main="Distribution of estimated ATEs")#
+abline(v=mean(ate.vec), col="red")
+Set number of iterations#
+nsims <- 5000#
+#
+# Define subjects and their potential outcomes outside of the loops#
+#
+N <- 500#
+m <- 239#
+#
+id <- 1:N#
+Y0 <- sample(1:50, size=N, replace=T)	# generate some fake data#
+Y1 <- sample(10:150, size=N, replace=T)	# generate some fake data#
+#
+# Create a vector with length equal to the number of simulated iterations#
+# in which to store each estimated ATE, by iteration#
+ate.vec <- rep(NA, nsims)#
+#
+# Let's also save each random allocation vector, by randomization#
+# We create a matrix; each column is a randomization (i.e. vector of treatments)#
+d.sim <- matrix(NA, nrow=N, ncol=nsims)#
+#
+#---Inside the loop---#
+#
+for(i in 1:nsims){#
+	# conduct complete random assignment, store in matrix#
+	d <- ifelse(1:N %in% sample(1:N, m), 1, 0)#
+	d.sim[,i] <- d#
+	# switching equation -- determine what's observed#
+	Yobs <- d*Y1 + (1-d)*Y0#
+	# create your "data"#
+	dat <- as.data.frame(cbind(id,Yobs,d))#
+	# estimate ATE#
+	# ATE = E[Y(1)] - E[Y(0)]#
+	ate.vec[i] <- mean(dat$Yobs[dat$d==1]) - mean(dat$Yobs[dat$d==0])#
+}#
+#
+#---Let's look at output#
+#
+ate.vec#
+#
+# calculate the expectation of the estimated ATEs over randomizations#
+mean(ate.vec)#
+#
+# histogram of distribution of ATEs#
+hist(ate.vec, breaks=55, main="Distribution of estimated ATEs")#
+abline(v=mean(ate.vec), col="red")
+histogram of distribution of ATEs#
+hist(ate.vec, breaks=55, main="Distribution of estimated ATEs", xlim=c(min(ate.vec), max(ate.vec)))#
+abline(v=mean(ate.vec), col="red")
+hist(ate.vec, breaks=55, main="Distribution of estimated ATEs", xlim=c(min(ate.vec), max(ate.vec)))
+hist(ate.vec, breaks=55, main="Distribution of estimated ATEs", xlim=c(min(ate.vec), max(ate.vec)))#
+abline(v=mean(ate.vec), col="red")
+Set number of iterations#
+nsims <- 5000#
+#
+# Define subjects and their potential outcomes outside of the loops#
+#
+N <- 5#
+m <- 2#
+#
+id <- 1:N#
+Y0 <- sample(1:50, size=N, replace=T)	# generate some fake data#
+Y1 <- sample(10:150, size=N, replace=T)	# generate some fake data#
+#
+# Create a vector with length equal to the number of simulated iterations#
+# in which to store each estimated ATE, by iteration#
+ate.vec <- rep(NA, nsims)#
+#
+# Let's also save each random allocation vector, by randomization#
+# We create a matrix; each column is a randomization (i.e. vector of treatments)#
+d.sim <- matrix(NA, nrow=N, ncol=nsims)#
+#
+#---Inside the loop---#
+#
+for(i in 1:nsims){#
+	# conduct complete random assignment, store in matrix#
+	d <- ifelse(1:N %in% sample(1:N, m), 1, 0)#
+	d.sim[,i] <- d#
+	# switching equation -- determine what's observed#
+	Yobs <- d*Y1 + (1-d)*Y0#
+	# create your "data"#
+	dat <- as.data.frame(cbind(id,Yobs,d))#
+	# estimate ATE#
+	# ATE = E[Y(1)] - E[Y(0)]#
+	ate.vec[i] <- mean(dat$Yobs[dat$d==1]) - mean(dat$Yobs[dat$d==0])#
+}#
+#
+#---Let's look at output#
+#
+ate.vec#
+#
+# calculate the expectation of the estimated ATEs over randomizations#
+mean(ate.vec)#
+#
+# histogram of distribution of ATEs#
+hist(ate.vec, breaks=55, main="Distribution of estimated ATEs")#
+abline(v=mean(ate.vec), col="red")
+cbind(id,Y0,Y1)
+cbind(id,Y0,Y1,(Y1-Y0))
+N <- 5#
+m <- 2#
+#
+id <- 1:N#
+Y0 <- sample(1:50, size=N, replace=T)	# generate some fake data#
+Y1 <- sample(10:150, size=N, replace=T)	# generate some fake data#
+#
+tau.i <- Y1-Y0#
+cbind(id,Y0,Y1,tau.i)
+rm(list=ls(all=T))
+cbind(c(rep("Person 1:", 13),rep("Person 2:", 13),rep("Person 3:", 13),rep("Person 4:", 13),rep("Person 5:", 13)))
+rm(list=ls(all=T))#
+#
+cbind(c(rep("Unit 1:", 29),rep("Unit 2:", 29),rep("Unit 3:", 29),rep("Unit 4:", 29),rep("Unit 5:", 29)))
+rm(list=ls(all=T))
+rm(list=ls(all=T))#
+#
+party <- c(rep("R",5), rep("D", 5))#
+Y0 <- runif(10,0,1)
+Y0
+cbind(party, Y0)
+rm(list=ls(all=T))#
+#
+party <- c(rep("R",5), rep("D", 5))#
+Y0 <- runif(10,0,1)#
+YD <- c(Y0[party=="R"]-rnorm(5,5,10) , Y0[party=="D"]+rnorm(5,5,10))#
+YR <- c(Y0[party=="R"]+rnorm(5,5,10) , Y0[party=="D"]+rnorm(5,5,10))#
+#
+cbind(party, Y0, YD, YR)
+rm(list=ls(all=T))#
+#
+party <- c(rep("R",5), rep("D", 5))#
+Y0 <- runif(10,0,1)#
+YD <- c(Y0[party=="R"]-rnorm(5,5,2) , Y0[party=="D"]+rnorm(5,5,2))#
+YR <- c(Y0[party=="R"]+rnorm(5,5,2) , Y0[party=="D"]+rnorm(5,5,2))#
+#
+cbind(party, Y0, YD, YR)
+rm(list=ls(all=T))#
+#
+party <- c(rep("R",5), rep("D", 5))#
+Y0 <- runif(10,0,1)#
+YD <- c(Y0[party=="R"]-rnorm(5,5,2) , Y0[party=="D"]+rnorm(5,5,2))#
+YR <- c(Y0[party=="R"]+rnorm(5,5,2) , Y0[party=="D"]-rnorm(5,5,2))#
+#
+cbind(party, Y0, YD, YR)
+rm(list=ls(all=T))#
+N <- 50#
+party <- c(rep("R",N/2), rep("D", N/2))#
+Y0 <- runif(N,0,1)#
+YD <- c(Y0[party=="R"]-rnorm(N/2,5,2) , Y0[party=="D"]+rnorm(N/2,5,2))#
+YR <- c(Y0[party=="R"]+rnorm(N/2,5,2) , Y0[party=="D"]-rnorm(N/2,5,2))#
+#
+cbind(party, Y0, YD, YR)
+d <- sample(1:3, N, replace=T)
+d
+Y <- rep(NA, N)#
+#
+for(i in 1:N){#
+	Y[i] <- ifelse(d[i]==1, Y0[i], ifelse(d[i]==2, YD[i], ifelse(d[i]==3, YR[i], Y[i])))#
+}
+table(Y)
+Y
+cbind(party, Y0, YD, YR, Y)
+cbind(party, Y0, YD, YR, d, Y)
+lm(Y ~ as.factor(d))
+out <- lm(Y ~ as.factor(d))#
+summary(out)
+rm(list=ls(all=T))#
+N <- 500#
+#
+party <- c(rep("R",N/2), rep("D", N/2))#
+Y0 <- runif(N,0,1)#
+YD <- c(Y0[party=="R"]-rnorm(N/2,5,2) , Y0[party=="D"]+rnorm(N/2,5,2))#
+YR <- c(Y0[party=="R"]+rnorm(N/2,5,2) , Y0[party=="D"]-rnorm(N/2,5,2))#
+d <- sample(1:3, N, replace=T)#
+d#
+#
+Y <- rep(NA, N)#
+#
+for(i in 1:N){#
+	Y[i] <- ifelse(d[i]==1, Y0[i], ifelse(d[i]==2, YD[i], ifelse(d[i]==3, YR[i], Y[i])))#
+}#
+#
+cbind(party, Y0, YD, YR, d, Y)#
+out <- lm(Y ~ as.factor(d))#
+summary(out)
+out2 <- lm(Y ~ as.factor(d) + party)#
+summary(out2)
+out2 <- lm(Y ~ as.factor(d) + as.factor(party))#
+summary(out2)
+summary(out)
+out3 <- lm(Y ~ as.factor(d) + as.factor(party) + as.factor(d):as.factor(party))#
+summary(out3)
+cbind(party, Y0, YD, YR, d, Y)
+block.N <- N/2#
+#
+d.D <- sample(1:3, block.N, replace=T)#
+d.R <- sample(1:3, block.N, replace=T)
+block.N <- N/2#
+#
+d.D <- sample(1:3, block.N, replace=T)#
+d.R <- sample(1:3, block.N, replace=T)#
+#
+# define#
+# if d=1 then congruent#
+# if d=2 then non congruent#
+# if d=3 then control#
+#
+Y.D <- rep(NA, block.N)#
+Y.R <- rep(NA, block.N)#
+#
+for(i in 1:block.N){#
+	Y.D[i] <- ifelse(d.D[i]==1, YD[i], ifelse(d.D[i]==2, YR[i], ifelse(d.D[i]==3, Y0[i], Y[i])))#
+	Y.R[i] <- ifelse(d.R[i]==1, YR[i], ifelse(d.R[i]==2, YD[i], ifelse(d.R[i]==3, Y0[i], Y[i])))#
+}
+Y.blocked <- c(Y.R, Y.D)
+Y.blocked <- c(Y.R, Y.D)#
+d.blocked <- c(d.R, d.D)#
+cbind(party, Y0, YD, YR, d.blocked, Y.blocked)
+block.N <- N/2#
+#
+d.D <- sample(1:3, block.N, replace=T)#
+d.R <- sample(1:3, block.N, replace=T)#
+#
+# define#
+# if d=1 then congruent#
+# if d=2 then non congruent#
+# if d=3 then control#
+#
+Y.D <- rep(NA, block.N)#
+Y.R <- rep(NA, block.N)#
+#
+for(i in 1:block.N){#
+	Y.D[i] <- ifelse(d.D[i]==1, YD[i], ifelse(d.D[i]==2, YR[i], ifelse(d.D[i]==3, Y0[i], Y.D[i])))#
+	Y.R[i] <- ifelse(d.R[i]==1, YR[i], ifelse(d.R[i]==2, YD[i], ifelse(d.R[i]==3, Y0[i], Y.D[i])))#
+}#
+#
+Y.blocked <- c(Y.R, Y.D)#
+d.blocked <- c(d.R, d.D)#
+cbind(party, Y0, YD, YR, d.blocked, Y.blocked)
+for(i in 1:block.N){#
+	Y.R[i] <- ifelse(d.R[i]==1, YR[i], ifelse(d.R[i]==2, YD[i], ifelse(d.R[i]==3, Y0[i], Y.D[i])))#
+	Y.D[i] <- ifelse(d.D[i]==1, YD[i+length(block.N)], ifelse(d.D[i]==2, YR[i+length(block.N)], ifelse(d.D[i]==3, Y0[i+length(block.N)], Y.D[i])))#
+}#
+#
+Y.blocked <- c(Y.R, Y.D)#
+d.blocked <- c(d.R, d.D)#
+cbind(party, Y0, YD, YR, d.blocked, Y.blocked)
+Y.D <- rep(NA, block.N)#
+Y.R <- rep(NA, block.N)#
+#
+Y0.R <- Y0[1:(N/2)]#
+Y0.D <- Y0[(N/2)+1:N]#
+YR.R <- YR[1:(N/2)]#
+YR.D <- YR[(N/2)+1:N]#
+YD.R <- YD[1:(N/2)]#
+YD.D <- YD[(N/2)+1:N]#
+#
+for(i in 1:block.N){#
+	Y.R[i] <- ifelse(d.R[i]==1, YR.R[i], ifelse(d.R[i]==2, YD.R[i], ifelse(d.R[i]==3, Y0.R[i], Y.D[i])))#
+	Y.D[i] <- ifelse(d.D[i]==1, YD.D[i], ifelse(d.D[i]==2, YR.D[i], ifelse(d.D[i]==3, Y0.D[i], Y.D[i])))#
+}#
+#
+Y.blocked <- c(Y.R, Y.D)#
+d.blocked <- c(d.R, d.D)#
+cbind(party, Y0, YD, YR, d.blocked, Y.blocked)
+d.blocked <- relevel(d.blocked, ref="3")#
+out.CT <- lm(Y.blocked ~ as.factor(d.blocked))#
+summary(out.CT)#
+#
+out2.CT <- lm(Y.blocked ~ as.factor(d.blocked) + as.factor(party))#
+summary(out2.CT)#
+#
+out3.CT <- lm(Y.blocked ~ as.factor(d.blocked) + as.factor(party) + as.factor(d.blocked):as.factor(party))#
+summary(out3.CT)
+d.blocked <- relevel(d.blocked, ref=3)
+d.blocked <- as.factor(d.blocked)#
+d.blocked <- relevel(d.blocked, ref=3)
+out.CT <- lm(Y.blocked ~ as.factor(d.blocked))#
+summary(out.CT)#
+#
+out2.CT <- lm(Y.blocked ~ as.factor(d.blocked) + as.factor(party))#
+summary(out2.CT)#
+#
+out3.CT <- lm(Y.blocked ~ as.factor(d.blocked) + as.factor(party) + as.factor(d.blocked):as.factor(party))#
+summary(out3.CT)
+summary(out3)
+R tutorial 6: the RI package#
+# Al Fang (ahf2116@columbia.edu)#
+#######################################
+#
+rm(list=ls(all=T))#
+#
+# install.packages("ri", dependencies=T)#
+#
+library(ri)#
+#
+N <- 100#
+m <- 50#
+Y <- sample(1:500, N)#
+D <- sample(1:N %in% sample(1:N, m), 1, 0)#
+#
+cbind(Y,D)
+R tutorial 6: the RI package#
+# Al Fang (ahf2116@columbia.edu)#
+#######################################
+#
+rm(list=ls(all=T))#
+#
+# install.packages("ri", dependencies=T)#
+#
+library(ri)#
+#
+N <- 100#
+m <- 50#
+Y <- sample(1:500, N)#
+D <- ifelse(1:N %in% sample(1:N, m), 1, 0)#
+#
+cbind(Y,D)
+R tutorial 6: the RI package#
+# Al Fang (ahf2116@columbia.edu)#
+#######################################
+#
+rm(list=ls(all=T))#
+#
+# install.packages("ri", dependencies=T)#
+#
+library(ri)#
+#
+N <- 100#
+m <- 50#
+Y <- sample(1:500, N)#
+D <- ifelse(1:N %in% sample(1:N, m), 1, 0)#
+#
+b <- c(rep(1,N/2), rep(2,N/2))
+b
+probs <- genprobexact(Z, blockvar=b)
+R tutorial 6: the RI package#
+# Al Fang (ahf2116@columbia.edu)#
+#######################################
+#
+rm(list=ls(all=T))#
+#
+# install.packages("ri", dependencies=T)#
+#
+library(ri)#
+#
+N <- 100#
+m <- 50#
+Y <- sample(1:500, N)#
+Z <- ifelse(1:N %in% sample(1:N, m), 1, 0)#
+b <- c(rep(1,N/2), rep(2,N/2))#
+#
+probs <- genprobexact(Z, blockvar=b)#
+table(probs)
+ate <- estate(Y, Z, prob=probs)#
+ate
+perms <- genperms(Z,maxiter=10000)
+perms
+Ys <- genouts(Y, Z, ate=0)
+Ys
+distout <- gendist(Ys, perms, prob=probs)
+distout
+ate
+mean(abs(distout) >= abs(ate))
+distout
+mean(distout)
+ate
+dispdist(distout, ate)
+Ys <- genouts(Y, Z, ate=ate)#
+#
+# generate sampling distribution based on schedule#
+# of potential outcomes implied by the sharp null#
+#
+distout <- gendist(Ys, perms, prob=probs)
+ate									# estimated ATE#
+mean(abs(distout) >= abs(ate))		# two tailed comparison used to calculate p value
+dispdist(distout, ate)
+R Starter Code - Randomization Inference#
+#############################################
+#
+# install.packages("ri", dependencies=TRUE)#
+library(ri)#
+#
+## Generate data, or read in your data set#
+#
+N <- 50#
+m <- 25#
+#
+d <- ifelse(1:N %in% sample(1:N, m), 1, 0)#
+Y0 <- runif(N,0,1)#
+Y1 <- Y0 + rnorm(N,5,2)#
+Y <- Y1*d + Y0*(1-d)
+cbind(Y0,Y1,d,Y)	# look at your data
+mean(Y[d==1]) - mean(Y[d==0])
+lm(Y~d)
+R Starter Code - Randomization Inference#
+# POLS 4368 Section - Feb 12 2013#
+#############################################
+#
+#####################################
+## Load the RI package#
+#####################################
+#
+# install.packages("ri", dependencies=TRUE)#
+library(ri)#
+#
+#####################################
+## Generate data, or read-in data#
+#####################################
+N <- 50#
+m <- 25
+d <- ifelse(1:N %in% sample(1:N, m), 1, 0)#
+Y0 <- runif(N,0,1)#
+Y1 <- Y0 + rnorm(N,5,2)#
+Y <- Y1*d + Y0*(1-d)#
+#
+cbind(Y0,Y1,d,Y)	# look at your data
+R Starter Code - Randomization Inference#
+# POLS 4368 Section - Feb 12 2013#
+#############################################
+#
+#####################################
+## Load the RI package#
+#####################################
+#
+# install.packages("ri", dependencies=TRUE)#
+library(ri)#
+set.seed(1234567)#
+#
+#####################################
+## Generate data, or read-in data#
+#####################################
+N <- 50#
+m <- 25#
+#
+d <- ifelse(1:N %in% sample(1:N, m), 1, 0)#
+Y0 <- runif(N,0,1)#
+Y1 <- Y0 + rnorm(N,5,2)#
+Y <- Y1*d + Y0*(1-d)#
+#
+cbind(Y0,Y1,d,Y)	# look at your data#
+#
+## Conduct analysis of actual experiment#
+## Estimate the ATE#
+#
+# nonparametric#
+mean(Y[d==1]) - mean(Y[d==0])#
+#
+# or fitting data to ols#
+lm(Y~d)
+Conduct randomization inference#
+## This code is also from "RI Example -- Clingingsmith_source.R" #
+##		from Chapter 3 under "Data and R Programs" on Courseworks#
+#########################################################################
+#
+# Define inputs (Z, Y, any blocking variable, or pre-treatment variables)#
+# Z must be a binary variable 0=control, 1=treatment#
+Z <- D
+probs <- genprobexact(Z)#
+ate <- estate(Y,Z,prob=probs)
+probs <- genprobexact(Z)
+Z
+R Starter Code - Randomization Inference#
+# POLS 4368 Section - Feb 12 2013#
+#############################################
+#
+#####################################
+## Load the RI package#
+#####################################
+#
+# install.packages("ri", dependencies=TRUE)#
+library(ri)#
+set.seed(1234567)#
+#
+#####################################
+## Generate data, or read-in data#
+#####################################
+N <- 50#
+m <- 25#
+#
+d <- ifelse(1:N %in% sample(1:N, m), 1, 0)#
+Y0 <- runif(N,0,1)#
+Y1 <- Y0 + rnorm(N,5,2)#
+Y <- Y1*d + Y0*(1-d)#
+#
+cbind(Y0,Y1,d,Y)	# look at your data#
+#
+## Conduct analysis of actual experiment#
+## Estimate the ATE#
+#
+# nonparametric#
+mean(Y[d==1]) - mean(Y[d==0])#
+#
+# or fitting data to ols#
+lm(Y~d)#
+#
+#########################################################################
+## Conduct randomization inference#
+## This code is also from "RI Example -- Clingingsmith_source.R" #
+##		from Chapter 3 under "Data and R Programs" on Courseworks#
+#########################################################################
+#
+# Define inputs (Z, Y, any blocking variable, or pre-treatment variables)#
+# Z must be a binary variable 0=control, 1=treatment#
+Z <- d#
+probs <- genprobexact(Z)
+probs
+ate <- estate(Y,Z,prob=probs)
+ate
+Set the number of simulated random assignments#
+perms <- genperms(Z,maxiter=10000)
+Create potential outcomes UNDER THE SHARP NULL OF NO EFFECT FOR ANY UNIT#
+Ys <- genouts(Y,Z,ate=0)
+Generate the sampling distribution based on schedule of potential outcome#
+# implied by the sharp null hypothesis#
+distout <- gendist(Ys,perms,prob=probs)#
+#
+ate                                 # estimated ATE
+sum(distout >= ate)                 # one-tailed comparison used to calculate p-value (greater than)
+sum(abs(distout) >= abs(ate))       # two-tailed comparison used to calculate p-value
+dispdist(distout,ate)               # display p-values, 95% confidence interval, standard error under the null, and graph the sampling distribution under the null
+dispdist(distout,ate)
+R Starter Code - Randomization Inference#
+# POLS 4368 Section - Feb 12 2013#
+#############################################
+#
+#####################################
+## Load the RI package#
+#####################################
+#
+# install.packages("ri", dependencies=TRUE)#
+library(ri)#
+set.seed(1234567)#
+#
+#####################################
+## Generate data, or read-in data#
+#####################################
+N <- 50#
+m <- 25#
+#
+d <- ifelse(1:N %in% sample(1:N, m), 1, 0)#
+Y0 <- runif(N,0,1)#
+Y1 <- Y0 + rnorm(N,2,2)#
+Y <- Y1*d + Y0*(1-d)#
+#
+cbind(Y0,Y1,d,Y)	# look at your data#
+#
+## Conduct analysis of actual experiment#
+## Estimate the ATE#
+#
+# nonparametric#
+mean(Y[d==1]) - mean(Y[d==0])#
+#
+# or fitting data to ols#
+lm(Y~d)#
+#
+#########################################################################
+## Conduct randomization inference#
+## This code is also from "RI Example -- Clingingsmith_source.R" #
+##		from Chapter 3 under "Data and R Programs" on Courseworks#
+#########################################################################
+#
+# Define inputs (Z, Y, any blocking variable, or pre-treatment variables)#
+# Z must be a binary variable 0=control, 1=treatment#
+Z <- d#
+probs <- genprobexact(Z)#
+ate <- estate(Y,Z,prob=probs)#
+#
+# Set the number of simulated random assignments#
+perms <- genperms(Z,maxiter=10000) #
+#
+# Create potential outcomes UNDER THE SHARP NULL OF NO EFFECT FOR ANY UNIT#
+Ys <- genouts(Y,Z,ate=0)#
+#
+# Generate the sampling distribution based on schedule of potential outcome#
+# implied by the sharp null hypothesis#
+distout <- gendist(Ys,perms,prob=probs)#
+#
+ate                                 # estimated ATE#
+sum(distout >= ate)                 # one-tailed comparison used to calculate p-value (greater than)#
+sum(abs(distout) >= abs(ate))       # two-tailed comparison used to calculate p-value#
+#
+dispdist(distout,ate)               # display p-values, 95% confidence interval, standard error under the null, and graph the sampling distribution under the null
+--------------------------------------------------------------#
+# estimation of confidence intervals assuming ATE=estimated ATE#
+#--------------------------------------------------------------#
+Ys <- genouts(Y,Z,ate=ate)            # create potential outcomes UNDER THE ASSUMPTION THAT ATE=ESTIMATED ATE#
+#
+distout <- gendist(Ys,perms,prob=probs)  # generate the sampling distribution  based on the schedule of potential outcomes implied by the null hypothesis#
+#
+dispdist(distout,ate)               # display p-values, 95% confidence interval, standard error under the null, and graph the sampling distribution under the null
+library(pwr)
+R Code - Power analysis example.R#
+# POLS 4368 - TA: Albert Fang#
+######################################
+# Install package: pwr#
+install.packages("pwr", dependencies=T)
+rm(list=ls(all=T))   # clear memory#
+library(pwr)
+?pwr.t2n.test
+n.t <- 50			# sample size, treatment group#
+n.c <- 50			# sample size, control group#
+sig.level <- .05	# set test size alpha = 0.05#
+#
+pwr.t2n.test(n1=n.t, n2=n.c , d=d, sig.level=sig.level, alternative="two.sided")
+pwr.t2n.test(n1=n.t, n2=n.c, sig.level=sig.level, alternative="two.sided")
+pwr.t2n.test(n1=n.t, n2=n.c, d=NULL, sig.level=sig.level, alternative="two.sided")
+?pwr.t2n.test
+pwr.t2n.test(n1=n1, n2=n2 , d=d, sig.level=sig.level, alternative="two.sided")
+n1 <- 50#
+n2 <- 50#
+sig.level <- 0.05#
+#
+pwr.t2n.test(n1=n1, n2=n2 , d=d, sig.level=sig.level, alternative="two.sided")
+n1 <- 50#
+n2 <- 50#
+sig.level <- 0.05#
+d <- 0.6#
+#
+pwr.t2n.test(n1=n1, n2=n2 , d=d, sig.level=sig.level, alternative="two.sided")
+?pwr.t2n.test
+R Code - Power analysis example.R#
+# POLS 4368 - TA: Albert Fang#
+######################################
+# Install package: pwr#
+# install.packages("pwr", dependencies=T)#
+#
+rm(list=ls(all=T))   # clear memory#
+library(pwr)#
+#
+# RELEVANT FUNCTIONS#
+# pwr.t2n.test -  two samples (different sizes) t-tests of means#
+# pwr.2p2n.test - two proportions (different sample sizes)#
+# pwr.2p.test - two proportions (same sample sizes)#
+# Toy Example#
+#
+n1 <- 50			# sample size, group 1 (e.g. "treatment")#
+n2 <- 50			# sample size, group 2 (e.g. "control")#
+sig.level <- 0.05	# test size alpha = 0.05#
+d <- 0.6			# effect size#
+#
+pwr.t2n.test(n1=n1, n2=n2 , d=d, sig.level=sig.level, alternative="two.sided")
+pwr.t2n.test(n1=n1, n2=n2 , d=d, sig.level=sig.level, alternative="two.sided")$power
+pwrout <- function(n1,n2,d,sig.level=0.05){#
+	pwr.t2n.test(n1=n1, n2=n2 , d=d, sig.level=sig.level, alternative="two.sided")$power#
+}
+seq(100, 1000, 50)
+n <- seq(100, 1000, 50)
+n
+plot(n, pwrout(n/3, n/3, d, .05))
+R Code - Power analysis example.R#
+# POLS 4368 - TA: Albert Fang#
+######################################
+# Install package: pwr#
+# install.packages("pwr", dependencies=T)#
+#
+rm(list=ls(all=T))   # clear memory#
+library(pwr)
+pwrout <- function(n1,n2,d,sig.level=0.05){#
+	pwr.t2n.test(n1=n1, n2=n2 , d=d, sig.level=sig.level, alternative="two.sided")$power#
+}#
+#
+# Let's plot power against simulated Ns#
+#
+n <- seq(100, 1000, 50)#
+#
+plot(n, pwrout(n/3, n/3, d, .05))
+?pwr.2p.test
+?pwr.t2n.test
+n <- seq(100, 1000, 50)#
+d <- 0.2#
+#
+plot(n, pwrout(n/3, n/3, d, .05))
+n <- seq(100, 1000, 50)#
+d <- 0.6#
+#
+plot(n, pwrout(n/3, n/3, d, .05))
+plot(n, pwrout(n/3, n/3, d, .05), type="l")
+plot(n, pwrout(n/3, n/3, d, .05), type="l", ylab="Power", xlab="Sample Size")
+n <- seq(100, 1000, 50)#
+d <- 0.4#
+#
+plot(n, pwrout(n/3, n/3, d, .05), type="l", ylab="Power", xlab="Sample Size")
+plot(n, pwrout(n/3, n/3, d, .05), type="l", ylab="Power", xlab="Sample Size")#
+abline(v=0.8, lty=2, col="red")
+plot(n, pwrout(n/3, n/3, d, .05), type="l", ylab="Power", xlab="Sample Size")#
+abline(h=0.8, lty=2, col="red")
+plot(n, pwrout(n/3, n/3, d, .05), type="l", ylab="Power", xlab="Sample Size")#
+lines(n, pwrout(n/5, n/5, d, .05))#
+abline(h=0.8, lty=2, col="red")
+plot(n, pwrout(n/2, n/2, d, .05), type="l", ylab="Power", xlab="Sample Size")#
+lines(n, pwrout(n/3, n/3, d, .05))#
+lines(n, pwrout(n/4, n/4, d, .05))#
+lines(n, pwrout(n/5, n/5, d, .05))#
+abline(h=0.8, lty=2, col="red")
+plot(n, pwrout(n/5, n/5, d, .05), type="l", ylab="Power", xlab="Sample Size")#
+lines(n, pwrout(n/4, n/4, d, .05))#
+lines(n, pwrout(n/3, n/3, d, .05))#
+lines(n, pwrout(n/2, n/2, d, .05))#
+abline(h=0.8, lty=2, col="red")
+plot(n, pwrout(n/5, n/5, d, .05), type="l", ylab="Power", xlab="Sample Size", ylim=c(0,1))#
+lines(n, pwrout(n/4, n/4, d, .05))#
+lines(n, pwrout(n/3, n/3, d, .05))#
+lines(n, pwrout(n/2, n/2, d, .05))#
+abline(h=0.8, lty=2, col="red")
+d <- 0.5#
+#
+plot(n, pwrout(n/5, n/5, d, .05), type="l", ylab="Power", xlab="Sample Size", ylim=c(0,1))#
+lines(n, pwrout(n/4, n/4, d, .05))#
+lines(n, pwrout(n/3, n/3, d, .05))#
+lines(n, pwrout(n/2, n/2, d, .05))#
+abline(h=0.8, lty=2, col="red")
+d <- 0.002#
+#
+plot(n, pwrout(n/5, n/5, d, .05), type="l", ylab="Power", xlab="Sample Size", ylim=c(0,1))#
+lines(n, pwrout(n/4, n/4, d, .05))#
+lines(n, pwrout(n/3, n/3, d, .05))#
+lines(n, pwrout(n/2, n/2, d, .05))#
+abline(h=0.8, lty=2, col="red")
+d <- 0.02#
+#
+plot(n, pwrout(n/5, n/5, d, .05), type="l", ylab="Power", xlab="Sample Size", ylim=c(0,1))#
+lines(n, pwrout(n/4, n/4, d, .05))#
+lines(n, pwrout(n/3, n/3, d, .05))#
+lines(n, pwrout(n/2, n/2, d, .05))#
+abline(h=0.8, lty=2, col="red")
+d <- 0.1#
+#
+plot(n, pwrout(n/5, n/5, d, .05), type="l", ylab="Power", xlab="Sample Size", ylim=c(0,1))#
+lines(n, pwrout(n/4, n/4, d, .05))#
+lines(n, pwrout(n/3, n/3, d, .05))#
+lines(n, pwrout(n/2, n/2, d, .05))#
+abline(h=0.8, lty=2, col="red")
+d <- 0.12#
+#
+plot(n, pwrout(n/5, n/5, d, .05), type="l", ylab="Power", xlab="Sample Size", ylim=c(0,1))#
+lines(n, pwrout(n/4, n/4, d, .05))#
+lines(n, pwrout(n/3, n/3, d, .05))#
+lines(n, pwrout(n/2, n/2, d, .05))#
+abline(h=0.8, lty=2, col="red")
+d <- 0.2#
+#
+plot(n, pwrout(n/5, n/5, d, .05), type="l", ylab="Power", xlab="Sample Size", ylim=c(0,1))#
+lines(n, pwrout(n/4, n/4, d, .05))#
+lines(n, pwrout(n/3, n/3, d, .05))#
+lines(n, pwrout(n/2, n/2, d, .05))#
+abline(h=0.8, lty=2, col="red")
+d <- 0.25#
+#
+plot(n, pwrout(n/5, n/5, d, .05), type="l", ylab="Power", xlab="Sample Size", ylim=c(0,1))#
+lines(n, pwrout(n/4, n/4, d, .05))#
+lines(n, pwrout(n/3, n/3, d, .05))#
+lines(n, pwrout(n/2, n/2, d, .05))#
+abline(h=0.8, lty=2, col="red")
+plot(n, pwrout(n/5, n/5, d, .05), type="l", ylab="Power", xlab="Sample Size", ylim=c(0,1))
+lines(n, pwrout(n/4, n/4, d, .05))
+lines(n, pwrout(n/3, n/3, d, .05))
+lines(n, pwrout(n/2, n/2, d, .05))
+abline(h=0.8, lty=2, col="red")
+n
+plot(n, pwrout(n/5, n/5, d, .05), type="l", ylab="Power", xlab="Sample Size", ylim=c(0,1))
+R Code - Rosenbaum confidence intervals.R#
+# POLS 4368 - TA: Albert Fang#
+# 19 Feb 2013#
+######################################
+#
+# Install RI package#
+# install.packages("ri", dependencies=TRUE)#
+#
+rm(list=ls(all=T))   # clear memory#
+library(ri)
+?invert.ci
+R Code - Rosenbaum confidence intervals.R#
+# POLS 4368 - TA: Albert Fang#
+# 19 Feb 2013#
+######################################
+#
+# Install RI package#
+# install.packages("ri", dependencies=TRUE)#
+#
+rm(list=ls(all=T))   # clear memory#
+library(ri)#
+#
+######################################
+#
+# the invert.ci() function in the RI package#
+#
+# Experimental code to generate endpoints of Rosenbaum (2002)-style#
+# confidence intervals through inversion of a constant effects hypothesis.#
+# Only conducts inference with the difference in (weighted) means#
+# as the test statistic, no covariate adjustment#
+#
+# Intuition behind method:#
+# 1) Take Y1, subtract posited ATE#
+# 2) Test statistical significance between actual Y0s and #
+#    synthetic Y0s manufactured in the treatment group#
+# 3) Repeat (1) and (2) for a bunch of posited ATEs, for each#
+#	 test the null (mean synthetic Y0s = mean actual Y0s)#
+# Note: if you overshoot you start to strain credulity#
+#
+# the invert.ci() function:#
+#   Input arguments:#
+#	Y - numeric vector of length N, outcome variable#
+#	Z - binary vector (0 or 1) of length N, treatment indicator#
+#	prob - numeric vector within the (0,1) interval of length N, #
+#		probability of treatment assignment, as outputted by genprob() or genprobexact().#
+#		When prob=NULL (the default), assumes uniform probability of assignment#
+#		to treatment equal to the mean of Z#
+#	perms - N-by-r permutation matrix, as output by genperms or genperms.custom#
+#	targetp - target p-value for the endpoint of the confidence interval#
+#
+######################################
+#
+# Generate some data (from Rosenbaum example.R in "Data and R Programs" on Courseworks)#
+#
+ntreat <- 500#
+ncontrol <- 3500#
+N <- ntreat+ncontrol#
+#
+# ratio of treatment to control standard deviations#
+ratio <- 2#
+#
+Y0 <- rnorm(N)#
+Y0 <- Y0 - mean(Y0)#
+Y1 <- rnorm(N)*ratio#
+Y1 <- Y1 - mean(Y1)
+Z <- c(rep(1,ntreat),rep(0,ncontrol))
+perms <- genperms(Z,maxiter=500)
+perms
+upperci <- lowerci <- rep(NA,ncol(perms))
+upperci
+lowerci
+Nupperci <- Nlowerci <- rep(NA,ncol(perms))
+Pupperci <- Plowerci <- rep(NA,ncol(perms))
+for (i in 1:ncol(perms)) {#
+	Zri <- perms[,i]#
+	Y <- Y0*(1-Zri) + Y1*Zri#
+	upperci[i] <- invert.ci(Y,Zri,prob=rep(mean(Zri),N),perms=perms,targetp=0.975)#
+	lowerci[i] <- invert.ci(Y,Zri,prob=rep(mean(Zri),N),perms=perms,targetp=0.025)#
+	seest <- (var(Y[Zri==1])/sum(Zri) + var(Y[Zri==0])/sum(1-Zri))^.5#
+	ateest <- mean(Y[Zri==1]) - mean(Y[Zri==0])#
+	Nupperci[i] <- ateest + 1.96*seest#
+	Nlowerci[i] <- ateest - 1.96*seest#
+	Ys <- genouts(Y,Zri,ate=ateest)#
+	cis <- quantile(gendist(Ys,perms,prob=rep(mean(Zri),N)),c(0.025,0.975))#
+	Plowerci[i] <- cis[1]#
+	Pupperci[i] <- cis[2]#
+	cat(i,"")#
+}
+Coverage of Neyman + normal approx#
+mean(Nupperci >= 0 & Nlowerci <= 0,na.rm=TRUE)#
+# Coverage of Rosenbaum method#
+mean(upperci >= 0 & lowerci <= 0,na.rm=TRUE)#
+# Coverage of Aronow method#
+mean(Pupperci >= 0 & Plowerci <= 0,na.rm=TRUE)#
+#
+# Summarizing intervals#
+summary(Nupperci)#
+summary(upperci)#
+summary(Pupperci)#
+#
+summary(Nlowerci)#
+summary(lowerci)#
+summary(Plowerci)
+R Code - Rosenbaum confidence intervals.R#
+# POLS 4368 - Experiments#
+# 19 Feb 2013#
+######################################
+#
+# Install RI package#
+# install.packages("ri", dependencies=TRUE)#
+#
+rm(list=ls(all=T))   # clear memory#
+library(ri)#
+#
+######################################
+#
+# the invert.ci() function in the RI package#
+#
+# Experimental code to generate endpoints of Rosenbaum (2002)-style#
+# confidence intervals through inversion of a constant effects hypothesis.#
+# Only conducts inference with the difference in (weighted) means#
+# as the test statistic, no covariate adjustment#
+#
+# Intuition behind method:#
+# 1) Take Y1, subtract posited ATE#
+# 2) Test statistical significance between actual Y0s and #
+#    synthetic Y0s manufactured in the treatment group#
+# 3) Repeat (1) and (2) for a bunch of posited ATEs, for each#
+#	 test the null (mean synthetic Y0s = mean actual Y0s)#
+# Note: if you overshoot you start to strain credulity#
+#
+# the invert.ci() function:#
+#   Input arguments:#
+#	Y - numeric vector of length N, outcome variable#
+#	Z - binary vector (0 or 1) of length N, treatment indicator#
+#	prob - numeric vector within the (0,1) interval of length N, #
+#		probability of treatment assignment, as outputted by genprob() or genprobexact().#
+#		When prob=NULL (the default), assumes uniform probability of assignment#
+#		to treatment equal to the mean of Z#
+#	perms - N-by-r permutation matrix, as output by genperms or genperms.custom#
+#	targetp - target p-value for the endpoint of the confidence interval#
+#
+######################################
+# Example: from Rosenbaum example.R in "Data and R Programs" on Courseworks#
+#
+# Generate some data #
+#
+ntreat <- 500#
+ncontrol <- 3500#
+N <- ntreat+ncontrol#
+#
+# ratio of treatment to control standard deviations#
+ratio <- 2#
+#
+Y0 <- rnorm(N)#
+Y0 <- Y0 - mean(Y0)#
+Y1 <- rnorm(N)*ratio#
+Y1 <- Y1 - mean(Y1)#
+#
+# True ATE is Zero.#
+#
+Z <- c(rep(1,ntreat),rep(0,ncontrol))#
+#
+perms <- genperms(Z,maxiter=500)#
+#
+upperci <- lowerci <- rep(NA,ncol(perms))#
+Nupperci <- Nlowerci <- rep(NA,ncol(perms))#
+Pupperci <- Plowerci <- rep(NA,ncol(perms))
+rm(list=ls(all=T))
+rm(list=ls(all=T))#
+#
+library(foreign)#
+#
+dupck <- read.csv("/Users/al/Dropbox/NYC Housing Discrimination/07 Data/Scaleup/step2_clean/S2A_SB_DUPS_20130303.csv", header=T)
+dupck <- t(dupck)
+dupck
+rm(list=ls(all=T))#
+#
+library(foreign)#
+#
+dups <- read.csv("/Users/al/Dropbox/NYC Housing Discrimination/07 Data/Scaleup/step2_clean/S2A_SB_DUPS_20130303.csv", header=T)#
+#
+dups <- t(dups)#
+#
+dups
+head(dups)
+names(dups)
+colnames(dups)
+dups[1,1]
+dups[,1:5]
+rm(list=ls(all=T))#
+#
+library(foreign)#
+#
+dups <- read.csv("/Users/al/Dropbox/NYC Housing Discrimination/07 Data/Scaleup/step2_clean/S2A_SB_DUPS_20130303.csv", header=T)
+dups
+names(dups)
+rm(list=ls(all=T))#
+data <- matrix(1:500,10,50)#
+#
+uni <- 2116#
+#
+set.seed(uni)
+data
+nrow(data)
+rm(list=ls(all=T))#
+data <- matrix(1:500,10,50)#
+#
+uni <- 2116#
+#
+set.seed(uni)#
+sample(1:nrow(data), 500, replace=F)
+rm(list=ls(all=T))#
+data <- matrix(1:500,10,50)#
+#
+uni <- 2116#
+#
+set.seed(uni)#
+sample(1:nrow(data), 5, replace=F)
+sample(1:nrow(data), 5, replace=F)
+rm(list=ls(all=T))#
+data <- matrix(1:500,10,50)#
+#
+uni <- 2116#
+#
+set.seed(uni)#
+sample(1:nrow(data), 5, replace=F)
+set.seed(uni)#
+sample(1:nrow(data), 5, replace=F)
+uni <- 2116#
+set.seed(uni)#
+sample(1:nrow(data), 5, replace=F)
+uni <- 3000#
+set.seed(uni)#
+sample(1:nrow(data), 5, replace=F)
+rm(list=ls(all=T))#
+data <- matrix(1:500,10,50)#
+#--------------------------- START CODE: Q1 DATA SUBSET ---------------------------#
+# Description: This code randomly subsets the data for Q1.#
+# Notes:#
+# (1) Make sure you read in the dataset for this question BEFORE running this code#
+# (2) You must replace the value assigned to "uni" using the last 4 #s in your UNI#
+# (3) You must run all of the code at once#
+# (4) The output dataset is named "q1data"#
+#
+uni <- 5000		# replace 5000 with the last 4 numbers in your UNI#
+#
+set.seed(uni)#
+sample(1:nrow(data), (nrow(data)/2)+1, replace=F)#
+#
+#--------------------------- END CODE: Q1 DATA SUBSET -----------------------------
+rm(list=ls(all=T))#
+data <- matrix(1:500,10,50)#
+#--------------------------- START CODE: Q1 DATA SUBSET ---------------------------#
+# Description: This code randomly subsets the data for Q1. If the original dataset#
+#	contains N records, it will draw (N/2)+1 records at random given a seed.#
+# Notes:#
+# (1) Make sure you read in the dataset for this question BEFORE running this code#
+# (2) You must replace the value assigned to "uni" using the last 4 #s in your UNI#
+# (3) You must run all of the code at once#
+# (4) The output dataset is named "q1data"#
+#
+uni <- 5000		# replace 5000 with the last 4 numbers in your UNI#
+#
+set.seed(uni)#
+mydata <- data[sample(1:nrow(data), (nrow(data)/2)+1, replace=F),]#
+#
+#--------------------------- END CODE: Q1 DATA SUBSET -----------------------------
+mydata
+rm(list=ls(all=T))#
+data <- matrix(1:500,10,50)#
+data <- cbind(1:nrow(data), data)#
+#--------------------------- START CODE: Q1 DATA SUBSET ---------------------------#
+# Description: This code randomly subsets the data for Q1. If the original dataset#
+#	contains N records, it will draw (N/2)+1 records at random given a seed.#
+# Notes:#
+# (1) Make sure you read in the dataset for this question BEFORE running this code#
+# (2) You must replace the value assigned to "uni" using the last 4 #s in your UNI#
+# (3) You must run all of the code at once#
+# (4) The output dataset is named "q1data"#
+#
+uni <- 5000		# replace 5000 with the last 4 numbers in your UNI#
+#
+set.seed(uni)#
+mydata <- data[sample(1:nrow(data), (nrow(data)/2)+1, replace=F),]#
+#
+#--------------------------- END CODE: Q1 DATA SUBSET -----------------------------#
+#
+mydata
+rm(list=ls(all=T))#
+data <- matrix(1:500,10,50)#
+data <- cbind(1:nrow(data), data)#
+#
+data#
+#
+#--------------------------- START CODE: Q1 DATA SUBSET ---------------------------#
+# Description: This code randomly subsets the data for Q1. If the original dataset#
+#	contains N records, it will draw (N/2)+1 records at random given a seed.#
+# Notes:#
+# (1) Make sure you read in the dataset for this question BEFORE running this code#
+# (2) You must replace the value assigned to "uni" using the last 4 #s in your UNI#
+# (3) You must run all of the code at once#
+# (4) The output dataset is named "q1data"#
+#
+uni <- 5000		# replace 5000 with the last 4 numbers in your UNI#
+#
+set.seed(uni)#
+mydata <- data[sample(1:nrow(data), (nrow(data)/2)+1, replace=F),]#
+#
+#--------------------------- END CODE: Q1 DATA SUBSET -----------------------------#
+#
+mydata
+rm(list=ls(all=T))#
+data <- matrix(1:5000,100,50)#
+#--------------------------- START CODE: DATA SUBSET ------------------------------#
+# Description: This code randomly subsets the original data frame.#
+#   If the original data frame contains N records, this code will draw #
+#	(N/2)+1 records at random given a seed that you set.#
+##
+# Instructions:#
+# (1) Insert this code AFTER you read in the dataset for a given question.#
+# (2) The original dataset you read in must be named "data"#
+# (3) You must replace the value assigned to "uni" using the last 4 #s in your UNI#
+# (4) You must run all of the code at once#
+# (5) The output dataset is named "mydata"#
+#
+uni <- 5000		# replace 5000 with the last 4 numbers in your UNI#
+set.seed(uni)#
+mydata <- data[sample(1:nrow(data), (nrow(data)/2)+1, replace=F),]#
+#
+#--------------------------- END CODE: DATA SUBSET --------------------------------
+dim(mydata)
+5%%2
+6%%2
+5%%2
+rm(list=ls(all=T))#
+#
+data <- matrix(NA, nrow=11, ncol=5)#
+#
+#--------------------------- START CODE: DATA SUBSET ------------------------------#
+# Description: This code randomly subsets the original data frame.#
+#   If the original data frame contains N records, this code will draw #
+#	(N/2)+1 records at random given a seed that you set.#
+##
+# Instructions:#
+# (1) Insert this code AFTER you read in the dataset for a given question.#
+# (2) The original dataset you read in must be named "data"#
+# (3) You must replace the value assigned to "uni" using the last 4 #s in your UNI#
+# (4) You must run all of the code at once#
+# (5) The output dataset is named "mydata"#
+#
+uni <- 5000		# replace 5000 with the last 4 numbers in your UNI#
+set.seed(uni)#
+#
+if (nrow(data)%%2 == 1) mydata <- data[sample(1:nrow(data), (nrow(data)/2)+1, replace=F),]#
+else if (nrow(data%%2) == 0) mydata <- data[sample(1:nrow(data), (nrow(data)/2), replace=F),]#
+#--------------------------- END CODE: DATA SUBSET --------------------------------
+rm(list=ls(all=T))#
+#
+data <- matrix(NA, nrow=11, ncol=5)#
+#
+#--------------------------- START CODE: DATA SUBSET ------------------------------#
+# Description: This code randomly subsets the original data frame.#
+#   If the original data frame contains N records, this code will draw #
+#	(N/2)+1 records at random given a seed that you set.#
+##
+# Instructions:#
+# (1) Insert this code AFTER you read in the dataset for a given question.#
+# (2) The original dataset you read in must be named "data"#
+# (3) You must replace the value assigned to "uni" using the last 4 #s in your UNI#
+# (4) You must run all of the code at once#
+# (5) The output dataset is named "mydata"#
+#
+uni <- 5000		# replace 5000 with the last 4 numbers in your UNI#
+set.seed(uni)#
+#
+if (nrow(data)%%2 == 1) mydata <- data[sample(1:nrow(data), (nrow(data)/2)+1, replace=F),]#
+if (nrow(data%%2) == 0) mydata <- data[sample(1:nrow(data), (nrow(data)/2), replace=F),]#
+#--------------------------- END CODE: DATA SUBSET --------------------------------
+rm(list=ls(all=T))#
+#
+data <- matrix(NA, nrow=11, ncol=5)#
+#
+#--------------------------- START CODE: DATA SUBSET ------------------------------#
+# Description: This code randomly subsets the original data frame.#
+#   If the original data frame contains N records, this code will draw #
+#	(N/2)+1 records at random given a seed that you set.#
+##
+# Instructions:#
+# (1) Insert this code AFTER you read in the dataset for a given question.#
+# (2) The original dataset you read in must be named "data"#
+# (3) You must replace the value assigned to "uni" using the last 4 #s in your UNI#
+# (4) You must run all of the code at once#
+# (5) The output dataset is named "mydata"#
+#
+uni <- 5000		# replace 5000 with the last 4 numbers in your UNI#
+set.seed(uni)#
+#
+if (nrow(data)%%2 == 1) mydata <- data[sample(1:nrow(data), (nrow(data)/2)+1, replace=F),]#
+if (nrow(data)%%2 == 0) mydata <- data[sample(1:nrow(data), (nrow(data)/2), replace=F),]#
+#--------------------------- END CODE: DATA SUBSET --------------------------------
+rm(list=ls(all=T))#
+#
+data <- matrix(NA, nrow=11, ncol=5)#
+#
+#--------------------------- START CODE: DATA SUBSET ------------------------------#
+# Description: This code randomly subsets the original data frame.#
+#   If the original data frame contains N records, this code will draw #
+#	(N/2)+1 records at random given a seed that you set.#
+##
+# Instructions:#
+# (1) Insert this code AFTER you read in the dataset for a given question.#
+# (2) The original dataset you read in must be named "data"#
+# (3) You must replace the value assigned to "uni" using the last 4 #s in your UNI#
+# (4) You must run all of the code at once#
+# (5) The output dataset is named "mydata"#
+#
+uni <- 5000		# replace 5000 with the last 4 numbers in your UNI#
+set.seed(uni)#
+#
+if (nrow(data)%%2 == 1) mydata <- data[sample(1:nrow(data), (nrow(data)/2)+1, replace=F),]#
+if (nrow(data)%%2 == 0) mydata <- data[sample(1:nrow(data), (nrow(data)/2), replace=F),]#
+#--------------------------- END CODE: DATA SUBSET --------------------------------#
+#
+dim(mydata)
+rm(list=ls(all=T))#
+#
+data <- matrix(NA, nrow=10, ncol=5)#
+#
+#--------------------------- START CODE: DATA SUBSET ------------------------------#
+# Description: This code randomly subsets the original data frame.#
+#   If the original data frame contains N records, this code will draw #
+#	(N/2)+1 records at random given a seed that you set.#
+##
+# Instructions:#
+# (1) Insert this code AFTER you read in the dataset for a given question.#
+# (2) The original dataset you read in must be named "data"#
+# (3) You must replace the value assigned to "uni" using the last 4 #s in your UNI#
+# (4) You must run all of the code at once#
+# (5) The output dataset is named "mydata"#
+#
+uni <- 5000		# replace 5000 with the last 4 numbers in your UNI#
+set.seed(uni)#
+#
+if (nrow(data)%%2 == 1) mydata <- data[sample(1:nrow(data), (nrow(data)/2)+1, replace=F),]#
+if (nrow(data)%%2 == 0) mydata <- data[sample(1:nrow(data), (nrow(data)/2), replace=F),]#
+#--------------------------- END CODE: DATA SUBSET --------------------------------#
+#
+dim(mydata)
+rm(list=ls(all=T))#
+#
+# replace with syntax to read in data file#
+# data <- matrix(NA, nrow=10, ncol=5)#
+#
+#--------------------------- START CODE TO SUBSET DATA ------------------------------#
+#
+# Description: This code randomly subsets the original data frame.#
+#   If the original data frame contains N records, and N is odd, this code will draw #
+#	(N/2)+1 records at random given the seed that you set. If N is even, this code#
+#   will draw (N/2) records at random given the seed you set.#
+##
+# Instructions:#
+# (1) Insert this code AFTER you read in the dataset for a given question.#
+# (2) The original dataset you read in must be named "data"#
+# (3) You must replace the value assigned to "uni" using the last 4 #s in your UNI#
+# (4) You must run all of the code at once#
+# (5) The output dataset is named "mydata"#
+#
+uni <- 5000					# replace 5000 with the last 4 numbers in your UNI#
+set.seed(uni)#
+if (nrow(data)%%2 == 1) mydata <- data[sample(1:nrow(data), (nrow(data)/2)+1, replace=F),]#
+if (nrow(data)%%2 == 0) mydata <- data[sample(1:nrow(data), (nrow(data)/2), replace=F),]#
+nrow(data); dim(mydata)		# check dimensions of original vs. output datasets#
+#
+#--------------------------- END CODE TO SUBSET DATA --------------------------------
+rm(list=ls(all=T))#
+#
+# replace with syntax to read in data file#
+data <- matrix(NA, nrow=10, ncol=5)#
+#
+#--------------------------- START CODE TO SUBSET DATA ------------------------------#
+#
+# Description: This code randomly subsets the original data frame.#
+#   If the original data frame contains N records, and N is odd, this code will draw #
+#	(N/2)+1 records at random given the seed that you set. If N is even, this code#
+#   will draw (N/2) records at random given the seed you set.#
+##
+# Instructions:#
+# (1) Insert this code AFTER you read in the dataset for a given question.#
+# (2) The original dataset you read in must be named "data"#
+# (3) You must replace the value assigned to "uni" using the last 4 #s in your UNI#
+# (4) You must run all of the code at once#
+# (5) The output dataset is named "mydata"#
+#
+uni <- 5000					# replace 5000 with the last 4 numbers in your UNI#
+set.seed(uni)#
+if (nrow(data)%%2 == 1) mydata <- data[sample(1:nrow(data), (nrow(data)/2)+1, replace=F),]#
+if (nrow(data)%%2 == 0) mydata <- data[sample(1:nrow(data), (nrow(data)/2), replace=F),]#
+nrow(data); dim(mydata)		# check dimensions of original vs. output datasets#
+#
+#--------------------------- END CODE TO SUBSET DATA --------------------------------
+rm(list=ls(all=T))#
+#
+# replace with syntax to read in data file#
+data <- matrix(NA, nrow=10, ncol=5)#
+#
+#--------------------------- START CODE TO SUBSET DATA ------------------------------#
+#
+# Description: This code randomly subsets the original data frame.#
+#   If the original data frame contains N records, and N is odd, this code will draw #
+#	(N/2)+1 records at random given the seed that you set. If N is even, this code#
+#   will draw (N/2) records at random given the seed you set.#
+##
+# Instructions:#
+# (1) Insert this code AFTER you read in the dataset for a given question.#
+# (2) The original dataset you read in must be named "data"#
+# (3) You must replace the value assigned to "uni" using the last 4 #s in your UNI#
+# (4) You must run all of the code at once#
+# (5) The output dataset is named "mydata"#
+#
+uni <- 5000					# replace 5000 with the last 4 numbers in your UNI#
+set.seed(uni)#
+if (nrow(data)%%2 == 1) mydata <- data[sample(1:nrow(data), (nrow(data)/2)+1, replace=F),]#
+if (nrow(data)%%2 == 0) mydata <- data[sample(1:nrow(data), (nrow(data)/2), replace=F),]#
+nrow(data); nrow(mydata)	# check dimensions of original vs. output datasets#
+#
+#--------------------------- END CODE TO SUBSET DATA --------------------------------
+rm(list=ls(all=T))#
+#
+# replace with syntax to read in data file#
+data <- matrix(NA, nrow=10, ncol=5)#
+#
+#--------------------------- START CODE TO SUBSET DATA ------------------------------#
+#
+# Description: This code randomly subsets the original data frame.#
+#   If the original data frame contains N records, and N is odd, this code will draw #
+#	(N/2)+1 records at random given the seed that you set. If N is even, this code#
+#   will draw (N/2) records at random given the seed you set.#
+##
+# Instructions:#
+# (1) Insert this code AFTER you read in the dataset for a given question.#
+# (2) The original dataset you read in must be named "data"#
+# (3) You must replace the value assigned to "uni" using the last 4 #s in your UNI#
+# (4) You must run all of the code at once#
+# (5) The output dataset is named "mydata"#
+#
+# set seed#
+uni <- 5000		# replace 5000 with the last 4 numbers in your UNI#
+set.seed(uni)#
+#
+# subset data#
+if (nrow(data)%%2 == 1) mydata <- data[sample(1:nrow(data), (nrow(data)/2)+1, replace=F),]#
+if (nrow(data)%%2 == 0) mydata <- data[sample(1:nrow(data), (nrow(data)/2), replace=F),]#
+#
+# check dimensions of original vs. output datasets#
+paste("# rows, original data:",nrow(data),sep=" ")#
+paste("# rows, subset data:",nrow(mydata),sep=" ")#
+#
+#--------------------------- END CODE TO SUBSET DATA --------------------------------
+rm(list=ls(all=T))#
+#
+# replace with syntax to read in data file#
+data <- matrix(NA, nrow=10, ncol=5)#
+#
+#--------------------------- START CODE TO SUBSET DATA ------------------------------#
+#
+# Description: This code randomly subsets the original data frame.#
+#   If the original data frame contains N records, and N is odd, this code will draw #
+#	(N/2)+1 records at random given the seed that you set. If N is even, this code#
+#   will draw (N/2) records at random given the seed you set.#
+##
+# Instructions:#
+# (1) Insert this code AFTER you read in the dataset for a given question.#
+# (2) The original dataset you read in must be named "data"#
+# (3) You must replace the value assigned to "uni" using the last 4 #s in your UNI#
+# (4) You must run all of the code at once#
+# (5) The output dataset is named "mydata"#
+#
+# set seed#
+uni <- 5000		# replace 5000 with the last 4 numbers in your UNI#
+set.seed(uni)#
+#
+# subset data#
+if (nrow(data)%%2 == 1) mydata <- data[sample(1:nrow(data), (nrow(data)/2)+1, replace=F),]#
+if (nrow(data)%%2 == 0) mydata <- data[sample(1:nrow(data), (nrow(data)/2), replace=F),]#
+#
+# check dimensions of original vs. output datasets#
+paste("# rows, original data:",nrow(data),sep=" "); paste("# rows, subset data:",nrow(mydata),sep=" ")#
+#
+#--------------------------- END CODE TO SUBSET DATA --------------------------------
+rm(list=ls(all=T))#
+#
+# replace with syntax to read in data file#
+data <- matrix(NA, nrow=10, ncol=5)#
+#
+#--------------------------- START CODE TO SUBSET DATA ------------------------------#
+# Description: This code randomly subsets the original data frame.#
+#   If the original data frame contains N records, and N is odd, this code will draw #
+#	(N/2)+1 records at random given the seed that you set. If N is even, this code#
+#   will draw (N/2) records at random given the seed you set.#
+##
+# Instructions:#
+# (1) Insert this code AFTER you read in the dataset for a given question.#
+# (2) The original dataset you read in must be named "data"#
+# (3) You must replace the value assigned to "uni" using the last 4 #s in your UNI#
+# (4) You must run all of the code at once#
+# (5) The output dataset is named "mydata"#
+#
+uni <- 5000#
+set.seed(uni)#
+mydata <- data[sample(1:nrow(data), nrow(data), replace=T),]#
+#
+#--------------------------- END CODE TO SUBSET DATA --------------------------------
+mydata
+rm(list=ls(all=T))#
+#
+# replace with syntax to read in data file#
+data <- matrix(1:500, nrow=10, ncol=5)#
+#
+#--------------------------- START CODE TO SUBSET DATA ------------------------------#
+# Description: This code randomly subsets the original data frame.#
+#   If the original data frame contains N records, and N is odd, this code will draw #
+#	(N/2)+1 records at random given the seed that you set. If N is even, this code#
+#   will draw (N/2) records at random given the seed you set.#
+##
+# Instructions:#
+# (1) Insert this code AFTER you read in the dataset for a given question.#
+# (2) The original dataset you read in must be named "data"#
+# (3) You must replace the value assigned to "uni" using the last 4 #s in your UNI#
+# (4) You must run all of the code at once#
+# (5) The output dataset is named "mydata"#
+#
+uni <- 5000#
+set.seed(uni)#
+mydata <- data[sample(1:nrow(data), nrow(data), replace=T),]#
+#
+#--------------------------- END CODE TO SUBSET DATA --------------------------------#
+#
+mydata
+rm(list=ls(all=T))#
+#
+# replace with syntax to read in data file#
+data <- matrix(1:5000, nrow=1000, ncol=5)#
+#
+#--------------------------- START CODE TO SUBSET DATA ------------------------------#
+# Description: This code randomly subsets the original data frame.#
+#   If the original data frame contains N records, and N is odd, this code will draw #
+#	(N/2)+1 records at random given the seed that you set. If N is even, this code#
+#   will draw (N/2) records at random given the seed you set.#
+##
+# Instructions:#
+# (1) Insert this code AFTER you read in the dataset for a given question.#
+# (2) The original dataset you read in must be named "data"#
+# (3) You must replace the value assigned to "uni" using the last 4 #s in your UNI#
+# (4) You must run all of the code at once#
+# (5) The output dataset is named "mydata"#
+#
+uni <- 5000#
+set.seed(uni)#
+mydata <- data[sample(1:nrow(data), nrow(data), replace=T),]#
+#
+#--------------------------- END CODE TO SUBSET DATA --------------------------------#
+#
+mydata
+table(mydata[,1])
+rm(list=ls(all=T))#
+#
+# replace with syntax to read in data file#
+data <- matrix(1:5000, nrow=1000, ncol=5)#
+#
+#--------------------------- START CODE TO SUBSET DATA ------------------------------#
+# Description: #
+#   Given an original data frame with N records and given a set seed, this code#
+#   randomly draws, with replacement, N records from the original data frame.#
+##
+# Instructions:#
+# (1) Insert this code AFTER you read in the dataset for a given question.#
+# (2) The original dataset you read in must be named "data"#
+# (3) You must replace the value assigned to "uni" using the last 4 #s in your UNI#
+# (4) You must run all of the code at once#
+# (5) The output dataset is named "mydata"#
+#
+uni <- 5000#
+set.seed(uni)#
+mydata <- data[sample(1:nrow(data), nrow(data), replace=T),]#
+#
+#--------------------------- END CODE TO SUBSET DATA --------------------------------
+dim(mydata)
+rm(list=ls(all=T))#
+#
+# replace with syntax to read in data file#
+data <- matrix(1:5000, nrow=1000, ncol=5)#
+#
+#--------------------------- START CODE TO SUBSET DATA ------------------------------#
+# Description: #
+#   Given an original data frame with N records and given a set seed, this code#
+#   randomly draws, with replacement, N records from the original data frame.#
+##
+# Instructions:#
+# (1) Insert this code AFTER you read in the dataset for a given question.#
+# (2) The original dataset you read in must be named "data"#
+# (3) You must replace the value assigned to "uni" using the last 4 #s in your UNI#
+# (4) You must run all of the code at once#
+# (5) The output dataset is named "mydata"#
+#
+uni <- 5000#
+set.seed(uni)#
+mydata <- as.data.frame(data[sample(1:nrow(data), nrow(data), replace=T),])#
+#
+#--------------------------- END CODE TO SUBSET DATA --------------------------------
+mydata
+table(mydata[,1])
+==============================================#
+# W4368 EXPERIMENTAL RESEARCH -- SPRING 2013#
+# MIDTERM EXAM KEY#
+# TA: Al Fang#
+# Date: 20 Apr 2013#
+# Unsampled data - Q2#
+# ==============================================#
+#
+rm(list=ls(all=T))#
+#
+setwd("/Users/al/Dropbox/FEDAI Homework Solutions/Midterm/")#
+#
+library(ri)#
+library(foreign)#
+library(xtable)#
+library(AER)#
+library(plyr)#
+#
+# Read in UNIs and student names to set seeds#
+#
+#stinfo <- read.csv("seeds.csv", header=T)#
+#names(stinfo) <- c("name","uni","seed")#
+stinfo <- as.data.frame(t(c("unsampled data","none","none")))#
+names(stinfo) <- c("name","uni","seed")#
+# Create objects to hold results#
+#
+q2a.out <- matrix(NA, nrow=0, ncol=4)#
+q2b.out <- matrix(NA, nrow=0, ncol=9) # within block ITT#
+q2e.out <- matrix(NA, nrow=0, ncol=9) # within block ITT_d#
+#
+# block weighted ITT (diff in means)#
+q2c.out <- matrix(NA, nrow=nrow(stinfo), ncol=13)#
+colnames(q2c.out) <- c("k","itt","pval.twotailed","pval.greater","pval.lesser","ci.lb","ci.ub","itt.adj","pval.twotailed.adj","pval.greater.adj","pval.lesser.adj","ci.lb.adj","ci.ub.adj")#
+rownames(q2c.out) <- stinfo$name#
+#
+# block weighted ITT (HT- diff in totals)#
+q2d.out <- matrix(NA, nrow=nrow(stinfo), ncol=13)#
+colnames(q2d.out) <- c("k","itt","pval.twotailed","pval.greater","pval.lesser","ci.lb","ci.ub","itt.adj","pval.twotailed.adj","pval.greater.adj","pval.lesser.adj","ci.lb.adj","ci.ub.adj")#
+rownames(q2d.out) <- stinfo$name#
+#
+# block weighted CACE#
+q2f.out <- matrix(NA, nrow=nrow(stinfo), ncol=13)#
+colnames(q2f.out) <- c("k","cace","pval.twotailed","pval.greater","pval.lesser","ci.lb","ci.ub","cace.adj","pval.twotailed.adj","pval.greater.adj","pval.lesser.adj","ci.lb.adj","ci.ub.adj")#
+rownames(q2f.out) <- stinfo$name#
+#
+# randomization check#
+q2g.out <- matrix(NA, nrow=nrow(stinfo), ncol=2)#
+colnames(q2g.out) <- c("f.stat","p.value")#
+rownames(q2g.out) <- stinfo$name
+setwd("/Users/al/Dropbox/FEDAI Homework Solutions/Midterm/")#
+q2data <- read.dta("q2acorn.dta", convert.factors=F)
+head(q2data)#
+names(q2data)#
+table(q2data$hhid, q2data$persons)#
+#
+# initialize variables#
+Y <- q2data$vote03#
+D <- q2data$contact#
+Z <- q2data$treat2#
+B <- q2data$persons#
+C <- q2data$hhid#
+X <- as.matrix(cbind(q2data$vote02, q2data$vote00, q2data$precinct, q2data$age))#
+#
+table(Y)#
+table(D)#
+table(Z)#
+table(Z, D, dnn=c("Z","D"))#
+table(B)#
+table(C)#
+table(C, B, dnn=c("C","B"))
+dat <- q2data#
+#
+	# initialize variables needed for analysis#
+		Y <- dat$vote03#
+		D <- dat$contact#
+		Z <- dat$treat2#
+		B <- dat$persons#
+		C <- dat$hhid#
+		X <- as.matrix(cbind(dat$vote02, dat$vote00, dat$precinct, dat$age))
+probabilities of assignment to treatment and#
+	# all possible random assignments#
+#
+		probs <- genprobexact(Z, blockvar=B, clustvar=C)#
+		perms <- genperms(Z,blockvar=B,clustvar=C,maxiter=10000)#
+		n.clust <- length(table(C))
+n.clust
+cace <- estlate(Y, D, Z, prob=probs, HT=FALSE)#
+#
+		# confidence intervals (from ivreg, assume constant effects and normal sampling distribution)#
+		W <- Z/probs + (1-Z)/(1-probs)#
+		cace.fit <- ivreg(Y ~ D, ~Z , weights=W)#
+		print(summary(cace.fit))#
+		ci.lower.cace <- confint(cace.fit, parm="D", level=.95)[1]#
+		ci.upper.cace <- confint(cace.fit, parm="D", level=.95)[2]
+cace
+unadjusted CACE#
+		cace <- estlate(Y, D, Z, prob=probs, HT=FALSE)#
+#
+		# confidence intervals (from ivreg, assume constant effects and normal sampling distribution)#
+		W <- Z/probs + (1-Z)/(1-probs)#
+		cace.fit <- ivreg(Y ~ D, ~Z , weights=W)#
+		print(summary(cace.fit))#
+		ci.lower.cace <- confint(cace.fit, parm="D", level=.95)[1]#
+		ci.upper.cace <- confint(cace.fit, parm="D", level=.95)[2]#
+#
+		# p values from randomization inference on the ITT#
+		itt <- estate(Y, Z, prob=probs, HT=FALSE)#
+		Ys <- genouts(Y, Z, ate=0)#
+		distout <- gendist(Ys,perms,prob=probs, HT=FALSE)#
+		dispout <- dispdist(distout, itt, display.plot=FALSE)#
+#
+		# save results#
+		q2f.out[,1] <- cace#
+		q2f.out[,2] <- dispout$two.tailed.p.value.abs#
+		q2f.out[,3] <- dispout$greater.p.value#
+		q2f.out[,4] <- dispout$lesser.p.value#
+		q2f.out[,5] <- ci.lower.cace - (sqrt((n.clust-1)/(n.clust-2))/2)#
+		q2f.out[,6] <- ci.upper.cace + (sqrt((n.clust-1)/(n.clust-2))/2)#
+#
+		# covariate adjusted CACE#
+#
+		# cace#
+		cace <- estlate(Y, D, Z, X=X, prob=probs, HT=FALSE)#
+#
+		# confidence intervals (from ivreg, assume constant effects and normal sampling distribution)#
+		W <- Z/probs + (1-Z)/(1-probs)#
+		cace.fit <- ivreg(Y ~ D + X | Z + X , weights=W)#
+		print(summary(cace.fit))#
+		ci.lower.cace <- confint(cace.fit, parm="D", level=.95)[1]#
+		ci.upper.cace <- confint(cace.fit, parm="D", level=.95)[2]#
+#
+		# p values from randomization inference on the ITT#
+		itt <- estate(Y, Z, X=X, prob=probs, HT=FALSE)#
+		Ys <- genouts(Y, Z, ate=0)#
+		distout <- gendist(Ys,X=X,perms,prob=probs, HT=FALSE)#
+		dispout <- dispdist(distout, itt, display.plot=FALSE)#
+#
+		# save results#
+		q2f.out[,7] <- cace#
+		q2f.out[,8] <- dispout$two.tailed.p.value.abs#
+		q2f.out[,9] <- dispout$greater.p.value#
+		q2f.out[,10] <- dispout$lesser.p.value#
+		q2f.out[,11] <- ci.lower.cace - (sqrt((n.clust-1)/(n.clust-2))/2)#
+		q2f.out[,12] <- ci.upper.cace + (sqrt((n.clust-1)/(n.clust-2))/2)
+q2f.out
+cace <- estlate(Y, D, Z, prob=probs, HT=FALSE)
+cace
+W <- Z/probs + (1-Z)/(1-probs)#
+		cace.fit <- ivreg(Y ~ D, ~Z , weights=W)#
+		print(summary(cace.fit))#
+		ci.lower.cace <- confint(cace.fit, parm="D", level=.95)[1]#
+		ci.upper.cace <- confint(cace.fit, parm="D", level=.95)[2]
+q2f.out[,1] <- cace
+q2f.out[,2] <- cace#
+		q2f.out[,3] <- dispout$two.tailed.p.value.abs#
+		q2f.out[,4] <- dispout$greater.p.value#
+		q2f.out[,5] <- dispout$lesser.p.value#
+		q2f.out[,6] <- ci.lower.cace - (sqrt((n.clust-1)/(n.clust-2))/2)#
+		q2f.out[,7] <- ci.upper.cace + (sqrt((n.clust-1)/(n.clust-2))/2)
+q2f.out[,8] <- cace#
+		q2f.out[,9] <- dispout$two.tailed.p.value.abs#
+		q2f.out[,10] <- dispout$greater.p.value#
+		q2f.out[,11] <- dispout$lesser.p.value#
+		q2f.out[,12] <- ci.lower.cace - (sqrt((n.clust-1)/(n.clust-2))/2)#
+		q2f.out[,13] <- ci.upper.cace + (sqrt((n.clust-1)/(n.clust-2))/2)
+q2f.out[,1] <- n.clust
+q2f.out
+write.csv(q2f.out, "q2f_unsampled.csv")
+xtable(q2f.out)
+write.csv(q2f.out, "q2f_unsampled.csv")
+setwd("/Users/al/Dropbox/FEDAI Homework Solutions/Midterm/Key/")
+write.csv(q2f.out, "q2f_unsampled.csv")

@@ -1,0 +1,10 @@
+base
+foreign
+knitr
+lmtest
+plyr
+ri
+sandwich
+stargazer
+xtable
+zoo

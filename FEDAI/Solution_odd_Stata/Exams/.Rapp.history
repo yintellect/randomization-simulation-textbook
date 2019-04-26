@@ -1,0 +1,3282 @@
+rm(list=ls(all=T))#
+#
+library(ri)#
+#
+Z <- c(1,1,1,1,1,0,0,0,0,0)#
+Y <- c(2,11,14,0,3,1,0,0,4,3)
+rm(list=ls(all=T))#
+#
+library(ri)#
+#
+Z <- c(1,1,1,1,1,0,0,0,0,0)#
+Y <- c(2,11,14,0,3,1,0,0,4,3)#
+probs <- genprobexact(Z)#
+ate <- estate(Y,Z,prob=probs)#
+perms <- genperms(Z,maxiter=10000)#
+Ys <- genouts(Y,Z,ate=7)
+Ys
+distout <- gendist(Ys,perms,prob=probs)
+distout
+ate
+dispdist(distout,ate)
+rm(list=ls())#
+library(ri)
+Y <- seq(1,19,2)
+Z <- c(rep(1,5), rep(0,5))
+Y
+Z
+probs<-rep(mean(Z),length(Z))
+probs
+ate<-mean(Y[Z==1])-mean(Y[Z==0])
+ate
+Y[Z==1]
+Y[Z==0]
+Z_perms<- matrix(data=NA, nrow=length(Y), ncol=maxiter)#
+for (i in 1:maxiter){#
+    n<-length(Z)#
+    Z.sim<-rbinom(n, 1, prob=mean(Z))#
+    Z_perms[,i]<-Z.sim#
+}
+perms <- genperms(Z,maxiter=10000,blockvar=NULL)#
+maxiter<-10000#
+##Question:how to generate all the possible distribution? I tried "maxiter<-(length(Z))!*(length(Z==1))!/(length(Z==0))!, but it does not work.#
+Z_perms<- matrix(data=NA, nrow=length(Y), ncol=maxiter)#
+for (i in 1:maxiter){#
+    n<-length(Z)#
+    Z.sim<-rbinom(n, 1, prob=mean(Z))#
+    Z_perms[,i]<-Z.sim#
+}
+Z_perms
+rm(list=ls())#
+library(ri)#
+###generate the data#
+Y <- seq(1,19,2)#
+Z <- c(rep(1,5), rep(0,5))#
+###probs <- genprobexact(Z,blockvar=NULL)#
+probs<-rep(mean(Z),length(Z))
+Y;Z;probs
+probs<-length(Z[Z==1])/length(Z)
+Y;Z;probs
+probs<-rep(length(Z[Z==1])/length(Z), length(Z))#
+Y;Z;probs
+ate<-mean(Y[Z==1])-mean(Y[Z==0])
+maxiter<-10000
+Z_perms<- matrix(data=NA, nrow=length(Y), ncol=maxiter)
+==============================================#
+# W4368 EXPERIMENTAL RESEARCH -- SPRING 2013#
+# MIDTERM EXAM KEY#
+# TA: Al Fang#
+# ==============================================#
+rm(list=ls(all=T))#
+#
+setwd("/Users/al/Dropbox/FEDAI Homework Solutions/Midterm/")#
+#
+library(ri)#
+library(foreign)#
+library(xtable)#
+# Read in UNIs and student names to set seeds#
+# Loop over each student's UNI number#
+#
+stinfo <- read.csv("seeds.csv", header=T)#
+names(stinfo) <- c("name","uni","seed")#
+#
+for(x in 1:nrow(stinfo)){#
+#
+myuni <- stinfo$seed[x]#
+#
+# ============================================================================================#
+# ============================================================================================#
+# Problem 1#
+# ============================================================================================#
+# ============================================================================================#
+#
+# Read in raw data, prepare person-specific dataset#
+#
+setwd("/Users/al/Dropbox/FEDAI Homework Solutions/Midterm/")#
+data <- read.dta("q1hajj.dta")#
+#
+uni <- myuni#
+set.seed(uni)#
+mydata <- as.data.frame(data[sample(1:nrow(data), nrow(data), replace=T),])#
+#
+# ==============================================#
+# 1A - Randomization check #
+# ==============================================#
+#
+numiter <- 10000#
+#
+q1a.fstat <- summary(lm(success ~ age + female + literate, data=mydata))$fstatistic[1]#
+#
+probs <- genprobexact(Z=mydata$success, clustvar=mydata$hhid)#
+perms <- genperms(Z=mydata$success, clustvar=mydata$hhid, maxiter=numiter)#
+#
+f.stat.store <- rep(NA, numiter)#
+#
+for(i in 1:numiter){#
+	f.stat.store[i] <- summary(lm(perms[,i] ~ mydata$age + mydata$female + mydata$literate))$fstatistic[1]#
+}#
+#
+q1a.pvalue <- mean(f.stat.store >= q1a.fstat)#
+#
+setwd("/Users/al/Dropbox/Teaching/S13 Experiments/Midterm/Key/")#
+pdf(paste("q1a_",stinfo$uni[x],".pdf",sep=""))#
+hist(f.stat.store, breaks=numiter/100, main=paste("Student: ",stinfo$name,", UNI: ",stinfo$uni[x],"\n Q1a: Simulated distribution of F statistic under the sharp null \n Observed F statistic: ",round(q1a.fstat, digits=3),", p-value: ",round(q1a.pvalue, digits=3),sep=""), xlab="Simulated F statistic")#
+abline(v=q1a.fstat, col="red")#
+dev.off()#
+#
+# ==============================================#
+# 1B - Construct table/graph to illustrate ITT#
+# ==============================================#
+# ==============================================#
+# ==============================================#
+# Problem 2#
+# ==============================================#
+# ==============================================#
+}
+==============================================#
+# W4368 EXPERIMENTAL RESEARCH -- SPRING 2013#
+# MIDTERM EXAM KEY#
+# TA: Al Fang#
+# ==============================================#
+rm(list=ls(all=T))#
+#
+setwd("/Users/al/Dropbox/FEDAI Homework Solutions/Midterm/")#
+#
+library(ri)#
+library(foreign)#
+library(xtable)#
+# Read in UNIs and student names to set seeds#
+# Loop over each student's UNI number#
+#
+stinfo <- read.csv("seeds.csv", header=T)#
+names(stinfo) <- c("name","uni","seed")#
+#
+for(x in 1:nrow(stinfo)){#
+#
+myuni <- stinfo$seed[x]#
+#
+# ============================================================================================#
+# ============================================================================================#
+# Problem 1#
+# ============================================================================================#
+# ============================================================================================#
+#
+# Read in raw data, prepare person-specific dataset#
+#
+setwd("/Users/al/Dropbox/FEDAI Homework Solutions/Midterm/")#
+data <- read.dta("q1hajj.dta")#
+#
+uni <- myuni#
+set.seed(uni)#
+mydata <- as.data.frame(data[sample(1:nrow(data), nrow(data), replace=T),])#
+#
+# ==============================================#
+# 1A - Randomization check #
+# ==============================================#
+#
+numiter <- 10000#
+#
+q1a.fstat <- summary(lm(success ~ age + female + literate, data=mydata))$fstatistic[1]#
+#
+probs <- genprobexact(Z=mydata$success, clustvar=mydata$hhid)#
+perms <- genperms(Z=mydata$success, clustvar=mydata$hhid, maxiter=numiter)#
+#
+f.stat.store <- rep(NA, numiter)#
+#
+for(i in 1:numiter){#
+	f.stat.store[i] <- summary(lm(perms[,i] ~ mydata$age + mydata$female + mydata$literate))$fstatistic[1]#
+}#
+#
+q1a.pvalue <- mean(f.stat.store >= q1a.fstat)#
+#
+setwd("/Users/al/Dropbox/Teaching/S13 Experiments/Midterm/Key/")#
+pdf(paste("q1a_",stinfo$uni[x],".pdf",sep=""))#
+hist(f.stat.store, breaks=numiter/100, main=paste("Student: ",stinfo$name[x],", UNI: ",stinfo$uni[x],"\n Q1a: Simulated distribution of F statistic under the sharp null \n Observed F statistic: ",round(q1a.fstat, digits=3),", p-value: ",round(q1a.pvalue, digits=3),sep=""), xlab="Simulated F statistic")#
+abline(v=q1a.fstat, col="red")#
+dev.off()#
+#
+# ==============================================#
+# 1B - Construct table/graph to illustrate ITT#
+# ==============================================#
+# ==============================================#
+# ==============================================#
+# Problem 2#
+# ==============================================#
+# ==============================================#
+}
+q1b.table <- matrix(NA, nrow=3, ncol=5)#
+rownames(q1b.table) <- c("treated","untreated","total")#
+colnames(q1b.table) <- c("mean.z1","n.z1","mean.z0","n.z0","diff")#
+q1b.table[1,1] <- mean(mydata$views[mydata$success==1 & mydata$hajj2006==1])#
+q1b.table[1,3] <- mean(mydata$views[mydata$success==0 & mydata$hajj2006==1])#
+q1b.table[2,1] <- mean(mydata$views[mydata$success==1 & mydata$hajj2006==0])#
+q1b.table[2,3] <- mean(mydata$views[mydata$success==0 & mydata$hajj2006==0])#
+#
+q1b.table[1,2] <- length(mydata$views[mydata$success==1 & mydata$hajj2006==1])#
+q1b.table[1,4] <- length(mydata$views[mydata$success==0 & mydata$hajj2006==1])#
+q1b.table[2,2] <- length(mydata$views[mydata$success==1 & mydata$hajj2006==0])#
+q1b.table[2,4] <- length(mydata$views[mydata$success==0 & mydata$hajj2006==0])
+q1b.table
+mydata$views[mydata$success==1 & mydata$hajj2006==1]
+==============================================#
+# W4368 EXPERIMENTAL RESEARCH -- SPRING 2013#
+# MIDTERM EXAM KEY#
+# TA: Al Fang#
+# ==============================================#
+rm(list=ls(all=T))#
+#
+setwd("/Users/al/Dropbox/FEDAI Homework Solutions/Midterm/")#
+#
+library(ri)#
+library(foreign)#
+library(xtable)#
+# Read in UNIs and student names to set seeds#
+# Loop over each student's UNI number#
+#
+stinfo <- read.csv("seeds.csv", header=T)#
+names(stinfo) <- c("name","uni","seed")#
+#
+for(x in 1:nrow(stinfo)){#
+#
+myuni <- stinfo$seed[x]#
+#
+# ============================================================================================#
+# ============================================================================================#
+# Problem 1#
+# ============================================================================================#
+# ============================================================================================#
+#
+# Read in raw data, prepare person-specific dataset#
+#
+setwd("/Users/al/Dropbox/FEDAI Homework Solutions/Midterm/")#
+data <- read.dta("q1hajj_sub.dta")#
+#
+uni <- myuni#
+set.seed(uni)#
+mydata <- as.data.frame(data[sample(1:nrow(data), nrow(data), replace=T),])
+numiter <- 10000#
+#
+q1a.fstat <- summary(lm(success ~ age + female + literate, data=mydata))$fstatistic[1]#
+#
+probs <- genprobexact(Z=mydata$success, clustvar=mydata$hhid)#
+perms <- genperms(Z=mydata$success, clustvar=mydata$hhid, maxiter=numiter)
+}
+==============================================#
+# W4368 EXPERIMENTAL RESEARCH -- SPRING 2013#
+# MIDTERM EXAM KEY#
+# TA: Al Fang#
+# ==============================================#
+rm(list=ls(all=T))#
+#
+setwd("/Users/al/Dropbox/FEDAI Homework Solutions/Midterm/")#
+#
+library(ri)#
+library(foreign)#
+library(xtable)#
+# Read in UNIs and student names to set seeds#
+#
+stinfo <- read.csv("seeds.csv", header=T)#
+names(stinfo) <- c("name","uni","seed")#
+#
+# Create objects to hold results#
+#
+q1b.table.list <- array(NA, dim=c(3,6,nrow(stinfo)))#
+#
+# Loop over each student's UNI number#
+#
+for(x in 1:nrow(stinfo)){#
+#
+myuni <- stinfo$seed[x]#
+#
+# ============================================================================================#
+# ============================================================================================#
+# Problem 1#
+# ============================================================================================#
+# ============================================================================================#
+#
+# Read in raw data, prepare person-specific dataset#
+#
+setwd("/Users/al/Dropbox/FEDAI Homework Solutions/Midterm/")#
+data <- read.dta("q1hajj_sub.dta")#
+#
+uni <- myuni#
+set.seed(uni)#
+mydata <- as.data.frame(data[sample(1:nrow(data), nrow(data), replace=T),])#
+#
+# ==============================================#
+# 1A - Randomization check #
+# ==============================================#
+#
+numiter <- 10000#
+#
+q1a.fstat <- summary(lm(success ~ age + female + literate, data=mydata))$fstatistic[1]#
+#
+probs <- genprobexact(Z=mydata$success, clustvar=mydata$hhid)#
+perms <- genperms(Z=mydata$success, clustvar=mydata$hhid, maxiter=numiter)#
+#
+# f.stat.store <- rep(NA, numiter)#
+#
+# for(i in 1:numiter){#
+#	f.stat.store[i] <- summary(lm(perms[,i] ~ mydata$age + mydata$female + mydata$literate))$fstatistic[1]#
+# }#
+#
+q1a.pvalue <- mean(f.stat.store >= q1a.fstat)#
+#
+setwd("/Users/al/Dropbox/Teaching/S13 Experiments/Midterm/Key/")#
+# pdf(paste("q1a_",stinfo$uni[x],".pdf",sep=""))#
+# hist(f.stat.store, breaks=numiter/100, main=paste("Student: ",stinfo$name[x],", UNI: ",stinfo$uni[x],"\n Q1a: Simulated distribution of F statistic under the sharp null \n Observed F statistic: ",round(q1a.fstat, digits=3),", p-value: ",round(q1a.pvalue, digits=3),sep=""), xlab="Simulated F statistic")#
+# abline(v=q1a.fstat, col="red")#
+# dev.off()#
+#
+# ==============================================#
+# 1B - Construct table/graph to illustrate ITT#
+# ==============================================#
+#
+q1b.table <- matrix(NA, nrow=3, ncol=6)#
+rownames(q1b.table) <- c("treated","untreated","total")#
+colnames(q1b.table) <- c("mean.z1","n.z1","mean.z0","n.z0","diff","n")#
+q1b.table[1,1] <- round(mean(mydata$views[mydata$success==1 & mydata$hajj2006==1]), digits=3)#
+q1b.table[1,3] <- round(mean(mydata$views[mydata$success==0 & mydata$hajj2006==1]), digits=3)#
+q1b.table[2,1] <- round(mean(mydata$views[mydata$success==1 & mydata$hajj2006==0]), digits=3)#
+q1b.table[2,3] <- round(mean(mydata$views[mydata$success==0 & mydata$hajj2006==0]), digits=3)#
+#
+q1b.table[1,2] <- paste("[",round(length(mydata$views[mydata$success==1 & mydata$hajj2006==1]), digits=0),"]",sep="")#
+q1b.table[1,4] <- paste("[",round(length(mydata$views[mydata$success==0 & mydata$hajj2006==1]), digits=0),"]",sep="")#
+q1b.table[2,2] <- paste("[",round(length(mydata$views[mydata$success==1 & mydata$hajj2006==0]), digits=0),"]",sep="")#
+q1b.table[2,4] <- paste("[",round(length(mydata$views[mydata$success==0 & mydata$hajj2006==0]), digits=0),"]",sep="")#
+#
+q1b.table[3,1] <- round(mean(mydata$views[mydata$success==1]), digits=3)#
+q1b.table[3,3] <- round(mean(mydata$views[mydata$success==0]), digits=3)#
+q1b.table[3,2] <- paste("[",round(length(mydata$views[mydata$success==1]), digits=0),"]",sep="")#
+q1b.table[3,4] <- paste("[",round(length(mydata$views[mydata$success==0]), digits=0),"]",sep="")#
+#
+q1b.table[1,5] <- round(q1b.table[1,1] - q1b.table[1,3], digits=3)#
+q1b.table[1,6] <- paste("[",round(q1b.table[1,2] + q1b.table[1,4], digits=0),"]",sep="")#
+q1b.table[2,5] <- round(q1b.table[2,1] - q1b.table[2,3], digits=3)#
+q1b.table[2,6] <- paste("[",round(q1b.table[2,2] + q1b.table[2,4], digits=0),"]",sep="")#
+#
+q1b.table[3,1] <- round(mean(mydata$views[mydata$success==1]), digits=3)#
+q1b.table[3,2] <- paste("[",round(length(mydata$views[mydata$success==1]), digits=0),"]",sep="")#
+q1b.table[3,3] <- round(mean(mydata$views[mydata$success==0]), digits=3)#
+q1b.table[3,4] <- paste("[",round(length(mydata$views[mydata$success==0]), digits=0),"]",sep="")#
+#
+q1b.table[3,5] <- round(q1b.table[3,1] - q1b.table[3,3], digits=3)#
+q1b.table[3,6] <- paste("[",round(q1b.table[3,2] + q1b.table[3,4], digits=0)#
+#
+q1b.table.list[,,x] <- q1b.table#
+print(q1b.table)#
+print(xtable(q1b.table))#
+#
+# ==============================================#
+# ==============================================#
+# Problem 2#
+# ==============================================#
+# ==============================================#
+}
+==============================================#
+# W4368 EXPERIMENTAL RESEARCH -- SPRING 2013#
+# MIDTERM EXAM KEY#
+# TA: Al Fang#
+# ==============================================#
+rm(list=ls(all=T))#
+#
+setwd("/Users/al/Dropbox/FEDAI Homework Solutions/Midterm/")#
+#
+library(ri)#
+library(foreign)#
+library(xtable)#
+# Read in UNIs and student names to set seeds#
+#
+stinfo <- read.csv("seeds.csv", header=T)#
+names(stinfo) <- c("name","uni","seed")#
+#
+# Create objects to hold results#
+#
+q1b.table.list <- array(NA, dim=c(3,6,nrow(stinfo)))#
+#
+# Loop over each student's UNI number#
+#
+for(x in 1:nrow(stinfo)){#
+#
+myuni <- stinfo$seed[x]#
+#
+# ============================================================================================#
+# ============================================================================================#
+# Problem 1#
+# ============================================================================================#
+# ============================================================================================#
+#
+# Read in raw data, prepare person-specific dataset#
+#
+setwd("/Users/al/Dropbox/FEDAI Homework Solutions/Midterm/")#
+data <- read.dta("q1hajj_sub.dta")#
+#
+uni <- myuni#
+set.seed(uni)#
+mydata <- as.data.frame(data[sample(1:nrow(data), nrow(data), replace=T),])#
+#
+# ==============================================#
+# 1A - Randomization check #
+# ==============================================#
+#
+numiter <- 10000#
+#
+q1a.fstat <- summary(lm(success ~ age + female + literate, data=mydata))$fstatistic[1]#
+#
+probs <- genprobexact(Z=mydata$success, clustvar=mydata$hhid)#
+perms <- genperms(Z=mydata$success, clustvar=mydata$hhid, maxiter=numiter)#
+#
+# f.stat.store <- rep(NA, numiter)#
+#
+# for(i in 1:numiter){#
+#	f.stat.store[i] <- summary(lm(perms[,i] ~ mydata$age + mydata$female + mydata$literate))$fstatistic[1]#
+# }#
+#
+q1a.pvalue <- mean(f.stat.store >= q1a.fstat)#
+#
+setwd("/Users/al/Dropbox/Teaching/S13 Experiments/Midterm/Key/")#
+# pdf(paste("q1a_",stinfo$uni[x],".pdf",sep=""))#
+# hist(f.stat.store, breaks=numiter/100, main=paste("Student: ",stinfo$name[x],", UNI: ",stinfo$uni[x],"\n Q1a: Simulated distribution of F statistic under the sharp null \n Observed F statistic: ",round(q1a.fstat, digits=3),", p-value: ",round(q1a.pvalue, digits=3),sep=""), xlab="Simulated F statistic")#
+# abline(v=q1a.fstat, col="red")#
+# dev.off()#
+#
+# ==============================================#
+# 1B - Construct table/graph to illustrate ITT#
+# ==============================================#
+#
+q1b.table <- matrix(NA, nrow=3, ncol=6)#
+rownames(q1b.table) <- c("treated","untreated","total")#
+colnames(q1b.table) <- c("mean.z1","n.z1","mean.z0","n.z0","diff","n")#
+q1b.table[1,1] <- round(mean(mydata$views[mydata$success==1 & mydata$hajj2006==1]), digits=3)#
+q1b.table[1,3] <- round(mean(mydata$views[mydata$success==0 & mydata$hajj2006==1]), digits=3)#
+q1b.table[2,1] <- round(mean(mydata$views[mydata$success==1 & mydata$hajj2006==0]), digits=3)#
+q1b.table[2,3] <- round(mean(mydata$views[mydata$success==0 & mydata$hajj2006==0]), digits=3)#
+#
+q1b.table[1,2] <- paste("[",round(length(mydata$views[mydata$success==1 & mydata$hajj2006==1]), digits=0),"]",sep="")#
+q1b.table[1,4] <- paste("[",round(length(mydata$views[mydata$success==0 & mydata$hajj2006==1]), digits=0),"]",sep="")#
+q1b.table[2,2] <- paste("[",round(length(mydata$views[mydata$success==1 & mydata$hajj2006==0]), digits=0),"]",sep="")#
+q1b.table[2,4] <- paste("[",round(length(mydata$views[mydata$success==0 & mydata$hajj2006==0]), digits=0),"]",sep="")#
+#
+q1b.table[3,1] <- round(mean(mydata$views[mydata$success==1]), digits=3)#
+q1b.table[3,3] <- round(mean(mydata$views[mydata$success==0]), digits=3)#
+q1b.table[3,2] <- paste("[",round(length(mydata$views[mydata$success==1]), digits=0),"]",sep="")#
+q1b.table[3,4] <- paste("[",round(length(mydata$views[mydata$success==0]), digits=0),"]",sep="")#
+#
+q1b.table[1,5] <- round(q1b.table[1,1] - q1b.table[1,3], digits=3)#
+q1b.table[1,6] <- paste("[",round(q1b.table[1,2] + q1b.table[1,4], digits=0),"]",sep="")#
+q1b.table[2,5] <- round(q1b.table[2,1] - q1b.table[2,3], digits=3)#
+q1b.table[2,6] <- paste("[",round(q1b.table[2,2] + q1b.table[2,4], digits=0),"]",sep="")#
+#
+q1b.table[3,1] <- round(mean(mydata$views[mydata$success==1]), digits=3)#
+q1b.table[3,2] <- paste("[",round(length(mydata$views[mydata$success==1]), digits=0),"]",sep="")#
+q1b.table[3,3] <- round(mean(mydata$views[mydata$success==0]), digits=3)#
+q1b.table[3,4] <- paste("[",round(length(mydata$views[mydata$success==0]), digits=0),"]",sep="")#
+#
+q1b.table[3,5] <- round(q1b.table[3,1] - q1b.table[3,3], digits=3)#
+q1b.table[3,6] <- paste("[",round(q1b.table[3,2] + q1b.table[3,4], digits=0),"]",sep="")#
+#
+q1b.table.out[,,x] <- q1b.table#
+print(q1b.table)#
+print(xtable(q1b.table))#
+#
+# ==============================================#
+# ==============================================#
+# Problem 2#
+# ==============================================#
+# ==============================================#
+}
+==============================================#
+# W4368 EXPERIMENTAL RESEARCH -- SPRING 2013#
+# MIDTERM EXAM KEY#
+# TA: Al Fang#
+# ==============================================#
+rm(list=ls(all=T))#
+#
+setwd("/Users/al/Dropbox/FEDAI Homework Solutions/Midterm/")#
+#
+library(ri)#
+library(foreign)#
+library(xtable)#
+# Read in UNIs and student names to set seeds#
+#
+stinfo <- read.csv("seeds.csv", header=T)#
+names(stinfo) <- c("name","uni","seed")#
+#
+# Create objects to hold results#
+#
+q1b.table.list <- array(NA, dim=c(3,6,nrow(stinfo)))#
+#
+# Loop over each student's UNI number#
+#
+for(x in 1:nrow(stinfo)){#
+#
+myuni <- stinfo$seed[x]#
+#
+# ============================================================================================#
+# ============================================================================================#
+# Problem 1#
+# ============================================================================================#
+# ============================================================================================#
+#
+# Read in raw data, prepare person-specific dataset#
+#
+setwd("/Users/al/Dropbox/FEDAI Homework Solutions/Midterm/")#
+data <- read.dta("q1hajj_sub.dta")#
+#
+uni <- myuni#
+set.seed(uni)#
+mydata <- as.data.frame(data[sample(1:nrow(data), nrow(data), replace=T),])#
+#
+# ==============================================#
+# 1A - Randomization check #
+# ==============================================#
+#
+numiter <- 10000#
+#
+q1a.fstat <- summary(lm(success ~ age + female + literate, data=mydata))$fstatistic[1]#
+#
+probs <- genprobexact(Z=mydata$success, clustvar=mydata$hhid)#
+perms <- genperms(Z=mydata$success, clustvar=mydata$hhid, maxiter=numiter)#
+#
+# f.stat.store <- rep(NA, numiter)#
+#
+# for(i in 1:numiter){#
+#	f.stat.store[i] <- summary(lm(perms[,i] ~ mydata$age + mydata$female + mydata$literate))$fstatistic[1]#
+# }#
+#
+# q1a.pvalue <- mean(f.stat.store >= q1a.fstat)#
+#
+setwd("/Users/al/Dropbox/Teaching/S13 Experiments/Midterm/Key/")#
+# pdf(paste("q1a_",stinfo$uni[x],".pdf",sep=""))#
+# hist(f.stat.store, breaks=numiter/100, main=paste("Student: ",stinfo$name[x],", UNI: ",stinfo$uni[x],"\n Q1a: Simulated distribution of F statistic under the sharp null \n Observed F statistic: ",round(q1a.fstat, digits=3),", p-value: ",round(q1a.pvalue, digits=3),sep=""), xlab="Simulated F statistic")#
+# abline(v=q1a.fstat, col="red")#
+# dev.off()#
+#
+# ==============================================#
+# 1B - Construct table/graph to illustrate ITT#
+# ==============================================#
+#
+q1b.table <- matrix(NA, nrow=3, ncol=6)#
+rownames(q1b.table) <- c("treated","untreated","total")#
+colnames(q1b.table) <- c("mean.z1","n.z1","mean.z0","n.z0","diff","n")#
+q1b.table[1,1] <- round(mean(mydata$views[mydata$success==1 & mydata$hajj2006==1]), digits=3)#
+q1b.table[1,3] <- round(mean(mydata$views[mydata$success==0 & mydata$hajj2006==1]), digits=3)#
+q1b.table[2,1] <- round(mean(mydata$views[mydata$success==1 & mydata$hajj2006==0]), digits=3)#
+q1b.table[2,3] <- round(mean(mydata$views[mydata$success==0 & mydata$hajj2006==0]), digits=3)#
+#
+q1b.table[1,2] <- paste("[",round(length(mydata$views[mydata$success==1 & mydata$hajj2006==1]), digits=0),"]",sep="")#
+q1b.table[1,4] <- paste("[",round(length(mydata$views[mydata$success==0 & mydata$hajj2006==1]), digits=0),"]",sep="")#
+q1b.table[2,2] <- paste("[",round(length(mydata$views[mydata$success==1 & mydata$hajj2006==0]), digits=0),"]",sep="")#
+q1b.table[2,4] <- paste("[",round(length(mydata$views[mydata$success==0 & mydata$hajj2006==0]), digits=0),"]",sep="")#
+#
+q1b.table[3,1] <- round(mean(mydata$views[mydata$success==1]), digits=3)#
+q1b.table[3,3] <- round(mean(mydata$views[mydata$success==0]), digits=3)#
+q1b.table[3,2] <- paste("[",round(length(mydata$views[mydata$success==1]), digits=0),"]",sep="")#
+q1b.table[3,4] <- paste("[",round(length(mydata$views[mydata$success==0]), digits=0),"]",sep="")#
+#
+q1b.table[1,5] <- round(q1b.table[1,1] - q1b.table[1,3], digits=3)#
+q1b.table[1,6] <- paste("[",round(q1b.table[1,2] + q1b.table[1,4], digits=0),"]",sep="")#
+q1b.table[2,5] <- round(q1b.table[2,1] - q1b.table[2,3], digits=3)#
+q1b.table[2,6] <- paste("[",round(q1b.table[2,2] + q1b.table[2,4], digits=0),"]",sep="")#
+#
+q1b.table[3,1] <- round(mean(mydata$views[mydata$success==1]), digits=3)#
+q1b.table[3,2] <- paste("[",round(length(mydata$views[mydata$success==1]), digits=0),"]",sep="")#
+q1b.table[3,3] <- round(mean(mydata$views[mydata$success==0]), digits=3)#
+q1b.table[3,4] <- paste("[",round(length(mydata$views[mydata$success==0]), digits=0),"]",sep="")#
+#
+q1b.table[3,5] <- round(q1b.table[3,1] - q1b.table[3,3], digits=3)#
+q1b.table[3,6] <- paste("[",round(q1b.table[3,2] + q1b.table[3,4], digits=0),"]",sep="")#
+#
+q1b.table.out[,,x] <- q1b.table#
+print(q1b.table)#
+print(xtable(q1b.table))#
+#
+# ==============================================#
+# ==============================================#
+# Problem 2#
+# ==============================================#
+# ==============================================#
+}
+==============================================#
+# W4368 EXPERIMENTAL RESEARCH -- SPRING 2013#
+# MIDTERM EXAM KEY#
+# TA: Al Fang#
+# ==============================================#
+rm(list=ls(all=T))#
+#
+setwd("/Users/al/Dropbox/FEDAI Homework Solutions/Midterm/")#
+#
+library(ri)#
+library(foreign)#
+library(xtable)#
+# Read in UNIs and student names to set seeds#
+#
+stinfo <- read.csv("seeds.csv", header=T)#
+names(stinfo) <- c("name","uni","seed")#
+#
+# Create objects to hold results#
+#
+q1b.table.list <- array(NA, dim=c(3,6,nrow(stinfo)))#
+#
+# Loop over each student's UNI number#
+#
+for(x in 1:nrow(stinfo)){#
+#
+myuni <- stinfo$seed[x]#
+#
+# ============================================================================================#
+# ============================================================================================#
+# Problem 1#
+# ============================================================================================#
+# ============================================================================================#
+#
+# Read in raw data, prepare person-specific dataset#
+#
+setwd("/Users/al/Dropbox/FEDAI Homework Solutions/Midterm/")#
+data <- read.dta("q1hajj_sub.dta")#
+#
+uni <- myuni#
+set.seed(uni)#
+mydata <- as.data.frame(data[sample(1:nrow(data), nrow(data), replace=T),])#
+#
+# ==============================================#
+# 1A - Randomization check #
+# ==============================================#
+#
+numiter <- 10000#
+#
+q1a.fstat <- summary(lm(success ~ age + female + literate, data=mydata))$fstatistic[1]#
+#
+probs <- genprobexact(Z=mydata$success, clustvar=mydata$hhid)#
+perms <- genperms(Z=mydata$success, clustvar=mydata$hhid, maxiter=numiter)#
+#
+# f.stat.store <- rep(NA, numiter)#
+#
+# for(i in 1:numiter){#
+#	f.stat.store[i] <- summary(lm(perms[,i] ~ mydata$age + mydata$female + mydata$literate))$fstatistic[1]#
+# }#
+#
+# q1a.pvalue <- mean(f.stat.store >= q1a.fstat)#
+#
+setwd("/Users/al/Dropbox/Teaching/S13 Experiments/Midterm/Key/")#
+# pdf(paste("q1a_",stinfo$uni[x],".pdf",sep=""))#
+# hist(f.stat.store, breaks=numiter/100, main=paste("Student: ",stinfo$name[x],", UNI: ",stinfo$uni[x],"\n Q1a: Simulated distribution of F statistic under the sharp null \n Observed F statistic: ",round(q1a.fstat, digits=3),", p-value: ",round(q1a.pvalue, digits=3),sep=""), xlab="Simulated F statistic")#
+# abline(v=q1a.fstat, col="red")#
+# dev.off()#
+#
+# ==============================================#
+# 1B - Construct table/graph to illustrate ITT#
+# ==============================================#
+#
+q1b.table <- matrix(NA, nrow=3, ncol=6)#
+rownames(q1b.table) <- c("treated","untreated","total")#
+colnames(q1b.table) <- c("mean.z1","n.z1","mean.z0","n.z0","diff","n")#
+q1b.table[1,1] <- round(mean(mydata$views[mydata$success==1 & mydata$hajj2006==1]), digits=3)#
+q1b.table[1,3] <- round(mean(mydata$views[mydata$success==0 & mydata$hajj2006==1]), digits=3)#
+q1b.table[2,1] <- round(mean(mydata$views[mydata$success==1 & mydata$hajj2006==0]), digits=3)#
+q1b.table[2,3] <- round(mean(mydata$views[mydata$success==0 & mydata$hajj2006==0]), digits=3)#
+#
+q1b.table[1,2] <- paste("[",round(length(mydata$views[mydata$success==1 & mydata$hajj2006==1]), digits=0),"]",sep="")#
+q1b.table[1,4] <- paste("[",round(length(mydata$views[mydata$success==0 & mydata$hajj2006==1]), digits=0),"]",sep="")#
+q1b.table[2,2] <- paste("[",round(length(mydata$views[mydata$success==1 & mydata$hajj2006==0]), digits=0),"]",sep="")#
+q1b.table[2,4] <- paste("[",round(length(mydata$views[mydata$success==0 & mydata$hajj2006==0]), digits=0),"]",sep="")#
+#
+q1b.table[3,1] <- round(mean(mydata$views[mydata$success==1]), digits=3)#
+q1b.table[3,3] <- round(mean(mydata$views[mydata$success==0]), digits=3)#
+q1b.table[3,2] <- paste("[",round(length(mydata$views[mydata$success==1]), digits=0),"]",sep="")#
+q1b.table[3,4] <- paste("[",round(length(mydata$views[mydata$success==0]), digits=0),"]",sep="")#
+#
+# q1b.table[1,5] <- round(q1b.table[1,1] - q1b.table[1,3], digits=3)#
+# q1b.table[1,6] <- paste("[",round(q1b.table[1,2] + q1b.table[1,4], digits=0),"]",sep="")#
+# q1b.table[2,5] <- round(q1b.table[2,1] - q1b.table[2,3], digits=3)#
+# q1b.table[2,6] <- paste("[",round(q1b.table[2,2] + q1b.table[2,4], digits=0),"]",sep="")#
+#
+q1b.table[3,1] <- round(mean(mydata$views[mydata$success==1]), digits=3)#
+q1b.table[3,2] <- paste("[",round(length(mydata$views[mydata$success==1]), digits=0),"]",sep="")#
+q1b.table[3,3] <- round(mean(mydata$views[mydata$success==0]), digits=3)#
+q1b.table[3,4] <- paste("[",round(length(mydata$views[mydata$success==0]), digits=0),"]",sep="")#
+#
+# q1b.table[3,5] <- round(q1b.table[3,1] - q1b.table[3,3], digits=3)#
+# q1b.table[3,6] <- paste("[",round(q1b.table[3,2] + q1b.table[3,4], digits=0),"]",sep="")#
+#
+q1b.table.out[,,x] <- q1b.table#
+print(q1b.table)#
+print(xtable(q1b.table))#
+#
+# ==============================================#
+# ==============================================#
+# Problem 2#
+# ==============================================#
+# ==============================================#
+}
+==============================================#
+# W4368 EXPERIMENTAL RESEARCH -- SPRING 2013#
+# MIDTERM EXAM KEY#
+# TA: Al Fang#
+# ==============================================#
+rm(list=ls(all=T))#
+#
+setwd("/Users/al/Dropbox/FEDAI Homework Solutions/Midterm/")#
+#
+library(ri)#
+library(foreign)#
+library(xtable)#
+# Read in UNIs and student names to set seeds#
+#
+stinfo <- read.csv("seeds.csv", header=T)#
+names(stinfo) <- c("name","uni","seed")#
+#
+# Create objects to hold results#
+#
+q1b.table.out <- array(NA, dim=c(3,6,nrow(stinfo)))#
+#
+# Loop over each student's UNI number#
+#
+for(x in 1:nrow(stinfo)){#
+#
+myuni <- stinfo$seed[x]#
+#
+# ============================================================================================#
+# ============================================================================================#
+# Problem 1#
+# ============================================================================================#
+# ============================================================================================#
+#
+# Read in raw data, prepare person-specific dataset#
+#
+setwd("/Users/al/Dropbox/FEDAI Homework Solutions/Midterm/")#
+data <- read.dta("q1hajj_sub.dta")#
+#
+uni <- myuni#
+set.seed(uni)#
+mydata <- as.data.frame(data[sample(1:nrow(data), nrow(data), replace=T),])#
+#
+# ==============================================#
+# 1A - Randomization check #
+# ==============================================#
+#
+numiter <- 10000#
+#
+q1a.fstat <- summary(lm(success ~ age + female + literate, data=mydata))$fstatistic[1]#
+#
+probs <- genprobexact(Z=mydata$success, clustvar=mydata$hhid)#
+perms <- genperms(Z=mydata$success, clustvar=mydata$hhid, maxiter=numiter)#
+#
+# f.stat.store <- rep(NA, numiter)#
+#
+# for(i in 1:numiter){#
+#	f.stat.store[i] <- summary(lm(perms[,i] ~ mydata$age + mydata$female + mydata$literate))$fstatistic[1]#
+# }#
+#
+# q1a.pvalue <- mean(f.stat.store >= q1a.fstat)#
+#
+setwd("/Users/al/Dropbox/Teaching/S13 Experiments/Midterm/Key/")#
+# pdf(paste("q1a_",stinfo$uni[x],".pdf",sep=""))#
+# hist(f.stat.store, breaks=numiter/100, main=paste("Student: ",stinfo$name[x],", UNI: ",stinfo$uni[x],"\n Q1a: Simulated distribution of F statistic under the sharp null \n Observed F statistic: ",round(q1a.fstat, digits=3),", p-value: ",round(q1a.pvalue, digits=3),sep=""), xlab="Simulated F statistic")#
+# abline(v=q1a.fstat, col="red")#
+# dev.off()#
+#
+# ==============================================#
+# 1B - Construct table/graph to illustrate ITT#
+# ==============================================#
+#
+q1b.table <- matrix(NA, nrow=3, ncol=6)#
+rownames(q1b.table) <- c("treated","untreated","total")#
+colnames(q1b.table) <- c("mean.z1","n.z1","mean.z0","n.z0","diff","n")#
+q1b.table[1,1] <- round(mean(mydata$views[mydata$success==1 & mydata$hajj2006==1]), digits=3)#
+q1b.table[1,3] <- round(mean(mydata$views[mydata$success==0 & mydata$hajj2006==1]), digits=3)#
+q1b.table[2,1] <- round(mean(mydata$views[mydata$success==1 & mydata$hajj2006==0]), digits=3)#
+q1b.table[2,3] <- round(mean(mydata$views[mydata$success==0 & mydata$hajj2006==0]), digits=3)#
+#
+q1b.table[1,2] <- paste("[",round(length(mydata$views[mydata$success==1 & mydata$hajj2006==1]), digits=0),"]",sep="")#
+q1b.table[1,4] <- paste("[",round(length(mydata$views[mydata$success==0 & mydata$hajj2006==1]), digits=0),"]",sep="")#
+q1b.table[2,2] <- paste("[",round(length(mydata$views[mydata$success==1 & mydata$hajj2006==0]), digits=0),"]",sep="")#
+q1b.table[2,4] <- paste("[",round(length(mydata$views[mydata$success==0 & mydata$hajj2006==0]), digits=0),"]",sep="")#
+#
+q1b.table[3,1] <- round(mean(mydata$views[mydata$success==1]), digits=3)#
+q1b.table[3,3] <- round(mean(mydata$views[mydata$success==0]), digits=3)#
+q1b.table[3,2] <- paste("[",round(length(mydata$views[mydata$success==1]), digits=0),"]",sep="")#
+q1b.table[3,4] <- paste("[",round(length(mydata$views[mydata$success==0]), digits=0),"]",sep="")#
+#
+# q1b.table[1,5] <- round(q1b.table[1,1] - q1b.table[1,3], digits=3)#
+# q1b.table[1,6] <- paste("[",round(q1b.table[1,2] + q1b.table[1,4], digits=0),"]",sep="")#
+# q1b.table[2,5] <- round(q1b.table[2,1] - q1b.table[2,3], digits=3)#
+# q1b.table[2,6] <- paste("[",round(q1b.table[2,2] + q1b.table[2,4], digits=0),"]",sep="")#
+#
+q1b.table[3,1] <- round(mean(mydata$views[mydata$success==1]), digits=3)#
+q1b.table[3,2] <- paste("[",round(length(mydata$views[mydata$success==1]), digits=0),"]",sep="")#
+q1b.table[3,3] <- round(mean(mydata$views[mydata$success==0]), digits=3)#
+q1b.table[3,4] <- paste("[",round(length(mydata$views[mydata$success==0]), digits=0),"]",sep="")#
+#
+# q1b.table[3,5] <- round(q1b.table[3,1] - q1b.table[3,3], digits=3)#
+# q1b.table[3,6] <- paste("[",round(q1b.table[3,2] + q1b.table[3,4], digits=0),"]",sep="")#
+#
+q1b.table.out[,,x] <- q1b.table#
+print(q1b.table)#
+print(xtable(q1b.table))#
+#
+# ==============================================#
+# ==============================================#
+# Problem 2#
+# ==============================================#
+# ==============================================#
+}
+==============================================#
+# W4368 EXPERIMENTAL RESEARCH -- SPRING 2013#
+# MIDTERM EXAM KEY#
+# TA: Al Fang#
+# ==============================================#
+rm(list=ls(all=T))#
+#
+setwd("/Users/al/Dropbox/FEDAI Homework Solutions/Midterm/")#
+#
+library(ri)#
+library(foreign)#
+library(xtable)#
+# Read in UNIs and student names to set seeds#
+#
+stinfo <- read.csv("seeds.csv", header=T)#
+names(stinfo) <- c("name","uni","seed")#
+#
+# Create objects to hold results#
+#
+q1b.table.out <- array(NA, dim=c(3,6,nrow(stinfo)))#
+#
+# Loop over each student's UNI number#
+#
+for(x in 1:nrow(stinfo)){#
+#
+myuni <- stinfo$seed[x]#
+#
+# ============================================================================================#
+# ============================================================================================#
+# Problem 1#
+# ============================================================================================#
+# ============================================================================================#
+#
+# Read in raw data, prepare person-specific dataset#
+#
+setwd("/Users/al/Dropbox/FEDAI Homework Solutions/Midterm/")#
+data <- read.dta("q1hajj_sub.dta")#
+#
+uni <- myuni#
+set.seed(uni)#
+mydata <- as.data.frame(data[sample(1:nrow(data), nrow(data), replace=T),])#
+#
+# ==============================================#
+# 1A - Randomization check #
+# ==============================================#
+#
+numiter <- 10000#
+#
+q1a.fstat <- summary(lm(success ~ age + female + literate, data=mydata))$fstatistic[1]#
+#
+probs <- genprobexact(Z=mydata$success, clustvar=mydata$hhid)#
+perms <- genperms(Z=mydata$success, clustvar=mydata$hhid, maxiter=numiter)#
+#
+# f.stat.store <- rep(NA, numiter)#
+#
+# for(i in 1:numiter){#
+#	f.stat.store[i] <- summary(lm(perms[,i] ~ mydata$age + mydata$female + mydata$literate))$fstatistic[1]#
+# }#
+#
+# q1a.pvalue <- mean(f.stat.store >= q1a.fstat)#
+#
+setwd("/Users/al/Dropbox/Teaching/S13 Experiments/Midterm/Key/")#
+# pdf(paste("q1a_",stinfo$uni[x],".pdf",sep=""))#
+# hist(f.stat.store, breaks=numiter/100, main=paste("Student: ",stinfo$name[x],", UNI: ",stinfo$uni[x],"\n Q1a: Simulated distribution of F statistic under the sharp null \n Observed F statistic: ",round(q1a.fstat, digits=3),", p-value: ",round(q1a.pvalue, digits=3),sep=""), xlab="Simulated F statistic")#
+# abline(v=q1a.fstat, col="red")#
+# dev.off()#
+#
+# ==============================================#
+# 1B - Construct table/graph to illustrate ITT#
+# ==============================================#
+#
+q1b.table <- matrix(NA, nrow=3, ncol=6)#
+rownames(q1b.table) <- c("treated","untreated","total")#
+colnames(q1b.table) <- c("mean.z1","n.z1","mean.z0","n.z0","diff","n")#
+#
+q1b.table[1,1] <- round(mean(mydata$views[mydata$success==1 & mydata$hajj2006==1]), digits=3)#
+q1b.table[1,3] <- round(mean(mydata$views[mydata$success==0 & mydata$hajj2006==1]), digits=3)#
+q1b.table[2,1] <- round(mean(mydata$views[mydata$success==1 & mydata$hajj2006==0]), digits=3)#
+q1b.table[2,3] <- round(mean(mydata$views[mydata$success==0 & mydata$hajj2006==0]), digits=3)#
+q1b.table[3,1] <- round(mean(mydata$views[mydata$success==1]), digits=3)#
+q1b.table[3,3] <- round(mean(mydata$views[mydata$success==0]), digits=3)#
+q1b.table[3,5] <- round(q1b.table[3,1] - q1b.table[3,3], digits=3)#
+q1b.table[1,5] <- round(q1b.table[1,1] - q1b.table[1,3], digits=3)#
+q1b.table[2,5] <- round(q1b.table[2,1] - q1b.table[2,3], digits=3)#
+q1b.table[1,6] <- paste("[",round(length(mydata$views[mydata$hajj2006==1]), digits=0),"]",sep="")#
+q1b.table[2,6] <- paste("[",round(length(mydata$views[mydata$hajj2006==0]), digits=0),"]",sep="")#
+q1b.table[3,6] <- paste("[",round(length(mydata$views), digits=0),"]",sep="")#
+q1b.table[1,2] <- paste("[",round(length(mydata$views[mydata$success==1 & mydata$hajj2006==1]), digits=0),"]",sep="")#
+q1b.table[1,4] <- paste("[",round(length(mydata$views[mydata$success==0 & mydata$hajj2006==1]), digits=0),"]",sep="")#
+q1b.table[2,2] <- paste("[",round(length(mydata$views[mydata$success==1 & mydata$hajj2006==0]), digits=0),"]",sep="")#
+q1b.table[2,4] <- paste("[",round(length(mydata$views[mydata$success==0 & mydata$hajj2006==0]), digits=0),"]",sep="")#
+q1b.table[3,2] <- paste("[",round(length(mydata$views[mydata$success==1]), digits=0),"]",sep="")#
+q1b.table[3,4] <- paste("[",round(length(mydata$views[mydata$success==0]), digits=0),"]",sep="")#
+q1b.table[3,2] <- paste("[",round(length(mydata$views[mydata$success==1]), digits=0),"]",sep="")#
+q1b.table[3,4] <- paste("[",round(length(mydata$views[mydata$success==0]), digits=0),"]",sep="")#
+#
+q1b.table.out[,,x] <- q1b.table#
+print(q1b.table)#
+print(xtable(q1b.table))#
+#
+# ==============================================#
+# ==============================================#
+# Problem 2#
+# ==============================================#
+# ==============================================#
+}
+dimnames(q1b.table.out) <- list(c("treated","untreated","total"), c("mean.z1","n.z1","mean.z0","n.z0","diff","n"), stinfo$uni )
+q1b.table.out
+for(y in 1:nrow(stinfo)){#
+#
+	print(stinfo$name[y])	#
+	print(q1b.table.out[,,y])#
+#
+}
+?print
+for(y in 1:nrow(stinfo)){#
+	print(q1b.table.out[,,y])#
+#
+}
+Q1b #
+for(y in 1:nrow(stinfo)){#
+#
+	print(stinfo$name[y])#
+	print(xtable(q1b.table.out[,,y]))#
+#
+}
+Q1b #
+for(y in 1:nrow(stinfo)){#
+#
+	print(stinfo$name[y])#
+	print(q1b.table.out[,,y])#
+#
+}
+q1a.out <- matrix(NA, nrow=nrow(stinfo), ncol=2)#
+colnames(q1a.out) <- c("f.stat","p.value")#
+rownames(q1a.out) <- stinfo$name
+==============================================#
+# W4368 EXPERIMENTAL RESEARCH -- SPRING 2013#
+# MIDTERM EXAM KEY#
+# TA: Al Fang#
+# ==============================================#
+rm(list=ls(all=T))#
+#
+setwd("/Users/al/Dropbox/FEDAI Homework Solutions/Midterm/")#
+#
+library(ri)#
+library(foreign)#
+library(xtable)#
+# Read in UNIs and student names to set seeds#
+#
+stinfo <- read.csv("seeds.csv", header=T)#
+names(stinfo) <- c("name","uni","seed")#
+#
+# Create objects to hold results#
+q1a.out <- matrix(NA, nrow=nrow(stinfo), ncol=2)#
+colnames(q1a.out) <- c("f.stat","p.value")#
+rownames(q1a.out) <- stinfo$name#
+#
+q1b.table.out <- array(NA, dim=c(3,6,nrow(stinfo)))#
+dimnames(q1b.table.out) <- list(c("treated","untreated","total"), c("mean.z1","n.z1","mean.z0","n.z0","diff","n"), stinfo$uni )#
+#
+# Loop over each student's UNI number#
+#
+for(x in 1:nrow(stinfo)){#
+#
+myuni <- stinfo$seed[x]#
+#
+# ============================================================================================#
+# ============================================================================================#
+# Problem 1#
+# ============================================================================================#
+# ============================================================================================#
+#
+# Read in raw data, prepare person-specific dataset#
+#
+setwd("/Users/al/Dropbox/FEDAI Homework Solutions/Midterm/")#
+data <- read.dta("q1hajj_sub.dta")#
+#
+uni <- myuni#
+set.seed(uni)#
+mydata <- as.data.frame(data[sample(1:nrow(data), nrow(data), replace=T),])#
+#
+# ==============================================#
+# 1A - Randomization check #
+# ==============================================#
+#
+numiter <- 10000#
+#
+q1a.fstat <- summary(lm(success ~ age + female + literate, data=mydata))$fstatistic[1]#
+#
+probs <- genprobexact(Z=mydata$success, clustvar=mydata$hhid)#
+perms <- genperms(Z=mydata$success, clustvar=mydata$hhid, maxiter=numiter)#
+#
+f.stat.store <- rep(NA, numiter)#
+#
+ for(i in 1:numiter){#
+	f.stat.store[i] <- summary(lm(perms[,i] ~ mydata$age + mydata$female + mydata$literate))$fstatistic[1]#
+ }#
+#
+q1a.pvalue <- mean(f.stat.store >= q1a.fstat)#
+#
+setwd("/Users/al/Dropbox/Teaching/S13 Experiments/Midterm/Key/")#
+ pdf(paste("q1a_",stinfo$uni[x],".pdf",sep=""))#
+ hist(f.stat.store, breaks=numiter/100, main=paste("Student: ",stinfo$name[x],", UNI: ",stinfo$uni[x],"\n Q1a: Simulated distribution of F statistic under the sharp null \n Observed F statistic: ",round(q1a.fstat, digits=3),", p-value: ",round(q1a.pvalue, digits=3),sep=""), xlab="Simulated F statistic")#
+ abline(v=q1a.fstat, col="red")#
+ dev.off()#
+#
+q1a.out[x,1] <- q1a.fstat#
+q1a.out[x,2] <- q1a.pvalue#
+#
+# ==============================================#
+# 1B - Construct table/graph to illustrate ITT#
+# ==============================================#
+#
+q1b.table <- matrix(NA, nrow=3, ncol=6)#
+rownames(q1b.table) <- c("treated","untreated","total")#
+colnames(q1b.table) <- c("mean.z1","n.z1","mean.z0","n.z0","diff","n")#
+#
+q1b.table[1,1] <- round(mean(mydata$views[mydata$success==1 & mydata$hajj2006==1]), digits=3)#
+q1b.table[1,3] <- round(mean(mydata$views[mydata$success==0 & mydata$hajj2006==1]), digits=3)#
+q1b.table[2,1] <- round(mean(mydata$views[mydata$success==1 & mydata$hajj2006==0]), digits=3)#
+q1b.table[2,3] <- round(mean(mydata$views[mydata$success==0 & mydata$hajj2006==0]), digits=3)#
+q1b.table[3,1] <- round(mean(mydata$views[mydata$success==1]), digits=3)#
+q1b.table[3,3] <- round(mean(mydata$views[mydata$success==0]), digits=3)#
+q1b.table[3,5] <- round(q1b.table[3,1] - q1b.table[3,3], digits=3)#
+q1b.table[1,5] <- round(q1b.table[1,1] - q1b.table[1,3], digits=3)#
+q1b.table[2,5] <- round(q1b.table[2,1] - q1b.table[2,3], digits=3)#
+q1b.table[1,6] <- paste("[",round(length(mydata$views[mydata$hajj2006==1]), digits=0),"]",sep="")#
+q1b.table[2,6] <- paste("[",round(length(mydata$views[mydata$hajj2006==0]), digits=0),"]",sep="")#
+q1b.table[3,6] <- paste("[",round(length(mydata$views), digits=0),"]",sep="")#
+q1b.table[1,2] <- paste("[",round(length(mydata$views[mydata$success==1 & mydata$hajj2006==1]), digits=0),"]",sep="")#
+q1b.table[1,4] <- paste("[",round(length(mydata$views[mydata$success==0 & mydata$hajj2006==1]), digits=0),"]",sep="")#
+q1b.table[2,2] <- paste("[",round(length(mydata$views[mydata$success==1 & mydata$hajj2006==0]), digits=0),"]",sep="")#
+q1b.table[2,4] <- paste("[",round(length(mydata$views[mydata$success==0 & mydata$hajj2006==0]), digits=0),"]",sep="")#
+q1b.table[3,2] <- paste("[",round(length(mydata$views[mydata$success==1]), digits=0),"]",sep="")#
+q1b.table[3,4] <- paste("[",round(length(mydata$views[mydata$success==0]), digits=0),"]",sep="")#
+q1b.table[3,2] <- paste("[",round(length(mydata$views[mydata$success==1]), digits=0),"]",sep="")#
+q1b.table[3,4] <- paste("[",round(length(mydata$views[mydata$success==0]), digits=0),"]",sep="")#
+#
+q1b.table.out[,,x] <- q1b.table#
+print(q1b.table)#
+#
+# ==============================================#
+# ==============================================#
+# Problem 2#
+# ==============================================#
+# ==============================================#
+}#
+#------- PRINT ANSWERS FOR EACH STUDENT ------------#
+#
+# Q1a#
+xtable(q1a.out, digits=3)#
+#
+# Q1b #
+for(y in 1:nrow(stinfo)){#
+#
+	print(stinfo$name[y])#
+	print(q1b.table.out[,,y])#
+#
+}
+Q1a#
+xtable(q1a.out, digits=3)
+q1c.out <- matrix(NA, nrow=nrow(stinfo), ncol=8)#
+colnames(q1c.out) <- c("itt","pval","ci.lb","ci.ub","itt.adj","pval.adj","ci.lb.adj","ci.ub.adj")#
+rownames(q1c.out) <- stinfo$name
+?genouts
+?dispdist
+?estate
+?genouts
+?gendist
+?dispdist
+==============================================#
+# W4368 EXPERIMENTAL RESEARCH -- SPRING 2013#
+# MIDTERM EXAM KEY#
+# TA: Al Fang#
+# ==============================================#
+rm(list=ls(all=T))#
+#
+setwd("/Users/al/Dropbox/FEDAI Homework Solutions/Midterm/")#
+#
+library(ri)#
+library(foreign)#
+library(xtable)#
+# Read in UNIs and student names to set seeds#
+#
+stinfo <- read.csv("seeds.csv", header=T)#
+names(stinfo) <- c("name","uni","seed")#
+#
+# Create objects to hold results#
+q1a.out <- matrix(NA, nrow=nrow(stinfo), ncol=2)#
+colnames(q1a.out) <- c("f.stat","p.value")#
+rownames(q1a.out) <- stinfo$name#
+#
+q1b.table.out <- array(NA, dim=c(3,6,nrow(stinfo)))#
+dimnames(q1b.table.out) <- list(c("treated","untreated","total"), c("mean.z1","n.z1","mean.z0","n.z0","diff","n"), stinfo$uni )#
+#
+q1c.out <- matrix(NA, nrow=nrow(stinfo), ncol=12)#
+colnames(q1c.out) <- c("itt","pval.twotailed","pval.greater","pval.lesser","ci.lb","ci.ub","itt.adj","pval.twotailed.adj","pval.greater.adj","pval.lesser.adj","ci.lb.adj","ci.ub.adj")#
+rownames(q1c.out) <- stinfo$name#
+#
+# Loop over each student's UNI number#
+#
+for(x in 1:nrow(stinfo)){#
+#
+myuni <- stinfo$seed[x]#
+#
+# ============================================================================================#
+# ============================================================================================#
+# Problem 1#
+# ============================================================================================#
+# ============================================================================================#
+#
+# Read in raw data, prepare person-specific dataset#
+#
+setwd("/Users/al/Dropbox/FEDAI Homework Solutions/Midterm/")#
+data <- read.dta("q1hajj_sub.dta")#
+#
+uni <- myuni#
+set.seed(uni)#
+mydata <- as.data.frame(data[sample(1:nrow(data), nrow(data), replace=T),])#
+#
+# ==============================================#
+# 1A - Randomization check #
+# ==============================================#
+#
+numiter <- 10000#
+#
+q1a.fstat <- summary(lm(success ~ age + female + literate, data=mydata))$fstatistic[1]#
+#
+probs <- genprobexact(Z=mydata$success, clustvar=mydata$hhid)#
+perms <- genperms(Z=mydata$success, clustvar=mydata$hhid, maxiter=numiter)#
+#
+f.stat.store <- rep(NA, numiter)#
+#
+ for(i in 1:numiter){#
+	f.stat.store[i] <- summary(lm(perms[,i] ~ mydata$age + mydata$female + mydata$literate))$fstatistic[1]#
+ }#
+#
+# q1a.pvalue <- mean(f.stat.store >= q1a.fstat)#
+#
+# setwd("/Users/al/Dropbox/Teaching/S13 Experiments/Midterm/Key/")#
+# pdf(paste("q1a_",stinfo$uni[x],".pdf",sep=""))#
+# hist(f.stat.store, breaks=numiter/100, main=paste("Student: ",stinfo$name[x],", UNI: ",stinfo$uni[x],"\n Q1a: Simulated distribution of F statistic under the sharp null \n Observed F statistic: ",round(q1a.fstat, digits=3),", p-value: ",round(q1a.pvalue, digits=3),sep=""), xlab="Simulated F statistic")#
+# abline(v=q1a.fstat, col="red")#
+# dev.off()#
+#
+# q1a.out[x,1] <- q1a.fstat#
+# q1a.out[x,2] <- q1a.pvalue#
+#
+# ==============================================#
+# 1B - Construct table/graph to illustrate ITT#
+# ==============================================#
+#
+q1b.table <- matrix(NA, nrow=3, ncol=6)#
+rownames(q1b.table) <- c("treated","untreated","total")#
+colnames(q1b.table) <- c("mean.z1","n.z1","mean.z0","n.z0","diff","n")#
+#
+q1b.table[1,1] <- round(mean(mydata$views[mydata$success==1 & mydata$hajj2006==1]), digits=3)#
+q1b.table[1,3] <- round(mean(mydata$views[mydata$success==0 & mydata$hajj2006==1]), digits=3)#
+q1b.table[2,1] <- round(mean(mydata$views[mydata$success==1 & mydata$hajj2006==0]), digits=3)#
+q1b.table[2,3] <- round(mean(mydata$views[mydata$success==0 & mydata$hajj2006==0]), digits=3)#
+q1b.table[3,1] <- round(mean(mydata$views[mydata$success==1]), digits=3)#
+q1b.table[3,3] <- round(mean(mydata$views[mydata$success==0]), digits=3)#
+q1b.table[3,5] <- round(q1b.table[3,1] - q1b.table[3,3], digits=3)#
+q1b.table[1,5] <- round(q1b.table[1,1] - q1b.table[1,3], digits=3)#
+q1b.table[2,5] <- round(q1b.table[2,1] - q1b.table[2,3], digits=3)#
+q1b.table[1,6] <- paste("[",round(length(mydata$views[mydata$hajj2006==1]), digits=0),"]",sep="")#
+q1b.table[2,6] <- paste("[",round(length(mydata$views[mydata$hajj2006==0]), digits=0),"]",sep="")#
+q1b.table[3,6] <- paste("[",round(length(mydata$views), digits=0),"]",sep="")#
+q1b.table[1,2] <- paste("[",round(length(mydata$views[mydata$success==1 & mydata$hajj2006==1]), digits=0),"]",sep="")#
+q1b.table[1,4] <- paste("[",round(length(mydata$views[mydata$success==0 & mydata$hajj2006==1]), digits=0),"]",sep="")#
+q1b.table[2,2] <- paste("[",round(length(mydata$views[mydata$success==1 & mydata$hajj2006==0]), digits=0),"]",sep="")#
+q1b.table[2,4] <- paste("[",round(length(mydata$views[mydata$success==0 & mydata$hajj2006==0]), digits=0),"]",sep="")#
+q1b.table[3,2] <- paste("[",round(length(mydata$views[mydata$success==1]), digits=0),"]",sep="")#
+q1b.table[3,4] <- paste("[",round(length(mydata$views[mydata$success==0]), digits=0),"]",sep="")#
+q1b.table[3,2] <- paste("[",round(length(mydata$views[mydata$success==1]), digits=0),"]",sep="")#
+q1b.table[3,4] <- paste("[",round(length(mydata$views[mydata$success==0]), digits=0),"]",sep="")#
+#
+q1b.table.out[,,x] <- q1b.table#
+print(q1b.table)#
+#
+# ==============================================#
+# 1C - Estimate ITT w/o and w/ cov adjustment#
+# 		Form 95% confidence interval#
+#		Test sharp null, tau_i = 0, for all i#
+# ==============================================#
+#
+Y <- mydata$views#
+Z <- mydata$success#
+D <- mydata$hajj2006#
+C <- mydata$hhid#
+X <- as.matrix(cbind(mydata$age, mydata$literate, mydata$female))#
+#
+# unadjusted ITT#
+#
+itt <- estate(Y, Z, prob=probs)#
+Ys <- genouts(Y, Z, ate=0)#
+distout <- gendist(Ys,perms,prob=probs)#
+dispout <- dispdist(distout, itt, display.plot=FALSE)#
+#
+q1c.out[x,1] <- itt#
+q1c.out[x,2] <- dispout$two.tailed.p.value.abs#
+q1c.out[x,3] <- dispout$greater.p.value#
+q1c.out[x,4] <- dispout$lesser.p.value#
+#
+Ys <- genouts(Y, Z, ate=itt)#
+distout <- gendist(Ys,perms,prob=probs)#
+dispout <- dispdist(distout, itt, display.plot=FALSE)#
+q1c.out[x,5] <- dispout$quantile[1]#
+q1c.out[x,6] <- dispout$quantile[2]#
+#
+# covariate adjusted ITT#
+#
+itt <- estate(Y, Z, X=X, prob=probs)#
+Ys <- genouts(Y, Z, ate=0)#
+distout <- gendist(Ys,X=X,perms,prob=probs)#
+dispout <- dispdist(distout, itt, display.plot=FALSE)#
+#
+q1c.out[x,7] <- itt#
+q1c.out[x,8] <- dispout$two.tailed.p.value.abs#
+q1c.out[x,9] <- dispout$greater.p.value#
+q1c.out[x,10] <- dispout$lesser.p.value#
+#
+Ys <- genouts(Y, Z, ate=itt)#
+distout <- gendist(Ys,X=X,perms,prob=probs)#
+dispout <- dispdist(distout, itt, display.plot=FALSE)#
+q1c.out[x,11] <- dispout$quantile[1]#
+q1c.out[x,12] <- dispout$quantile[2]#
+# ==============================================#
+# ==============================================#
+# Problem 2#
+# ==============================================#
+# ==============================================#
+}
+==============================================#
+# W4368 EXPERIMENTAL RESEARCH -- SPRING 2013#
+# MIDTERM EXAM KEY#
+# TA: Al Fang#
+# ==============================================#
+rm(list=ls(all=T))#
+#
+setwd("/Users/al/Dropbox/FEDAI Homework Solutions/Midterm/")#
+#
+library(ri)#
+library(foreign)#
+library(xtable)#
+# Read in UNIs and student names to set seeds#
+#
+stinfo <- read.csv("seeds.csv", header=T)#
+names(stinfo) <- c("name","uni","seed")#
+#
+# Create objects to hold results#
+q1a.out <- matrix(NA, nrow=nrow(stinfo), ncol=2)#
+colnames(q1a.out) <- c("f.stat","p.value")#
+rownames(q1a.out) <- stinfo$name#
+#
+q1b.table.out <- array(NA, dim=c(3,6,nrow(stinfo)))#
+dimnames(q1b.table.out) <- list(c("treated","untreated","total"), c("mean.z1","n.z1","mean.z0","n.z0","diff","n"), stinfo$uni )#
+#
+q1c.out <- matrix(NA, nrow=nrow(stinfo), ncol=12)#
+colnames(q1c.out) <- c("itt","pval.twotailed","pval.greater","pval.lesser","ci.lb","ci.ub","itt.adj","pval.twotailed.adj","pval.greater.adj","pval.lesser.adj","ci.lb.adj","ci.ub.adj")#
+rownames(q1c.out) <- stinfo$name#
+#
+# Loop over each student's UNI number#
+#
+for(x in 1:nrow(stinfo)){#
+#
+myuni <- stinfo$seed[x]#
+#
+# ============================================================================================#
+# ============================================================================================#
+# Problem 1#
+# ============================================================================================#
+# ============================================================================================#
+#
+# Read in raw data, prepare person-specific dataset#
+#
+setwd("/Users/al/Dropbox/FEDAI Homework Solutions/Midterm/")#
+data <- read.dta("q1hajj_sub.dta")#
+#
+uni <- myuni#
+set.seed(uni)#
+mydata <- as.data.frame(data[sample(1:nrow(data), nrow(data), replace=T),])#
+#
+# ==============================================#
+# 1A - Randomization check #
+# ==============================================#
+#
+numiter <- 10000#
+#
+q1a.fstat <- summary(lm(success ~ age + female + literate, data=mydata))$fstatistic[1]#
+#
+probs <- genprobexact(Z=mydata$success, clustvar=mydata$hhid)#
+perms <- genperms(Z=mydata$success, clustvar=mydata$hhid, maxiter=numiter)#
+#
+f.stat.store <- rep(NA, numiter)#
+#
+ for(i in 1:numiter){#
+	f.stat.store[i] <- summary(lm(perms[,i] ~ mydata$age + mydata$female + mydata$literate))$fstatistic[1]#
+ }#
+#
+# q1a.pvalue <- mean(f.stat.store >= q1a.fstat)#
+#
+# setwd("/Users/al/Dropbox/Teaching/S13 Experiments/Midterm/Key/")#
+# pdf(paste("q1a_",stinfo$uni[x],".pdf",sep=""))#
+# hist(f.stat.store, breaks=numiter/100, main=paste("Student: ",stinfo$name[x],", UNI: ",stinfo$uni[x],"\n Q1a: Simulated distribution of F statistic under the sharp null \n Observed F statistic: ",round(q1a.fstat, digits=3),", p-value: ",round(q1a.pvalue, digits=3),sep=""), xlab="Simulated F statistic")#
+# abline(v=q1a.fstat, col="red")#
+# dev.off()#
+#
+# q1a.out[x,1] <- q1a.fstat#
+# q1a.out[x,2] <- q1a.pvalue#
+#
+# ==============================================#
+# 1B - Construct table/graph to illustrate ITT#
+# ==============================================#
+#
+q1b.table <- matrix(NA, nrow=3, ncol=6)#
+rownames(q1b.table) <- c("treated","untreated","total")#
+colnames(q1b.table) <- c("mean.z1","n.z1","mean.z0","n.z0","diff","n")#
+#
+q1b.table[1,1] <- round(mean(mydata$views[mydata$success==1 & mydata$hajj2006==1]), digits=3)#
+q1b.table[1,3] <- round(mean(mydata$views[mydata$success==0 & mydata$hajj2006==1]), digits=3)#
+q1b.table[2,1] <- round(mean(mydata$views[mydata$success==1 & mydata$hajj2006==0]), digits=3)#
+q1b.table[2,3] <- round(mean(mydata$views[mydata$success==0 & mydata$hajj2006==0]), digits=3)#
+q1b.table[3,1] <- round(mean(mydata$views[mydata$success==1]), digits=3)#
+q1b.table[3,3] <- round(mean(mydata$views[mydata$success==0]), digits=3)#
+q1b.table[3,5] <- round(q1b.table[3,1] - q1b.table[3,3], digits=3)#
+q1b.table[1,5] <- round(q1b.table[1,1] - q1b.table[1,3], digits=3)#
+q1b.table[2,5] <- round(q1b.table[2,1] - q1b.table[2,3], digits=3)#
+q1b.table[1,6] <- paste("[",round(length(mydata$views[mydata$hajj2006==1]), digits=0),"]",sep="")#
+q1b.table[2,6] <- paste("[",round(length(mydata$views[mydata$hajj2006==0]), digits=0),"]",sep="")#
+q1b.table[3,6] <- paste("[",round(length(mydata$views), digits=0),"]",sep="")#
+q1b.table[1,2] <- paste("[",round(length(mydata$views[mydata$success==1 & mydata$hajj2006==1]), digits=0),"]",sep="")#
+q1b.table[1,4] <- paste("[",round(length(mydata$views[mydata$success==0 & mydata$hajj2006==1]), digits=0),"]",sep="")#
+q1b.table[2,2] <- paste("[",round(length(mydata$views[mydata$success==1 & mydata$hajj2006==0]), digits=0),"]",sep="")#
+q1b.table[2,4] <- paste("[",round(length(mydata$views[mydata$success==0 & mydata$hajj2006==0]), digits=0),"]",sep="")#
+q1b.table[3,2] <- paste("[",round(length(mydata$views[mydata$success==1]), digits=0),"]",sep="")#
+q1b.table[3,4] <- paste("[",round(length(mydata$views[mydata$success==0]), digits=0),"]",sep="")#
+q1b.table[3,2] <- paste("[",round(length(mydata$views[mydata$success==1]), digits=0),"]",sep="")#
+q1b.table[3,4] <- paste("[",round(length(mydata$views[mydata$success==0]), digits=0),"]",sep="")#
+#
+q1b.table.out[,,x] <- q1b.table#
+print(q1b.table)#
+#
+# ==============================================#
+# 1C - Estimate ITT w/o and w/ cov adjustment#
+# 		Form 95% confidence interval#
+#		Test sharp null, tau_i = 0, for all i#
+# ==============================================#
+#
+Y <- mydata$views#
+Z <- mydata$success#
+D <- mydata$hajj2006#
+C <- mydata$hhid#
+X <- as.matrix(cbind(mydata$age, mydata$literate, mydata$female))#
+#
+# unadjusted ITT#
+#
+itt <- estate(Y, Z, prob=probs)#
+Ys <- genouts(Y, Z, ate=0)#
+distout <- gendist(Ys,perms,prob=probs)#
+dispout <- dispdist(distout, itt, display.plot=FALSE)#
+#
+q1c.out[x,1] <- itt#
+q1c.out[x,2] <- dispout$two.tailed.p.value.abs#
+q1c.out[x,3] <- dispout$greater.p.value#
+q1c.out[x,4] <- dispout$lesser.p.value#
+#
+Ys <- genouts(Y, Z, ate=itt)#
+distout <- gendist(Ys,perms,prob=probs)#
+dispout <- dispdist(distout, itt, display.plot=FALSE)#
+q1c.out[x,5] <- dispout$quantile[1]#
+q1c.out[x,6] <- dispout$quantile[2]#
+#
+# covariate adjusted ITT#
+#
+itt <- estate(Y, Z, X=X, prob=probs)#
+Ys <- genouts(Y, Z, ate=0)#
+distout <- gendist(Ys,X=X,perms,prob=probs)#
+dispout <- dispdist(distout, itt, display.plot=FALSE)#
+#
+q1c.out[x,7] <- itt#
+q1c.out[x,8] <- dispout$two.tailed.p.value.abs#
+q1c.out[x,9] <- dispout$greater.p.value#
+q1c.out[x,10] <- dispout$lesser.p.value#
+#
+Ys <- genouts(Y, Z, ate=itt)#
+distout <- gendist(Ys,X=X,perms,prob=probs)#
+dispout <- dispdist(distout, itt, display.plot=FALSE)#
+q1c.out[x,11] <- dispout$quantile[1]#
+q1c.out[x,12] <- dispout$quantile[2]#
+setwd("/Users/al/Dropbox/Teaching/S13 Experiments/Midterm/Key/")#
+pdf(paste("q1d_",stinfo$uni[x],".pdf",sep=""))#
+resresplot(Y, Z, X=X, prob=probs, scale = 1)#
+dev.off()#
+# ==============================================#
+# ==============================================#
+# Problem 2#
+# ==============================================#
+# ==============================================#
+}#
+#------- PRINT STUDENT-SPECIFIC ANSWER KEY ------------#
+#
+# Q1a#
+xtable(q1a.out, digits=3)#
+#
+# Q1b #
+for(y in 1:nrow(stinfo)){#
+#
+	print(stinfo$name[y])#
+	print(q1b.table.out[,,y])#
+#
+}#
+# Q1c#
+xtable(q1c.out, digits=3)
+==============================================#
+# W4368 EXPERIMENTAL RESEARCH -- SPRING 2013#
+# MIDTERM EXAM KEY#
+# TA: Al Fang#
+# ==============================================#
+rm(list=ls(all=T))#
+#
+setwd("/Users/al/Dropbox/FEDAI Homework Solutions/Midterm/")#
+#
+library(ri)#
+library(foreign)#
+library(xtable)#
+# Read in UNIs and student names to set seeds#
+#
+stinfo <- read.csv("seeds.csv", header=T)#
+names(stinfo) <- c("name","uni","seed")#
+#
+# Create objects to hold results#
+q1a.out <- matrix(NA, nrow=nrow(stinfo), ncol=2)#
+colnames(q1a.out) <- c("f.stat","p.value")#
+rownames(q1a.out) <- stinfo$name#
+#
+q1b.table.out <- array(NA, dim=c(3,6,nrow(stinfo)))#
+dimnames(q1b.table.out) <- list(c("treated","untreated","total"), c("mean.z1","n.z1","mean.z0","n.z0","diff","n"), stinfo$uni )#
+#
+q1c.out <- matrix(NA, nrow=nrow(stinfo), ncol=12)#
+colnames(q1c.out) <- c("itt","pval.twotailed","pval.greater","pval.lesser","ci.lb","ci.ub","itt.adj","pval.twotailed.adj","pval.greater.adj","pval.lesser.adj","ci.lb.adj","ci.ub.adj")#
+rownames(q1c.out) <- stinfo$name#
+#
+q1e.out <- matrix(NA, nrow=nrow(stinfo), ncol=12)#
+colnames(q1e.out) <- c("itt","pval.twotailed","pval.greater","pval.lesser","ci.lb","ci.ub","itt.adj","pval.twotailed.adj","pval.greater.adj","pval.lesser.adj","ci.lb.adj","ci.ub.adj")#
+rownames(q1e.out) <- stinfo$name#
+#
+# Loop over each student's UNI number#
+#
+for(x in 1:nrow(stinfo)){#
+#
+myuni <- stinfo$seed[x]#
+#
+# ============================================================================================#
+# ============================================================================================#
+# Problem 1#
+# ============================================================================================#
+# ============================================================================================#
+#
+# Read in raw data, prepare person-specific dataset#
+#
+setwd("/Users/al/Dropbox/FEDAI Homework Solutions/Midterm/")#
+data <- read.dta("q1hajj_sub.dta")#
+#
+uni <- myuni#
+set.seed(uni)#
+mydata <- as.data.frame(data[sample(1:nrow(data), nrow(data), replace=T),])#
+#
+# ==============================================#
+# 1A - Randomization check #
+# ==============================================#
+#
+numiter <- 10000#
+#
+q1a.fstat <- summary(lm(success ~ age + female + literate, data=mydata))$fstatistic[1]#
+#
+probs <- genprobexact(Z=mydata$success, clustvar=mydata$hhid)#
+perms <- genperms(Z=mydata$success, clustvar=mydata$hhid, maxiter=numiter)#
+#
+# f.stat.store <- rep(NA, numiter)#
+#
+# for(i in 1:numiter){#
+#	f.stat.store[i] <- summary(lm(perms[,i] ~ mydata$age + mydata$female + mydata$literate))$fstatistic[1]#
+# }#
+#
+# q1a.pvalue <- mean(f.stat.store >= q1a.fstat)#
+#
+# setwd("/Users/al/Dropbox/Teaching/S13 Experiments/Midterm/Key/")#
+# pdf(paste("q1a_",stinfo$uni[x],".pdf",sep=""))#
+# hist(f.stat.store, breaks=numiter/100, main=paste("Student: ",stinfo$name[x],", UNI: ",stinfo$uni[x],"\n Q1a: Simulated distribution of F statistic under the sharp null \n Observed F statistic: ",round(q1a.fstat, digits=3),", p-value: ",round(q1a.pvalue, digits=3),sep=""), xlab="Simulated F statistic")#
+# abline(v=q1a.fstat, col="red")#
+# dev.off()#
+#
+# q1a.out[x,1] <- q1a.fstat#
+# q1a.out[x,2] <- q1a.pvalue#
+#
+# ==============================================#
+# 1B - Construct table/graph to illustrate ITT#
+# ==============================================#
+#
+q1b.table <- matrix(NA, nrow=3, ncol=6)#
+rownames(q1b.table) <- c("treated","untreated","total")#
+colnames(q1b.table) <- c("mean.z1","n.z1","mean.z0","n.z0","diff","n")#
+#
+q1b.table[1,1] <- round(mean(mydata$views[mydata$success==1 & mydata$hajj2006==1]), digits=3)#
+q1b.table[1,3] <- round(mean(mydata$views[mydata$success==0 & mydata$hajj2006==1]), digits=3)#
+q1b.table[2,1] <- round(mean(mydata$views[mydata$success==1 & mydata$hajj2006==0]), digits=3)#
+q1b.table[2,3] <- round(mean(mydata$views[mydata$success==0 & mydata$hajj2006==0]), digits=3)#
+q1b.table[3,1] <- round(mean(mydata$views[mydata$success==1]), digits=3)#
+q1b.table[3,3] <- round(mean(mydata$views[mydata$success==0]), digits=3)#
+q1b.table[3,5] <- round(q1b.table[3,1] - q1b.table[3,3], digits=3)#
+q1b.table[1,5] <- round(q1b.table[1,1] - q1b.table[1,3], digits=3)#
+q1b.table[2,5] <- round(q1b.table[2,1] - q1b.table[2,3], digits=3)#
+q1b.table[1,6] <- paste("[",round(length(mydata$views[mydata$hajj2006==1]), digits=0),"]",sep="")#
+q1b.table[2,6] <- paste("[",round(length(mydata$views[mydata$hajj2006==0]), digits=0),"]",sep="")#
+q1b.table[3,6] <- paste("[",round(length(mydata$views), digits=0),"]",sep="")#
+q1b.table[1,2] <- paste("[",round(length(mydata$views[mydata$success==1 & mydata$hajj2006==1]), digits=0),"]",sep="")#
+q1b.table[1,4] <- paste("[",round(length(mydata$views[mydata$success==0 & mydata$hajj2006==1]), digits=0),"]",sep="")#
+q1b.table[2,2] <- paste("[",round(length(mydata$views[mydata$success==1 & mydata$hajj2006==0]), digits=0),"]",sep="")#
+q1b.table[2,4] <- paste("[",round(length(mydata$views[mydata$success==0 & mydata$hajj2006==0]), digits=0),"]",sep="")#
+q1b.table[3,2] <- paste("[",round(length(mydata$views[mydata$success==1]), digits=0),"]",sep="")#
+q1b.table[3,4] <- paste("[",round(length(mydata$views[mydata$success==0]), digits=0),"]",sep="")#
+q1b.table[3,2] <- paste("[",round(length(mydata$views[mydata$success==1]), digits=0),"]",sep="")#
+q1b.table[3,4] <- paste("[",round(length(mydata$views[mydata$success==0]), digits=0),"]",sep="")#
+#
+q1b.table.out[,,x] <- q1b.table#
+print(q1b.table)#
+#
+# ==============================================#
+# 1C - Estimate ITT w/o and w/ cov adjustment#
+# 		Form 95% confidence interval#
+#		Test sharp null, tau_i = 0, for all i#
+# ==============================================#
+#
+Y <- mydata$views#
+Z <- mydata$success#
+D <- mydata$hajj2006#
+C <- mydata$hhid#
+X <- as.matrix(cbind(mydata$age, mydata$literate, mydata$female))#
+#
+# unadjusted ITT#
+#
+itt <- estate(Y, Z, prob=probs)#
+Ys <- genouts(Y, Z, ate=0)#
+distout <- gendist(Ys,perms,prob=probs)#
+dispout <- dispdist(distout, itt, display.plot=FALSE)#
+#
+q1c.out[x,1] <- itt#
+q1c.out[x,2] <- dispout$two.tailed.p.value.abs#
+q1c.out[x,3] <- dispout$greater.p.value#
+q1c.out[x,4] <- dispout$lesser.p.value#
+#
+Ys <- genouts(Y, Z, ate=itt)#
+distout <- gendist(Ys,perms,prob=probs)#
+dispout <- dispdist(distout, itt, display.plot=FALSE)#
+q1c.out[x,5] <- dispout$quantile[1]#
+q1c.out[x,6] <- dispout$quantile[2]#
+#
+# covariate adjusted ITT#
+#
+itt <- estate(Y, Z, X=X, prob=probs)#
+Ys <- genouts(Y, Z, ate=0)#
+distout <- gendist(Ys,X=X,perms,prob=probs)#
+dispout <- dispdist(distout, itt, display.plot=FALSE)#
+#
+q1c.out[x,7] <- itt#
+q1c.out[x,8] <- dispout$two.tailed.p.value.abs#
+q1c.out[x,9] <- dispout$greater.p.value#
+q1c.out[x,10] <- dispout$lesser.p.value#
+#
+Ys <- genouts(Y, Z, ate=itt)#
+distout <- gendist(Ys,X=X,perms,prob=probs)#
+dispout <- dispdist(distout, itt, display.plot=FALSE)#
+q1c.out[x,11] <- dispout$quantile[1]#
+q1c.out[x,12] <- dispout$quantile[2]#
+# ==============================================#
+# 1D - Res-res plot#
+# ==============================================#
+#
+setwd("/Users/al/Dropbox/Teaching/S13 Experiments/Midterm/Key/")#
+# pdf(paste("q1d_",stinfo$uni[x],".pdf",sep=""))#
+# resresplot(Y, Z, X=X, prob=probs, scale = 1)#
+# dev.off()#
+#
+# ==============================================#
+# 1E - Diff in totals (HT estimator)#
+# ==============================================#
+#
+# unadjusted ITT#
+#
+itt <- estate(Y, Z, prob=probs, HT=TRUE)#
+Ys <- genouts(Y, Z, ate=0)#
+distout <- gendist(Ys,perms,prob=probs, HT=TRUE)#
+dispout <- dispdist(distout, itt, display.plot=FALSE)#
+#
+q1e.out[x,1] <- itt#
+q1e.out[x,2] <- dispout$two.tailed.p.value.abs#
+q1e.out[x,3] <- dispout$greater.p.value#
+q1e.out[x,4] <- dispout$lesser.p.value#
+#
+Ys <- genouts(Y, Z, ate=itt)#
+distout <- gendist(Ys,perms,prob=probs, HT=TRUE)#
+dispout <- dispdist(distout, itt, display.plot=FALSE)#
+q1c.out[x,5] <- dispout$quantile[1]#
+q1c.out[x,6] <- dispout$quantile[2]#
+#
+# covariate adjusted ITT#
+#
+itt <- estate(Y, Z, X=X, prob=probs, HT=TRUE)#
+Ys <- genouts(Y, Z, ate=0)#
+distout <- gendist(Ys,X=X,perms,prob=probs, HT=TRUE)#
+dispout <- dispdist(distout, itt, display.plot=FALSE)#
+#
+q1e.out[x,7] <- itt#
+q1e.out[x,8] <- dispout$two.tailed.p.value.abs#
+q1e.out[x,9] <- dispout$greater.p.value#
+q1e.out[x,10] <- dispout$lesser.p.value#
+#
+Ys <- genouts(Y, Z, ate=itt)#
+distout <- gendist(Ys,X=X,perms,prob=probs, HT=TRUE)#
+dispout <- dispdist(distout, itt, display.plot=FALSE)#
+q1e.out[x,11] <- dispout$quantile[1]#
+q1e.out[x,12] <- dispout$quantile[2]#
+# ==============================================#
+# ==============================================#
+# Problem 2#
+# ==============================================#
+# ==============================================#
+}#
+#------- PRINT STUDENT-SPECIFIC ANSWER KEY ------------#
+#
+# Q1a#
+xtable(q1a.out, digits=3)#
+#
+# Q1b #
+for(y in 1:nrow(stinfo)){#
+#
+	print(stinfo$name[y])#
+	print(q1b.table.out[,,y])#
+#
+}#
+# Q1c#
+xtable(q1c.out, digits=3)#
+#
+# Q1d -- see pdf output#
+#
+# Q1e#
+xtable(q1e.out, digits=3)
+cace <- estlate(Y, D, Z, prob=probs, HT=TRUE)
+cace
+Y
+Y <- mydata$views#
+Z <- mydata$success#
+D <- mydata$hajj2006#
+C <- mydata$hhid#
+X <- as.matrix(cbind(mydata$age, mydata$literate, mydata$female))
+Y
+Z
+D
+C
+X
+W <- Z/probs + (1-Z)/(1-probs)
+W
+1/W
+cace.fit <- ivreg(Y ~ D, ~Z , weights=W)
+library(AER)
+cace.fit <- ivreg(Y ~ D, ~Z , weights=W)
+cace.fit
+cace
+probs <- genprobexact(Z=mydata$success, clustvar=mydata$hhid)#
+perms <- genperms(Z=mydata$success, clustvar=mydata$hhid, maxiter=numiter)
+cace <- estlate(Y, D, Z, prob=probs, HT=FALSE)
+cace
+W <- Z/probs + (1-Z)/(1-probs)
+cace.fit <- ivreg(Y ~ D, ~Z , weights=W)
+cace.fit
+print(summary(cace.fit))
+ci.lower.cace <- confint(cace.fit, parm="D", level=.95)[1]
+ci.upper.cace <- confint(cace.fit, parm="D", level=.95)[2]
+coeftest(cace.fit, vcovHC(cace.fit))
+cace <- estlate(Y, D, Z, X=X, prob=probs, HT=FALSE)
+cace
+W <- Z/probs + (1-Z)/(1-probs)#
+cace.fit <- ivreg(Y ~ D + X, ~Z , weights=W)#
+print(summary(cace.fit))
+W <- Z/probs + (1-Z)/(1-probs)
+?ivreg
+cace.fit <- ivreg(Y ~ D + X | Z , weights=W)
+cace.fit
+cace.fit <- ivreg(Y ~ D + X | Z + X , weights=W)
+cace.fit
+print(summary(cace.fit))
+confint(cace.fit, parm="D", level=.95)
+ci.lower.cace <- confint(cace.fit, parm="D", level=.95)[1]#
+ci.upper.cace <- confint(cace.fit, parm="D", level=.95)[2]
+setwd("/Users/al/Dropbox/FEDAI Homework Solutions/Midterm/")#
+data <- read.dta("q1hajj.dta")#
+#
+uni <- myuni#
+set.seed(uni)#
+q1miss <- as.data.frame(data[sample(1:nrow(data), nrow(data), replace=T),])
+dim(q1miss)
+q1miss
+names(q1miss)
+table(q1miss$success, useNA="always")#
+table(q1miss$hajj2006, useNA="always")#
+table(q1miss$views, useNA="always")#
+table(q1miss$age, useNA="always")#
+table(q1miss$female, useNA="always")#
+table(q1miss$literate, useNA="always")
+max(q1miss$views)
+max(q1miss$views, na.rm=T)
+min(q1miss$views, na.rm=T)
+==============================================#
+# W4368 EXPERIMENTAL RESEARCH -- SPRING 2013#
+# MIDTERM EXAM KEY#
+# TA: Al Fang#
+# Date: 20 Apr 2013#
+# ==============================================#
+#
+rm(list=ls(all=T))#
+#
+setwd("/Users/al/Dropbox/FEDAI Homework Solutions/Midterm/")#
+#
+library(ri)#
+library(foreign)#
+library(xtable)#
+library(AER)#
+# Read in UNIs and student names to set seeds#
+#
+stinfo <- read.csv("seeds.csv", header=T)#
+names(stinfo) <- c("name","uni","seed")#
+#
+# Create objects to hold results#
+q1a.out <- matrix(NA, nrow=nrow(stinfo), ncol=2)#
+colnames(q1a.out) <- c("f.stat","p.value")#
+rownames(q1a.out) <- stinfo$name#
+#
+q1b.table.out <- array(NA, dim=c(3,6,nrow(stinfo)))#
+dimnames(q1b.table.out) <- list(c("treated","untreated","total"), c("mean.z1","n.z1","mean.z0","n.z0","diff","n"), stinfo$uni )#
+#
+q1c.out <- matrix(NA, nrow=nrow(stinfo), ncol=12)#
+colnames(q1c.out) <- c("itt","pval.twotailed","pval.greater","pval.lesser","ci.lb","ci.ub","itt.adj","pval.twotailed.adj","pval.greater.adj","pval.lesser.adj","ci.lb.adj","ci.ub.adj")#
+rownames(q1c.out) <- stinfo$name#
+#
+q1e.out <- matrix(NA, nrow=nrow(stinfo), ncol=12)#
+colnames(q1e.out) <- c("itt","pval.twotailed","pval.greater","pval.lesser","ci.lb","ci.ub","itt.adj","pval.twotailed.adj","pval.greater.adj","pval.lesser.adj","ci.lb.adj","ci.ub.adj")#
+rownames(q1e.out) <- stinfo$name#
+#
+q1h.out <- matrix(NA, nrow=nrow(stinfo), ncol=12)#
+colnames(q1h.out) <- c("cace","pval.twotailed","pval.greater","pval.lesser","ci.lb","ci.ub","cace.adj","pval.twotailed.adj","pval.greater.adj","pval.lesser.adj","ci.lb.adj","ci.ub.adj")#
+rownames(q1h.out) <- stinfo$name#
+#
+q1i.out <- matrix(NA, nrow=nrow(stinfo), ncol=4)#
+colnames(q1i.out) <- c("itt.ev.lower","itt.ev.upper","itt.ev.lower.adj","itt.ev.upper.adj")#
+rownames(q1i.out) <- stinfo$name#
+#
+# Loop over each student's UNI number#
+#
+for(x in 1:nrow(stinfo)){#
+#
+myuni <- stinfo$seed[x]#
+#
+# ============================================================================================#
+# ============================================================================================#
+# Problem 1#
+# ============================================================================================#
+# ============================================================================================#
+#
+# Read in raw data, prepare person-specific dataset#
+#
+setwd("/Users/al/Dropbox/FEDAI Homework Solutions/Midterm/")#
+data <- read.dta("q1hajj_sub.dta")#
+#
+uni <- myuni#
+set.seed(uni)#
+mydata <- as.data.frame(data[sample(1:nrow(data), nrow(data), replace=T),])#
+#
+# ==============================================#
+# 1A - Randomization check #
+# ==============================================#
+#
+numiter <- 10000#
+#
+q1a.fstat <- summary(lm(success ~ age + female + literate, data=mydata))$fstatistic[1]#
+#
+probs <- genprobexact(Z=mydata$success, clustvar=mydata$hhid)#
+perms <- genperms(Z=mydata$success, clustvar=mydata$hhid, maxiter=numiter)#
+#
+# f.stat.store <- rep(NA, numiter)#
+#
+# for(i in 1:numiter){#
+#	f.stat.store[i] <- summary(lm(perms[,i] ~ mydata$age + mydata$female + mydata$literate))$fstatistic[1]#
+# }#
+#
+# q1a.pvalue <- mean(f.stat.store >= q1a.fstat)#
+#
+# setwd("/Users/al/Dropbox/Teaching/S13 Experiments/Midterm/Key/")#
+# pdf(paste("q1a_",stinfo$uni[x],".pdf",sep=""))#
+# hist(f.stat.store, breaks=numiter/100, main=paste("Student: ",stinfo$name[x],", UNI: ",stinfo$uni[x],"\n Q1a: Simulated distribution of F statistic under the sharp null \n Observed F statistic: ",round(q1a.fstat, digits=3),", p-value: ",round(q1a.pvalue, digits=3),sep=""), xlab="Simulated F statistic")#
+# abline(v=q1a.fstat, col="red")#
+# dev.off()#
+#
+# q1a.out[x,1] <- q1a.fstat#
+# q1a.out[x,2] <- q1a.pvalue#
+#
+# ==============================================#
+# 1B - Construct table/graph to illustrate ITT#
+# ==============================================#
+#
+q1b.table <- matrix(NA, nrow=3, ncol=6)#
+rownames(q1b.table) <- c("treated","untreated","total")#
+colnames(q1b.table) <- c("mean.z1","n.z1","mean.z0","n.z0","diff","n")#
+#
+q1b.table[1,1] <- round(mean(mydata$views[mydata$success==1 & mydata$hajj2006==1]), digits=3)#
+q1b.table[1,3] <- round(mean(mydata$views[mydata$success==0 & mydata$hajj2006==1]), digits=3)#
+q1b.table[2,1] <- round(mean(mydata$views[mydata$success==1 & mydata$hajj2006==0]), digits=3)#
+q1b.table[2,3] <- round(mean(mydata$views[mydata$success==0 & mydata$hajj2006==0]), digits=3)#
+q1b.table[3,1] <- round(mean(mydata$views[mydata$success==1]), digits=3)#
+q1b.table[3,3] <- round(mean(mydata$views[mydata$success==0]), digits=3)#
+q1b.table[3,5] <- round(q1b.table[3,1] - q1b.table[3,3], digits=3)#
+q1b.table[1,5] <- round(q1b.table[1,1] - q1b.table[1,3], digits=3)#
+q1b.table[2,5] <- round(q1b.table[2,1] - q1b.table[2,3], digits=3)#
+q1b.table[1,6] <- paste("[",round(length(mydata$views[mydata$hajj2006==1]), digits=0),"]",sep="")#
+q1b.table[2,6] <- paste("[",round(length(mydata$views[mydata$hajj2006==0]), digits=0),"]",sep="")#
+q1b.table[3,6] <- paste("[",round(length(mydata$views), digits=0),"]",sep="")#
+q1b.table[1,2] <- paste("[",round(length(mydata$views[mydata$success==1 & mydata$hajj2006==1]), digits=0),"]",sep="")#
+q1b.table[1,4] <- paste("[",round(length(mydata$views[mydata$success==0 & mydata$hajj2006==1]), digits=0),"]",sep="")#
+q1b.table[2,2] <- paste("[",round(length(mydata$views[mydata$success==1 & mydata$hajj2006==0]), digits=0),"]",sep="")#
+q1b.table[2,4] <- paste("[",round(length(mydata$views[mydata$success==0 & mydata$hajj2006==0]), digits=0),"]",sep="")#
+q1b.table[3,2] <- paste("[",round(length(mydata$views[mydata$success==1]), digits=0),"]",sep="")#
+q1b.table[3,4] <- paste("[",round(length(mydata$views[mydata$success==0]), digits=0),"]",sep="")#
+q1b.table[3,2] <- paste("[",round(length(mydata$views[mydata$success==1]), digits=0),"]",sep="")#
+q1b.table[3,4] <- paste("[",round(length(mydata$views[mydata$success==0]), digits=0),"]",sep="")#
+#
+q1b.table.out[,,x] <- q1b.table#
+print(q1b.table)#
+#
+# ==============================================#
+# 1C - Estimate ITT w/o and w/ cov adjustment#
+# 		Form 95% confidence interval#
+#		Test sharp null, tau_i = 0, for all i#
+# ==============================================#
+#
+Y <- mydata$views#
+Z <- mydata$success#
+D <- mydata$hajj2006#
+C <- mydata$hhid#
+X <- as.matrix(cbind(mydata$age, mydata$literate, mydata$female))#
+#
+# unadjusted ITT#
+#
+itt <- estate(Y, Z, prob=probs)#
+Ys <- genouts(Y, Z, ate=0)#
+distout <- gendist(Ys,perms,prob=probs)#
+dispout <- dispdist(distout, itt, display.plot=FALSE)#
+#
+q1c.out[x,1] <- itt#
+q1c.out[x,2] <- dispout$two.tailed.p.value.abs#
+q1c.out[x,3] <- dispout$greater.p.value#
+q1c.out[x,4] <- dispout$lesser.p.value#
+#
+Ys <- genouts(Y, Z, ate=itt)#
+distout <- gendist(Ys,perms,prob=probs)#
+dispout <- dispdist(distout, itt, display.plot=FALSE)#
+q1c.out[x,5] <- dispout$quantile[1]#
+q1c.out[x,6] <- dispout$quantile[2]#
+#
+# covariate adjusted ITT#
+#
+itt <- estate(Y, Z, X=X, prob=probs)#
+Ys <- genouts(Y, Z, ate=0)#
+distout <- gendist(Ys,X=X,perms,prob=probs)#
+dispout <- dispdist(distout, itt, display.plot=FALSE)#
+#
+q1c.out[x,7] <- itt#
+q1c.out[x,8] <- dispout$two.tailed.p.value.abs#
+q1c.out[x,9] <- dispout$greater.p.value#
+q1c.out[x,10] <- dispout$lesser.p.value#
+#
+Ys <- genouts(Y, Z, ate=itt)#
+distout <- gendist(Ys,X=X,perms,prob=probs)#
+dispout <- dispdist(distout, itt, display.plot=FALSE)#
+q1c.out[x,11] <- dispout$quantile[1]#
+q1c.out[x,12] <- dispout$quantile[2]#
+# ==============================================#
+# 1D - Res-res plot#
+# ==============================================#
+#
+# setwd("/Users/al/Dropbox/Teaching/S13 Experiments/Midterm/Key/")#
+# pdf(paste("q1d_",stinfo$uni[x],".pdf",sep=""))#
+# resresplot(Y, Z, X=X, prob=probs, scale = 1)#
+# dev.off()#
+#
+# ==============================================#
+# 1E - Diff in totals (HT estimator)#
+# ==============================================#
+#
+# unadjusted ITT#
+#
+itt <- estate(Y, Z, prob=probs, HT=TRUE)#
+Ys <- genouts(Y, Z, ate=0)#
+distout <- gendist(Ys,perms,prob=probs, HT=TRUE)#
+dispout <- dispdist(distout, itt, display.plot=FALSE)#
+#
+q1e.out[x,1] <- itt#
+q1e.out[x,2] <- dispout$two.tailed.p.value.abs#
+q1e.out[x,3] <- dispout$greater.p.value#
+q1e.out[x,4] <- dispout$lesser.p.value#
+#
+Ys <- genouts(Y, Z, ate=itt)#
+distout <- gendist(Ys,perms,prob=probs, HT=TRUE)#
+dispout <- dispdist(distout, itt, display.plot=FALSE)#
+q1c.out[x,5] <- dispout$quantile[1]#
+q1c.out[x,6] <- dispout$quantile[2]#
+#
+# covariate adjusted ITT#
+#
+itt <- estate(Y, Z, X=X, prob=probs, HT=TRUE)#
+Ys <- genouts(Y, Z, ate=0)#
+distout <- gendist(Ys,X=X,perms,prob=probs, HT=TRUE)#
+dispout <- dispdist(distout, itt, display.plot=FALSE)#
+#
+q1e.out[x,7] <- itt#
+q1e.out[x,8] <- dispout$two.tailed.p.value.abs#
+q1e.out[x,9] <- dispout$greater.p.value#
+q1e.out[x,10] <- dispout$lesser.p.value#
+#
+Ys <- genouts(Y, Z, ate=itt)#
+distout <- gendist(Ys,X=X,perms,prob=probs, HT=TRUE)#
+dispout <- dispdist(distout, itt, display.plot=FALSE)#
+q1e.out[x,11] <- dispout$quantile[1]#
+q1e.out[x,12] <- dispout$quantile[2]#
+# ==============================================#
+# 1H - CACE#
+# ==============================================#
+#
+# unadjusted CACE#
+#
+# cace#
+cace <- estlate(Y, D, Z, prob=probs, HT=FALSE)#
+#
+# confidence intervals (from ivreg, assume constant effects and normal sampling distribution)#
+W <- Z/probs + (1-Z)/(1-probs)#
+cace.fit <- ivreg(Y ~ D, ~Z , weights=W)#
+print(summary(cace.fit))#
+ci.lower.cace <- confint(cace.fit, parm="D", level=.95)[1]#
+ci.upper.cace <- confint(cace.fit, parm="D", level=.95)[2]#
+#
+# p values from randomization inference on the ITT#
+itt <- estate(Y, Z, prob=probs, HT=FALSE)#
+Ys <- genouts(Y, Z, ate=0)#
+distout <- gendist(Ys,perms,prob=probs, HT=FALSE)#
+dispout <- dispdist(distout, itt, display.plot=FALSE)#
+#
+# save results#
+q1h.out[x,1] <- cace#
+q1h.out[x,2] <- dispout$two.tailed.p.value.abs#
+q1h.out[x,3] <- dispout$greater.p.value#
+q1h.out[x,4] <- dispout$lesser.p.value#
+q1h.out[x,5] <- ci.lower.cace#
+q1h.out[x,6] <- ci.upper.cace#
+#
+# covariate adjusted CACE#
+#
+# cace#
+cace <- estlate(Y, D, Z, X=X, prob=probs, HT=FALSE)#
+#
+# confidence intervals (from ivreg, assume constant effects and normal sampling distribution)#
+W <- Z/probs + (1-Z)/(1-probs)#
+cace.fit <- ivreg(Y ~ D + X | Z + X , weights=W)#
+print(summary(cace.fit))#
+ci.lower.cace <- confint(cace.fit, parm="D", level=.95)[1]#
+ci.upper.cace <- confint(cace.fit, parm="D", level=.95)[2]#
+#
+# p values from randomization inference on the ITT#
+itt <- estate(Y, Z, X=X, prob=probs, HT=FALSE)#
+Ys <- genouts(Y, Z, ate=0)#
+distout <- gendist(Ys,X=X,perms,prob=probs, HT=FALSE)#
+dispout <- dispdist(distout, itt, display.plot=FALSE)#
+#
+# save results#
+q1h.out[x,7] <- cace#
+q1h.out[x,8] <- dispout$two.tailed.p.value.abs#
+q1h.out[x,9] <- dispout$greater.p.value#
+q1h.out[x,10] <- dispout$lesser.p.value#
+q1h.out[x,11] <- ci.lower.cace#
+q1h.out[x,12] <- ci.upper.cace#
+# ==============================================#
+# 1I - EXTREME VALUE BOUNDS#
+# ==============================================#
+#
+setwd("/Users/al/Dropbox/FEDAI Homework Solutions/Midterm/")#
+data <- read.dta("q1hajj.dta")#
+#
+uni <- myuni#
+set.seed(uni)#
+q1miss <- as.data.frame(data[sample(1:nrow(data), nrow(data), replace=T),])#
+names(q1miss)#
+#
+# check missing data#
+table(q1miss$success, useNA="always")#
+table(q1miss$hajj2006, useNA="always")#
+table(q1miss$views, useNA="always")#
+table(q1miss$age, useNA="always")#
+table(q1miss$female, useNA="always")#
+table(q1miss$literate, useNA="always")#
+#
+# impute data for evb - upper bound#
+q1.ub.impute <- q1miss#
+q1.ub.impute$views <- ifelse(is.na(q1.ub.impute$views) & q1.ub.impute$success == 1, 12,  q1.ub.impute$views )#
+q1.ub.impute$views <- ifelse(is.na(q1.ub.impute$views) & q1.ub.impute$success == 0, -12, q1.ub.impute$views )#
+#
+# impute data for evb - lower bound#
+q1.lb.impute <- q1miss#
+q1.lb.impute$views <- ifelse(is.na(q1.lb.impute$views) & q1.lb.impute$success == 1, -12, q1.lb.impute$views )#
+q1.lb.impute$views <- ifelse(is.na(q1.lb.impute$views) & q1.lb.impute$success == 0, 12,  q1.lb.impute$views )#
+# estimate upper extreme value bound for ITT#
+#
+Y <- q1.ub.impute$views#
+Z <- q1.ub.impute$success#
+D <- q1.ub.impute$hajj2006#
+C <- q1.ub.impute$hhid#
+X <- as.matrix(cbind(q1.ub.impute$age, q1.ub.impute$literate, q1.ub.impute$female))#
+#
+probs <- genprobexact(Z, clustvar=C)#
+itt.ev.upper <- estate(Y, Z, prob=probs, HT=FALSE)#
+itt.ev.upper.adj <- estate(Y, Z, X=X, prob=probs, HT=FALSE)#
+#
+# estimate lower extreme value bound for ITT#
+#
+Y <- q1.lb.impute$views#
+Z <- q1.lb.impute$success#
+D <- q1.lb.impute$hajj2006#
+C <- q1.lb.impute$hhid#
+X <- as.matrix(cbind(q1.lb.impute$age, q1.lb.impute$literate, q1.lb.impute$female))#
+#
+probs <- genprobexact(Z, clustvar=C)#
+itt.ev.lower <- estate(Y, Z, prob=probs, HT=FALSE)#
+itt.ev.lower.adj <- estate(Y, Z, X=X, prob=probs, HT=FALSE)#
+#
+# store results#
+#
+q1i.out[x,1] <- itt.ev.lower#
+q1i.out[x,2] <- itt.ev.upper#
+q1i.out[x,3] <- itt.ev.lower.adj#
+q1i.out[x,4] <- itt.ev.upper.adj#
+# ============================================================================================#
+# ============================================================================================#
+# Problem 2#
+# ============================================================================================#
+# ============================================================================================#
+}#
+#------- PRINT STUDENT-SPECIFIC ANSWER KEY ------------#
+#
+# Q1a#
+xtable(q1a.out, digits=3)#
+#
+# Q1b #
+for(y in 1:nrow(stinfo)){#
+#
+	print(stinfo$name[y])#
+	print(q1b.table.out[,,y])#
+#
+}#
+# Q1c#
+xtable(q1c.out, digits=3)#
+#
+# Q1d -- see pdf output#
+#
+# Q1e#
+xtable(q1e.out, digits=3)#
+#
+# Q1h#
+xtable(q1h.out, digits=3)#
+#
+# Q1i#
+xtable(q1i.out, digits=3)
+==============================================#
+# W4368 EXPERIMENTAL RESEARCH -- SPRING 2013#
+# MIDTERM EXAM KEY#
+# TA: Al Fang#
+# Date: 20 Apr 2013#
+# ==============================================#
+#
+rm(list=ls(all=T))#
+#
+setwd("/Users/al/Dropbox/FEDAI Homework Solutions/Midterm/")#
+#
+library(ri)#
+library(foreign)#
+library(xtable)#
+library(AER)#
+# Read in UNIs and student names to set seeds#
+#
+stinfo <- read.csv("seeds.csv", header=T)#
+names(stinfo) <- c("name","uni","seed")#
+#
+# Create objects to hold results#
+q1a.out <- matrix(NA, nrow=nrow(stinfo), ncol=2)#
+colnames(q1a.out) <- c("f.stat","p.value")#
+rownames(q1a.out) <- stinfo$name#
+#
+q1b.table.out <- array(NA, dim=c(3,6,nrow(stinfo)))#
+dimnames(q1b.table.out) <- list(c("treated","untreated","total"), c("mean.z1","n.z1","mean.z0","n.z0","diff","n"), stinfo$uni )#
+#
+q1c.out <- matrix(NA, nrow=nrow(stinfo), ncol=12)#
+colnames(q1c.out) <- c("itt","pval.twotailed","pval.greater","pval.lesser","ci.lb","ci.ub","itt.adj","pval.twotailed.adj","pval.greater.adj","pval.lesser.adj","ci.lb.adj","ci.ub.adj")#
+rownames(q1c.out) <- stinfo$name#
+#
+q1e.out <- matrix(NA, nrow=nrow(stinfo), ncol=12)#
+colnames(q1e.out) <- c("itt","pval.twotailed","pval.greater","pval.lesser","ci.lb","ci.ub","itt.adj","pval.twotailed.adj","pval.greater.adj","pval.lesser.adj","ci.lb.adj","ci.ub.adj")#
+rownames(q1e.out) <- stinfo$name#
+#
+q1h.out <- matrix(NA, nrow=nrow(stinfo), ncol=12)#
+colnames(q1h.out) <- c("cace","pval.twotailed","pval.greater","pval.lesser","ci.lb","ci.ub","cace.adj","pval.twotailed.adj","pval.greater.adj","pval.lesser.adj","ci.lb.adj","ci.ub.adj")#
+rownames(q1h.out) <- stinfo$name#
+#
+q1i.out <- matrix(NA, nrow=nrow(stinfo), ncol=8)#
+colnames(q1i.out) <- c("itt.ev.lower","itt.ev.upper","itt.ev.lower.adj","itt.ev.upper.adj","ittHT.ev.lower","ittHT.ev.upper","ittHT.ev.lower.adj","ittHT.ev.upper.adj")#
+rownames(q1i.out) <- stinfo$name#
+#
+# Loop over each student's UNI number#
+#
+for(x in 1:nrow(stinfo)){#
+#
+myuni <- stinfo$seed[x]#
+#
+# ============================================================================================#
+# ============================================================================================#
+# Problem 1#
+# ============================================================================================#
+# ============================================================================================#
+#
+# Read in raw data, prepare person-specific dataset#
+#
+setwd("/Users/al/Dropbox/FEDAI Homework Solutions/Midterm/")#
+data <- read.dta("q1hajj_sub.dta")#
+#
+uni <- myuni#
+set.seed(uni)#
+mydata <- as.data.frame(data[sample(1:nrow(data), nrow(data), replace=T),])#
+# ==============================================#
+# 1I - EXTREME VALUE BOUNDS#
+# ==============================================#
+#
+setwd("/Users/al/Dropbox/FEDAI Homework Solutions/Midterm/")#
+data <- read.dta("q1hajj.dta")#
+#
+uni <- myuni#
+set.seed(uni)#
+q1miss <- as.data.frame(data[sample(1:nrow(data), nrow(data), replace=T),])#
+names(q1miss)#
+#
+# check missing data#
+table(q1miss$success, useNA="always")#
+table(q1miss$hajj2006, useNA="always")#
+table(q1miss$views, useNA="always")#
+table(q1miss$age, useNA="always")#
+table(q1miss$female, useNA="always")#
+table(q1miss$literate, useNA="always")#
+#
+# impute data for evb - upper bound#
+q1.ub.impute <- q1miss#
+q1.ub.impute$views <- ifelse(is.na(q1.ub.impute$views) & q1.ub.impute$success == 1, 12,  q1.ub.impute$views )#
+q1.ub.impute$views <- ifelse(is.na(q1.ub.impute$views) & q1.ub.impute$success == 0, -12, q1.ub.impute$views )#
+#
+# impute data for evb - lower bound#
+q1.lb.impute <- q1miss#
+q1.lb.impute$views <- ifelse(is.na(q1.lb.impute$views) & q1.lb.impute$success == 1, -12, q1.lb.impute$views )#
+q1.lb.impute$views <- ifelse(is.na(q1.lb.impute$views) & q1.lb.impute$success == 0, 12,  q1.lb.impute$views )#
+# estimate upper extreme value bound for ITT#
+#
+Y <- q1.ub.impute$views#
+Z <- q1.ub.impute$success#
+D <- q1.ub.impute$hajj2006#
+C <- q1.ub.impute$hhid#
+X <- as.matrix(cbind(q1.ub.impute$age, q1.ub.impute$literate, q1.ub.impute$female))#
+#
+probs <- genprobexact(Z, clustvar=C)#
+itt.ev.upper <- estate(Y, Z, prob=probs, HT=FALSE)#
+itt.ev.upper.adj <- estate(Y, Z, X=X, prob=probs, HT=FALSE)#
+#
+ittHT.ev.upper <- estate(Y, Z, prob=probs, HT=TRUE)#
+ittHT.ev.upper.adj <- estate(Y, Z, X=X, prob=probs, HT=TRUE)#
+#
+# estimate lower extreme value bound for ITT#
+#
+Y <- q1.lb.impute$views#
+Z <- q1.lb.impute$success#
+D <- q1.lb.impute$hajj2006#
+C <- q1.lb.impute$hhid#
+X <- as.matrix(cbind(q1.lb.impute$age, q1.lb.impute$literate, q1.lb.impute$female))#
+#
+probs <- genprobexact(Z, clustvar=C)#
+itt.ev.lower <- estate(Y, Z, prob=probs, HT=FALSE)#
+itt.ev.lower.adj <- estate(Y, Z, X=X, prob=probs, HT=FALSE)#
+#
+ittHT.ev.lower <- estate(Y, Z, prob=probs, HT=TRUE)#
+ittHT.ev.lower.adj <- estate(Y, Z, X=X, prob=probs, HT=TRUE)#
+#
+# store results#
+#
+q1i.out[x,1] <- itt.ev.lower#
+q1i.out[x,2] <- itt.ev.upper#
+q1i.out[x,3] <- itt.ev.lower.adj#
+q1i.out[x,4] <- itt.ev.upper.adj#
+q1i.out[x,5] <- ittHT.ev.lower#
+q1i.out[x,6] <- ittHT.ev.upper#
+q1i.out[x,7] <- ittHT.ev.lower.adj#
+q1i.out[x,8] <- ittHT.ev.upper.adj#
+#
+# ============================================================================================#
+# ============================================================================================#
+# Problem 2#
+# ============================================================================================#
+# ============================================================================================#
+}#
+#------- PRINT STUDENT-SPECIFIC ANSWER KEY ------------#
+#
+# Q1a#
+xtable(q1a.out, digits=3)#
+#
+# Q1b #
+for(y in 1:nrow(stinfo)){#
+#
+	print(stinfo$name[y])#
+	print(q1b.table.out[,,y])#
+#
+}#
+# Q1c#
+xtable(q1c.out, digits=3)#
+#
+# Q1d -- see pdf output#
+#
+# Q1e#
+xtable(q1e.out, digits=3)#
+#
+# Q1h#
+xtable(q1h.out, digits=3)#
+#
+# Q1i#
+xtable(q1i.out, digits=3)
+q1g.out <- matrix(NA, nrow=nrow(stinfo), ncol=3)#
+colnames(q1g.out) <- c("Pr(Complier)","Pr(Always-Taker)","Pr(Never-Taker)")#
+rownames(q1g.out) <- stinfo$name
+==============================================#
+# W4368 EXPERIMENTAL RESEARCH -- SPRING 2013#
+# MIDTERM EXAM KEY#
+# TA: Al Fang#
+# Date: 20 Apr 2013#
+# ==============================================#
+#
+rm(list=ls(all=T))#
+#
+setwd("/Users/al/Dropbox/FEDAI Homework Solutions/Midterm/")#
+#
+library(ri)#
+library(foreign)#
+library(xtable)#
+library(AER)#
+# Read in UNIs and student names to set seeds#
+#
+stinfo <- read.csv("seeds.csv", header=T)#
+names(stinfo) <- c("name","uni","seed")#
+#
+# Create objects to hold results#
+q1a.out <- matrix(NA, nrow=nrow(stinfo), ncol=2)#
+colnames(q1a.out) <- c("f.stat","p.value")#
+rownames(q1a.out) <- stinfo$name#
+#
+q1b.table.out <- array(NA, dim=c(3,6,nrow(stinfo)))#
+dimnames(q1b.table.out) <- list(c("treated","untreated","total"), c("mean.z1","n.z1","mean.z0","n.z0","diff","n"), stinfo$uni )#
+#
+q1c.out <- matrix(NA, nrow=nrow(stinfo), ncol=12)#
+colnames(q1c.out) <- c("itt","pval.twotailed","pval.greater","pval.lesser","ci.lb","ci.ub","itt.adj","pval.twotailed.adj","pval.greater.adj","pval.lesser.adj","ci.lb.adj","ci.ub.adj")#
+rownames(q1c.out) <- stinfo$name#
+#
+q1e.out <- matrix(NA, nrow=nrow(stinfo), ncol=12)#
+colnames(q1e.out) <- c("itt","pval.twotailed","pval.greater","pval.lesser","ci.lb","ci.ub","itt.adj","pval.twotailed.adj","pval.greater.adj","pval.lesser.adj","ci.lb.adj","ci.ub.adj")#
+rownames(q1e.out) <- stinfo$name#
+#
+q1g.out <- matrix(NA, nrow=nrow(stinfo), ncol=3)#
+colnames(q1g.out) <- c("Pr(Complier)","Pr(Always-Taker)","Pr(Never-Taker)")#
+rownames(q1g.out) <- stinfo$name#
+#
+q1h.out <- matrix(NA, nrow=nrow(stinfo), ncol=12)#
+colnames(q1h.out) <- c("cace","pval.twotailed","pval.greater","pval.lesser","ci.lb","ci.ub","cace.adj","pval.twotailed.adj","pval.greater.adj","pval.lesser.adj","ci.lb.adj","ci.ub.adj")#
+rownames(q1h.out) <- stinfo$name#
+#
+q1i.out <- matrix(NA, nrow=nrow(stinfo), ncol=8)#
+colnames(q1i.out) <- c("itt.ev.lower","itt.ev.upper","itt.ev.lower.adj","itt.ev.upper.adj","ittHT.ev.lower","ittHT.ev.upper","ittHT.ev.lower.adj","ittHT.ev.upper.adj")#
+rownames(q1i.out) <- stinfo$name#
+#
+# Loop over each student's UNI number#
+#
+for(x in 1:nrow(stinfo)){#
+#
+myuni <- stinfo$seed[x]#
+#
+# ============================================================================================#
+# ============================================================================================#
+# Problem 1#
+# ============================================================================================#
+# ============================================================================================#
+#
+# Read in raw data, prepare person-specific dataset#
+#
+setwd("/Users/al/Dropbox/FEDAI Homework Solutions/Midterm/")#
+data <- read.dta("q1hajj_sub.dta")#
+#
+uni <- myuni#
+set.seed(uni)#
+mydata <- as.data.frame(data[sample(1:nrow(data), nrow(data), replace=T),])#
+# ==============================================#
+# 1G - Shares of Compliers, Always-Takers,#
+#		and Never-Takers#
+# ==============================================#
+#
+# always takers#
+q1g.out[x,2] <- length(mydata$views[mydata$hajj==1 & mydata$success==0])/length(mydata$views[mydata$sucess==0])#
+#
+# never takers#
+q1g.out[x,3] <- length(mydata$views[mydata$hajj==0 & mydata$success==1])/length(mydata$views[mydata$sucess==1])#
+#
+# compliers#
+q1g.out[x,1] <- 1 - q1g.out[x,2] - q1g.out[x,3]#
+#
+# ============================================================================================#
+# ============================================================================================#
+# Problem 2#
+# ============================================================================================#
+# ============================================================================================#
+}#
+#------- PRINT STUDENT-SPECIFIC ANSWER KEY ------------#
+#
+# Q1a#
+xtable(q1a.out, digits=3)#
+#
+# Q1b #
+for(y in 1:nrow(stinfo)){#
+#
+	print(stinfo$name[y])#
+	print(q1b.table.out[,,y])#
+#
+}#
+# Q1c#
+xtable(q1c.out, digits=3)#
+#
+# Q1d -- see pdf output#
+#
+# Q1e#
+xtable(q1e.out, digits=3)#
+#
+# Q1g#
+xtable(q1g.out, digits=3)#
+#
+# Q1h#
+xtable(q1h.out, digits=3)#
+#
+# Q1i#
+xtable(q1i.out, digits=3)
+==============================================#
+# W4368 EXPERIMENTAL RESEARCH -- SPRING 2013#
+# MIDTERM EXAM KEY#
+# TA: Al Fang#
+# Date: 20 Apr 2013#
+# ==============================================#
+#
+rm(list=ls(all=T))#
+#
+setwd("/Users/al/Dropbox/FEDAI Homework Solutions/Midterm/")#
+#
+library(ri)#
+library(foreign)#
+library(xtable)#
+library(AER)#
+# Read in UNIs and student names to set seeds#
+#
+stinfo <- read.csv("seeds.csv", header=T)#
+names(stinfo) <- c("name","uni","seed")#
+#
+# Create objects to hold results#
+q1a.out <- matrix(NA, nrow=nrow(stinfo), ncol=2)#
+colnames(q1a.out) <- c("f.stat","p.value")#
+rownames(q1a.out) <- stinfo$name#
+#
+q1b.table.out <- array(NA, dim=c(3,6,nrow(stinfo)))#
+dimnames(q1b.table.out) <- list(c("treated","untreated","total"), c("mean.z1","n.z1","mean.z0","n.z0","diff","n"), stinfo$uni )#
+#
+q1c.out <- matrix(NA, nrow=nrow(stinfo), ncol=12)#
+colnames(q1c.out) <- c("itt","pval.twotailed","pval.greater","pval.lesser","ci.lb","ci.ub","itt.adj","pval.twotailed.adj","pval.greater.adj","pval.lesser.adj","ci.lb.adj","ci.ub.adj")#
+rownames(q1c.out) <- stinfo$name#
+#
+q1e.out <- matrix(NA, nrow=nrow(stinfo), ncol=12)#
+colnames(q1e.out) <- c("itt","pval.twotailed","pval.greater","pval.lesser","ci.lb","ci.ub","itt.adj","pval.twotailed.adj","pval.greater.adj","pval.lesser.adj","ci.lb.adj","ci.ub.adj")#
+rownames(q1e.out) <- stinfo$name#
+#
+q1g.out <- matrix(NA, nrow=nrow(stinfo), ncol=3)#
+colnames(q1g.out) <- c("Pr(Complier)","Pr(Always-Taker)","Pr(Never-Taker)")#
+rownames(q1g.out) <- stinfo$name#
+#
+q1h.out <- matrix(NA, nrow=nrow(stinfo), ncol=12)#
+colnames(q1h.out) <- c("cace","pval.twotailed","pval.greater","pval.lesser","ci.lb","ci.ub","cace.adj","pval.twotailed.adj","pval.greater.adj","pval.lesser.adj","ci.lb.adj","ci.ub.adj")#
+rownames(q1h.out) <- stinfo$name#
+#
+q1i.out <- matrix(NA, nrow=nrow(stinfo), ncol=8)#
+colnames(q1i.out) <- c("itt.ev.lower","itt.ev.upper","itt.ev.lower.adj","itt.ev.upper.adj","ittHT.ev.lower","ittHT.ev.upper","ittHT.ev.lower.adj","ittHT.ev.upper.adj")#
+rownames(q1i.out) <- stinfo$name#
+#
+# Loop over each student's UNI number#
+#
+for(x in 1:nrow(stinfo)){#
+#
+myuni <- stinfo$seed[x]#
+#
+# ============================================================================================#
+# ============================================================================================#
+# Problem 1#
+# ============================================================================================#
+# ============================================================================================#
+#
+# Read in raw data, prepare person-specific dataset#
+#
+setwd("/Users/al/Dropbox/FEDAI Homework Solutions/Midterm/")#
+data <- read.dta("q1hajj_sub.dta")#
+#
+uni <- myuni#
+set.seed(uni)#
+mydata <- as.data.frame(data[sample(1:nrow(data), nrow(data), replace=T),])#
+# ==============================================#
+# 1G - Shares of Compliers, Always-Takers,#
+#		and Never-Takers#
+# ==============================================#
+#
+# always takers#
+q1g.out[x,2] <- length(mydata$views[mydata$hajj==1 & mydata$success==0])/length(mydata$views[mydata$sucess==0])#
+print(q1g.out[x,2])#
+#
+# never takers#
+q1g.out[x,3] <- length(mydata$views[mydata$hajj==0 & mydata$success==1])/length(mydata$views[mydata$sucess==1])#
+print(q1g.out[x,3])#
+#
+# compliers#
+q1g.out[x,1] <- 1 - q1g.out[x,2] - q1g.out[x,3]#
+print(q1g.out[x,1])#
+# ============================================================================================#
+# ============================================================================================#
+# Problem 2#
+# ============================================================================================#
+# ============================================================================================#
+}#
+#------- PRINT STUDENT-SPECIFIC ANSWER KEY ------------#
+#
+# Q1a#
+xtable(q1a.out, digits=3)#
+#
+# Q1b #
+for(y in 1:nrow(stinfo)){#
+#
+	print(stinfo$name[y])#
+	print(q1b.table.out[,,y])#
+#
+}#
+# Q1c#
+xtable(q1c.out, digits=3)#
+#
+# Q1d -- see pdf output#
+#
+# Q1e#
+xtable(q1e.out, digits=3)#
+#
+# Q1g#
+xtable(q1g.out, digits=3)#
+#
+# Q1h#
+xtable(q1h.out, digits=3)#
+#
+# Q1i#
+xtable(q1i.out, digits=3)
+==============================================#
+# W4368 EXPERIMENTAL RESEARCH -- SPRING 2013#
+# MIDTERM EXAM KEY#
+# TA: Al Fang#
+# Date: 20 Apr 2013#
+# ==============================================#
+#
+rm(list=ls(all=T))#
+#
+setwd("/Users/al/Dropbox/FEDAI Homework Solutions/Midterm/")#
+#
+library(ri)#
+library(foreign)#
+library(xtable)#
+library(AER)#
+# Read in UNIs and student names to set seeds#
+#
+stinfo <- read.csv("seeds.csv", header=T)#
+names(stinfo) <- c("name","uni","seed")#
+#
+# Create objects to hold results#
+q1a.out <- matrix(NA, nrow=nrow(stinfo), ncol=2)#
+colnames(q1a.out) <- c("f.stat","p.value")#
+rownames(q1a.out) <- stinfo$name#
+#
+q1b.table.out <- array(NA, dim=c(3,6,nrow(stinfo)))#
+dimnames(q1b.table.out) <- list(c("treated","untreated","total"), c("mean.z1","n.z1","mean.z0","n.z0","diff","n"), stinfo$uni )#
+#
+q1c.out <- matrix(NA, nrow=nrow(stinfo), ncol=12)#
+colnames(q1c.out) <- c("itt","pval.twotailed","pval.greater","pval.lesser","ci.lb","ci.ub","itt.adj","pval.twotailed.adj","pval.greater.adj","pval.lesser.adj","ci.lb.adj","ci.ub.adj")#
+rownames(q1c.out) <- stinfo$name#
+#
+q1e.out <- matrix(NA, nrow=nrow(stinfo), ncol=12)#
+colnames(q1e.out) <- c("itt","pval.twotailed","pval.greater","pval.lesser","ci.lb","ci.ub","itt.adj","pval.twotailed.adj","pval.greater.adj","pval.lesser.adj","ci.lb.adj","ci.ub.adj")#
+rownames(q1e.out) <- stinfo$name#
+#
+q1g.out <- matrix(NA, nrow=nrow(stinfo), ncol=3)#
+colnames(q1g.out) <- c("Pr(Complier)","Pr(Always-Taker)","Pr(Never-Taker)")#
+rownames(q1g.out) <- stinfo$name#
+#
+q1h.out <- matrix(NA, nrow=nrow(stinfo), ncol=12)#
+colnames(q1h.out) <- c("cace","pval.twotailed","pval.greater","pval.lesser","ci.lb","ci.ub","cace.adj","pval.twotailed.adj","pval.greater.adj","pval.lesser.adj","ci.lb.adj","ci.ub.adj")#
+rownames(q1h.out) <- stinfo$name#
+#
+q1i.out <- matrix(NA, nrow=nrow(stinfo), ncol=8)#
+colnames(q1i.out) <- c("itt.ev.lower","itt.ev.upper","itt.ev.lower.adj","itt.ev.upper.adj","ittHT.ev.lower","ittHT.ev.upper","ittHT.ev.lower.adj","ittHT.ev.upper.adj")#
+rownames(q1i.out) <- stinfo$name#
+#
+# Loop over each student's UNI number#
+#
+for(x in 1:nrow(stinfo)){#
+#
+myuni <- stinfo$seed[x]#
+#
+# ============================================================================================#
+# ============================================================================================#
+# Problem 1#
+# ============================================================================================#
+# ============================================================================================#
+#
+# Read in raw data, prepare person-specific dataset#
+#
+setwd("/Users/al/Dropbox/FEDAI Homework Solutions/Midterm/")#
+data <- read.dta("q1hajj_sub.dta")#
+#
+uni <- myuni#
+set.seed(uni)#
+mydata <- as.data.frame(data[sample(1:nrow(data), nrow(data), replace=T),])#
+# ==============================================#
+# 1G - Shares of Compliers, Always-Takers,#
+#		and Never-Takers#
+# ==============================================#
+#
+# always takers#
+q1g.out[x,2] <- length(mydata$views[mydata$hajj==1 & mydata$success==0])/length(mydata$views[mydata$success==0])#
+#
+# never takers#
+q1g.out[x,3] <- length(mydata$views[mydata$hajj==0 & mydata$success==1])/length(mydata$views[mydata$success==1])#
+#
+# compliers#
+q1g.out[x,1] <- 1 - q1g.out[x,2] - q1g.out[x,3]#
+# ============================================================================================#
+# ============================================================================================#
+# Problem 2#
+# ============================================================================================#
+# ============================================================================================#
+}#
+#------- PRINT STUDENT-SPECIFIC ANSWER KEY ------------#
+#
+# Q1a#
+xtable(q1a.out, digits=3)#
+#
+# Q1b #
+for(y in 1:nrow(stinfo)){#
+#
+	print(stinfo$name[y])#
+	print(q1b.table.out[,,y])#
+#
+}#
+# Q1c#
+xtable(q1c.out, digits=3)#
+#
+# Q1d -- see pdf output#
+#
+# Q1e#
+xtable(q1e.out, digits=3)#
+#
+# Q1g#
+xtable(q1g.out, digits=3)#
+#
+# Q1h#
+xtable(q1h.out, digits=3)#
+#
+# Q1i#
+xtable(q1i.out, digits=3)
+==============================================#
+# W4368 EXPERIMENTAL RESEARCH -- SPRING 2013#
+# MIDTERM EXAM KEY#
+# TA: Al Fang#
+# Date: 20 Apr 2013#
+# ==============================================#
+#
+rm(list=ls(all=T))#
+#
+setwd("/Users/al/Dropbox/FEDAI Homework Solutions/Midterm/")#
+#
+library(ri)#
+library(foreign)#
+library(xtable)#
+library(AER)#
+# Read in UNIs and student names to set seeds#
+#
+stinfo <- read.csv("seeds.csv", header=T)#
+names(stinfo) <- c("name","uni","seed")#
+#
+# Create objects to hold results#
+q1a.out <- matrix(NA, nrow=nrow(stinfo), ncol=2)#
+colnames(q1a.out) <- c("f.stat","p.value")#
+rownames(q1a.out) <- stinfo$name#
+#
+q1b.table.out <- array(NA, dim=c(3,6,nrow(stinfo)))#
+dimnames(q1b.table.out) <- list(c("treated","untreated","total"), c("mean.z1","n.z1","mean.z0","n.z0","diff","n"), stinfo$uni )#
+#
+q1c.out <- matrix(NA, nrow=nrow(stinfo), ncol=12)#
+colnames(q1c.out) <- c("itt","pval.twotailed","pval.greater","pval.lesser","ci.lb","ci.ub","itt.adj","pval.twotailed.adj","pval.greater.adj","pval.lesser.adj","ci.lb.adj","ci.ub.adj")#
+rownames(q1c.out) <- stinfo$name#
+#
+q1e.out <- matrix(NA, nrow=nrow(stinfo), ncol=12)#
+colnames(q1e.out) <- c("itt","pval.twotailed","pval.greater","pval.lesser","ci.lb","ci.ub","itt.adj","pval.twotailed.adj","pval.greater.adj","pval.lesser.adj","ci.lb.adj","ci.ub.adj")#
+rownames(q1e.out) <- stinfo$name#
+#
+q1g.out <- matrix(NA, nrow=nrow(stinfo), ncol=3)#
+colnames(q1g.out) <- c("Pr(Complier)","Pr(Always-Taker)","Pr(Never-Taker)")#
+rownames(q1g.out) <- stinfo$name#
+#
+q1h.out <- matrix(NA, nrow=nrow(stinfo), ncol=12)#
+colnames(q1h.out) <- c("cace","pval.twotailed","pval.greater","pval.lesser","ci.lb","ci.ub","cace.adj","pval.twotailed.adj","pval.greater.adj","pval.lesser.adj","ci.lb.adj","ci.ub.adj")#
+rownames(q1h.out) <- stinfo$name#
+#
+q1i.out <- matrix(NA, nrow=nrow(stinfo), ncol=8)#
+colnames(q1i.out) <- c("itt.ev.lower","itt.ev.upper","itt.ev.lower.adj","itt.ev.upper.adj","ittHT.ev.lower","ittHT.ev.upper","ittHT.ev.lower.adj","ittHT.ev.upper.adj")#
+rownames(q1i.out) <- stinfo$name#
+#
+# Loop over each student's UNI number#
+#
+for(x in 1:nrow(stinfo)){#
+#
+myuni <- stinfo$seed[x]#
+#
+# ============================================================================================#
+# ============================================================================================#
+# Problem 1#
+# ============================================================================================#
+# ============================================================================================#
+#
+# Read in raw data, prepare person-specific dataset#
+#
+setwd("/Users/al/Dropbox/FEDAI Homework Solutions/Midterm/")#
+data <- read.dta("q1hajj_sub.dta")#
+#
+uni <- myuni#
+set.seed(uni)#
+mydata <- as.data.frame(data[sample(1:nrow(data), nrow(data), replace=T),])#
+# ==============================================#
+# 1G - Shares of Compliers, Always-Takers,#
+#		and Never-Takers#
+# ==============================================#
+#
+# always takers#
+q1g.out[x,2] <- length(mydata$views[mydata$hajj==1 & mydata$success==0])/length(mydata$views[mydata$success==0])#
+#
+# never takers#
+q1g.out[x,3] <- length(mydata$views[mydata$hajj==0 & mydata$success==1])/length(mydata$views[mydata$success==1])#
+#
+# compliers#
+q1g.out[x,1] <- 1 - q1g.out[x,2] - q1g.out[x,3]#
+probs <- genprobexact(Z=mydata$success, clustvar=mydata$hhid)#
+#
+wt <- mydata$success / probs + (1-mydata$success) / (1-probs)#
+print(summary(lm(mydata$hajj2006 ~ mydata$success, weight=wt)))#
+#
+# ============================================================================================#
+# ============================================================================================#
+# Problem 2#
+# ============================================================================================#
+# ============================================================================================#
+}
+==============================================#
+# W4368 EXPERIMENTAL RESEARCH -- SPRING 2013#
+# MIDTERM EXAM KEY#
+# TA: Al Fang#
+# Date: 20 Apr 2013#
+# ==============================================#
+#
+rm(list=ls(all=T))#
+#
+setwd("/Users/al/Dropbox/FEDAI Homework Solutions/Midterm/")#
+#
+library(ri)#
+library(foreign)#
+library(xtable)#
+library(AER)#
+# Read in UNIs and student names to set seeds#
+#
+stinfo <- read.csv("seeds.csv", header=T)#
+names(stinfo) <- c("name","uni","seed")#
+#
+# Create objects to hold results#
+q1a.out <- matrix(NA, nrow=nrow(stinfo), ncol=2)#
+colnames(q1a.out) <- c("f.stat","p.value")#
+rownames(q1a.out) <- stinfo$name#
+#
+q1b.table.out <- array(NA, dim=c(3,6,nrow(stinfo)))#
+dimnames(q1b.table.out) <- list(c("treated","untreated","total"), c("mean.z1","n.z1","mean.z0","n.z0","diff","n"), stinfo$uni )#
+#
+q1c.out <- matrix(NA, nrow=nrow(stinfo), ncol=12)#
+colnames(q1c.out) <- c("itt","pval.twotailed","pval.greater","pval.lesser","ci.lb","ci.ub","itt.adj","pval.twotailed.adj","pval.greater.adj","pval.lesser.adj","ci.lb.adj","ci.ub.adj")#
+rownames(q1c.out) <- stinfo$name#
+#
+q1e.out <- matrix(NA, nrow=nrow(stinfo), ncol=12)#
+colnames(q1e.out) <- c("itt","pval.twotailed","pval.greater","pval.lesser","ci.lb","ci.ub","itt.adj","pval.twotailed.adj","pval.greater.adj","pval.lesser.adj","ci.lb.adj","ci.ub.adj")#
+rownames(q1e.out) <- stinfo$name#
+#
+q1g.out <- matrix(NA, nrow=nrow(stinfo), ncol=3)#
+colnames(q1g.out) <- c("Pr(Complier)","Pr(Always-Taker)","Pr(Never-Taker)")#
+rownames(q1g.out) <- stinfo$name#
+#
+q1h.out <- matrix(NA, nrow=nrow(stinfo), ncol=12)#
+colnames(q1h.out) <- c("cace","pval.twotailed","pval.greater","pval.lesser","ci.lb","ci.ub","cace.adj","pval.twotailed.adj","pval.greater.adj","pval.lesser.adj","ci.lb.adj","ci.ub.adj")#
+rownames(q1h.out) <- stinfo$name#
+#
+q1i.out <- matrix(NA, nrow=nrow(stinfo), ncol=8)#
+colnames(q1i.out) <- c("itt.ev.lower","itt.ev.upper","itt.ev.lower.adj","itt.ev.upper.adj","ittHT.ev.lower","ittHT.ev.upper","ittHT.ev.lower.adj","ittHT.ev.upper.adj")#
+rownames(q1i.out) <- stinfo$name#
+#
+# Loop over each student's UNI number#
+#
+for(x in 1:nrow(stinfo)){#
+#
+myuni <- stinfo$seed[x]#
+#
+# ============================================================================================#
+# ============================================================================================#
+# Problem 1#
+# ============================================================================================#
+# ============================================================================================#
+#
+# Read in raw data, prepare person-specific dataset#
+#
+setwd("/Users/al/Dropbox/FEDAI Homework Solutions/Midterm/")#
+data <- read.dta("q1hajj_sub.dta")#
+#
+uni <- myuni#
+set.seed(uni)#
+mydata <- as.data.frame(data[sample(1:nrow(data), nrow(data), replace=T),])#
+probs <- genprobexact(Z=mydata$success, clustvar=mydata$hhid)#
+perms <- genperms(Z=mydata$success, clustvar=mydata$hhid, maxiter=numiter)#
+# ==============================================#
+# 1E - Diff in totals (HT estimator)#
+# ==============================================#
+#
+# unadjusted ITT#
+#
+itt <- estate(Y, Z, prob=probs, HT=TRUE)#
+Ys <- genouts(Y, Z, ate=0)#
+distout <- gendist(Ys,perms,prob=probs, HT=TRUE)#
+dispout <- dispdist(distout, itt, display.plot=FALSE)#
+#
+q1e.out[x,1] <- itt#
+q1e.out[x,2] <- dispout$two.tailed.p.value.abs#
+q1e.out[x,3] <- dispout$greater.p.value#
+q1e.out[x,4] <- dispout$lesser.p.value#
+#
+Ys <- genouts(Y, Z, ate=itt)#
+distout <- gendist(Ys,perms,prob=probs, HT=TRUE)#
+dispout <- dispdist(distout, itt, display.plot=FALSE)#
+q1c.out[x,5] <- dispout$quantile[1]#
+q1c.out[x,6] <- dispout$quantile[2]#
+#
+# covariate adjusted ITT#
+#
+itt <- estate(Y, Z, X=X, prob=probs, HT=TRUE)#
+Ys <- genouts(Y, Z, ate=0)#
+distout <- gendist(Ys,X=X,perms,prob=probs, HT=TRUE)#
+dispout <- dispdist(distout, itt, display.plot=FALSE)#
+#
+q1e.out[x,7] <- itt#
+q1e.out[x,8] <- dispout$two.tailed.p.value.abs#
+q1e.out[x,9] <- dispout$greater.p.value#
+q1e.out[x,10] <- dispout$lesser.p.value#
+#
+Ys <- genouts(Y, Z, ate=itt)#
+distout <- gendist(Ys,X=X,perms,prob=probs, HT=TRUE)#
+dispout <- dispdist(distout, itt, display.plot=FALSE)#
+q1e.out[x,11] <- dispout$quantile[1]#
+q1e.out[x,12] <- dispout$quantile[2]#
+}#
+#------- PRINT STUDENT-SPECIFIC ANSWER KEY ------------#
+#
+# Q1a#
+xtable(q1a.out, digits=3)#
+#
+# Q1b #
+for(y in 1:nrow(stinfo)){#
+#
+	print(stinfo$name[y])#
+	print(q1b.table.out[,,y])#
+#
+}#
+# Q1c#
+xtable(q1c.out, digits=3)#
+#
+# Q1d -- see pdf output#
+#
+# Q1e#
+xtable(q1e.out, digits=3)
+==============================================#
+# W4368 EXPERIMENTAL RESEARCH -- SPRING 2013#
+# MIDTERM EXAM KEY#
+# TA: Al Fang#
+# Date: 20 Apr 2013#
+# ==============================================#
+#
+rm(list=ls(all=T))#
+#
+setwd("/Users/al/Dropbox/FEDAI Homework Solutions/Midterm/")#
+#
+library(ri)#
+library(foreign)#
+library(xtable)#
+library(AER)#
+# Read in UNIs and student names to set seeds#
+#
+stinfo <- read.csv("seeds.csv", header=T)#
+names(stinfo) <- c("name","uni","seed")#
+#
+# Create objects to hold results#
+q1a.out <- matrix(NA, nrow=nrow(stinfo), ncol=2)#
+colnames(q1a.out) <- c("f.stat","p.value")#
+rownames(q1a.out) <- stinfo$name#
+#
+q1b.table.out <- array(NA, dim=c(3,6,nrow(stinfo)))#
+dimnames(q1b.table.out) <- list(c("treated","untreated","total"), c("mean.z1","n.z1","mean.z0","n.z0","diff","n"), stinfo$uni )#
+#
+q1c.out <- matrix(NA, nrow=nrow(stinfo), ncol=12)#
+colnames(q1c.out) <- c("itt","pval.twotailed","pval.greater","pval.lesser","ci.lb","ci.ub","itt.adj","pval.twotailed.adj","pval.greater.adj","pval.lesser.adj","ci.lb.adj","ci.ub.adj")#
+rownames(q1c.out) <- stinfo$name#
+#
+q1e.out <- matrix(NA, nrow=nrow(stinfo), ncol=12)#
+colnames(q1e.out) <- c("itt","pval.twotailed","pval.greater","pval.lesser","ci.lb","ci.ub","itt.adj","pval.twotailed.adj","pval.greater.adj","pval.lesser.adj","ci.lb.adj","ci.ub.adj")#
+rownames(q1e.out) <- stinfo$name#
+#
+q1g.out <- matrix(NA, nrow=nrow(stinfo), ncol=3)#
+colnames(q1g.out) <- c("Pr(Complier)","Pr(Always-Taker)","Pr(Never-Taker)")#
+rownames(q1g.out) <- stinfo$name#
+#
+q1h.out <- matrix(NA, nrow=nrow(stinfo), ncol=12)#
+colnames(q1h.out) <- c("cace","pval.twotailed","pval.greater","pval.lesser","ci.lb","ci.ub","cace.adj","pval.twotailed.adj","pval.greater.adj","pval.lesser.adj","ci.lb.adj","ci.ub.adj")#
+rownames(q1h.out) <- stinfo$name#
+#
+q1i.out <- matrix(NA, nrow=nrow(stinfo), ncol=8)#
+colnames(q1i.out) <- c("itt.ev.lower","itt.ev.upper","itt.ev.lower.adj","itt.ev.upper.adj","ittHT.ev.lower","ittHT.ev.upper","ittHT.ev.lower.adj","ittHT.ev.upper.adj")#
+rownames(q1i.out) <- stinfo$name#
+#
+# Loop over each student's UNI number#
+#
+for(x in 1:nrow(stinfo)){#
+#
+myuni <- stinfo$seed[x]#
+#
+# ============================================================================================#
+# ============================================================================================#
+# Problem 1#
+# ============================================================================================#
+# ============================================================================================#
+#
+# Read in raw data, prepare person-specific dataset#
+#
+setwd("/Users/al/Dropbox/FEDAI Homework Solutions/Midterm/")#
+data <- read.dta("q1hajj_sub.dta")#
+#
+uni <- myuni#
+set.seed(uni)#
+mydata <- as.data.frame(data[sample(1:nrow(data), nrow(data), replace=T),])#
+# ==============================================#
+# 1A - Randomization check #
+# ==============================================#
+#
+numiter <- 10000#
+#
+q1a.fstat <- summary(lm(success ~ age + female + literate, data=mydata))$fstatistic[1]#
+#
+probs <- genprobexact(Z=mydata$success, clustvar=mydata$hhid)#
+perms <- genperms(Z=mydata$success, clustvar=mydata$hhid, maxiter=numiter)#
+Y <- mydata$views#
+Z <- mydata$success#
+D <- mydata$hajj2006#
+C <- mydata$hhid#
+X <- as.matrix(cbind(mydata$age, mydata$literate, mydata$female))#
+#
+# ==============================================#
+# 1E - Diff in totals (HT estimator)#
+# ==============================================#
+#
+# unadjusted ITT#
+#
+itt <- estate(Y, Z, prob=probs, HT=TRUE)#
+Ys <- genouts(Y, Z, ate=0)#
+distout <- gendist(Ys,perms,prob=probs, HT=TRUE)#
+dispout <- dispdist(distout, itt, display.plot=FALSE)#
+#
+q1e.out[x,1] <- itt#
+q1e.out[x,2] <- dispout$two.tailed.p.value.abs#
+q1e.out[x,3] <- dispout$greater.p.value#
+q1e.out[x,4] <- dispout$lesser.p.value#
+#
+Ys <- genouts(Y, Z, ate=itt)#
+distout <- gendist(Ys,perms,prob=probs, HT=TRUE)#
+dispout <- dispdist(distout, itt, display.plot=FALSE)#
+q1c.out[x,5] <- dispout$quantile[1]#
+q1c.out[x,6] <- dispout$quantile[2]#
+#
+# covariate adjusted ITT#
+#
+itt <- estate(Y, Z, X=X, prob=probs, HT=TRUE)#
+Ys <- genouts(Y, Z, ate=0)#
+distout <- gendist(Ys,X=X,perms,prob=probs, HT=TRUE)#
+dispout <- dispdist(distout, itt, display.plot=FALSE)#
+#
+q1e.out[x,7] <- itt#
+q1e.out[x,8] <- dispout$two.tailed.p.value.abs#
+q1e.out[x,9] <- dispout$greater.p.value#
+q1e.out[x,10] <- dispout$lesser.p.value#
+#
+Ys <- genouts(Y, Z, ate=itt)#
+distout <- gendist(Ys,X=X,perms,prob=probs, HT=TRUE)#
+dispout <- dispdist(distout, itt, display.plot=FALSE)#
+q1e.out[x,11] <- dispout$quantile[1]#
+q1e.out[x,12] <- dispout$quantile[2]#
+}#
+#------- PRINT STUDENT-SPECIFIC ANSWER KEY ------------#
+#
+# Q1a#
+xtable(q1a.out, digits=3)#
+#
+# Q1b #
+for(y in 1:nrow(stinfo)){#
+#
+	print(stinfo$name[y])#
+	print(q1b.table.out[,,y])#
+#
+}#
+# Q1c#
+xtable(q1c.out, digits=3)#
+#
+# Q1d -- see pdf output#
+#
+# Q1e#
+xtable(q1e.out, digits=3)#
+#
+# Q1g#
+xtable(q1g.out, digits=3)#
+#
+# Q1h#
+xtable(q1h.out, digits=3)#
+#
+# Q1i#
+xtable(q1i.out, digits=3)
+==============================================#
+# W4368 EXPERIMENTAL RESEARCH -- SPRING 2013#
+# MIDTERM EXAM KEY#
+# TA: Al Fang#
+# Date: 20 Apr 2013#
+# ==============================================#
+#
+rm(list=ls(all=T))#
+#
+setwd("/Users/al/Dropbox/FEDAI Homework Solutions/Midterm/")#
+#
+library(ri)#
+library(foreign)#
+library(xtable)#
+library(AER)#
+# Read in UNIs and student names to set seeds#
+#
+stinfo <- read.csv("seeds.csv", header=T)#
+names(stinfo) <- c("name","uni","seed")#
+#
+# Create objects to hold results#
+q1a.out <- matrix(NA, nrow=nrow(stinfo), ncol=2)#
+colnames(q1a.out) <- c("f.stat","p.value")#
+rownames(q1a.out) <- stinfo$name#
+#
+q1b.table.out <- array(NA, dim=c(3,6,nrow(stinfo)))#
+dimnames(q1b.table.out) <- list(c("treated","untreated","total"), c("mean.z1","n.z1","mean.z0","n.z0","diff","n"), stinfo$uni )#
+#
+q1c.out <- matrix(NA, nrow=nrow(stinfo), ncol=12)#
+colnames(q1c.out) <- c("itt","pval.twotailed","pval.greater","pval.lesser","ci.lb","ci.ub","itt.adj","pval.twotailed.adj","pval.greater.adj","pval.lesser.adj","ci.lb.adj","ci.ub.adj")#
+rownames(q1c.out) <- stinfo$name#
+#
+q1e.out <- matrix(NA, nrow=nrow(stinfo), ncol=12)#
+colnames(q1e.out) <- c("itt","pval.twotailed","pval.greater","pval.lesser","ci.lb","ci.ub","itt.adj","pval.twotailed.adj","pval.greater.adj","pval.lesser.adj","ci.lb.adj","ci.ub.adj")#
+rownames(q1e.out) <- stinfo$name#
+#
+q1g.out <- matrix(NA, nrow=nrow(stinfo), ncol=3)#
+colnames(q1g.out) <- c("Pr(Complier)","Pr(Always-Taker)","Pr(Never-Taker)")#
+rownames(q1g.out) <- stinfo$name#
+#
+q1h.out <- matrix(NA, nrow=nrow(stinfo), ncol=12)#
+colnames(q1h.out) <- c("cace","pval.twotailed","pval.greater","pval.lesser","ci.lb","ci.ub","cace.adj","pval.twotailed.adj","pval.greater.adj","pval.lesser.adj","ci.lb.adj","ci.ub.adj")#
+rownames(q1h.out) <- stinfo$name#
+#
+q1i.out <- matrix(NA, nrow=nrow(stinfo), ncol=8)#
+colnames(q1i.out) <- c("itt.ev.lower","itt.ev.upper","itt.ev.lower.adj","itt.ev.upper.adj","ittHT.ev.lower","ittHT.ev.upper","ittHT.ev.lower.adj","ittHT.ev.upper.adj")#
+rownames(q1i.out) <- stinfo$name#
+#
+# Loop over each student's UNI number#
+#
+for(x in 1:nrow(stinfo)){#
+#
+myuni <- stinfo$seed[x]#
+#
+# ============================================================================================#
+# ============================================================================================#
+# Problem 1#
+# ============================================================================================#
+# ============================================================================================#
+#
+# Read in raw data, prepare person-specific dataset#
+#
+setwd("/Users/al/Dropbox/FEDAI Homework Solutions/Midterm/")#
+data <- read.dta("q1hajj_sub.dta")#
+#
+uni <- myuni#
+set.seed(uni)#
+mydata <- as.data.frame(data[sample(1:nrow(data), nrow(data), replace=T),])#
+# ==============================================#
+# 1A - Randomization check #
+# ==============================================#
+#
+numiter <- 10000#
+#
+q1a.fstat <- summary(lm(success ~ age + female + literate, data=mydata))$fstatistic[1]#
+#
+probs <- genprobexact(Z=mydata$success, clustvar=mydata$hhid)#
+perms <- genperms(Z=mydata$success, clustvar=mydata$hhid, maxiter=numiter)#
+Y <- mydata$views#
+Z <- mydata$success#
+D <- mydata$hajj2006#
+C <- mydata$hhid#
+X <- as.matrix(cbind(mydata$age, mydata$literate, mydata$female))#
+#
+# ==============================================#
+# 1E - Diff in totals (HT estimator)#
+# ==============================================#
+#
+# unadjusted ITT#
+#
+itt <- estate(Y, Z, prob=probs, HT=TRUE)#
+Ys <- genouts(Y, Z, ate=0)#
+distout <- gendist(Ys,perms,prob=probs, HT=TRUE)#
+dispout <- dispdist(distout, itt, display.plot=FALSE)#
+#
+q1e.out[x,1] <- itt#
+q1e.out[x,2] <- dispout$two.tailed.p.value.abs#
+q1e.out[x,3] <- dispout$greater.p.value#
+q1e.out[x,4] <- dispout$lesser.p.value#
+#
+Ys <- genouts(Y, Z, ate=itt)#
+distout <- gendist(Ys,perms,prob=probs, HT=TRUE)#
+dispout <- dispdist(distout, itt, display.plot=FALSE)#
+q1c.out[x,5] <- dispout$quantile[1]#
+q1c.out[x,6] <- dispout$quantile[2]#
+#
+# covariate adjusted ITT#
+#
+itt <- estate(Y, Z, X=X, prob=probs, HT=TRUE)#
+Ys <- genouts(Y, Z, ate=0)#
+distout <- gendist(Ys,X=X,perms,prob=probs, HT=TRUE)#
+dispout <- dispdist(distout, itt, display.plot=FALSE)#
+#
+q1e.out[x,7] <- itt#
+q1e.out[x,8] <- dispout$two.tailed.p.value.abs#
+q1e.out[x,9] <- dispout$greater.p.value#
+q1e.out[x,10] <- dispout$lesser.p.value#
+#
+Ys <- genouts(Y, Z, ate=itt)#
+distout <- gendist(Ys,X=X,perms,prob=probs, HT=TRUE)#
+dispout <- dispdist(distout, itt, display.plot=FALSE)#
+q1e.out[x,11] <- dispout$quantile[1]#
+q1e.out[x,12] <- dispout$quantile[2]#
+}#
+#------- PRINT STUDENT-SPECIFIC ANSWER KEY ------------#
+#
+# Q1a#
+xtable(q1a.out, digits=3)#
+#
+# Q1b #
+for(y in 1:nrow(stinfo)){#
+#
+	print(stinfo$name[y])#
+	print(q1b.table.out[,,y])#
+#
+}#
+# Q1c#
+xtable(q1c.out, digits=3)#
+#
+# Q1d -- see pdf output#
+#
+# Q1e#
+xtable(q1e.out, digits=3)
+==============================================#
+# W4368 EXPERIMENTAL RESEARCH -- SPRING 2013#
+# MIDTERM EXAM KEY#
+# TA: Al Fang#
+# Date: 20 Apr 2013#
+# ==============================================#
+#
+rm(list=ls(all=T))#
+#
+setwd("/Users/al/Dropbox/FEDAI Homework Solutions/Midterm/")#
+#
+library(ri)#
+library(foreign)#
+library(xtable)#
+library(AER)#
+# Read in UNIs and student names to set seeds#
+#
+stinfo <- read.csv("seeds.csv", header=T)#
+names(stinfo) <- c("name","uni","seed")#
+#
+# Create objects to hold results#
+q1a.out <- matrix(NA, nrow=nrow(stinfo), ncol=2)#
+colnames(q1a.out) <- c("f.stat","p.value")#
+rownames(q1a.out) <- stinfo$name#
+#
+q1b.table.out <- array(NA, dim=c(3,6,nrow(stinfo)))#
+dimnames(q1b.table.out) <- list(c("treated","untreated","total"), c("mean.z1","n.z1","mean.z0","n.z0","diff","n"), stinfo$uni )#
+#
+q1c.out <- matrix(NA, nrow=nrow(stinfo), ncol=12)#
+colnames(q1c.out) <- c("itt","pval.twotailed","pval.greater","pval.lesser","ci.lb","ci.ub","itt.adj","pval.twotailed.adj","pval.greater.adj","pval.lesser.adj","ci.lb.adj","ci.ub.adj")#
+rownames(q1c.out) <- stinfo$name#
+#
+q1e.out <- matrix(NA, nrow=nrow(stinfo), ncol=12)#
+colnames(q1e.out) <- c("itt","pval.twotailed","pval.greater","pval.lesser","ci.lb","ci.ub","itt.adj","pval.twotailed.adj","pval.greater.adj","pval.lesser.adj","ci.lb.adj","ci.ub.adj")#
+rownames(q1e.out) <- stinfo$name#
+#
+q1g.out <- matrix(NA, nrow=nrow(stinfo), ncol=3)#
+colnames(q1g.out) <- c("Pr(Complier)","Pr(Always-Taker)","Pr(Never-Taker)")#
+rownames(q1g.out) <- stinfo$name#
+#
+q1h.out <- matrix(NA, nrow=nrow(stinfo), ncol=12)#
+colnames(q1h.out) <- c("cace","pval.twotailed","pval.greater","pval.lesser","ci.lb","ci.ub","cace.adj","pval.twotailed.adj","pval.greater.adj","pval.lesser.adj","ci.lb.adj","ci.ub.adj")#
+rownames(q1h.out) <- stinfo$name#
+#
+q1i.out <- matrix(NA, nrow=nrow(stinfo), ncol=8)#
+colnames(q1i.out) <- c("itt.ev.lower","itt.ev.upper","itt.ev.lower.adj","itt.ev.upper.adj","ittHT.ev.lower","ittHT.ev.upper","ittHT.ev.lower.adj","ittHT.ev.upper.adj")#
+rownames(q1i.out) <- stinfo$name#
+#
+# Loop over each student's UNI number#
+#
+for(x in 1:nrow(stinfo)){#
+#
+myuni <- stinfo$seed[x]#
+#
+# ============================================================================================#
+# ============================================================================================#
+# Problem 1#
+# ============================================================================================#
+# ============================================================================================#
+#
+# Read in raw data, prepare person-specific dataset#
+#
+setwd("/Users/al/Dropbox/FEDAI Homework Solutions/Midterm/")#
+data <- read.dta("q1hajj_sub.dta")#
+#
+uni <- myuni#
+set.seed(uni)#
+mydata <- as.data.frame(data[sample(1:nrow(data), nrow(data), replace=T),])#
+# ==============================================#
+# 1A - Randomization check #
+# ==============================================#
+#
+numiter <- 10000#
+#
+q1a.fstat <- summary(lm(success ~ age + female + literate, data=mydata))$fstatistic[1]#
+#
+probs <- genprobexact(Z=mydata$success, clustvar=mydata$hhid)#
+perms <- genperms(Z=mydata$success, clustvar=mydata$hhid, maxiter=numiter)#
+Y <- mydata$views#
+Z <- mydata$success#
+D <- mydata$hajj2006#
+C <- mydata$hhid#
+X <- as.matrix(cbind(mydata$age, mydata$literate, mydata$female))#
+#
+# ==============================================#
+# 1E - Diff in totals (HT estimator)#
+# ==============================================#
+#
+# unadjusted ITT#
+#
+itt <- estate(Y, Z, prob=probs, HT=TRUE)#
+Ys <- genouts(Y, Z, ate=0)#
+distout <- gendist(Ys,perms,prob=probs, HT=TRUE)#
+dispout <- dispdist(distout, itt, display.plot=FALSE)#
+#
+q1e.out[x,1] <- itt#
+q1e.out[x,2] <- dispout$two.tailed.p.value.abs#
+q1e.out[x,3] <- dispout$greater.p.value#
+q1e.out[x,4] <- dispout$lesser.p.value#
+#
+Ys <- genouts(Y, Z, ate=itt)#
+distout <- gendist(Ys,perms,prob=probs, HT=TRUE)#
+dispout <- dispdist(distout, itt, display.plot=FALSE)#
+q1e.out[x,5] <- dispout$quantile[1]#
+q1e.out[x,6] <- dispout$quantile[2]#
+#
+# covariate adjusted ITT#
+#
+itt <- estate(Y, Z, X=X, prob=probs, HT=TRUE)#
+Ys <- genouts(Y, Z, ate=0)#
+distout <- gendist(Ys,X=X,perms,prob=probs, HT=TRUE)#
+dispout <- dispdist(distout, itt, display.plot=FALSE)#
+#
+q1e.out[x,7] <- itt#
+q1e.out[x,8] <- dispout$two.tailed.p.value.abs#
+q1e.out[x,9] <- dispout$greater.p.value#
+q1e.out[x,10] <- dispout$lesser.p.value#
+#
+Ys <- genouts(Y, Z, ate=itt)#
+distout <- gendist(Ys,X=X,perms,prob=probs, HT=TRUE)#
+dispout <- dispdist(distout, itt, display.plot=FALSE)#
+q1e.out[x,11] <- dispout$quantile[1]#
+q1e.out[x,12] <- dispout$quantile[2]#
+}#
+#------- PRINT STUDENT-SPECIFIC ANSWER KEY ------------#
+#
+# Q1a#
+xtable(q1a.out, digits=3)#
+#
+# Q1b #
+for(y in 1:nrow(stinfo)){#
+#
+	print(stinfo$name[y])#
+	print(q1b.table.out[,,y])#
+#
+}#
+# Q1c#
+xtable(q1c.out, digits=3)#
+#
+# Q1d -- see pdf output#
+#
+# Q1e#
+xtable(q1e.out, digits=3)
+C <- mydata$hhid
+C
+table(C)
+length(table(C))

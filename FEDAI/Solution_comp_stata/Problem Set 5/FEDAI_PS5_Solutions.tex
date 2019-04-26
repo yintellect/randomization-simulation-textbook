@@ -99,14 +99,14 @@
 \usepackage[printwatermark]{xwatermark}
 \newwatermark[allpages,color=black!50,angle=45,scale=1,xpos=0,ypos=0]{DO NOT DISTRIBUTE}
 
-
+\input{pygments.tex}
 
 
 
 \title{Field Experiments: Design, Analysis and Interpretation \\
 Solutions for Chapter 5 Exercises}
 \author{Alan S. Gerber and Donald P. Green\footnote{Solutions prepared by Peter M. Aronow and revised by Alexander Coppock}}
-\date{\today}
+\date{\vspace{-5ex}}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \IfFileExists{upquote.sty}{\usepackage{upquote}}{}
@@ -399,20 +399,44 @@ Guan and Green report the results of a canvassing experiment conducted in Beijin
 \item Using the dataset at http://isps.research.yale.edu/FEDAI, estimate the $ITT$.
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlcom{# get rid of a couple of observations with missing outcome data}
-\hlstd{beijing} \hlkwb{<-} \hlkwd{na.omit}\hlstd{(beijing.all)}
-\hlstd{Z} \hlkwb{<-}     \hlstd{beijing}\hlopt{$}\hlstd{treat2}
-\hlstd{Y} \hlkwb{<-}     \hlstd{beijing}\hlopt{$}\hlstd{turnout}
-\hlstd{D} \hlkwb{<-}     \hlstd{beijing}\hlopt{$}\hlstd{contact}
-\hlstd{clust} \hlkwb{<-} \hlstd{beijing}\hlopt{$}\hlstd{dormid}
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}1}]:} \PY{k}{set}\PY{k}{ more} off
+        \PY{k}{qui} import delim .\PY{o}{/}data\PY{o}{/}chapter05\PY{o}{/}Guan\PYZus{}Green\PYZus{}CPS\PYZus{}2006,\PY{k}{ clear}
+\end{Verbatim}
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}2}]:} \PY{k}{qui}\PY{k}{ drop}\PY{k}{ if} turnout \PY{o}{==} .
+        \PY{k}{qui}\PY{k}{ drop}\PY{k}{ if} contact \PY{o}{==} .
+        \PY{k}{qui}\PY{k}{ drop}\PY{k}{ if} dormid \PY{o}{==} .
+        \PY{k}{qui}\PY{k}{ drop}\PY{k}{ if} treat2 \PY{o}{==} . 
+        
+        \PY{k}{rename} treat2 Z
+        \PY{k}{rename} turnout Y
+        \PY{k}{rename} contact D
+        \PY{k}{rename} dormid clust
+\end{Verbatim}
 
-\hlstd{ITT} \hlkwb{<-} \hlkwd{mean}\hlstd{(Y[Z} \hlopt{==} \hlnum{1}\hlstd{])} \hlopt{-} \hlkwd{mean}\hlstd{(Y[Z} \hlopt{==} \hlnum{0}\hlstd{])}
-\hlstd{ITT}
-\end{alltt}
-\begin{verbatim}
-## [1] 0.1319296
-\end{verbatim}
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}3}]:} \PY{k}{tabstat} Y,\PY{k}{ by}(Z) stat(mean)\PY{k}{ save}
+        \PY{c+c1}{//}\PY{c+c1}{ }\PY{c+c1}{I}\PY{c+c1}{T}\PY{c+c1}{T}
+        \PY{k}{di} \PY{n+nFormat}{\PYZpc{}8.7f} \PY{n+nf}{el}(\PY{n+nf}{r}(Stat2),\PY{l+m}{1} ,\PY{l+m}{1}) \PY{o}{\PYZhy{}} \PY{n+nf}{el}(\PY{n+nf}{r}(Stat1),\PY{l+m}{1} ,\PY{l+m}{1})
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Summary for variables: Y
+     by categories of: Z 
+
+       Z |      mean
+---------+----------
+       0 |  .6686657
+       1 |  .8005952
+---------+----------
+   Total |  .7568374
+--------------------
+
+0.1319296
+
+    \end{Verbatim}
+
 \end{kframe}
 \end{knitrout}
 
@@ -421,60 +445,93 @@ The estimated ITT is 0.132.
 \item Use randomization inference to test the sharp null hypothesis that the $ITT$ is zero for all observations, taking into account the fact that random assignment was clustered by dorm room. Interpret your results.
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlstd{probs} \hlkwb{<-} \hlkwd{genprobexact}\hlstd{(Z,}\hlkwc{clustvar}\hlstd{=clust)}  \hlcom{# subjects are clustered by dorm room}
-\hlstd{itt} \hlkwb{<-} \hlkwd{estate}\hlstd{(Y,Z,}\hlkwc{prob}\hlstd{=probs)}
-\hlstd{itt}
-\end{alltt}
-\begin{verbatim}
-## [1] 0.1319
-\end{verbatim}
-\begin{alltt}
-\hlstd{numiter} \hlkwb{<-} \hlnum{10000}
-\hlstd{perms} \hlkwb{<-} \hlkwd{genperms}\hlstd{(Z,}\hlkwc{maxiter}\hlstd{=numiter,}\hlkwc{clustvar}\hlstd{=clust)}    \hlcom{# clustered assignment}
-\end{alltt}
-\begin{verbatim}
-## Too many permutations to use exact method.
-## Defaulting to approximate method.
-## Increase maxiter to at least 5.83377797524832e+275 to perform exact estimation.
-\end{verbatim}
-\begin{alltt}
-\hlstd{Ys} \hlkwb{<-} \hlkwd{genouts}\hlstd{(Y,Z,}\hlkwc{ate}\hlstd{=}\hlnum{0}\hlstd{)}
-\hlstd{distout} \hlkwb{<-} \hlkwd{gendist}\hlstd{(Ys,perms,}\hlkwc{prob}\hlstd{=probs)}
+   \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}4}]:} \PY{k}{preserve}
+        \PY{k}{collapse} Z,\PY{k}{ by}(clust)   
+        \PY{k}{qui}\PY{k}{ sum} Z
+        \PY{k}{global} p = \PY{n+nf}{r}(mean)
+        \PY{k}{restore}
+\end{Verbatim}
 
-\hlstd{p.value} \hlkwb{<-} \hlkwd{sum}\hlstd{(}\hlkwd{abs}\hlstd{(distout)} \hlopt{>=} \hlkwd{abs}\hlstd{(itt))}        \hlcom{# two-tailed comparison}
-\hlstd{p.value}
-\end{alltt}
-\begin{verbatim}
-## [1] 0
-\end{verbatim}
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}5}]:} \PY{c+c1}{//}\PY{c+c1}{ }\PY{c+c1}{p}\PY{c+c1}{r}\PY{c+c1}{o}\PY{c+c1}{b}\PY{c+c1}{a}\PY{c+c1}{b}\PY{c+c1}{i}\PY{c+c1}{l}\PY{c+c1}{i}\PY{c+c1}{t}\PY{c+c1}{y}\PY{c+c1}{ }\PY{c+c1}{o}\PY{c+c1}{f}\PY{c+c1}{ }\PY{c+c1}{b}\PY{c+c1}{e}\PY{c+c1}{i}\PY{c+c1}{n}\PY{c+c1}{g}\PY{c+c1}{ }\PY{c+c1}{a}\PY{c+c1}{s}\PY{c+c1}{s}\PY{c+c1}{i}\PY{c+c1}{g}\PY{c+c1}{n}\PY{c+c1}{e}\PY{c+c1}{d}\PY{c+c1}{ }\PY{c+c1}{t}\PY{c+c1}{o}\PY{c+c1}{ }\PY{c+c1}{t}\PY{c+c1}{r}\PY{c+c1}{e}\PY{c+c1}{a}\PY{c+c1}{t}\PY{c+c1}{m}\PY{c+c1}{e}\PY{c+c1}{n}\PY{c+c1}{t}
+        \PY{k}{gen} probs = \PY{n+nv+vg}{\PYZdl{}}\PY{n+nv+vg}{p}
+        
+        
+        ritest Z \PYZus{}b[Z],\PY{k}{ cluster}(clust) reps(\PY{l+m}{10000}) nodots: \PY{c+cs}{///}
+        \PY{k}{regress} Y Z
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+  res. var(s):  Z
+   Resampling:  Permuting Z
+Clust. var(s):  clust
+     Clusters:  1004
+Strata var(s):  none
+       Strata:  1
+
+------------------------------------------------------------------------------
+T            |     T(obs)       c       n   p=c/n   SE(p) [95\% Conf. Interval]
+-------------+----------------------------------------------------------------
+       \_pm\_1 |   .1319296       0   10000  0.0000  0.0000         0   .0003688
+------------------------------------------------------------------------------
+Note: Confidence interval is with respect to p=c/n.
+Note: c = \#\{|T| >= |T(obs)|\}
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}6}]:} \PY{c+c1}{//}\PY{c+c1}{ }\PY{c+c1}{i}\PY{c+c1}{t}\PY{c+c1}{t}
+        \PY{k}{di} \PY{n+nFormat}{\PYZpc{}8.4f} \PY{n+nf}{el}(\PY{n+nf}{r}(b),\PY{l+m}{1},\PY{l+m}{1})
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+  0.1319
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}7}]:} \PY{c+c1}{//}\PY{c+c1}{ }\PY{c+c1}{p}\PY{c+c1}{.}\PY{c+c1}{v}\PY{c+c1}{a}\PY{c+c1}{l}\PY{c+c1}{u}\PY{c+c1}{e}\PY{c+c1}{.}\PY{c+c1}{t}\PY{c+c1}{w}\PY{c+c1}{o}\PY{c+c1}{s}\PY{c+c1}{i}\PY{c+c1}{d}\PY{c+c1}{e}\PY{c+c1}{d}
+        \PY{k}{di} \PY{n+nFormat}{\PYZpc{}8.0f} \PY{n+nf}{el}(\PY{n+nf}{r}(p),\PY{l+m}{1},\PY{l+m}{1})
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+       0
+    \end{Verbatim}
 \end{kframe}
 \end{knitrout}
 
 \item Assume that the leaflet had no effect on turnout. Estimate the $CACE$.
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlstd{itt} \hlkwb{<-} \hlkwd{estate}\hlstd{(Y,Z,}\hlkwc{prob}\hlstd{=probs)}
-\hlstd{itt}
-\end{alltt}
-\begin{verbatim}
-## [1] 0.1319
-\end{verbatim}
-\begin{alltt}
-\hlstd{ittd} \hlkwb{<-} \hlkwd{estate}\hlstd{(D,Z,}\hlkwc{prob}\hlstd{=probs)}
-\hlstd{ittd}
-\end{alltt}
-\begin{verbatim}
-## [1] 0.8858
-\end{verbatim}
-\begin{alltt}
-\hlstd{cace} \hlkwb{<-} \hlstd{itt}\hlopt{/}\hlstd{ittd}
-\hlstd{cace}
-\end{alltt}
-\begin{verbatim}
-## [1] 0.1489
-\end{verbatim}
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}8}]:} \PY{k}{qui}\PY{k}{ regress} Y Z
+        \PY{k}{scalar} itt = \PYZus{}b[Z]
+        \PY{k}{di} \PY{n+nFormat}{\PYZpc{}8.4f} itt
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+  0.1319
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}9}]:} \PY{k}{qui}\PY{k}{ regress} D Z
+        \PY{k}{scalar} ittd = \PYZus{}b[Z]
+        \PY{k}{di} \PY{n+nFormat}{\PYZpc{}8.4f} ittd
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+  0.8858
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}10}]:} \PY{k}{scalar} cace = itt\PY{o}{/}ittd
+         \PY{k}{di} \PY{n+nFormat}{\PYZpc{}8.4f} cace
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+  0.1489
+    \end{Verbatim}
 \end{kframe}
 \end{knitrout}
 \item Assume that the leaflet raised the probability of voting by one percentage point among both Compliers and Never-Takers. In other words, suppose that the treatment group's turnout rate would have been one percentage point lower had the leaflets not been distributed. Write down a model of the expected turnout rates in the treatment and control groups, incorporating the average effect of the leaflet.\\
@@ -557,27 +614,43 @@ Estimate the proportion of Compliers based on subjects' responses to the placebo
 
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlstd{Z} \hlkwb{<-} \hlkwd{c}\hlstd{(}\hlkwd{rep}\hlstd{(}\hlstr{"baseline"}\hlstd{,} \hlnum{2572}\hlstd{),} \hlkwd{rep}\hlstd{(}\hlstr{"treatment"}\hlstd{,} \hlnum{486}\hlopt{+}\hlnum{2086}\hlstd{),} \hlkwd{rep}\hlstd{(}\hlstr{"placebo"}\hlstd{,} \hlnum{470}\hlopt{+}\hlnum{2109}\hlstd{))}
-\hlstd{D} \hlkwb{<-} \hlkwd{c}\hlstd{(}\hlkwd{rep}\hlstd{(}\hlnum{0}\hlstd{,} \hlnum{2572}\hlstd{),} \hlkwd{rep}\hlstd{(}\hlnum{1}\hlstd{,} \hlnum{486}\hlstd{),} \hlkwd{rep}\hlstd{(}\hlnum{0}\hlstd{,}\hlnum{2086}\hlstd{),} \hlkwd{rep}\hlstd{(}\hlnum{1}\hlstd{,} \hlnum{470}\hlstd{),} \hlkwd{rep}\hlstd{(}\hlnum{0}\hlstd{,}\hlnum{2109}\hlstd{))}
-\hlstd{Y} \hlkwb{<-} \hlkwd{c}\hlstd{(}\hlkwd{rep}\hlstd{(}\hlnum{1}\hlstd{,} \hlkwd{round}\hlstd{(}\hlnum{2572}\hlopt{*}\hlnum{0.3122}\hlstd{)),} \hlkwd{rep}\hlstd{(}\hlnum{0}\hlstd{,}\hlkwd{round}\hlstd{(}\hlnum{2572}\hlopt{*}\hlstd{(}\hlnum{1}\hlopt{-}\hlnum{0.3122}\hlstd{))),}
-       \hlkwd{rep}\hlstd{(}\hlnum{1}\hlstd{,} \hlkwd{round}\hlstd{(}\hlnum{486}\hlopt{*}\hlnum{0.3909}\hlstd{)),} \hlkwd{rep}\hlstd{(}\hlnum{0}\hlstd{,}\hlkwd{round}\hlstd{(}\hlnum{486}\hlopt{*}\hlstd{(}\hlnum{1}\hlopt{-}\hlnum{0.3909}\hlstd{))),}
-       \hlkwd{rep}\hlstd{(}\hlnum{1}\hlstd{,} \hlkwd{round}\hlstd{(}\hlnum{2086}\hlopt{*}\hlnum{0.3274}\hlstd{)),} \hlkwd{rep}\hlstd{(}\hlnum{0}\hlstd{,}\hlkwd{round}\hlstd{(}\hlnum{2086}\hlopt{*}\hlstd{(}\hlnum{1}\hlopt{-}\hlnum{0.3274}\hlstd{))),}
-       \hlkwd{rep}\hlstd{(}\hlnum{1}\hlstd{,} \hlkwd{round}\hlstd{(}\hlnum{470}\hlopt{*}\hlnum{0.2979}\hlstd{)),} \hlkwd{rep}\hlstd{(}\hlnum{0}\hlstd{,}\hlkwd{round}\hlstd{(}\hlnum{470}\hlopt{*}\hlstd{(}\hlnum{1}\hlopt{-}\hlnum{0.2979}\hlstd{))),}
-       \hlkwd{rep}\hlstd{(}\hlnum{1}\hlstd{,} \hlkwd{round}\hlstd{(}\hlnum{2109}\hlopt{*}\hlnum{0.3215}\hlstd{)),} \hlkwd{rep}\hlstd{(}\hlnum{0}\hlstd{,}\hlkwd{round}\hlstd{(}\hlnum{2109}\hlopt{*}\hlstd{(}\hlnum{1}\hlopt{-}\hlnum{0.3215}\hlstd{))))}
-\hlstd{pr.c.treatment} \hlkwb{<-} \hlkwd{mean}\hlstd{(D[Z}\hlopt{==}\hlstr{"treatment"}\hlstd{])}
-\hlstd{pr.c.treatment}
-\end{alltt}
-\begin{verbatim}
-## [1] 0.189
-\end{verbatim}
-\begin{alltt}
-\hlstd{pr.c.placebo} \hlkwb{<-} \hlkwd{mean}\hlstd{(D[Z}\hlopt{==}\hlstr{"placebo"}\hlstd{])}
-\hlstd{pr.c.placebo}
-\end{alltt}
-\begin{verbatim}
-## [1] 0.1822
-\end{verbatim}
+   \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}1}]:} \PY{k}{clear}
+        \PY{k}{qui}\PY{k}{ set} obs \PY{l+m}{7723}
+        \PY{c+c1}{//}\PY{c+c1}{ }\PY{c+c1}{s}\PY{c+c1}{s}\PY{c+c1}{c}\PY{c+c1}{ }\PY{c+c1}{i}\PY{c+c1}{n}\PY{c+c1}{s}\PY{c+c1}{t}\PY{c+c1}{a}\PY{c+c1}{l}\PY{c+c1}{l}\PY{c+c1}{ }\PY{c+c1}{e}\PY{c+c1}{g}\PY{c+c1}{e}\PY{c+c1}{n}\PY{c+c1}{m}\PY{c+c1}{o}\PY{c+c1}{r}\PY{c+c1}{e}\PY{c+c1}{ }\PY{c+c1}{(}\PY{c+c1}{i}\PY{c+c1}{n}\PY{c+c1}{s}\PY{c+c1}{t}\PY{c+c1}{a}\PY{c+c1}{l}\PY{c+c1}{l}\PY{c+c1}{ }\PY{c+c1}{t}\PY{c+c1}{h}\PY{c+c1}{e}\PY{c+c1}{ }\PY{c+c1}{p}\PY{c+c1}{a}\PY{c+c1}{c}\PY{c+c1}{k}\PY{c+c1}{a}\PY{c+c1}{g}\PY{c+c1}{e}\PY{c+c1}{)}
+        \PY{k}{qui}\PY{k}{ egen} z =\PY{k}{ repeat}(), values(\PY{l+s}{\PYZdq{}}\PY{l+s}{b}\PY{l+s}{a}\PY{l+s}{s}\PY{l+s}{e}\PY{l+s}{l}\PY{l+s}{i}\PY{l+s}{n}\PY{l+s}{e}\PY{l+s}{\PYZdq{}})
+        \PY{k}{qui}\PY{k}{ replace} z = \PY{l+s}{\PYZdq{}}\PY{l+s}{t}\PY{l+s}{r}\PY{l+s}{e}\PY{l+s}{a}\PY{l+s}{t}\PY{l+s}{m}\PY{l+s}{e}\PY{l+s}{n}\PY{l+s}{t}\PY{l+s}{\PYZdq{}}\PY{k}{ in} \PY{l+m}{2573}\PY{o}{/}\PY{l+m}{5144}
+        \PY{k}{qui}\PY{k}{ replace} z = \PY{l+s}{\PYZdq{}}\PY{l+s}{p}\PY{l+s}{l}\PY{l+s}{a}\PY{l+s}{c}\PY{l+s}{e}\PY{l+s}{b}\PY{l+s}{o}\PY{l+s}{\PYZdq{}}\PY{k}{ in} \PY{l+m}{5145}\PY{o}{/}\PY{l+m}{7723}
+        \PY{k}{qui}\PY{k}{ egen}\PY{k}{ d} = fill(\PY{l+m}{0},\PY{l+m}{0})
+        \PY{k}{qui}\PY{k}{ replace}\PY{k}{ d} = \PY{l+m}{1}\PY{k}{ in} \PY{l+m}{2573}\PY{o}{/}\PY{l+m}{3058}
+        \PY{k}{qui}\PY{k}{ replace}\PY{k}{ d} = \PY{l+m}{1}\PY{k}{ in} \PY{l+m}{5145}\PY{o}{/}\PY{l+m}{5614}
+        \PY{k}{qui}\PY{k}{ egen} y = fill(\PY{l+m}{1},\PY{l+m}{1})
+        \PY{k}{qui}\PY{k}{ replace} y=\PY{l+m}{0}\PY{k}{ in} \PY{l+m}{804}\PY{o}{/}\PY{l+m}{2572}
+        \PY{k}{qui}\PY{k}{ replace} y=\PY{l+m}{0}\PY{k}{ in} \PY{l+m}{2763}\PY{o}{/}\PY{l+m}{3058}
+        \PY{k}{qui}\PY{k}{ replace} y=\PY{l+m}{0}\PY{k}{ in} \PY{l+m}{3742}\PY{o}{/}\PY{l+m}{5144}
+        \PY{k}{qui}\PY{k}{ replace} y=\PY{l+m}{0}\PY{k}{ in} \PY{l+m}{5285}\PY{o}{/}\PY{l+m}{5614}
+        \PY{k}{qui}\PY{k}{ replace} y=\PY{l+m}{0}\PY{k}{ in} \PY{l+m}{6293}\PY{o}{/}\PY{l+m}{7723}
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}2}]:} \PY{k}{qui}\PY{k}{ sum}\PY{k}{ d}\PY{k}{ if} z\PY{o}{==}\PY{l+s}{\PYZdq{}}\PY{l+s}{t}\PY{l+s}{r}\PY{l+s}{e}\PY{l+s}{a}\PY{l+s}{t}\PY{l+s}{m}\PY{l+s}{e}\PY{l+s}{n}\PY{l+s}{t}\PY{l+s}{\PYZdq{}}
+        \PY{k}{scalar} pr\PYZus{}c\PYZus{}treatment =  \PY{n+nf}{r}(mean)
+        \PY{k}{di} \PY{n+nFormat}{\PYZpc{}8.3f} pr\PYZus{}c\PYZus{}treatment
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+   0.189
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}3}]:} \PY{k}{qui}\PY{k}{ sum}\PY{k}{ d}\PY{k}{ if} z\PY{o}{==}\PY{l+s}{\PYZdq{}}\PY{l+s}{p}\PY{l+s}{l}\PY{l+s}{a}\PY{l+s}{c}\PY{l+s}{e}\PY{l+s}{b}\PY{l+s}{o}\PY{l+s}{\PYZdq{}}
+        \PY{k}{scalar} pr\PYZus{}c\PYZus{}placebo =  \PY{n+nf}{r}(mean)
+        \PY{k}{di} \PY{n+nFormat}{\PYZpc{}8.4f} pr\PYZus{}c\PYZus{}placebo
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+  0.1822
+    \end{Verbatim}
 \end{kframe}
 \end{knitrout}
 
@@ -586,20 +659,25 @@ The estimated proportion of compliers in the vote encouragement group is 0.189. 
 \item Do the data suggest that Never-Takers in the treatment and placebo groups have the same rate of turnout? Is this comparison informative?\\
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlstd{rate.nt.treatment} \hlkwb{<-} \hlkwd{mean}\hlstd{(Y[Z}\hlopt{==}\hlstr{"treatment"} \hlopt{&} \hlstd{D}\hlopt{==}\hlnum{0}\hlstd{])}
-\hlstd{rate.nt.placebo} \hlkwb{<-} \hlkwd{mean}\hlstd{(Y[Z}\hlopt{==}\hlstr{"placebo"} \hlopt{&} \hlstd{D}\hlopt{==}\hlnum{0}\hlstd{])}
-\hlstd{rate.nt.treatment}
-\end{alltt}
-\begin{verbatim}
-## [1] 0.3274
-\end{verbatim}
-\begin{alltt}
-\hlstd{rate.nt.placebo}
-\end{alltt}
-\begin{verbatim}
-## [1] 0.3215
-\end{verbatim}
+   \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}4}]:} \PY{c+c1}{//}\PY{c+c1}{ }\PY{c+c1}{r}\PY{c+c1}{a}\PY{c+c1}{t}\PY{c+c1}{e}\PY{c+c1}{.}\PY{c+c1}{n}\PY{c+c1}{t}\PY{c+c1}{.}\PY{c+c1}{t}\PY{c+c1}{r}\PY{c+c1}{e}\PY{c+c1}{a}\PY{c+c1}{t}\PY{c+c1}{m}\PY{c+c1}{e}\PY{c+c1}{n}\PY{c+c1}{t}
+        \PY{k}{qui}\PY{k}{ sum} y\PY{k}{ if} z\PY{o}{==}\PY{l+s}{\PYZdq{}}\PY{l+s}{t}\PY{l+s}{r}\PY{l+s}{e}\PY{l+s}{a}\PY{l+s}{t}\PY{l+s}{m}\PY{l+s}{e}\PY{l+s}{n}\PY{l+s}{t}\PY{l+s}{\PYZdq{}} \PY{o}{\PYZam{}}\PY{k}{ d}\PY{o}{==}\PY{l+m}{0} 
+        \PY{k}{di} \PY{n+nFormat}{\PYZpc{}8.4f} \PY{n+nf}{r}(mean)
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+  0.3274
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}5}]:} \PY{c+c1}{//}\PY{c+c1}{ }\PY{c+c1}{r}\PY{c+c1}{a}\PY{c+c1}{t}\PY{c+c1}{e}\PY{c+c1}{.}\PY{c+c1}{n}\PY{c+c1}{t}\PY{c+c1}{.}\PY{c+c1}{p}\PY{c+c1}{l}\PY{c+c1}{a}\PY{c+c1}{c}\PY{c+c1}{e}\PY{c+c1}{b}\PY{c+c1}{o}
+        \PY{k}{qui}\PY{k}{ sum} y\PY{k}{ if} z\PY{o}{==}\PY{l+s}{\PYZdq{}}\PY{l+s}{p}\PY{l+s}{l}\PY{l+s}{a}\PY{l+s}{c}\PY{l+s}{e}\PY{l+s}{b}\PY{l+s}{o}\PY{l+s}{\PYZdq{}} \PY{o}{\PYZam{}}\PY{k}{ d}\PY{o}{==}\PY{l+m}{0}
+        \PY{k}{di} \PY{n+nFormat}{\PYZpc{}8.4f} \PY{n+nf}{r}(mean)
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+  0.3215
+    \end{Verbatim}
 \end{kframe}
 \end{knitrout}
 Yes, the turnout rate among the encouragement never takers is 32.7\% versus 32.2\% for the placebo group. If $D_i(1)$ is the same for all subjects whether the $Z=1$ means that they are assigned to the placebo or the encouragement, and the subjects are randomly assigned to each group, then the groups of untreated placebo and encouragement subjects are formed by random assignment from the same pool of subjects (the non-compliers). A prediction that follows from this claim is that placebo and the encouragement groups have the same expected average potential outcomes when untreated. If the observed difference in average potential outcomes when untreated is too large, we may reject the maintained hypothesis that the group is formed by random draws from a common pool of subjects. One implication of this is that perhaps the pattern of subject compliance is not the same for the two treatments.
@@ -607,10 +685,27 @@ Yes, the turnout rate among the encouragement never takers is 32.7\% versus 32.2
 \item Estimate the CACE of receiving the placebo. Is this estimate consistent with the substantive assumption that the placebo has no effect on turnout?\\
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlstd{itt.placebo} \hlkwb{<-} \hlkwd{mean}\hlstd{(Y[Z}\hlopt{==}\hlstr{"placebo"}\hlstd{])} \hlopt{-} \hlkwd{mean}\hlstd{(Y[Z}\hlopt{==}\hlstr{"baseline"}\hlstd{])}
-\hlstd{cace.placebo} \hlkwb{<-} \hlstd{itt.placebo}\hlopt{/}\hlstd{pr.c.placebo}
-\end{alltt}
+   \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}6}]:} \PY{k}{qui}\PY{k}{ sum} y\PY{k}{ if} z\PY{o}{==}\PY{l+s}{\PYZdq{}}\PY{l+s}{p}\PY{l+s}{l}\PY{l+s}{a}\PY{l+s}{c}\PY{l+s}{e}\PY{l+s}{b}\PY{l+s}{o}\PY{l+s}{\PYZdq{}}
+        \PY{k}{scalar} y\PYZus{}placebo = \PY{n+nf}{r}(mean)
+        \PY{k}{qui}\PY{k}{ sum} y\PY{k}{ if} z\PY{o}{==}\PY{l+s}{\PYZdq{}}\PY{l+s}{b}\PY{l+s}{a}\PY{l+s}{s}\PY{l+s}{e}\PY{l+s}{l}\PY{l+s}{i}\PY{l+s}{n}\PY{l+s}{e}\PY{l+s}{\PYZdq{}}
+        \PY{k}{scalar} y\PYZus{}baseline = \PY{n+nf}{r}(mean)
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}7}]:} \PY{k}{scalar} itt\PYZus{}placebo = y\PYZus{}placebo \PY{o}{\PYZhy{}} y\PYZus{}baseline
+        \PY{k}{scalar} cace\PYZus{}placebo = itt\PYZus{}placebo\PY{o}{/}pr\PYZus{}c\PYZus{}placebo
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}8}]:} \PY{c+c1}{//}\PY{c+c1}{ }\PY{c+c1}{E}\PY{c+c1}{s}\PY{c+c1}{t}\PY{c+c1}{i}\PY{c+c1}{m}\PY{c+c1}{a}\PY{c+c1}{t}\PY{c+c1}{e}\PY{c+c1}{ }\PY{c+c1}{t}\PY{c+c1}{h}\PY{c+c1}{e}\PY{c+c1}{ }\PY{c+c1}{C}\PY{c+c1}{A}\PY{c+c1}{C}\PY{c+c1}{E}\PY{c+c1}{ }\PY{c+c1}{o}\PY{c+c1}{f}\PY{c+c1}{ }\PY{c+c1}{r}\PY{c+c1}{e}\PY{c+c1}{c}\PY{c+c1}{e}\PY{c+c1}{i}\PY{c+c1}{v}\PY{c+c1}{i}\PY{c+c1}{n}\PY{c+c1}{g}\PY{c+c1}{ }\PY{c+c1}{t}\PY{c+c1}{h}\PY{c+c1}{e}\PY{c+c1}{ }\PY{c+c1}{p}\PY{c+c1}{l}\PY{c+c1}{a}\PY{c+c1}{c}\PY{c+c1}{e}\PY{c+c1}{b}\PY{c+c1}{o}
+        \PY{k}{disp} \PY{n+nFormat}{\PYZpc{}8.3f} cace\PYZus{}placebo
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+   0.027
+    \end{Verbatim}
+
 \end{kframe}
 \end{knitrout}
 
@@ -619,23 +714,32 @@ The CACE is 0.027. The placebo has an unexpectedly positive effect on turnout (a
 \item Estimate the CACE of receiving the treatment using two different methods. First, use the conventional method of dividing the $ITT$ by the $ITT_D$. Second, compare turnout rates among Compliers in both the treatment and placebo groups. Interpret the results. \\
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlcom{## Method 1}
-\hlstd{itt.treatment} \hlkwb{<-} \hlkwd{mean}\hlstd{(Y[Z}\hlopt{==}\hlstr{"treatment"}\hlstd{])} \hlopt{-} \hlkwd{mean}\hlstd{(Y[Z}\hlopt{==}\hlstr{"baseline"}\hlstd{])}
-\hlstd{cace.treatment1} \hlkwb{<-} \hlstd{itt.treatment}\hlopt{/}\hlstd{pr.c.treatment}
-\hlstd{cace.treatment1}
-\end{alltt}
-\begin{verbatim}
-## [1] 0.1440329
-\end{verbatim}
-\begin{alltt}
-\hlcom{## Method 2}
-\hlstd{cace.treatment2} \hlkwb{<-} \hlkwd{mean}\hlstd{(Y[Z}\hlopt{==}\hlstr{"treatment"} \hlopt{&} \hlstd{D}\hlopt{==}\hlnum{1}\hlstd{])} \hlopt{-} \hlkwd{mean}\hlstd{(Y[Z}\hlopt{==}\hlstr{"placebo"} \hlopt{&} \hlstd{D}\hlopt{==}\hlnum{1}\hlstd{])}
-\hlstd{cace.treatment2}
-\end{alltt}
-\begin{verbatim}
-## [1] 0.09307416
-\end{verbatim}
+  \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}9}]:} \PY{k}{qui}\PY{k}{ sum} y\PY{k}{ if} z\PY{o}{==}\PY{l+s}{\PYZdq{}}\PY{l+s}{t}\PY{l+s}{r}\PY{l+s}{e}\PY{l+s}{a}\PY{l+s}{t}\PY{l+s}{m}\PY{l+s}{e}\PY{l+s}{n}\PY{l+s}{t}\PY{l+s}{\PYZdq{}}
+        \PY{k}{scalar} y\PYZus{}treat = \PY{n+nf}{r}(mean)
+        \PY{k}{qui}\PY{k}{ sum} y\PY{k}{ if} z\PY{o}{==}\PY{l+s}{\PYZdq{}}\PY{l+s}{b}\PY{l+s}{a}\PY{l+s}{s}\PY{l+s}{e}\PY{l+s}{l}\PY{l+s}{i}\PY{l+s}{n}\PY{l+s}{e}\PY{l+s}{\PYZdq{}}
+        \PY{k}{scalar} y\PYZus{}base= \PY{n+nf}{r}(mean)
+        \PY{k}{scalar} itt\PYZus{}treatment = y\PYZus{}treat \PY{o}{\PYZhy{}} y\PYZus{}base
+        \PY{k}{scalar} cace\PYZus{}treatment1 = itt\PYZus{}treatment\PY{o}{/}pr\PYZus{}c\PYZus{}treatment
+        \PY{k}{disp} \PY{n+nFormat}{\PYZpc{}8.7f} cace\PYZus{}treatment1
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+0.1440329
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}10}]:} \PY{k}{qui}\PY{k}{ sum} y\PY{k}{ if} z\PY{o}{==}\PY{l+s}{\PYZdq{}}\PY{l+s}{t}\PY{l+s}{r}\PY{l+s}{e}\PY{l+s}{a}\PY{l+s}{t}\PY{l+s}{m}\PY{l+s}{e}\PY{l+s}{n}\PY{l+s}{t}\PY{l+s}{\PYZdq{}} \PY{o}{\PYZam{}}\PY{k}{ d}\PY{o}{==}\PY{l+m}{1}
+         \PY{k}{scalar} yd\PYZus{}treat = \PY{n+nf}{r}(mean)
+         \PY{k}{qui}\PY{k}{ sum} y\PY{k}{ if} z\PY{o}{==}\PY{l+s}{\PYZdq{}}\PY{l+s}{p}\PY{l+s}{l}\PY{l+s}{a}\PY{l+s}{c}\PY{l+s}{e}\PY{l+s}{b}\PY{l+s}{o}\PY{l+s}{\PYZdq{}} \PY{o}{\PYZam{}}\PY{k}{ d}\PY{o}{==}\PY{l+m}{1}
+         \PY{k}{scalar} yd\PYZus{}placebo = \PY{n+nf}{r}(mean)
+         \PY{k}{scalar} cace\PYZus{}treatment2 = yd\PYZus{}treat \PY{o}{\PYZhy{}} yd\PYZus{}placebo
+         \PY{k}{disp} cace\PYZus{}treatment2
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+.09307416
+    \end{Verbatim}
 \end{kframe}
 \end{knitrout}
 

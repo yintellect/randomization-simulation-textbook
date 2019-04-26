@@ -1,0 +1,112 @@
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% PROBLEM SET LATEX TEMPLATE FILE
+% DEFINE DOCUMENT STYLE, LOAD PACKAGES
+\documentclass[11pt,notitlepage]{article}		% ADD COMMENTS USING A PERCENT SIGN
+\usepackage{amsfonts}
+\usepackage{amsthm}
+\usepackage{amsmath, booktabs}
+\usepackage{mathtools}
+\usepackage{amssymb}
+\usepackage{subfig}
+\usepackage{setspace}
+\usepackage{fullpage}
+\usepackage{verbatim}
+\usepackage{graphicx}
+\usepackage{tabularx}
+\usepackage{longtable}
+\usepackage{multicol}
+\usepackage{multirow}
+\setlength{\parindent}{0in}		% uncomment to remove indent at start of paragraphs
+\usepackage{pdflscape}
+\usepackage[english]{babel}
+\usepackage[pdftex]{hyperref}
+\usepackage{natbib}
+\usepackage{caption}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{graphics}
+\usepackage{multirow}
+\usepackage{graphics}
+\usepackage{hyperref}
+\usepackage{longtable}
+\usepackage{latexsym}
+\usepackage{rotating}
+\usepackage{setspace}
+\usepackage{layouts} 
+\usepackage[titletoc]{appendix}
+\DeclareGraphicsExtensions{.pdf,.jpg,.png}
+\usepackage[margin=1in]{geometry}
+\usepackage{enumerate}
+\usepackage{float}
+\usepackage{xcolor}
+\usepackage[printwatermark]{xwatermark}
+\newwatermark[allpages,color=black!50,angle=45,scale=1,xpos=0,ypos=0]{DO NOT DISTRIBUTE}
+
+% FONTS
+\usepackage[T1]{fontenc}					% always use this no matter what
+
+% uncomment any one of these to see what it does to your font!
+%\usepackage{pxfonts}
+%\usepackage{cmbright}
+%\usepackage{txfonts}
+%\usepackage[adobe-utopia]{mathdesign}
+%\usepackage{kpfonts}
+%\usepackage{lmodern}
+%\usepackage{newtxtext,newtxmath}
+
+
+
+% DEFINE WHAT GOES INTO YOUR TITLE BEFORE THE DOCUMENT BEGINS
+\title{Field Experiments: Design, Analysis and Interpretation \\
+Solutions for Chapter 1 Exercises}
+\author{Alan S. Gerber and Donald P. Green\footnote{Solutions prepared by Peter M. Aronow and revised by Alexander Coppock}}
+\date{\today}
+
+
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+
+\maketitle
+
+
+\section*{Question 1}
+Core concepts: [25 points]
+
+\begin{enumerate}[a)]
+\item What is an experiment, and how does it differ from an observational study?  \\
+Answer:\\
+A randomized experiment is a study in which observations are allocated by chance to receive some type of treatment; in an observational (or non-experimental) study, treatments are not assigned randomly.
+
+\item What is ``unobserved heterogeneity,'' and what are its consequences for the interpretation of correlations? \\
+Answer:\\
+Unobserved heterogeneity refers to the set of unmeasured factors that cause outcomes to vary from one subject to the next. Unobserved heterogeneity complicates the task of drawing causal inferences from correlations between treatments and outcomes because treatments that are not randomly assigned may be correlated with unmeasured factors that predict outcomes.  
+\end{enumerate}
+
+\section*{Question 2}
+Would you classify the study described in the following abstract as a field experiment, a natural experiment, or a quasi-experiment? Why? [25 points]
+
+\begin{quote}
+``This study seeks to estimate the health effects of sanitary drinking water among low-income villages in Guatemala. A random sample of all villages with fewer than 2,000 inhabitants were selected for analysis. Of the 250 villages sampled, 110 were found to have unsanitary drinking water. In these 110 villages, infant mortality rates were, on average, 25 deaths per 1,000 live births, as compared to 5 deaths per 1,000 live births in the 140 villages with sanitary drinking water. Unsanitary drinking water appears to be a major contributor to infant mortality.''
+\end{quote}
+Answer:\\
+This study is a quasi-experiment. Although villages are sampled randomly, random assignment is not used to determine which villages receive sanitary drinking water (the treatment in this study). The lack of random assignment means that this study does not qualify as either an experiment or natural experiment, the latter being a special kind of experiment in which governments or other non-academic entity allocates treatments randomly.
+
+\section*{Question 3}
+Based on what you are able to infer from the following abstract, to what extent does the study described seem to fulfill the criteria for a field experiment? [25 points]
+
+\begin{quote}
+``We study the demand for household water connections in urban Morocco, and the effect of such connections on household welfare. In the northern city of Tangiers, among homeowners without a private connection to the city's water grid, a random subset was offered a simplified procedure to purchase a household connection on credit (at a zero percent interest rate). Take-up was high, at 69\%. Because all households in our sample had access to the water grid through free public taps \ldots household connections did not lead to any improvement in the quality of the water households consumed; and despite a significant increase in the quantity of water consumed, we find no change in the incidence of waterborne illnesses. Nevertheless, we find that households are willing to pay a substantial amount of money to have a private tap at home. Being connected generates important time gains, which are used for leisure and social activities, rather than productive activities.''\footnote{Devoto et al. 2011.}
+\end{quote}
+
+Answer:\\
+This study is an experiment because subjects (those without a private connection to the water grid) were randomly offered an opportunity to purchase a connection. The study satisfies many of the criteria for classification as a field experiment: it was conducted in a naturalistic setting, involved actual consumers, tested the effects of a real intervention (an opportunity to purchase a private water connection on favorable financial terms), and measured meaningful real-world outcomes, such as time use (although we cannot tell from this description whether the measurement of outcomes was unobtrusive).  
+
+\section*{Question 4}
+A parody appearing in the British Medical Journal questioned whether parachutes are in fact effective in preventing death when skydivers are presented with severe ``gravitational challenge.''\footnote{Smith and Pell 2003.}  The authors point out that no randomized trials have assigned parachutes to skydivers. Why is it reasonable to believe that parachutes are effective even in the absence of randomized experiments that establish their efficacy?  [25 points]
+
+Answer:\\
+Although randomized experiments could in principle answer the question of whether parachutes  are effective against ``gravitational challenge,'' it is unnecessary to conduct a randomized experiment in this case because the threats to inference posed by self-selection into treatment or unobserved heterogeneity seem far-fetched.  the laws of physics strongly shape our prior beliefs about what happens to people if they fall from several thousand feet without a parachute. Observational data corroborate these intuitions -- chances of survival are infinitesimal when parachutes malfunction and very good when parachutes work properly -- and it is hard to think of a scenario under which this correlation could be spurious, as this relationship holds not only for humans but also for animals, who were used to test parachutes during their development.  
+
+Finally, the ``treatment effect'' of parachutes is extremely large. Nearly all those that fall out of airplanes without them die and nearly all those that have a parachute survive. Any unobserved heterogeneity to bias the estimate of effectiveness would have to be extremely powerful -- those who would die regardless of having a parachute would all have to select into the ``no parachute'' condition. This is a type of informal sensitivity analysis -- we reject the notion that the correlation is spurious because the size of the treatment effect is overwhelming.
+
+\end{document}

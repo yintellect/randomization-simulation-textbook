@@ -1,0 +1,298 @@
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% PROBLEM SET LATEX TEMPLATE FILE
+% DEFINE DOCUMENT STYLE, LOAD PACKAGES
+\documentclass[11pt,notitlepage]{article}\usepackage[]{graphicx}\usepackage[]{color}
+%% maxwidth is the original width if it is less than linewidth
+%% otherwise use linewidth (to make sure the graphics do not exceed the margin)
+\makeatletter
+\def\maxwidth{ %
+  \ifdim\Gin@nat@width>\linewidth
+    \linewidth
+  \else
+    \Gin@nat@width
+  \fi
+}
+\makeatother
+
+\definecolor{fgcolor}{rgb}{0.345, 0.345, 0.345}
+\newcommand{\hlnum}[1]{\textcolor[rgb]{0.686,0.059,0.569}{#1}}%
+\newcommand{\hlstr}[1]{\textcolor[rgb]{0.192,0.494,0.8}{#1}}%
+\newcommand{\hlcom}[1]{\textcolor[rgb]{0.678,0.584,0.686}{\textit{#1}}}%
+\newcommand{\hlopt}[1]{\textcolor[rgb]{0,0,0}{#1}}%
+\newcommand{\hlstd}[1]{\textcolor[rgb]{0.345,0.345,0.345}{#1}}%
+\newcommand{\hlkwa}[1]{\textcolor[rgb]{0.161,0.373,0.58}{\textbf{#1}}}%
+\newcommand{\hlkwb}[1]{\textcolor[rgb]{0.69,0.353,0.396}{#1}}%
+\newcommand{\hlkwc}[1]{\textcolor[rgb]{0.333,0.667,0.333}{#1}}%
+\newcommand{\hlkwd}[1]{\textcolor[rgb]{0.737,0.353,0.396}{\textbf{#1}}}%
+\let\hlipl\hlkwb
+
+\usepackage{framed}
+\makeatletter
+\newenvironment{kframe}{%
+ \def\at@end@of@kframe{}%
+ \ifinner\ifhmode%
+  \def\at@end@of@kframe{\end{minipage}}%
+  \begin{minipage}{\columnwidth}%
+ \fi\fi%
+ \def\FrameCommand##1{\hskip\@totalleftmargin \hskip-\fboxsep
+ \colorbox{shadecolor}{##1}\hskip-\fboxsep
+     % There is no \\@totalrightmargin, so:
+     \hskip-\linewidth \hskip-\@totalleftmargin \hskip\columnwidth}%
+ \MakeFramed {\advance\hsize-\width
+   \@totalleftmargin\z@ \linewidth\hsize
+   \@setminipage}}%
+ {\par\unskip\endMakeFramed%
+ \at@end@of@kframe}
+\makeatother
+
+\definecolor{shadecolor}{rgb}{.97, .97, .97}
+\definecolor{messagecolor}{rgb}{0, 0, 0}
+\definecolor{warningcolor}{rgb}{1, 0, 1}
+\definecolor{errorcolor}{rgb}{1, 0, 0}
+\newenvironment{knitrout}{}{} % an empty environment to be redefined in TeX
+
+\usepackage{alltt}    % ADD COMMENTS USING A PERCENT SIGN
+\usepackage{amsfonts}
+\usepackage{amsthm}
+\usepackage{amsmath, booktabs}
+\usepackage{mathtools}
+\usepackage{amssymb}
+\usepackage{subfig}
+\usepackage{setspace}
+\usepackage{fullpage}
+\usepackage{verbatim}
+\usepackage{graphicx}
+\usepackage{tabularx}
+\usepackage{longtable}
+\usepackage{multicol}
+\usepackage{multirow}
+\setlength{\parindent}{0in}  	% uncomment to remove indent at start of paragraphs
+\usepackage{pdflscape}
+\usepackage[english]{babel}
+\usepackage[pdftex]{hyperref}
+\usepackage{natbib}
+\usepackage{caption}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{graphics}
+\usepackage{multirow}
+\usepackage{graphics}
+\usepackage{hyperref}
+\usepackage{longtable}
+\usepackage{latexsym}
+\usepackage{rotating}
+\usepackage{setspace}
+\usepackage{layouts} 
+\usepackage[titletoc]{appendix}
+\DeclareGraphicsExtensions{.pdf,.jpg,.png}
+\usepackage[margin=1in]{geometry}
+\usepackage{enumerate}
+\usepackage{float}
+
+\newcolumntype{L}[1]{>{\raggedright\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\usepackage[T1]{fontenc}				
+
+\usepackage{xcolor}
+\usepackage[printwatermark]{xwatermark}
+
+\input{pygments.tex}
+
+
+
+\title{Field Experiments: Design, Analysis and Interpretation \\
+Solutions for Chapter 7 Exercises}
+\author{Alan S. Gerber and Donald P. Green\footnote{Solutions prepared by Peter M. Aronow and revised by Alexander Coppock}}
+\date{\vspace{-5ex}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\begin{document}
+
+\maketitle
+
+\section*{Question 1}
+\begin{enumerate}[a)]
+\item Equation (7.1) describes the relationship between potential missingness and observed
+missingness. Explain the notation used in the expression $r_i = r_i(0)(1 - z_i) + r_i(1)z_i$.\\
+Answer:\\
+The variable $r_i$ represents whether a given observation is actually observed ($r_i=1$) or not ($r_i=0$).  The potential outcomes $r_i(1)$ and $r_i(0)$ refer to whether a given observation would be observed if assigned to the treatment group or the control group, respectively.  When $Z_i=0$, the revealed outcome is $r_i=r_i(0)$, and when $Z_i=1$, the revealed outcome is $r_i=r_i(1)$. The expression above is analogous to the ``switching equation'' that maps potential outcomes to revealed outcomes via the realized treatment assignment -- depending on the treatment assignment, subjects reveal their $r_i(1)$ or $r_i(0)$.
+
+\item Explain why the assumption that $Y_i(z) = Y_i(z, r(z) = 1) = Y_i(z, r(z) = 0)$ amounts to an ``exclusion restriction.'' \\
+Answer:\\
+An exclusion restriction is an assumption that says that a given input variable has no effect on a potential outcome.  In this example, the input variable $r_i(Z_i)$, which indicates whether outcomes will be observed given a treatment assignment, has no effect on the potential outcomes of $Y_i(Z_i ).$
+\item What is an ``If-Treated-Reporter''?\\
+Answer:\\
+An If-Treated-Reporter is a subject that whose outcomes are observed if and only if they are assigned to the treatment group. For this type of subject $r_i(1)=1$ and $r_i(0)=0$. 
+\item What are extreme value bounds? \\
+Answer:\\
+Extreme value bounds indicate the largest and smallest estimates one would obtain if one were to substitute the largest or smallest possible outcomes in place of missing data.
+\end{enumerate}
+
+\section*{Question 2}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{verbatim}
+
+
+
+
+
+
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+
+
+\section*{Question 3}
+Construct a hypothetical schedule of potential outcomes to illustrate each of these cases:
+\begin{enumerate}[a)]
+\item The proportion of missing outcomes is expected to be different for the treatment and control groups, yet the difference-in-means estimator is unbiased when applied to observed outcomes in the treatment and control groups.
+
+% Table generated by Excel2LaTeX from sheet 'Sheet1'
+\begin{table}[htbp]
+  \centering
+    \begin{tabular}{rrrr}
+    \toprule
+    $Y_i(0)$ & $Y_i(1)$ & $r_i(0)$ & $r_i(1)$ \\
+    \midrule
+    4     & 0     & 1     & 0 \\
+    5     & 5     & 1     & 1 \\
+    6     & 4     & 1     & 1 \\
+    2     & 5     & 0     & 1 \\
+    3     & 6     & 0     & 1 \\
+    \bottomrule
+    \end{tabular}%
+  \label{tab:addlabel}%
+\end{table}%
+
+Using the general formula for the ATE,
+\begin{align*}
+& E[r_i(1)] * E[Y_i(1)|r_i(1)=1] + (1-E[r_i(1)])*E[Y_i(1)|r_i(1)=0] - \\
+& E[r_i(1)] * E[Y_i(0)|r_i(1)=1]-(1-E[r_i(1)])*E[Y_i(0)|r_i(1)=0] =\\
+& 0.8 * 5 + 0.2 * 0 - 0.6*5 + 0.4*2.5 = 0
+\end{align*}
+
+In this special case, calculating the ATE among the non-missing did not lead to biased estimates of the ATE among the entire subject pool.
+
+\item The proportion of missing outcomes is expected to be the same for the treatment and control groups, yet the difference-in-means estimator is biased when applied to observed outcomes in the treatment and control groups.
+
+% Table generated by Excel2LaTeX from sheet 'Sheet1'
+\begin{table}[H]
+  \centering
+    \begin{tabular}{rrrr}
+    \toprule
+    $Y_i(0)$ & $Y_i(1)$ & $r_i(0)$ & $r_i(1)$ \\
+    \midrule
+    4     & 0     & 1     & 0 \\
+    5     & 5     & 1     & 1 \\
+    6     & 4     & 1     & 1 \\
+    2     & 5     & 1     & 1 \\
+    3     & 6     & 0     & 1 \\
+    \bottomrule
+    \end{tabular}%
+  \label{tab:addlabel}%
+\end{table}%
+\end{enumerate}
+Using the general formula for the ATE,
+\begin{align*}
+& E[r_i(1)] * E[Y_i(1)|r_i(1)=1] + (1-E[r_i(1)])*E[Y_i(1)|r_i(1)=0] - \\
+& E[r_i(1)] * E[Y_i(0)|r_i(1)=1]-(1-E[r_i(1)])*E[Y_i(0)|r_i(1)=0] =\\
+& 0.8 * 5 + 0.2 * 0 - 0.8*4.25 + 0.2*3 = 0
+\end{align*}
+
+Focusing solely on the non-missing values gives us $E[Y_i(1)|r_i(1)=1)-Y_i(0)|(r_i (0)=1)]$ or $5 - 4.25 = 0.75$, which is biased.
+
+\section*{Question 4}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{verbatim}
+
+
+
+
+
+
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+
+
+
+\section*{Question 5}
+Suppose you were to encounter missingness in the course of conducting an experiment. You look for clues about the causes and consequences of missingness by conducting three lines of investigation: (1) assessing whether rates of missingness differ between treatment and control groups, (2) assessing whether covariates predict which subjects have missing outcomes, and (3) assessing whether the predictive relationship between missingness and covariates differs between treatment and control groups. In what ways would these three lines of investigation inform the analysis and interpretation of your experiment?\\
+Answer:\\
+The value of each analysis depends in part on the researcher's interpretation of why attrition occurs. If, for example, the researcher's hypothesis is that attrition occurs for reasons that are effectively random (e.g., administrative oversights), the three analyses might be informative.  If rates of missingness are similar across experimental groups and covariates that predict the (observed) outcome are weakly related to missingness, the researcher's MIPO interpretation gains credence.(The limitations of these tests should also be kept in mind: the covariates cannot speak definitively to the question of how unobserved potential outcomes are related to missingness.)  Alternatively, a researcher might posit that missingness is systematic (and therefore likely to be related to covariates) yet posit that missingness is symmetric across experimental groups in the sense that the sample contains Always-Reporters and Never-Reporters. The researcher aspires to estimate the ATE among Always-Reporters and looks for signs of asymmetry in rates of attrition (test 1) and predictors of attrition (test 3). Although these tests cannot establish that the hyopthesis is true, our degree of belief in the hypothesis grows if neither test shows signs of asymmetry.
+\section*{Question 6}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{verbatim}
+
+
+
+
+
+
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+
+\section*{Question 7}
+Sometimes experimental researchers exclude subjects from their analysis because the subjects (1) appear to understand what hypothesis the experiment is testing, (2) seem not to be taking the experiment seriously, or (3) fail to follow directions. Discuss whether each of these three practices is likely to introduce bias when the researcher compares average outcomes among non-excluded subjects.\\
+Answer:\\
+Each of these practices may produce biased estimates. Subjects who ``understand what hypothesis the experiment is testing'' may have distinctive potential outcomes; discarding these observation may lead to bias, especially if they are more likely to suspect the hypothesis when assigned to the treatment group. Subjects who seem to not be taking the experiment seriously or fail to follow directions may also have distinctive potential outcomes, and behavior that might cause them to be expelled may differ depending on experimental assignment.
+
+
+\section*{Question 8}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{verbatim}
+
+
+
+
+
+
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+\section*{Question 9}
+Suppose a researcher studying a developing country plans to conduct an experiment to assess the effects of providing low-income households with cash grants if they agree to keep their children in school and take them for regular visits to health clinics. The primary outcome of interest is whether children in the treatment group are more likely to complete high school. A random sample of 1,000 households throughout the country is allocated to the treatment group (cash grants), and another sample of 1,000 households is allocated to the control group.
+
+\begin{enumerate}[a)]
+\item Suppose that halfway through the project, a civil war breaks out in half of the country. Researchers are prevented from gathering outcomes for 500 treatment and 500 control subjects living in the war zone. What are the implications of this type of attrition for the analysis and interpretation of the experiment?\\
+Answer:\\
+In this case, one might suppose that the source of missingness operates the same on the treatment and control subjects, so that the only two latent types in the subject pool are Always-Reporters and Never-Reporters. One may not be able to estimate the ATE for the entire country without assuming $MIPO|X$ and re-weighting the outcomes in the observed section of the country to reflect the covariate profile in the wartorn region. However, if one is content to estimate the ATE for the observed section of the country, this type of attrition does not cause bias.
+
+\item Another identical experiment is performed in a different developing country. This time the attrition problem is as follows: households that were offered cash grants are more likely to live at the same address years later, when researchers return in order to measure outcomes. Of the 1,000 households assigned to the treatment group, 900 are found when researchers return to measure outcomes, as opposed to just 700 of the 1,000 households in the control group. What are the implications of this type of attrition for the analysis and interpretation of the experiment?\\
+Answer:\\
+This type of attrition may be a source of bias. Migration (missingness) may be related to potential education outcomes, and the treatment (or lack thereof) may cause some households to relocate. For example, if students with lower potential education outcomes tend to migrate when their incomes are low, the treatment has the effect of causing some lower-performing students to remain in the non-missing sample, thereby reducing the estimated effect of the treatment based on a comparison of non-missing subjects in treatment and control. In this case, a researcher might turn to trimming bounds on the assumption that those who would have been available for an interview if assigned to the control group would also have been available for an interview if assigned to the treatment group.
+\end{enumerate}
+
+\section*{Question 10}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{verbatim}
+
+
+
+
+
+
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+
+
+
+
+
+\end{document}
+
