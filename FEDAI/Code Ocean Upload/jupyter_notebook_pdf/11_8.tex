@@ -1,0 +1,488 @@
+
+% Default to the notebook output style
+
+    
+
+
+% Inherit from the specified cell style.
+
+
+
+
+    
+\documentclass[11pt]{article}
+
+    
+    
+    \usepackage[T1]{fontenc}
+    % Nicer default font (+ math font) than Computer Modern for most use cases
+    \usepackage{mathpazo}
+
+    % Basic figure setup, for now with no caption control since it's done
+    % automatically by Pandoc (which extracts ![](path) syntax from Markdown).
+    \usepackage{graphicx}
+    % We will generate all images so they have a width \maxwidth. This means
+    % that they will get their normal width if they fit onto the page, but
+    % are scaled down if they would overflow the margins.
+    \makeatletter
+    \def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth
+    \else\Gin@nat@width\fi}
+    \makeatother
+    \let\Oldincludegraphics\includegraphics
+    % Set max figure width to be 80% of text width, for now hardcoded.
+    \renewcommand{\includegraphics}[1]{\Oldincludegraphics[width=.8\maxwidth]{#1}}
+    % Ensure that by default, figures have no caption (until we provide a
+    % proper Figure object with a Caption API and a way to capture that
+    % in the conversion process - todo).
+    \usepackage{caption}
+    \DeclareCaptionLabelFormat{nolabel}{}
+    \captionsetup{labelformat=nolabel}
+
+    \usepackage{adjustbox} % Used to constrain images to a maximum size 
+    \usepackage{xcolor} % Allow colors to be defined
+    \usepackage{enumerate} % Needed for markdown enumerations to work
+    \usepackage{geometry} % Used to adjust the document margins
+    \usepackage{amsmath} % Equations
+    \usepackage{amssymb} % Equations
+    \usepackage{textcomp} % defines textquotesingle
+    % Hack from http://tex.stackexchange.com/a/47451/13684:
+    \AtBeginDocument{%
+        \def\PYZsq{\textquotesingle}% Upright quotes in Pygmentized code
+    }
+    \usepackage{upquote} % Upright quotes for verbatim code
+    \usepackage{eurosym} % defines \euro
+    \usepackage[mathletters]{ucs} % Extended unicode (utf-8) support
+    \usepackage[utf8x]{inputenc} % Allow utf-8 characters in the tex document
+    \usepackage{fancyvrb} % verbatim replacement that allows latex
+    \usepackage{grffile} % extends the file name processing of package graphics 
+                         % to support a larger range 
+    % The hyperref package gives us a pdf with properly built
+    % internal navigation ('pdf bookmarks' for the table of contents,
+    % internal cross-reference links, web links for URLs, etc.)
+    \usepackage{hyperref}
+    \usepackage{longtable} % longtable support required by pandoc >1.10
+    \usepackage{booktabs}  % table support for pandoc > 1.12.2
+    \usepackage[inline]{enumitem} % IRkernel/repr support (it uses the enumerate* environment)
+    \usepackage[normalem]{ulem} % ulem is needed to support strikethroughs (\sout)
+                                % normalem makes italics be italics, not underlines
+    \usepackage{mathrsfs}
+    
+
+    
+    
+    % Colors for the hyperref package
+    \definecolor{urlcolor}{rgb}{0,.145,.698}
+    \definecolor{linkcolor}{rgb}{.71,0.21,0.01}
+    \definecolor{citecolor}{rgb}{.12,.54,.11}
+
+    % ANSI colors
+    \definecolor{ansi-black}{HTML}{3E424D}
+    \definecolor{ansi-black-intense}{HTML}{282C36}
+    \definecolor{ansi-red}{HTML}{E75C58}
+    \definecolor{ansi-red-intense}{HTML}{B22B31}
+    \definecolor{ansi-green}{HTML}{00A250}
+    \definecolor{ansi-green-intense}{HTML}{007427}
+    \definecolor{ansi-yellow}{HTML}{DDB62B}
+    \definecolor{ansi-yellow-intense}{HTML}{B27D12}
+    \definecolor{ansi-blue}{HTML}{208FFB}
+    \definecolor{ansi-blue-intense}{HTML}{0065CA}
+    \definecolor{ansi-magenta}{HTML}{D160C4}
+    \definecolor{ansi-magenta-intense}{HTML}{A03196}
+    \definecolor{ansi-cyan}{HTML}{60C6C8}
+    \definecolor{ansi-cyan-intense}{HTML}{258F8F}
+    \definecolor{ansi-white}{HTML}{C5C1B4}
+    \definecolor{ansi-white-intense}{HTML}{A1A6B2}
+    \definecolor{ansi-default-inverse-fg}{HTML}{FFFFFF}
+    \definecolor{ansi-default-inverse-bg}{HTML}{000000}
+
+    % commands and environments needed by pandoc snippets
+    % extracted from the output of `pandoc -s`
+    \providecommand{\tightlist}{%
+      \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+    \DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+    % Add ',fontsize=\small' for more characters per line
+    \newenvironment{Shaded}{}{}
+    \newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.56,0.13,0.00}{{#1}}}
+    \newcommand{\DecValTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\FloatTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\CharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\StringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\CommentTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textit{{#1}}}}
+    \newcommand{\OtherTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{{#1}}}
+    \newcommand{\AlertTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.02,0.16,0.49}{{#1}}}
+    \newcommand{\RegionMarkerTok}[1]{{#1}}
+    \newcommand{\ErrorTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\NormalTok}[1]{{#1}}
+    
+    % Additional commands for more recent versions of Pandoc
+    \newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.53,0.00,0.00}{{#1}}}
+    \newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.73,0.40,0.53}{{#1}}}
+    \newcommand{\ImportTok}[1]{{#1}}
+    \newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.73,0.13,0.13}{\textit{{#1}}}}
+    \newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\VariableTok}[1]{\textcolor[rgb]{0.10,0.09,0.49}{{#1}}}
+    \newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.40,0.40,0.40}{{#1}}}
+    \newcommand{\BuiltInTok}[1]{{#1}}
+    \newcommand{\ExtensionTok}[1]{{#1}}
+    \newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.74,0.48,0.00}{{#1}}}
+    \newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.49,0.56,0.16}{{#1}}}
+    \newcommand{\InformationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\WarningTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    
+    
+    % Define a nice break command that doesn't care if a line doesn't already
+    % exist.
+    \def\br{\hspace*{\fill} \\* }
+    % Math Jax compatibility definitions
+    \def\gt{>}
+    \def\lt{<}
+    \let\Oldtex\TeX
+    \let\Oldlatex\LaTeX
+    \renewcommand{\TeX}{\textrm{\Oldtex}}
+    \renewcommand{\LaTeX}{\textrm{\Oldlatex}}
+    % Document parameters
+    % Document title
+    \title{11\_8}
+    
+    
+    
+    
+    
+
+    % Pygments definitions
+    
+\makeatletter
+\def\PY@reset{\let\PY@it=\relax \let\PY@bf=\relax%
+    \let\PY@ul=\relax \let\PY@tc=\relax%
+    \let\PY@bc=\relax \let\PY@ff=\relax}
+\def\PY@tok#1{\csname PY@tok@#1\endcsname}
+\def\PY@toks#1+{\ifx\relax#1\empty\else%
+    \PY@tok{#1}\expandafter\PY@toks\fi}
+\def\PY@do#1{\PY@bc{\PY@tc{\PY@ul{%
+    \PY@it{\PY@bf{\PY@ff{#1}}}}}}}
+\def\PY#1#2{\PY@reset\PY@toks#1+\relax+\PY@do{#2}}
+
+\expandafter\def\csname PY@tok@w\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.73,0.73}{##1}}}
+\expandafter\def\csname PY@tok@c\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.74,0.48,0.00}{##1}}}
+\expandafter\def\csname PY@tok@k\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.69,0.00,0.25}{##1}}}
+\expandafter\def\csname PY@tok@o\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ow\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@ne\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.82,0.25,0.23}{##1}}}
+\expandafter\def\csname PY@tok@nv\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@no\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ni\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.60,0.60,0.60}{##1}}}
+\expandafter\def\csname PY@tok@na\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.49,0.56,0.16}{##1}}}
+\expandafter\def\csname PY@tok@nt\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@s\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sd\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@si\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@se\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sr\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@ss\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sx\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@m\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@gh\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gu\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.50,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gr\endcsname{\def\PY@tc##1{\textcolor[rgb]{1.00,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ge\endcsname{\let\PY@it=\textit}
+\expandafter\def\csname PY@tok@gs\endcsname{\let\PY@bf=\textbf}
+\expandafter\def\csname PY@tok@gp\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@go\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.53,0.53}{##1}}}
+\expandafter\def\csname PY@tok@gt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.27,0.87}{##1}}}
+\expandafter\def\csname PY@tok@err\endcsname{\def\PY@bc##1{\setlength{\fboxsep}{0pt}\fcolorbox[rgb]{1.00,0.00,0.00}{1,1,1}{\strut ##1}}}
+\expandafter\def\csname PY@tok@kc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kd\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kr\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@bp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@fm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@vc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vg\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sa\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@dl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s2\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s1\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@mb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@il\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mo\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ch\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cm\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cpf\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@c1\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cs\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+
+\def\PYZbs{\char`\\}
+\def\PYZus{\char`\_}
+\def\PYZob{\char`\{}
+\def\PYZcb{\char`\}}
+\def\PYZca{\char`\^}
+\def\PYZam{\char`\&}
+\def\PYZlt{\char`\<}
+\def\PYZgt{\char`\>}
+\def\PYZsh{\char`\#}
+\def\PYZpc{\char`\%}
+\def\PYZdl{\char`\$}
+\def\PYZhy{\char`\-}
+\def\PYZsq{\char`\'}
+\def\PYZdq{\char`\"}
+\def\PYZti{\char`\~}
+% for compatibility with earlier versions
+\def\PYZat{@}
+\def\PYZlb{[}
+\def\PYZrb{]}
+\makeatother
+
+
+    % Exact colors from NB
+    \definecolor{incolor}{rgb}{0.0, 0.0, 0.5}
+    \definecolor{outcolor}{rgb}{0.545, 0.0, 0.0}
+
+
+
+    
+    % Prevent overflowing lines due to hard-to-break entities
+    \sloppy 
+    % Setup hyperref package
+    \hypersetup{
+      breaklinks=true,  % so long urls are correctly broken across lines
+      colorlinks=true,
+      urlcolor=urlcolor,
+      linkcolor=linkcolor,
+      citecolor=citecolor,
+      }
+    % Slightly bigger margins than the latex defaults
+    
+    \geometry{verbose,tmargin=1in,bmargin=1in,lmargin=1in,rmargin=1in}
+    
+    
+
+    \begin{document}
+    
+    
+    \maketitle
+    
+    
+
+    
+    \hypertarget{problem-11.8}{%
+\section{Problem 11.8}\label{problem-11.8}}
+
+    \hypertarget{part-a}{%
+\subsection{Part a}\label{part-a}}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}1}]:} import delimited .\PY{o}{/}data\PY{o}{/}chapter11\PY{o}{/}GerberGreenBook\PYZus{}Chapter11\PYZus{}Table\PYZus{}11\PYZus{}3,\PY{k}{ clear}
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}2}]:} \PY{k}{tabstat} m1\PYZus{}x2 m2\PYZus{}x2, statistics(sum)\PY{k}{ by}(region)
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+
+Summary statistics: sum
+  by categories of: region (Region)
+
+  region |     m1\_x2     m2\_x2
+---------+--------------------
+       1 |       .67      1.14
+       2 |      2.17      2.53
+       3 |       .45        .5
+       4 |       7.1     13.36
+       5 |      2.14      2.53
+       6 |      1.91      2.05
+---------+--------------------
+   Total |     14.44     22.11
+------------------------------
+
+    \end{Verbatim}
+
+    \hypertarget{part-b}{%
+\subsection{Part b}\label{part-b}}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}3}]:} \PY{k}{clear} 
+        
+        import delim .\PY{o}{/}data\PY{o}{/}chapter11\PY{o}{/}Chapter\PYZus{}11\PYZus{}Dupas\PYZus{}2010\PYZus{}Dataset,\PY{k}{ clear}
+        \PY{c+c1}{//}\PY{c+c1}{i}\PY{c+c1}{m}\PY{c+c1}{p}\PY{c+c1}{o}\PY{c+c1}{r}\PY{c+c1}{t}\PY{c+c1}{ }\PY{c+c1}{d}\PY{c+c1}{e}\PY{c+c1}{l}\PY{c+c1}{i}\PY{c+c1}{m}\PY{c+c1}{ }\PY{c+c1}{D}\PY{c+c1}{u}\PY{c+c1}{p}\PY{c+c1}{a}\PY{c+c1}{s}\PY{c+c1}{\PYZus{}}\PY{c+c1}{Q}\PY{c+c1}{J}\PY{c+c1}{E}\PY{c+c1}{\PYZus{}}\PY{c+c1}{2}\PY{c+c1}{0}\PY{c+c1}{1}\PY{c+c1}{0}\PY{c+c1}{,}\PY{c+c1}{ }\PY{c+c1}{c}\PY{c+c1}{l}\PY{c+c1}{e}\PY{c+c1}{a}\PY{c+c1}{r}
+        
+        
+        \PY{k}{gen} log\PYZus{}price =\PY{k}{ log}(price)
+        
+        \PY{k}{gen} purchased =.
+        \PY{k}{replace} purchased = \PY{l+m}{1}\PY{k}{ if} purchasednet\PY{o}{==}\PY{l+s}{\PYZdq{}}\PY{l+s}{y}\PY{l+s}{e}\PY{l+s}{s}\PY{l+s}{\PYZdq{}}
+        \PY{k}{replace} purchased = \PY{l+m}{0}\PY{k}{ if} purchasednet\PY{o}{==}\PY{l+s}{\PYZdq{}}\PY{l+s}{n}\PY{l+s}{o}\PY{l+s}{\PYZdq{}}
+        
+        \PY{k}{rename} cfw\PYZus{}id region	
+        \PY{k}{	}
+        \PY{k}{drop}\PY{k}{ if} (price \PY{o}{==}\PY{l+m}{0} | region\PY{o}{==}\PY{l+m}{4})
+        
+        
+        \PY{k}{qui}\PY{k}{ glm} purchased log\PYZus{}price i\PY{l+m}{.}region c\PY{l+m}{.}log\PYZus{}price\PYZsh{}i\PY{l+m}{.}region, family(binomial) link(logit)
+        \PY{k}{predict} double preds\PYZus{}1
+        
+        \PY{k}{qui}\PY{k}{ glm} purchased log\PYZus{}price i\PY{l+m}{.}region, family(binomial) link(logit)
+        \PY{k}{predict} double preds\PYZus{}2
+        
+        
+        
+        \PY{k}{generate} non\PYZus{}p =.
+        \PY{k}{replace} non\PYZus{}p=\PY{l+m}{1}\PY{k}{ if} purchased\PY{o}{==}\PY{l+m}{0}
+        \PY{k}{replace} non\PYZus{}p=\PY{l+m}{0}\PY{k}{ if} purchased\PY{o}{!=}\PY{l+m}{0}
+        
+        \PY{k}{generate} pred\PYZus{}nonp\PYZus{}1 = \PY{l+m}{1}\PY{o}{\PYZhy{}}preds\PYZus{}1
+        \PY{k}{generate} pred\PYZus{}nonp\PYZus{}2 = \PY{l+m}{1}\PY{o}{\PYZhy{}}preds\PYZus{}2
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}4}]:} \PY{k}{collapse} (sum) purchases=purchased \PY{c+cs}{///}
+           non\PYZus{}purchases=non\PYZus{}p \PY{c+cs}{///}
+           pred\PYZus{}purchases\PYZus{}1=preds\PYZus{}1 \PY{c+cs}{///}
+           pred\PYZus{}nonpurchases\PYZus{}1=pred\PYZus{}nonp\PYZus{}1 \PY{c+cs}{///}
+           pred\PYZus{}purchases\PYZus{}2=preds\PYZus{}2 \PY{c+cs}{///}
+           pred\PYZus{}nonpurchases\PYZus{}2=pred\PYZus{}nonp\PYZus{}2,\PY{k}{ by}(region price)
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}5}]:} \PY{k}{gen} chi\PYZus{}square\PYZus{}1 = (purchases\PY{o}{\PYZhy{}} pred\PYZus{}purchases\PYZus{}1)\PY{o}{\PYZca{}}\PY{l+m}{2}\PY{o}{/} pred\PYZus{}purchases\PYZus{}1 \PY{o}{+} \PY{c+cs}{///}
+        (non\PYZus{}purchases\PY{o}{\PYZhy{}} pred\PYZus{}nonpurchases\PYZus{}1)\PY{o}{\PYZca{}}\PY{l+m}{2}\PY{o}{/} pred\PYZus{}nonpurchases\PYZus{}1
+        
+        \PY{k}{gen} chi\PYZus{}square\PYZus{}2 = (purchases\PY{o}{\PYZhy{}} pred\PYZus{}purchases\PYZus{}2)\PY{o}{\PYZca{}}\PY{l+m}{2}\PY{o}{/} pred\PYZus{}purchases\PYZus{}2 \PY{o}{+} \PY{c+cs}{///}
+        ( non\PYZus{}purchases\PY{o}{\PYZhy{}} pred\PYZus{}nonpurchases\PYZus{}2)\PY{o}{\PYZca{}}\PY{l+m}{2}\PY{o}{/} pred\PYZus{}nonpurchases\PYZus{}2
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}6}]:} \PY{c+c1}{//}\PY{c+c1}{ }\PY{c+c1}{p}\PY{c+c1}{r}\PY{c+c1}{i}\PY{c+c1}{n}\PY{c+c1}{t}\PY{c+c1}{ }\PY{c+c1}{t}\PY{c+c1}{a}\PY{c+c1}{b}\PY{c+c1}{l}\PY{c+c1}{e}
+        \PY{k}{list} region price purchases non\PYZus{}purchases pred\PYZus{}purchases\PYZus{}1 \PY{c+cs}{///}
+        pred\PYZus{}nonpurchases\PYZus{}1 chi\PYZus{}square\PYZus{}1
+        \PY{k}{list} region price purchases non\PYZus{}purchases pred\PYZus{}purchases\PYZus{}2 \PY{c+cs}{///}
+        pred\PYZus{}nonpurchases\PYZus{}2 chi\PYZus{}square\PYZus{}2
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+
+
+     +------------------------------------------------------------------------+
+     | region   price   purcha\textasciitilde{}s   non\_pu\textasciitilde{}s   pred\_pu\textasciitilde{}1   pred\_n\textasciitilde{}1   chi\_sq\textasciitilde{}1 |
+     |------------------------------------------------------------------------|
+  1. |      1      70         16         13   15.441598    13.5584   .0431908 |
+  2. |      1     100         16         31   16.920757   30.07924    .078289 |
+  3. |      1     130         12         37   12.291133   36.70887   .0092048 |
+  4. |      1     190          5         23   3.8221953    24.1778    .420315 |
+  5. |      1     250          2         28   2.5243177   27.47568   .1189098 |
+     |------------------------------------------------------------------------|
+  6. |      2      40         46         15   47.582604    13.4174   .2393082 |
+  7. |      2      80         40         30   35.429156   34.57085   1.194044 |
+  8. |      2     120         18         46   21.212681   42.78732   .7277873 |
+  9. |      2     200         10         49   9.7755597   49.22444   .0061763 |
+ 10. |      3      50         42         16   43.139894   14.86011   .1175591 |
+     |------------------------------------------------------------------------|
+ 11. |      3      90         33         27   31.052283   28.94772   .2532181 |
+ 12. |      3     150         18         40   18.042949   39.95705   .0001484 |
+ 13. |      3     210          9         39   9.7648732   38.23513   .0752127 |
+ 14. |      5      60         27         10   26.083854   10.91615   .1090662 |
+ 15. |      5     110         12         25   15.218787   21.78121   1.156442 |
+     |------------------------------------------------------------------------|
+ 16. |      5     140         11         18   8.6973594   20.30264   .8707839 |
+ 17. |      6      50         14          5   14.837853   4.162147   .2159737 |
+ 18. |      6     100         11          7   8.7298279   9.270172   1.146296 |
+ 19. |      6     150          4         14   5.4323191   12.56768   .5408933 |
+     +------------------------------------------------------------------------+
+
+
+     +------------------------------------------------------------------------+
+     | region   price   purcha\textasciitilde{}s   non\_pu\textasciitilde{}s   pred\_pu\textasciitilde{}2   pred\_n\textasciitilde{}2   chi\_sq\textasciitilde{}2 |
+     |------------------------------------------------------------------------|
+  1. |      1      70         16         13    14.85299   14.14701    .181574 |
+  2. |      1     100         16         31   16.687555   30.31244   .0439238 |
+  3. |      1     130         12         37   12.498146   36.50185   .0266531 |
+  4. |      1     190          5         23   4.1147946   23.88521   .2232385 |
+  5. |      1     250          2         28   2.8465156   27.15348   .2781327 |
+     |------------------------------------------------------------------------|
+  6. |      2      40         46         15   47.744037   13.25596    .293164 |
+  7. |      2      80         40         30   35.468777   34.53122   1.173467 |
+  8. |      2     120         18         46   21.135136   42.86486   .6943625 |
+  9. |      2     200         10         49    9.652051   49.34795   .0149967 |
+ 10. |      3      50         42         16   44.054578   13.94542   .3985204 |
+     |------------------------------------------------------------------------|
+ 11. |      3      90         33         27   31.294685   28.70532   .1942352 |
+ 12. |      3     150         18         40   17.510472   40.48953   .0196039 |
+ 13. |      3     210          9         39   9.1402666   38.85973   .0026588 |
+ 14. |      5      60         27         10   25.287202    11.7128    .366482 |
+ 15. |      5     110         12         25    15.49734   21.50266   1.358088 |
+     |------------------------------------------------------------------------|
+ 16. |      5     140         11         18    9.215458   19.78454    .506534 |
+ 17. |      6      50         14          5   14.607437   4.392563   .1092606 |
+ 18. |      6     100         11          7   8.7615558   9.238444   1.114256 |
+ 19. |      6     150          4         14   5.6310073   12.36899    .687486 |
+     +------------------------------------------------------------------------+
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}7}]:} \PY{k}{qui}\PY{k}{ tabstat} chi\PYZus{}square\PYZus{}1, statistics(sum)\PY{k}{ save}
+        \PY{k}{scalar}  model\PYZus{}1\PYZus{}chi\PYZus{}sq=\PY{n+nf}{el}(\PY{n+nf}{r}(StatTotal),\PY{l+m}{1},\PY{l+m}{1})
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}8}]:} \PY{k}{scalar} pvalue\PYZus{}1=chiprob(\PY{l+m}{9}, model\PYZus{}1\PYZus{}chi\PYZus{}sq)
+        \PY{k}{disp} \PY{n+nFormat}{\PYZpc{}8.5f} model\PYZus{}1\PYZus{}chi\PYZus{}sq
+        \PY{k}{disp} \PY{n+nFormat}{\PYZpc{}8.6f} pvalue\PYZus{}1
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+
+ 7.32282
+
+0.603548
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}9}]:} \PY{k}{qui}\PY{k}{ tabstat} chi\PYZus{}square\PYZus{}2, statistics(sum)\PY{k}{ save}
+        \PY{k}{scalar}  model\PYZus{}2\PYZus{}chi\PYZus{}sq=\PY{n+nf}{el}(\PY{n+nf}{r}(StatTotal),\PY{l+m}{1},\PY{l+m}{1})
+        \PY{k}{scalar} pvalue\PYZus{}2=chiprob(\PY{l+m}{13}, model\PYZus{}2\PYZus{}chi\PYZus{}sq)
+        \PY{k}{disp} \PY{n+nFormat}{\PYZpc{}8.5f} model\PYZus{}2\PYZus{}chi\PYZus{}sq
+        \PY{k}{disp} \PY{n+nFormat}{\PYZpc{}8.6f} pvalue\PYZus{}2
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+
+ 7.68664
+
+0.863399
+
+    \end{Verbatim}
+
+
+    % Add a bibliography block to the postdoc
+    
+    
+    
+    \end{document}

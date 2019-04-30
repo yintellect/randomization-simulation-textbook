@@ -1,0 +1,662 @@
+---
+title: "Thesis Analysis"
+author: "Nicole Smith"
+date: "4/19/2018"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(fig.path="/Users/Nicole/Desktop/Masters Thesis/Data/figs/",
+               cache.path="cache/",
+               cache=TRUE)
+
+library(bartMachine)
+library(foreign)
+library(haven)
+library(tidyverse)
+
+setwd("/Users/Nicole/Desktop/Masters Thesis/Data/")
+set.seed(2184)
+```
+
+
+#### Baird, McIntosh, Ozler (2011), "Cash or Condition? Evidence from a cash transfer experiment", Quarterly Journal of Economics, 126(4), pp. 1709-1753
+```{r Baird (2011) Housekeeping}
+baird <- read_dta("./Baird Data/CorC_Public_Data_FINAL_DEIDENTIFIED.dta")
+
+baird <- plyr::rename(baird, c("_Iage_R1_14" = "Iage_R1_14", "_Iage_R1_15" = "Iage_R1_15", "_Iage_R1_16" = "Iage_R1_16", "_Iage_R1_17" = "Iage_R1_17", "_Iage_R1_18" = "Iage_R1_18", "_Iage_R1_19" = "Iage_R1_19", "_Iage_R1_20" = "Iage_R1_20"))
+
+baird$ever_married <- as.numeric(haven::as_factor(baird$ever_married))
+```
+
+```{r}
+baird$Z <- ifelse(baird$C2 == 1, 0, ifelse(baird$T2a == 1, 1, ifelse(baird$T2b == 1, 2, NA)))
+
+var(baird$frac_attend_term1_2009[baird$Z == 2], na.rm = T)
+var(baird$frac_attend_term1_2009[baird$Z == 1], na.rm = T)
+var(baird$frac_attend_term1_2009[baird$Z == 0], na.rm = T)
+```
+
+
+```{r Baird (2011) Term 1 2009, options(java.parameters = "-Xmx5g")}
+baird_term1_2009 <- baird[!is.na(baird$frac_attend_term1_2009), ]
+
+# Removing other outcome variables
+baird_term1_2009 <- baird_term1_2009 %>% 
+  select(c(round, education_score_exists, eng_pilot, math_pilot, father_alive, mother_alive, ever_preg_r1, never_had_sex, mobile, asset_index, hhsize, female_headed, hh_amount, individual_amount, ea_status, eaid, age_R1, Iage_R1_14, Iage_R1_15, Iage_R1_16, Iage_R1_17, Iage_R1_17, Iage_R1_18, Iage_R1_19, Iage_R1_20, stratum1, stratum2, highest_grade_baseline, asset_index_baseline, never_had_sex_baseline, wgt, wgt_SSR3, total_amount, Z, frac_attend_term1_2009))
+baird_term1_2009 <- plyr::rename(baird_term1_2009, c("never_had_sex" = "Never had Sex", "age_R1" = "Age", "individual_amount" = "Amount Girl Received", "hh_amount" = "Amount Household Received"))
+
+# Training and testing data
+n_term1_2009 = nrow(baird_term1_2009)
+trainIndex_term1_2009 = sample(1:n_term1_2009, size = (0.75*n_term1_2009), replace = FALSE)
+baird_term1_2009_train = baird_term1_2009[trainIndex_term1_2009, ]
+baird_term1_2009_test = baird_term1_2009[-trainIndex_term1_2009, ]
+
+baird_term1_2009_train <- as.data.frame(baird_term1_2009_train)
+baird_term1_2009_test <- as.data.frame(baird_term1_2009_test)
+
+# bartMachine
+suppressMessages(stopifnot(require(bartMachine))) 
+set_bart_machine_num_cores(4)
+
+frac_term1_2009 <- bartMachine(baird_term1_2009_train[, names(baird_term1_2009_train) != "frac_attend_term1_2009"], baird_term1_2009_train$frac_attend_term1_2009,
+                             use_missing_data = TRUE,
+                             use_missing_data_dummies_as_covars = TRUE, 
+                             mem_cache_for_speed = FALSE, 
+                             serialize = TRUE)
+
+frac_term1_2009_predict <- bart_predict_for_test_data(frac_term1_2009, baird_term1_2009_test[, names(baird_term1_2009_test) != "frac_attend_term1_2009"], baird_term1_2009_test$frac_attend_term1_2009)
+```
+
+```{r}
+# K-Fold cross-validation 
+frac_term1_2009_cv <- k_fold_cv(baird_term1_2009_train[,  names(baird_term1_2009_train) != "frac_attend_term1_2009"], 
+          baird_term1_2009_train$frac_attend_term1_2009, 
+          use_missing_data = TRUE,
+          use_missing_data_dummies_as_covars = TRUE, 
+          k_folds = 10, 
+          serialize = TRUE)
+```
+
+highest_grade_baseline asset_index_baseline never_had_sex_baseline _Iage_R1_14- _Iage_R1_20
+	    stratum1 stratum2
+```{r}
+png("./figs/term1_2009_sex.png")
+pd_plot(frac_term1_2009, "Never had Sex")
+dev.off()
+png("./figs/term1_2009_age.png")
+pd_plot(frac_term1_2009, "Age")
+dev.off()
+png("./figs/term1_2009_individual.png")
+pd_plot(frac_term1_2009, "Amount Girl Received")
+dev.off()
+png("./figs/term1_2009_hh.png")
+pd_plot(frac_term1_2009, "Amount Household Received")
+dev.off()
+```
+
+
+```{r, eval = FALSE}
+par(mar = c(0, 0, 0, 0))
+vs <- var_selection_by_permute(frac_term1_2009,
+                               num_permute_samples = 10)
+vs$important_vars_local_names
+vs$important_vars_global_max_names
+vs$important_vars_global_se_names
+# plot according to page 23
+
+var_selection_by_permute_response_cv(frac_term1_2009)$best_method
+
+investigate_var_importance(frac_term1_2009_cv, num_replicates_for_avg = 20)
+interaction_investigator(frac_term1_2009, num_replicates_for_avg = 25, num_var_plot = 10, bottom_margin = 15)
+```
+
+The only interaction that makes sense intuitively is "stratum * age_15"; all others are dummy variables for if the data exists
+
+
+```{r}
+var(baird$frac_attend_term2_2009[baird$Z == 2], na.rm = T)
+var(baird$frac_attend_term2_2009[baird$Z == 1], na.rm = T)
+var(baird$frac_attend_term2_2009[baird$Z == 0], na.rm = T)
+```
+
+
+```{r Baird (2011) Term 2 2009, options(java.parameters = "-Xmx5g")}
+baird_term2_2009 <- baird[!is.na(baird$frac_attend_term2_2009), ]
+
+# Removing other outcome variables
+baird_term2_2009 <- baird_term2_2009 %>% 
+  select(c(round, education_score_exists, eng_pilot, math_pilot, father_alive, mother_alive, ever_preg_r1, never_had_sex, mobile, asset_index, hhsize, female_headed, hh_amount, individual_amount, ea_status, eaid, age_R1, Iage_R1_14, Iage_R1_15, Iage_R1_16, Iage_R1_17, Iage_R1_17, Iage_R1_18, Iage_R1_19, Iage_R1_20, stratum1, stratum2, highest_grade_baseline, asset_index_baseline, never_had_sex_baseline, wgt, wgt_SSR3, total_amount, Z, frac_attend_term2_2009))
+baird_term2_2009 <- plyr::rename(baird_term2_2009, c("never_had_sex" = "Never had Sex", "age_R1" = "Age", "individual_amount" = "Amount Girl Received", "hh_amount" = "Amount Household Received"))
+
+# Training and testing data
+n_term2_2009 = nrow(baird_term2_2009)
+trainIndex_term2_2009 = sample(1:n_term2_2009, size = (0.75*n_term2_2009), replace = FALSE)
+baird_term2_2009_train = baird_term2_2009[trainIndex_term2_2009, ]
+baird_term2_2009_test = baird_term2_2009[-trainIndex_term2_2009, ]
+
+baird_term2_2009_train <- as.data.frame(baird_term2_2009_train)
+baird_term2_2009_test <- as.data.frame(baird_term2_2009_test)
+
+# bartMachine
+suppressMessages(stopifnot(require(bartMachine))) 
+set_bart_machine_num_cores(4)
+
+frac_term2_2009 <- bartMachine(baird_term2_2009_train[, names(baird_term2_2009_train) != "frac_attend_term2_2009"], baird_term2_2009_train$frac_attend_term2_2009,
+                             use_missing_data = TRUE,
+                             use_missing_data_dummies_as_covars = TRUE, 
+                             mem_cache_for_speed = FALSE, 
+                             serialize = TRUE)
+
+frac_term2_2009_predict <- bart_predict_for_test_data(frac_term2_2009, baird_term2_2009_test[, names(baird_term2_2009_test) != "frac_attend_term2_2009"], baird_term2_2009_test$frac_attend_term2_2009)
+```
+
+```{r}
+png("./figs/term2_2009_sex.png")
+pd_plot(frac_term2_2009, "Never had Sex")
+dev.off()
+png("./figs/term2_2009_age.png")
+pd_plot(frac_term2_2009, "Age")
+dev.off()
+png("./figs/term2_2009_individual.png")
+pd_plot(frac_term2_2009, "Amount Girl Received")
+dev.off()
+png("./figs/term2_2009_hh.png")
+pd_plot(frac_term2_2009, "Amount Household Received")
+dev.off()
+```
+
+```{r}
+var(baird$frac_attend_term3_2009[baird$Z == 2], na.rm = T)
+var(baird$frac_attend_term3_2009[baird$Z == 1], na.rm = T)
+var(baird$frac_attend_term3_2009[baird$Z == 0], na.rm = T)
+```
+
+
+```{r Baird (2011) Term 3 2009, options(java.parameters = "-Xmx5g")}
+baird_term3_2009 <- baird[!is.na(baird$frac_attend_term3_2009), ]
+
+# Removing other outcome variables
+baird_term3_2009 <- baird_term3_2009 %>% 
+  select(c(round, education_score_exists, eng_pilot, math_pilot, father_alive, mother_alive, ever_preg_r1, never_had_sex, mobile, asset_index, hhsize, female_headed, hh_amount, individual_amount, ea_status, eaid, age_R1, Iage_R1_14, Iage_R1_15, Iage_R1_16, Iage_R1_17, Iage_R1_17, Iage_R1_18, Iage_R1_19, Iage_R1_20, stratum1, stratum2, highest_grade_baseline, asset_index_baseline, never_had_sex_baseline, wgt, wgt_SSR3, total_amount, Z, frac_attend_term3_2009))
+baird_term3_2009 <- plyr::rename(baird_term3_2009, c("never_had_sex" = "Never had Sex", "age_R1" = "Age", "individual_amount" = "Amount Girl Received", "hh_amount" = "Amount Household Received"))
+
+# Training and testing data
+n_term3_2009 = nrow(baird_term3_2009)
+trainIndex_term3_2009 = sample(1:n_term3_2009, size = (0.75*n_term3_2009), replace = FALSE)
+baird_term3_2009_train = baird_term3_2009[trainIndex_term3_2009, ]
+baird_term3_2009_test = baird_term3_2009[-trainIndex_term3_2009, ]
+
+baird_term3_2009_train <- as.data.frame(baird_term3_2009_train)
+baird_term3_2009_test <- as.data.frame(baird_term3_2009_test)
+
+# bartMachine
+suppressMessages(stopifnot(require(bartMachine))) 
+set_bart_machine_num_cores(4)
+
+frac_term3_2009 <- bartMachine(baird_term3_2009_train[, names(baird_term3_2009_train) != "frac_attend_term3_2009"], baird_term3_2009_train$frac_attend_term3_2009,
+                             use_missing_data = TRUE,
+                             use_missing_data_dummies_as_covars = TRUE, 
+                             mem_cache_for_speed = FALSE, 
+                             serialize = TRUE)
+
+frac_term3_2009_predict <- bart_predict_for_test_data(frac_term3_2009, baird_term3_2009_test[, names(baird_term3_2009_test) != "frac_attend_term3_2009"], baird_term3_2009_test$frac_attend_term3_2009)
+```
+
+```{r}
+png("./figs/term3_2009_sex.png")
+pd_plot(frac_term3_2009, "Never had Sex")
+dev.off()
+png("./figs/term3_2009_age.png")
+pd_plot(frac_term3_2009, "Age")
+dev.off()
+png("./figs/term3_2009_individual.png")
+pd_plot(frac_term3_2009, "Amount Girl Received")
+dev.off()
+png("./figs/term3_2009_hh.png")
+pd_plot(frac_term3_2009, "Amount Household Received")
+dev.off()
+```
+
+```{r}
+var(baird$frac_attend_2009_v1[baird$Z == 2], na.rm = T)
+var(baird$frac_attend_2009_v1[baird$Z == 1], na.rm = T)
+var(baird$frac_attend_2009_v1[baird$Z == 0], na.rm = T)
+```
+
+
+```{r Baird (2011) Terms 2009, options(java.parameters = "-Xmx5g")}
+baird_terms_2009 <- baird[!is.na(baird$frac_attend_2009_v1), ]
+
+# Removing other outcome variables
+baird_terms_2009 <- baird_terms_2009 %>% 
+  select(c(round, education_score_exists, eng_pilot, math_pilot, father_alive, mother_alive, ever_preg_r1, never_had_sex, mobile, asset_index, hhsize, female_headed, hh_amount, individual_amount, ea_status, eaid, age_R1, Iage_R1_14, Iage_R1_15, Iage_R1_16, Iage_R1_17, Iage_R1_17, Iage_R1_18, Iage_R1_19, Iage_R1_20, stratum1, stratum2, highest_grade_baseline, asset_index_baseline, never_had_sex_baseline, wgt, wgt_SSR3, total_amount, Z, frac_attend_2009_v1))
+baird_terms_2009 <- plyr::rename(baird_terms_2009, c("never_had_sex" = "Never had Sex", "age_R1" = "Age", "individual_amount" = "Amount Girl Received", "hh_amount" = "Amount Household Received"))
+
+# Training and testing data
+n_terms_2009 = nrow(baird_terms_2009)
+trainIndex_terms_2009 = sample(1:n_terms_2009, size = (0.75*n_terms_2009), replace = FALSE)
+baird_terms_2009_train = baird_terms_2009[trainIndex_terms_2009, ]
+baird_terms_2009_test = baird_terms_2009[-trainIndex_terms_2009, ]
+
+baird_terms_2009_train <- as.data.frame(baird_terms_2009_train)
+baird_terms_2009_test <- as.data.frame(baird_terms_2009_test)
+
+# bartMachine
+suppressMessages(stopifnot(require(bartMachine))) 
+set_bart_machine_num_cores(4)
+
+frac_terms_2009 <- bartMachine(baird_terms_2009_train[, names(baird_terms_2009_train) != "frac_attend_2009_v1"], baird_terms_2009_train$frac_attend_2009_v1,
+                             use_missing_data = TRUE,
+                             use_missing_data_dummies_as_covars = TRUE, 
+                             mem_cache_for_speed = FALSE, 
+                             serialize = TRUE)
+
+frac_terms_2009_predict <- bart_predict_for_test_data(frac_terms_2009, baird_terms_2009_test[, names(baird_terms_2009_test) != "frac_attend_2009_v1"], baird_terms_2009_test$frac_attend_2009_v1)
+```
+
+```{r}
+png("./figs/terms_2009_sex.png")
+pd_plot(frac_terms_2009, "Never had Sex")
+dev.off()
+
+png("./figs/terms_2009_age.png")
+pd_plot(frac_terms_2009, "Age")
+dev.off()
+
+png("./figs/terms_2009_individual.png")
+pd_plot(frac_terms_2009, "Amount Girl Received")
+dev.off()
+
+png("./figs/terms_2009_hh.png")
+pd_plot(frac_terms_2009, "Amount Household Received")
+dev.off()
+```
+
+```{r}
+var(baird$frac_attend_term1_2010[baird$Z == 2], na.rm = T)
+var(baird$frac_attend_term1_2010[baird$Z == 1], na.rm = T)
+var(baird$frac_attend_term1_2010[baird$Z == 0], na.rm = T)
+```
+
+
+```{r Baird (2011) Term 1 2010, options(java.parameters = "-Xmx5g")}
+baird_term1_2010 <- baird[!is.na(baird$frac_attend_term1_2010), ]
+
+# Removing other outcome variables
+baird_term1_2010 <- baird_term1_2010 %>% 
+  select(c(round, education_score_exists, eng_pilot, math_pilot, father_alive, mother_alive, ever_preg_r1, never_had_sex, mobile, asset_index, hhsize, female_headed, hh_amount, individual_amount, ea_status, eaid, age_R1, Iage_R1_14, Iage_R1_15, Iage_R1_16, Iage_R1_17, Iage_R1_17, Iage_R1_18, Iage_R1_19, Iage_R1_20, stratum1, stratum2, highest_grade_baseline, asset_index_baseline, never_had_sex_baseline, wgt, wgt_SSR3, total_amount, Z, frac_attend_term1_2010))
+baird_term1_2010 <- plyr::rename(baird_term1_2010, c("never_had_sex" = "Never had Sex", "age_R1" = "Age", "individual_amount" = "Amount Girl Received", "hh_amount" = "Amount Household Received"))
+
+# Training and testing data
+n_term1_2010 = nrow(baird_term1_2010)
+trainIndex_term1_2010 = sample(1:n_term1_2010, size = (0.75*n_term1_2010), replace = FALSE)
+baird_term1_2010_train = baird_term1_2010[trainIndex_term1_2010, ]
+baird_term1_2010_test = baird_term1_2010[-trainIndex_term1_2010, ]
+
+baird_term1_2010_train <- as.data.frame(baird_term1_2010_train)
+baird_term1_2010_test <- as.data.frame(baird_term1_2010_test)
+
+# bartMachine
+suppressMessages(stopifnot(require(bartMachine))) 
+set_bart_machine_num_cores(4)
+
+frac_term1_2010 <- bartMachine(baird_term1_2010_train[, names(baird_term1_2010_train) != "frac_attend_term1_2010"], baird_term1_2010_train$frac_attend_term1_2010,
+                             use_missing_data = TRUE,
+                             use_missing_data_dummies_as_covars = TRUE, 
+                             mem_cache_for_speed = FALSE, 
+                             serialize = TRUE)
+
+frac_term1_2010_predict <- bart_predict_for_test_data(frac_term1_2010, baird_term1_2010_test[, names(baird_term1_2010_test) != "frac_attend_term1_2010"], baird_term1_2010_test$frac_attend_term1_2010)
+```
+
+```{r}
+png("./figs/term1_2010_sex.png")
+pd_plot(frac_term1_2010, "Never had Sex")
+dev.off()
+
+png("./figs/term1_2010_age.png")
+pd_plot(frac_term1_2010, "Age")
+dev.off()
+
+png("./figs/term1_2010_individual.png")
+pd_plot(frac_term1_2010, "Amount Girl Received")
+dev.off()
+
+png("./figs/term1_2010_hh.png")
+pd_plot(frac_term1_2010, "Amount Household Received")
+dev.off()
+```
+
+```{r}
+var(baird$eng_std[baird$Z == 2], na.rm = T)
+var(baird$eng_std[baird$Z == 1], na.rm = T)
+var(baird$eng_std[baird$Z == 0], na.rm = T)
+```
+
+
+```{r Baird (2011) English, options(java.parameters = "-Xmx5g")}
+baird_eng <- baird[!is.na(baird$eng_std), ]
+
+# Removing other outcome variables
+baird_eng <- baird_eng %>% 
+  select(c(round, education_score_exists, eng_pilot, math_pilot, father_alive, mother_alive, ever_preg_r1, never_had_sex, mobile, asset_index, hhsize, female_headed, hh_amount, individual_amount, ea_status, eaid, age_R1, Iage_R1_14, Iage_R1_15, Iage_R1_16, Iage_R1_17, Iage_R1_17, Iage_R1_18, Iage_R1_19, Iage_R1_20, stratum1, stratum2, highest_grade_baseline, asset_index_baseline, never_had_sex_baseline, wgt, wgt_SSR3, total_amount, Z, eng_std))
+baird_eng <- plyr::rename(baird_eng, c("never_had_sex" = "Never had Sex", "age_R1" = "Age", "individual_amount" = "Amount Girl Received", "hh_amount" = "Amount Household Received"))
+
+# Training and testing data
+n_eng = nrow(baird_eng)
+trainIndex_eng = sample(1:n_eng, size = (0.75*n_eng), replace = FALSE)
+baird_eng_train = baird_eng[trainIndex_eng, ]
+baird_eng_test = baird_eng[-trainIndex_eng, ]
+
+baird_eng_train <- as.data.frame(baird_eng_train)
+baird_eng_test <- as.data.frame(baird_eng_test)
+
+# bartMachine
+suppressMessages(stopifnot(require(bartMachine))) 
+set_bart_machine_num_cores(4)
+
+eng <- bartMachine(baird_eng_train[, names(baird_eng_train) != "eng_std"], baird_eng_train$eng_std,
+                             use_missing_data = TRUE,
+                             use_missing_data_dummies_as_covars = TRUE, 
+                             mem_cache_for_speed = FALSE, 
+                             serialize = TRUE)
+
+eng_predict <- bart_predict_for_test_data(eng, baird_eng_test[, names(baird_eng_test) != "eng_std"], baird_eng_test$eng_std)
+```
+
+```{r}
+png("./figs/eng_sex.png")
+pd_plot(eng, "Never had Sex")
+dev.off()
+
+png("./figs/eng_age.png")
+pd_plot(eng, "Age")
+dev.off()
+
+png("./figs/eng_individual.png")
+pd_plot(eng, "Amount Girl Received")
+dev.off()
+
+png("./figs/eng_hh.png")
+pd_plot(eng, "Amount Household Received")
+dev.off()
+```
+
+```{r}
+var(baird$TIMMS_std[baird$Z == 2], na.rm = T)
+var(baird$TIMMS_std[baird$Z == 1], na.rm = T)
+var(baird$TIMMS_std[baird$Z == 0], na.rm = T)
+```
+
+
+```{r Baird (2011) TIMMS, options(java.parameters = "-Xmx5g")}
+baird_timms <- baird[!is.na(baird$TIMMS_std), ]
+
+# Removing other outcome variables
+baird_timms <- baird_timms %>% 
+  select(c(round, education_score_exists, eng_pilot, math_pilot, father_alive, mother_alive, ever_preg_r1, never_had_sex, mobile, asset_index, hhsize, female_headed, hh_amount, individual_amount, ea_status, eaid, age_R1, Iage_R1_14, Iage_R1_15, Iage_R1_16, Iage_R1_17, Iage_R1_17, Iage_R1_18, Iage_R1_19, Iage_R1_20, stratum1, stratum2, highest_grade_baseline, asset_index_baseline, never_had_sex_baseline, wgt, wgt_SSR3, total_amount, Z, TIMMS_std))
+baird_timms <- plyr::rename(baird_timms, c("never_had_sex" = "Never had Sex", "age_R1" = "Age", "individual_amount" = "Amount Girl Received", "hh_amount" = "Amount Household Received"))
+
+# Training and testing data
+n_timms = nrow(baird_timms)
+trainIndex_timms = sample(1:n_timms, size = (0.75*n_timms), replace = FALSE)
+baird_timms_train = baird_timms[trainIndex_timms, ]
+baird_timms_test = baird_timms[-trainIndex_timms, ]
+
+baird_timms_train <- as.data.frame(baird_timms_train)
+baird_timms_test <- as.data.frame(baird_timms_test)
+
+# bartMachine
+suppressMessages(stopifnot(require(bartMachine))) 
+set_bart_machine_num_cores(4)
+
+timms <- bartMachine(baird_timms_train[, names(baird_timms_train) != "TIMMS_std"], baird_timms_train$TIMMS_std,
+                             use_missing_data = TRUE,
+                             use_missing_data_dummies_as_covars = TRUE, 
+                             mem_cache_for_speed = FALSE, 
+                             serialize = TRUE)
+
+timms_predict <- bart_predict_for_test_data(timms, baird_timms_test[, names(baird_timms_test) != "TIMMS_std"], baird_timms_test$TIMMS_std)
+```
+
+```{r}
+png("./figs/timms_sex.png")
+pd_plot(timms, "Never had Sex")
+dev.off()
+
+png("./figs/timms_age.png")
+pd_plot(timms, "Age")
+dev.off()
+
+png("./figs/timms_individual.png")
+pd_plot(timms, "Amount Girl Received")
+dev.off()
+
+png("./figs/timms_hh.png")
+pd_plot(timms, "Amount Household Received")
+dev.off()
+```
+
+
+```{r}
+var(baird$math_malawi_std[baird$Z == 2], na.rm = T)
+var(baird$math_malawi_std[baird$Z == 1], na.rm = T)
+var(baird$math_malawi_std[baird$Z == 0], na.rm = T)
+```
+
+
+```{r Baird (2011) Math Scores, options(java.parameters = "-Xmx5g")}
+baird_math <- baird[!is.na(baird$math_malawi_std), ]
+
+# Removing other outcome variables
+baird_math <- baird_math %>% 
+  select(c(round, education_score_exists, eng_pilot, math_pilot, father_alive, mother_alive, ever_preg_r1, never_had_sex, mobile, asset_index, hhsize, female_headed, hh_amount, individual_amount, ea_status, eaid, age_R1, Iage_R1_14, Iage_R1_15, Iage_R1_16, Iage_R1_17, Iage_R1_17, Iage_R1_18, Iage_R1_19, Iage_R1_20, stratum1, stratum2, highest_grade_baseline, asset_index_baseline, never_had_sex_baseline, wgt, wgt_SSR3, total_amount, Z, math_malawi_std))
+baird_math <- plyr::rename(baird_math, c("never_had_sex" = "Never had Sex", "age_R1" = "Age", "individual_amount" = "Amount Girl Received", "hh_amount" = "Amount Household Received"))
+
+# Training and testing data
+n_math = nrow(baird_math)
+trainIndex_math = sample(1:n_math, size = (0.75*n_math), replace = FALSE)
+baird_math_train = baird_math[trainIndex_math, ]
+baird_math_test = baird_math[-trainIndex_math, ]
+
+baird_math_train <- as.data.frame(baird_math_train)
+baird_math_test <- as.data.frame(baird_math_test)
+
+# bartMachine
+suppressMessages(stopifnot(require(bartMachine))) 
+set_bart_machine_num_cores(4)
+
+math <- bartMachine(baird_math_train[, names(baird_math_train) != "math_malawi_std"], baird_math_train$math_malawi_std,
+                             use_missing_data = TRUE,
+                             use_missing_data_dummies_as_covars = TRUE, 
+                             mem_cache_for_speed = FALSE, 
+                             serialize = TRUE)
+
+math_predict <- bart_predict_for_test_data(math, baird_math_test[, names(baird_math_test) != "math_malawi_std"], baird_math_test$math_malawi_std)
+```
+
+```{r}
+png("./figs/math_sex.png")
+pd_plot(math, "Never had Sex")
+dev.off()
+
+png("./figs/math_age.png")
+pd_plot(math, "Age")
+dev.off()
+
+png("./figs/math_individual.png")
+pd_plot(math, "Amount Girl Received")
+dev.off()
+
+png("./figs/math_hh.png")
+pd_plot(math, "Amount Household Received")
+dev.off()
+```
+
+```{r}
+var(baird$cog_std[baird$Z == 2], na.rm = T)
+var(baird$cog_std[baird$Z == 1], na.rm = T)
+var(baird$cog_std[baird$Z == 0], na.rm = T)
+```
+
+
+```{r Baird (2011) Cognitive Scores, options(java.parameters = "-Xmx5g")}
+baird_cog <- baird[!is.na(baird$cog_std), ]
+
+# Removing other outcome variables
+baird_cog <- baird_cog %>% 
+  select(c(round, education_score_exists, eng_pilot, math_pilot, father_alive, mother_alive, ever_preg_r1, never_had_sex, mobile, asset_index, hhsize, female_headed, hh_amount, individual_amount, ea_status, eaid, age_R1, Iage_R1_14, Iage_R1_15, Iage_R1_16, Iage_R1_17, Iage_R1_17, Iage_R1_18, Iage_R1_19, Iage_R1_20, stratum1, stratum2, highest_grade_baseline, asset_index_baseline, never_had_sex_baseline, wgt, wgt_SSR3, total_amount, Z, cog_std))
+baird_cog <- plyr::rename(baird_cog, c("never_had_sex" = "Never had Sex", "age_R1" = "Age", "individual_amount" = "Amount Girl Received", "hh_amount" = "Amount Household Received"))
+
+# Training and testing data
+n_cog = nrow(baird_cog)
+trainIndex_cog = sample(1:n_cog, size = (0.75*n_cog), replace = FALSE)
+baird_cog_train = baird_cog[trainIndex_cog, ]
+baird_cog_test = baird_cog[-trainIndex_cog, ]
+
+baird_cog_train <- as.data.frame(baird_cog_train)
+baird_cog_test <- as.data.frame(baird_cog_test)
+
+# bartMachine
+suppressMessages(stopifnot(require(bartMachine))) 
+set_bart_machine_num_cores(4)
+
+cog <- bartMachine(baird_cog_train[, names(baird_cog_train) != "cog_std"], baird_cog_train$cog_std,
+                             use_missing_data = TRUE,
+                             use_missing_data_dummies_as_covars = TRUE, 
+                             mem_cache_for_speed = FALSE, 
+                             serialize = TRUE)
+
+cog_predict <- bart_predict_for_test_data(cog, baird_cog_test[, names(baird_cog_test) != "cog_std"], baird_cog_test$cog_std)
+```
+
+```{r}
+png("./figs/cog_sex.png")
+pd_plot(cog, "Never had Sex")
+dev.off()
+
+png("./figs/cog_age.png")
+pd_plot(cog, "Age")
+dev.off()
+
+png("./figs/cog_individual.png")
+pd_plot(cog, "Amount Girl Received")
+dev.off()
+
+png("./figs/cog_hh.png")
+pd_plot(cog, "Amount Household Received")
+dev.off()
+```
+
+
+```{r}
+var(baird$ever_married[baird$Z == 2], na.rm = T)
+var(baird$ever_married[baird$Z == 1], na.rm = T)
+var(baird$ever_married[baird$Z == 0], na.rm = T)
+```
+
+
+```{r Baird (2011) Ever Married, options(java.parameters = "-Xmx5g")}
+baird_married <- baird[!is.na(baird$ever_married), ]
+
+# Removing other outcome variables
+baird_married <- baird_married %>% 
+  select(c(round, education_score_exists, eng_pilot, math_pilot, father_alive, mother_alive, ever_preg_r1, never_had_sex, mobile, asset_index, hhsize, female_headed, hh_amount, individual_amount, ea_status, eaid, age_R1, Iage_R1_14, Iage_R1_15, Iage_R1_16, Iage_R1_17, Iage_R1_17, Iage_R1_18, Iage_R1_19, Iage_R1_20, stratum1, stratum2, highest_grade_baseline, asset_index_baseline, never_had_sex_baseline, wgt, wgt_SSR3, total_amount, Z, ever_married))
+baird_married <- plyr::rename(baird_married, c("never_had_sex" = "Never had Sex", "age_R1" = "Age", "individual_amount" = "Amount Girl Received", "hh_amount" = "Amount Household Received"))
+
+# Training and testing data
+n_married = nrow(baird_married)
+trainIndex_married = sample(1:n_married, size = (0.75*n_cog), replace = FALSE)
+baird_married_train = baird_married[trainIndex_married, ]
+baird_married_test = baird_married[-trainIndex_married, ]
+
+baird_married_train <- as.data.frame(baird_married_train)
+baird_married_test <- as.data.frame(baird_married_test)
+
+# bartMachine
+suppressMessages(stopifnot(require(bartMachine))) 
+set_bart_machine_num_cores(4)
+
+married <- bartMachine(baird_married_train[, names(baird_married_train) != "ever_married"], baird_married_train$ever_married,
+                             use_missing_data = TRUE,
+                             use_missing_data_dummies_as_covars = TRUE, 
+                             mem_cache_for_speed = FALSE, 
+                             serialize = TRUE)
+
+married_predict <- bart_predict_for_test_data(married, baird_married_test[, names(baird_married_test) != "ever_married"], baird_married_test$ever_married)
+```
+
+```{r}
+png("./figs/married_sex.png")
+pd_plot(married, "Never had Sex")
+dev.off()
+
+png("./figs/married_age.png")
+pd_plot(married, "Age")
+dev.off()
+
+png("./figs/married_individual.png")
+pd_plot(married, "Amount Girl Received")
+dev.off()
+
+png("./figs/married_hh.png")
+pd_plot(married, "Amount Household Received")
+dev.off()
+```
+
+```{r}
+var(baird$ever_pregnant[baird$Z == 2], na.rm = T)
+var(baird$ever_pregnant[baird$Z == 1], na.rm = T)
+var(baird$ever_pregnant[baird$Z == 0], na.rm = T)
+```
+
+
+```{r Baird (2011) Ever Pregnant, options(java.parameters = "-Xmx5g")}
+baird_pregnant <- baird[!is.na(baird$ever_pregnant), ]
+
+# Removing other outcome variables
+baird_pregnant <- baird_pregnant %>% 
+  select(c(round, education_score_exists, eng_pilot, math_pilot, father_alive, mother_alive, ever_preg_r1, never_had_sex, mobile, asset_index, hhsize, female_headed, hh_amount, individual_amount, ea_status, eaid, age_R1, Iage_R1_14, Iage_R1_15, Iage_R1_16, Iage_R1_17, Iage_R1_17, Iage_R1_18, Iage_R1_19, Iage_R1_20, stratum1, stratum2, highest_grade_baseline, asset_index_baseline, never_had_sex_baseline, wgt, wgt_SSR3, total_amount, Z, ever_pregnant))
+baird_pregnant <- plyr::rename(baird_pregnant, c("never_had_sex" = "Never had Sex", "age_R1" = "Age", "individual_amount" = "Amount Girl Received", "hh_amount" = "Amount Household Received"))
+
+# Training and testing data
+n_pregnant = nrow(baird_pregnant)
+trainIndex_pregnant = sample(1:n_pregnant, size = (0.75*n_pregnant), replace = FALSE)
+baird_pregnant_train = baird_pregnant[trainIndex_pregnant, ]
+baird_pregnant_test = baird_pregnant[-trainIndex_pregnant, ]
+
+baird_pregnant_train <- as.data.frame(baird_pregnant_train)
+baird_pregnant_test <- as.data.frame(baird_pregnant_test)
+
+# bartMachine
+suppressMessages(stopifnot(require(bartMachine))) 
+set_bart_machine_num_cores(4)
+
+pregnant <- bartMachine(baird_pregnant_train[, names(baird_pregnant_train) != "ever_pregnant"], baird_pregnant_train$ever_pregnant,
+                             use_missing_data = TRUE,
+                             use_missing_data_dummies_as_covars = TRUE, 
+                             mem_cache_for_speed = FALSE)
+
+pregnant_predict <- bart_predict_for_test_data(pregnant, baird_pregnant_test[, names(baird_pregnant_test) != "ever_pregnant"], baird_pregnant_test$ever_pregnant)
+```
+
+```{r}
+png("./figs/pregnant_sex.png")
+pd_plot(pregnant, "Never had Sex")
+dev.off()
+
+png("./figs/pregnant_age.png")
+pd_plot(pregnant, "Age")
+dev.off()
+
+png("./figs/pregnant_individual.png")
+pd_plot(pregnant, "Amount Girl Received")
+dev.off()
+
+png("./figs/pregnant_hh.png")
+pd_plot(pregnant, "Amount Household Received")
+dev.off()
+```
+
+

@@ -1,0 +1,952 @@
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% PROBLEM SET LATEX TEMPLATE FILE
+% DEFINE DOCUMENT STYLE, LOAD PACKAGES
+\documentclass[11pt,notitlepage]{article}\usepackage[]{graphicx}\usepackage[]{color}
+%% maxwidth is the original width if it is less than linewidth
+%% otherwise use linewidth (to make sure the graphics do not exceed the margin)
+\makeatletter
+\def\maxwidth{ %
+  \ifdim\Gin@nat@width>\linewidth
+    \linewidth
+  \else
+    \Gin@nat@width
+  \fi
+}
+\makeatother
+
+\definecolor{fgcolor}{rgb}{0.345, 0.345, 0.345}
+\newcommand{\hlnum}[1]{\textcolor[rgb]{0.686,0.059,0.569}{#1}}%
+\newcommand{\hlstr}[1]{\textcolor[rgb]{0.192,0.494,0.8}{#1}}%
+\newcommand{\hlcom}[1]{\textcolor[rgb]{0.678,0.584,0.686}{\textit{#1}}}%
+\newcommand{\hlopt}[1]{\textcolor[rgb]{0,0,0}{#1}}%
+\newcommand{\hlstd}[1]{\textcolor[rgb]{0.345,0.345,0.345}{#1}}%
+\newcommand{\hlkwa}[1]{\textcolor[rgb]{0.161,0.373,0.58}{\textbf{#1}}}%
+\newcommand{\hlkwb}[1]{\textcolor[rgb]{0.69,0.353,0.396}{#1}}%
+\newcommand{\hlkwc}[1]{\textcolor[rgb]{0.333,0.667,0.333}{#1}}%
+\newcommand{\hlkwd}[1]{\textcolor[rgb]{0.737,0.353,0.396}{\textbf{#1}}}%
+\let\hlipl\hlkwb
+
+\usepackage{framed}
+\makeatletter
+\newenvironment{kframe}{%
+ \def\at@end@of@kframe{}%
+ \ifinner\ifhmode%
+  \def\at@end@of@kframe{\end{minipage}}%
+  \begin{minipage}{\columnwidth}%
+ \fi\fi%
+ \def\FrameCommand##1{\hskip\@totalleftmargin \hskip-\fboxsep
+ \colorbox{shadecolor}{##1}\hskip-\fboxsep
+     % There is no \\@totalrightmargin, so:
+     \hskip-\linewidth \hskip-\@totalleftmargin \hskip\columnwidth}%
+ \MakeFramed {\advance\hsize-\width
+   \@totalleftmargin\z@ \linewidth\hsize
+   \@setminipage}}%
+ {\par\unskip\endMakeFramed%
+ \at@end@of@kframe}
+\makeatother
+
+\definecolor{shadecolor}{rgb}{.97, .97, .97}
+\definecolor{messagecolor}{rgb}{0, 0, 0}
+\definecolor{warningcolor}{rgb}{1, 0, 1}
+\definecolor{errorcolor}{rgb}{1, 0, 0}
+\newenvironment{knitrout}{}{} % an empty environment to be redefined in TeX
+
+\usepackage{alltt}    % ADD COMMENTS USING A PERCENT SIGN
+\usepackage{amsfonts}
+\usepackage{amsthm}
+\usepackage{amsmath, booktabs}
+\usepackage{mathtools}
+\usepackage{amssymb}
+\usepackage{subfig}
+\usepackage{setspace}
+\usepackage{fullpage}
+\usepackage{verbatim}
+\usepackage{graphicx}
+\usepackage{tabularx}
+\usepackage{longtable}
+\usepackage{multicol}
+\usepackage{multirow}
+\setlength{\parindent}{0in}  	% uncomment to remove indent at start of paragraphs
+\usepackage{pdflscape}
+\usepackage[english]{babel}
+\usepackage[pdftex]{hyperref}
+\usepackage{natbib}
+\usepackage{caption}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{graphics}
+\usepackage{multirow}
+\usepackage{graphics}
+\usepackage{hyperref}
+\usepackage{longtable}
+\usepackage{latexsym}
+\usepackage{rotating}
+\usepackage{setspace}
+\usepackage{layouts} 
+\usepackage[titletoc]{appendix}
+\DeclareGraphicsExtensions{.pdf,.jpg,.png}
+\usepackage[margin=1in]{geometry}
+\usepackage{enumerate}
+\usepackage{float}
+
+\newcolumntype{L}[1]{>{\raggedright\let\newline\\\arraybackslash\hspace{0pt}}p{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\let\newline\\\arraybackslash\hspace{0pt}}p{#1}}
+
+\usepackage[T1]{fontenc}				
+
+\usepackage{xcolor}
+\usepackage[printwatermark]{xwatermark}
+
+\input{../data/pygments.tex}
+
+
+
+\title{Field Experiments: Design, Analysis and Interpretation \\
+Solutions for Chapter 9 Exercises}
+\author{Alan S. Gerber and Donald P. Green\footnote{Solutions prepared by Peter M. Aronow and revised by Alexander Coppock}}
+\date{\vspace{-5ex}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\begin{document}
+
+\maketitle
+
+
+\section*{Question 1}
+Important concepts:
+
+\begin{enumerate}[a)]
+\item Define CATE. Is a Complier average causal effect (CACE) an example of a CATE?\\
+Answer:\\
+CATE stands for conditional average treatment effect, or the ATE among a subgroup. Typically, the subgroup in question is defined by some observable covariate(s), such as the CATE for women over 40 years of age. One could, however, define a CATE for a latent group such as Compliers (those who take the treatment if and only if assigned to the treatment group). Therefore, a CACE is a CATE.
+
+\item What is an interaction effect?\\
+Answer:\\
+An interaction refers to systematic variation in treatment effects. A treatment-by-covariate interaction refers to variation in ATEs that is a function of covariates. A treatment-by-treatment interaction refers to variation in the average effect of one randomized intervention that occurs as a function of other assigned treatments.
+
+\item Describe the multiple comparisons problem and the Bonferroni correction.\\
+Answer:\\
+The multiple comparisons problem refers to the disortion in $p$-values that occurs when researchers conduct a series of hypothesis tests. When several hypothesis tests are conducted, the chances that at least one of them appears significant may be substantially greater than 0.05, the nominal size of each test. The Bonferroni correction reestablishes the proper size of each test when several hypothesis tests are conducted.   If $k$ tests are conducted at the 0.05 level, the Bonferroni-corrected target significance level is $0.05/k$.
+\end{enumerate}
+
+\section*{Question 2}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{verbatim}
+
+
+
+
+
+
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+
+\section*{Question 3}
+One way to reduce variance in $Y_i(0)$ is to block on a prognostic covariate. When blocking is used, the joint distribution of $Y_i(0)$ and $Y_i(1)$ is simulated within blocks using the bounding procedure described in section 9.2. Using the schedule of potential outcomes below, show how the maximum and minimum values of the covariance of $Y_i(0)$ and $Y_i(1)$ compare to the maximum and minimum values of the covariance of $Y_i(0)$ and $Y_i(1)$ for the dataset as a whole (i.e., had blocking not been used).
+
+% Table generated by Excel2LaTeX from sheet 'Sheet1'
+\begin{table}[H]
+  \centering
+  \caption{Question 3 Table}
+    \begin{tabular}{rrrr}
+    \toprule
+    Block  & Subject  & Yi(0)  & Yi(1)  \\
+    \midrule
+    A     & A-1   & 0     & 2 \\
+    A     & A-2   & 1     & 5 \\
+    A     & A-3   & 1     & 3 \\
+    A     & A-4   & 2     & 1 \\
+    B     & B-1   & 2     & 3 \\
+    B     & B-2   & 3     & 3 \\
+    B     & B-3   & 4     & 9 \\
+    B     & B-4   & 4     & 7 \\
+    \bottomrule
+    \end{tabular}%
+  \label{tab:addlabel}%
+\end{table}%
+
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}1}]:} \PY{k}{clear}
+        \PY{k}{set} obs \PY{l+m}{8}
+        \PY{k}{egen} block =\PY{k}{ repeat}(), values(\PY{l+s}{\PYZdq{}}\PY{l+s}{A}\PY{l+s}{\PYZdq{}})
+        \PY{k}{replace} block =\PY{l+s}{\PYZdq{}}\PY{l+s}{B}\PY{l+s}{\PYZdq{}}\PY{k}{ in} \PY{l+m}{5}\PY{o}{/}\PY{l+m}{8}
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}3}]:} \PY{k}{input} int y0 int y1
+        	\PY{l+m}{0} \PY{l+m}{2}
+        	\PY{l+m}{1} \PY{l+m}{5}
+        	\PY{l+m}{1} \PY{l+m}{3}
+        	\PY{l+m}{2} \PY{l+m}{1}	
+        	\PY{l+m}{2} \PY{l+m}{3}
+        	\PY{l+m}{3} \PY{l+m}{3}
+        	\PY{l+m}{4} \PY{l+m}{9}
+        	\PY{l+m}{4} \PY{l+m}{7} end
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}6}]:} \PY{c+c1}{//}\PY{c+c1}{ }\PY{c+c1}{f}\PY{c+c1}{u}\PY{c+c1}{n}\PY{c+c1}{c}\PY{c+c1}{t}\PY{c+c1}{i}\PY{c+c1}{o}\PY{c+c1}{n}\PY{c+c1}{ }\PY{c+c1}{t}\PY{c+c1}{o}\PY{c+c1}{ }\PY{c+c1}{c}\PY{c+c1}{a}\PY{c+c1}{l}\PY{c+c1}{c}\PY{c+c1}{u}\PY{c+c1}{l}\PY{c+c1}{a}\PY{c+c1}{t}\PY{c+c1}{e}\PY{c+c1}{ }\PY{c+c1}{p}\PY{c+c1}{o}\PY{c+c1}{p}\PY{c+c1}{u}\PY{c+c1}{l}\PY{c+c1}{a}\PY{c+c1}{t}\PY{c+c1}{i}\PY{c+c1}{o}\PY{c+c1}{n}\PY{c+c1}{ }\PY{c+c1}{c}\PY{c+c1}{o}\PY{c+c1}{v}\PY{c+c1}{a}\PY{c+c1}{r}\PY{c+c1}{i}\PY{c+c1}{a}\PY{c+c1}{n}\PY{c+c1}{c}\PY{c+c1}{e}
+        \PY{k}{cap}\PY{k}{ program}\PY{k}{ drop} cov\PYZus{}pop
+        \PY{k}{program} define cov\PYZus{}pop, rclass
+        \PY{k}{args} x y	
+        \PY{k}{tempvar} xy\PYZus{}dev 
+        \PY{k}{qui}\PY{k}{ sum} \PY{n+nv}{`}\PY{n+nv}{x}\PY{n+nv}{\PYZsq{}}
+        \PY{k}{local} avg\PYZus{}x = \PY{n+nf}{r}(mean)
+        \PY{k}{local} length = \PY{n+nf}{r}(N)	
+        
+        \PY{k}{qui}\PY{k}{ sum} \PY{n+nv}{`}\PY{n+nv}{y}\PY{n+nv}{\PYZsq{}}
+        \PY{k}{local} avg\PYZus{}y = \PY{n+nf}{r}(mean)
+        \PY{k}{	}
+        \PY{k}{gen} \PY{n+nv}{`}\PY{n+nv}{x}\PY{n+nv}{y}\PY{n+nv}{\PYZus{}}\PY{n+nv}{d}\PY{n+nv}{e}\PY{n+nv}{v}\PY{n+nv}{\PYZsq{}} = (\PY{n+nv}{`}\PY{n+nv}{x}\PY{n+nv}{\PYZsq{}}\PY{o}{\PYZhy{}}\PY{n+nv}{`}\PY{n+nv}{a}\PY{n+nv}{v}\PY{n+nv}{g}\PY{n+nv}{\PYZus{}}\PY{n+nv}{x}\PY{n+nv}{\PYZsq{}})\PY{o}{*}(\PY{n+nv}{`}\PY{n+nv}{y}\PY{n+nv}{\PYZsq{}}\PY{o}{\PYZhy{}}\PY{n+nv}{`}\PY{n+nv}{a}\PY{n+nv}{v}\PY{n+nv}{g}\PY{n+nv}{\PYZus{}}\PY{n+nv}{y}\PY{n+nv}{\PYZsq{}})
+        \PY{k}{qui}\PY{k}{ tabstat} \PY{n+nv}{`}\PY{n+nv}{x}\PY{n+nv}{y}\PY{n+nv}{\PYZus{}}\PY{n+nv}{d}\PY{n+nv}{e}\PY{n+nv}{v}\PY{n+nv}{\PYZsq{}}, stat(sum)\PY{k}{ save}
+        \PY{k}{return}\PY{k}{ scalar} cor\PYZus{}pop = \PY{n+nf}{el}(\PY{n+nf}{r}(StatTotal),\PY{l+m}{1},\PY{l+m}{1})\PY{o}{/}\PY{n+nv}{`}\PY{n+nv}{l}\PY{n+nv}{e}\PY{n+nv}{n}\PY{n+nv}{g}\PY{n+nv}{t}\PY{n+nv}{h}\PY{n+nv}{\PYZsq{}}
+        end
+        
+        \PY{k}{qui}\PY{k}{ egen} rank\PYZus{}y1=rank(y1), unique
+        \PY{k}{qui}\PY{k}{ gen} id=\PYZus{}n
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}7}]:} vlookup id,\PY{k}{ generate}(y1\PYZus{}lowtohigh) key(rank\PYZus{}y1) value(y1)
+        \PY{k}{replace} id = \PY{l+m}{9}\PY{o}{\PYZhy{}}id
+        vlookup id,\PY{k}{ generate}(y1\PYZus{}hightolow) key(rank\PYZus{}y1) value(y1)
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}8}]:} cov\PYZus{}pop y0 y1\PYZus{}hightolow
+        \PY{k}{di} \PY{l+s}{\PYZdq{}}\PY{l+s}{c}\PY{l+s}{o}\PY{l+s}{v}\PY{l+s}{.}\PY{l+s}{m}\PY{l+s}{i}\PY{l+s}{n}\PY{l+s}{ }\PY{l+s}{=}\PY{l+s}{\PYZdq{}}\PY{n+nFormat}{\PYZpc{}8.3f} \PY{n+nf}{r}(cor\PYZus{}pop)
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+
+
+cov.min =  -3.141
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}9}]:} cov\PYZus{}pop y0 y1\PYZus{}lowtohigh
+        \PY{k}{di} \PY{l+s}{\PYZdq{}}\PY{l+s}{c}\PY{l+s}{o}\PY{l+s}{v}\PY{l+s}{.}\PY{l+s}{m}\PY{l+s}{i}\PY{l+s}{n}\PY{l+s}{ }\PY{l+s}{=}\PY{l+s}{\PYZdq{}}\PY{n+nFormat}{\PYZpc{}8.3f} \PY{n+nf}{r}(cor\PYZus{}pop)
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+
+
+cov.min =   3.234
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}10}]:} \PY{k}{qui}\PY{k}{ replace} id=\PYZus{}n
+         \PY{k}{qui}\PY{k}{ replace} id=.\PY{k}{ if} block\PY{o}{==}\PY{l+s}{\PYZdq{}}\PY{l+s}{B}\PY{l+s}{\PYZdq{}}
+         \PY{k}{qui}\PY{k}{ egen} rank\PYZus{}y1\PYZus{}A = rank(y1), unique\PY{k}{ by}(block)
+         \PY{k}{qui}\PY{k}{ replace} rank\PYZus{}y1\PYZus{}A =.\PY{k}{ if} block\PY{o}{==}\PY{l+s}{\PYZdq{}}\PY{l+s}{B}\PY{l+s}{\PYZdq{}}
+         \PY{k}{qui} vlookup id,\PY{k}{ generate}(y1\PYZus{}hightolow\PYZus{}block\PYZus{}A) key(rank\PYZus{}y1\PYZus{}A) value(y1)
+         \PY{k}{qui}\PY{k}{ replace} id = \PYZus{}n\PY{l+m}{\PYZhy{}4}
+         \PY{k}{qui}\PY{k}{ replace} id =.\PY{k}{ if} block\PY{o}{==}\PY{l+s}{\PYZdq{}}\PY{l+s}{A}\PY{l+s}{\PYZdq{}}
+         \PY{k}{qui}\PY{k}{ egen} rank\PYZus{}y1\PYZus{}B = rank(y1), unique\PY{k}{ by}(block)
+         \PY{k}{qui}\PY{k}{ replace} rank\PYZus{}y1\PYZus{}B =.\PY{k}{ if} block\PY{o}{==}\PY{l+s}{\PYZdq{}}\PY{l+s}{A}\PY{l+s}{\PYZdq{}}
+         \PY{k}{qui} vlookup id,\PY{k}{ generate}(y1\PYZus{}hightolow\PYZus{}block\PYZus{}B) key(rank\PYZus{}y1\PYZus{}B) value(y1)
+         \PY{k}{qui}\PY{k}{ gen} y1\PYZus{}hightolow\PYZus{}block = y1\PYZus{}hightolow\PYZus{}block\PYZus{}A
+         \PY{k}{qui}\PY{k}{ replace} y1\PYZus{}hightolow\PYZus{}block = y1\PYZus{}hightolow\PYZus{}block\PYZus{}B\PY{k}{ if} block\PY{o}{==}\PY{l+s}{\PYZdq{}}\PY{l+s}{B}\PY{l+s}{\PYZdq{}}
+         \PY{k}{qui}\PY{k}{ replace} id=\PY{l+m}{5}\PY{o}{\PYZhy{}}\PYZus{}n
+         \PY{k}{qui}\PY{k}{ replace} id=.\PY{k}{ if} block\PY{o}{==}\PY{l+s}{\PYZdq{}}\PY{l+s}{B}\PY{l+s}{\PYZdq{}}
+         \PY{k}{qui} vlookup id,\PY{k}{ generate}(y1\PYZus{}lowtohigh\PYZus{}block\PYZus{}A) key(rank\PYZus{}y1\PYZus{}A) value(y1)
+         \PY{k}{qui}\PY{k}{ replace} id = \PY{l+m}{9}\PY{o}{\PYZhy{}}\PYZus{}n
+         \PY{k}{qui}\PY{k}{ replace} id =.\PY{k}{ if} block\PY{o}{==}\PY{l+s}{\PYZdq{}}\PY{l+s}{A}\PY{l+s}{\PYZdq{}}
+         \PY{k}{qui} vlookup id,\PY{k}{ generate}(y1\PYZus{}lowtohigh\PYZus{}block\PYZus{}B) key(rank\PYZus{}y1\PYZus{}B) value(y1)
+         \PY{k}{qui}\PY{k}{ gen} y1\PYZus{}lowtohigh\PYZus{}block = y1\PYZus{}lowtohigh\PYZus{}block\PYZus{}A
+         \PY{k}{qui}\PY{k}{ replace} y1\PYZus{}lowtohigh\PYZus{}block = y1\PYZus{}lowtohigh\PYZus{}block\PYZus{}B\PY{k}{ if} block\PY{o}{==}\PY{l+s}{\PYZdq{}}\PY{l+s}{B}\PY{l+s}{\PYZdq{}}
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}11}]:} cov\PYZus{}pop y0 y1\PYZus{}lowtohigh\PYZus{}block
+         \PY{k}{di} \PY{l+s}{\PYZdq{}}\PY{l+s}{c}\PY{l+s}{o}\PY{l+s}{v}\PY{l+s}{.}\PY{l+s}{m}\PY{l+s}{i}\PY{l+s}{n}\PY{l+s}{ }\PY{l+s}{=}\PY{l+s}{\PYZdq{}}\PY{n+nFormat}{\PYZpc{}8.4f} \PY{n+nf}{r}(cor\PYZus{}pop)
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+
+
+cov.min = -0.0156
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}12}]:} cov\PYZus{}pop y0 y1\PYZus{}hightolow\PYZus{}block
+         \PY{k}{di} \PY{l+s}{\PYZdq{}}\PY{l+s}{c}\PY{l+s}{o}\PY{l+s}{v}\PY{l+s}{.}\PY{l+s}{m}\PY{l+s}{i}\PY{l+s}{n}\PY{l+s}{ }\PY{l+s}{=}\PY{l+s}{\PYZdq{}}\PY{n+nFormat}{\PYZpc{}8.3f} \PY{n+nf}{r}(cor\PYZus{}pop)
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+
+
+cov.min =   2.984
+
+    \end{Verbatim}
+\end{kframe}
+\end{knitrout}
+
+The lowest and highest covariances under simple random assignment are -3.14 and 3.23.  In order to find the lowest and highest covariances under blocked assignment, sort the potential outcomes within blocks before calculating the covariances for all observations.  Under blocked random assignment, the lowest covariance is -0.02, and the highest covariance is 2.98. Taking advantange of the blocks reduces the range of possible covariances.
+
+
+\section*{Question 4}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{verbatim}
+
+
+
+
+
+
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+
+\section*{Question 5}
+The table below shows hypothetical potential outcomes for an experiment in which low-income subjects in a developing country are randomly assigned to receive (i) loans to aid their small businesses; (ii) business training to improve their accounting, hiring, and inventory-management skills; (iii) both; or (iv) neither. The outcome measure in business income during the subsequent year. The table also includes a pre-treatment covariate, an indicator scored 1 if the subject was judged to be proficient in these basic business skills.
+
+% Table generated by Excel2LaTeX from sheet 'Sheet1'
+\begin{table}[H]
+  \centering
+  \caption{Question 5 Table}
+    \begin{tabular}{rrrrrr}
+    \toprule
+    Subject & $Y_i(loan)$ & $Y_i(training)$ & $Y_i(both)$ & $Y_i(Neither)$ & Prior business skills \\
+    \midrule
+    1     & 2     & 2     & 3     & 2     & 0 \\
+    2     & 2     & 3     & 2     & 1     & 0 \\
+    3     & 5     & 6     & 6     & 4     & 1 \\
+    4     & 3     & 1     & 5     & 1     & 1 \\
+    5     & 4     & 4     & 5     & 0     & 0 \\
+    6     & 10    & 8     & 11    & 10    & 1 \\
+    7     & 1     & 3     & 3     & 1     & 0 \\
+    8     & 5     & 5     & 5     & 5     & 1 \\ \midrule
+    Average & 4     & 4     & 5     & 3     & 0.5 \\
+    \bottomrule
+    \end{tabular}%
+  \label{tab:addlabel}%
+\end{table}%
+
+\begin{enumerate}[a)]
+\item What is the ATE of the loan if all subjects were also to receive training?\\
+Answer:\\
+The relevant comparison is the average potential outcomes under ``both'' to the average potential outcome under only ``training.''  The ATE is 5-4=1.
+
+\item What is the ATE of the loan if no subjects receive training?\\
+Answer:\\
+The relevant comparison is the average potential outcomes under ``loan'' to the average potential outcome under only ``neither.''  The ATE is 4-3=1.
+
+\item What is the ATE of the training if all subjects also receive a loan?\\
+Answer:\\
+The relevant comparison is the average potential outcomes under ``both'' to the average potential outcome under only ``loan.''  The ATE is 5-4=1.
+
+\item What is the ATE of the training if no subjects receive a loan?\\
+Answer:\\
+The relevant comparison is the average potential outcomes under ``training'' to the average potential outcome under only ``neither.''  The ATE is 4-3=1.
+
+\item Suppose subjects were randomly assigned to one of the four experimental treatments in equal proportions. Use the table above to fill in the expected values of the four regression coefficients for the model and interpret the results:
+
+\begin{equation}
+Y_i = \alpha_0 + \alpha_1 Loan_i + \alpha_2 Training_i + \alpha_3 (Loan_i * Training_i) + e_i
+\end{equation}
+
+The four coefficients are $\alpha_0=3$, the average outcome under ``neither''; $\alpha_1=1$, the ATE of loan when there is no training; $\alpha_2=1$, the ATE of training when there is no loan; and $\alpha_3=0$ the change in the effect of training that occurs when our focus switches from those who receive no loan to those who receive a loan.  Note that this interaction term can also be interpreted as the change in the ATE of loans that we observe when we move from the untrained subgroup to the trained subgroup. 
+
+\begin{equation}
+Y_i = 3 + 1*Loan_i + 1*Training_i + 0*(Loan_i * Training_i) + e_i
+\end{equation}
+
+
+\item Suppose a researcher were to implement a block randomized experiment, such that two subjects with business skills are assigned to receive loans, and two subjects without business skills are assigned to receive loans, and the rest are assigned to control. No subjects are assigned to receive training. The researcher estimates the model
+
+\begin{equation}
+Y_i = \gamma_0 + \gamma_1 Loan_i + \gamma_2 Skills_i + \gamma_3 (Loan_i * Skills_i) + e_i
+\end{equation}
+
+Over all 36 possible random assignments, the average estimated regression is as follows:
+
+\begin{equation}
+Y_i = 1.00 + 1.25 Loan_i + 4.00 Skills_i - 0.50 (Loan_i * Skills_i)
+\end{equation}
+
+Interpret the results and contrast them with the results from part (e). (Hint: the block randomized design does not affect the interpretation. Focus on the distinction between treatment-by-treatment and treatment-by-covariate interactions.)\\
+Answer:\\
+The key thing to bear in mind when interpreting these results is that the interaction between loans and skills is a treatment-by-covariate interaction because skills are not randomly assigned. The results seem to suggest that loans are more effective amongst those without skills (CATE = 1.25) than among those with skills (CATE = 1.25 - 0.5 = 0.75). These CATEs may describe the ATEs in these two skill groups, but the change in CATEs does not necessarily imply that a random increase in skill would diminish the effects of loans.  
+\end{enumerate}
+
+\section*{Question 6}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{verbatim}
+
+
+
+
+
+
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+
+
+
+
+\begin{enumerate}[a)]
+\item Suppose you ignored the sex of the server and simply analyzed whether the happy face treatment has heterogeneous effects. Use randomization inference to test whether $Var(\tau_i) = 0$ by testing whether $Var(Y_i(1)) = Var(Y_i(0))$. Construct the full schedule of potential outcomes by assuming that the treatment effect is equal to the observed difference-in-means between $Y_i(1)$ and $Y_i(0)$. Interpret your results.\\
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}1}]:} \PY{k}{qui} import delim .\PY{o}{/}data\PY{o}{/}chapter09\PY{o}{/}Rind\PYZus{}Bordia\PYZus{}JASP\PYZus{}1996,\PY{k}{ clear}
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}2}]:} \PY{k}{gen} Z =.
+        \PY{k}{qui}\PY{k}{ replace} Z = \PY{l+m}{1}\PY{k}{ if} happyface\PY{o}{==}\PY{l+m}{1}
+        \PY{k}{qui}\PY{k}{ replace} Z = \PY{l+m}{0}\PY{k}{ if} happyface\PY{o}{==}\PY{l+m}{0}
+        
+        \PY{k}{rename} tip Y
+        
+        \PY{k}{capture}\PY{k}{ program}\PY{k}{ drop} var\PYZus{}difference
+        \PY{k}{program} define var\PYZus{}difference, rclass
+        \PY{k}{	sum} Y\PY{k}{ if} Z\PY{o}{==}\PY{l+m}{1}, detail
+        \PY{k}{	local} var\PYZus{}treat = \PY{n+nf}{r}(Var)
+        \PY{k}{	sum} Y\PY{k}{ if} Z\PY{o}{==}\PY{l+m}{0}, detail
+        \PY{k}{	local} var\PYZus{}control = \PY{n+nf}{r}(Var)
+        \PY{k}{	return}\PY{k}{ scalar} vardiff= \PY{n+nv}{`}\PY{n+nv}{v}\PY{n+nv}{a}\PY{n+nv}{r}\PY{n+nv}{\PYZus{}}\PY{n+nv}{t}\PY{n+nv}{r}\PY{n+nv}{e}\PY{n+nv}{a}\PY{n+nv}{t}\PY{n+nv}{\PYZsq{}}\PY{o}{\PYZhy{}}\PY{n+nv}{`}\PY{n+nv}{v}\PY{n+nv}{a}\PY{n+nv}{r}\PY{n+nv}{\PYZus{}}\PY{n+nv}{c}\PY{n+nv}{o}\PY{n+nv}{n}\PY{n+nv}{t}\PY{n+nv}{r}\PY{n+nv}{o}\PY{n+nv}{l}\PY{n+nv}{\PYZsq{}}
+        end
+        
+        tsrtest Z \PY{n+nf}{r}(vardiff): var\PYZus{}difference
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Two-sample randomization test for theta=r(vardiff) of var\_difference by Z
+
+Combinations:   5.19137106438e+25 = (89 choose 44)
+Assuming null=0
+Observed theta: 53.31
+
+Minimum time needed for exact test (h:m:s):  1.66e+18:00:00
+Reverting to Monte Carlo simulation.
+Mode: simulation (10000 repetitions)
+
+progress: |{\ldots}|
+
+ p=0.23448 [one-tailed test of Ho:  theta(Z==0)<=theta(Z==1)]
+ p=0.76542 [one-tailed test of Ho:  theta(Z==0)>=theta(Z==1)]
+ p=0.47205 [two-tailed test of Ho:  theta(Z==0)==theta(Z==1)]
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}3}]:} \PY{c+c1}{//}\PY{c+c1}{ }\PY{c+c1}{ }\PY{c+c1}{p}\PY{c+c1}{\PYZhy{}}\PY{c+c1}{v}\PY{c+c1}{a}\PY{c+c1}{l}\PY{c+c1}{u}\PY{c+c1}{e}\PY{c+c1}{ }\PY{c+c1}{f}\PY{c+c1}{o}\PY{c+c1}{r}\PY{c+c1}{ }\PY{c+c1}{v}\PY{c+c1}{a}\PY{c+c1}{r}\PY{c+c1}{(}\PY{c+c1}{Y}\PY{c+c1}{1}\PY{c+c1}{)}\PY{c+c1}{\PYZgt{}}\PY{c+c1}{V}\PY{c+c1}{a}\PY{c+c1}{r}\PY{c+c1}{(}\PY{c+c1}{Y}\PY{c+c1}{0}\PY{c+c1}{)}
+        \PY{k}{di} \PY{n+nFormat}{\PYZpc{}8.4f} \PY{n+nf}{r}(uppertail)
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+  0.2345
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}4}]:} \PY{c+c1}{//}\PY{c+c1}{ }\PY{c+c1}{ }\PY{c+c1}{p}\PY{c+c1}{\PYZhy{}}\PY{c+c1}{v}\PY{c+c1}{a}\PY{c+c1}{l}\PY{c+c1}{u}\PY{c+c1}{e}\PY{c+c1}{ }\PY{c+c1}{f}\PY{c+c1}{o}\PY{c+c1}{r}\PY{c+c1}{ }\PY{c+c1}{v}\PY{c+c1}{a}\PY{c+c1}{r}\PY{c+c1}{(}\PY{c+c1}{Y}\PY{c+c1}{1}\PY{c+c1}{)}\PY{c+c1}{\PYZlt{}}\PY{c+c1}{\PYZgt{}}\PY{c+c1}{V}\PY{c+c1}{a}\PY{c+c1}{r}\PY{c+c1}{(}\PY{c+c1}{Y}\PY{c+c1}{0}\PY{c+c1}{)}
+        \PY{k}{di} \PY{n+nFormat}{\PYZpc{}8.3f} \PY{n+nf}{r}(twotail)
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+   0.472
+
+    \end{Verbatim}
+\end{kframe}
+\end{knitrout}
+
+We constructed a simulation of 10,000 random assignments and for each assessed the difference in variances between treatment and control group. The observed difference is 53.31. However, this absolute difference has a p-value of 0.472.  We cannot reject the null hypothesis that the observed difference in variances is the produce of random samping variability. The failure to reject the null is not surprising given the low power of this test, which does not focus on any specific model of heterogeneous treatment effects.
+
+
+\item Write down a regression model that depicts the effect of the sex of the waitstaff, whether they write a happy face on the bill, and the interaction of these factors.\\
+Answer:\\
+Using tip percentage as the outcome and a binary variable for sex (female=1) and for the use of a happy face (face=1), a regression model is as follows: 
+\begin{equation}
+Y_i = \gamma_0 + \gamma_1 Sex_i + \gamma_2 Face_i + \gamma_3 (Sex_i * Face_i) + e_i
+\end{equation}
+
+\item Estimate the regression model in (b) and test the interaction between waitstaff sex and the happy face treatment. Is the interaction significant? \\
+Answer:\\
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}5}]:} \PY{k}{rename} female female\PYZus{}factor
+        \PY{k}{gen} female = .
+        \PY{k}{replace} female = \PY{l+m}{1}\PY{k}{ if} female\PYZus{}factor\PY{o}{==}\PY{l+m}{1}
+        \PY{k}{replace} female = \PY{l+m}{0}\PY{k}{ if} female\PYZus{}factor\PY{o}{==}\PY{l+m}{0}
+        
+        \PY{k}{gen} zfemale = Z\PY{o}{*}female
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}6}]:} \PY{c+c1}{//}\PY{c+c1}{l}\PY{c+c1}{m}\PY{c+c1}{m}\PY{c+c1}{o}\PY{c+c1}{d}\PY{c+c1}{e}\PY{c+c1}{l}\PY{c+c1}{i}\PY{c+c1}{n}\PY{c+c1}{t}\PY{c+c1}{:}\PY{c+c1}{ }\PY{c+c1}{r}\PY{c+c1}{e}\PY{c+c1}{g}\PY{c+c1}{r}\PY{c+c1}{e}\PY{c+c1}{s}\PY{c+c1}{s}\PY{c+c1}{i}\PY{c+c1}{o}\PY{c+c1}{n}\PY{c+c1}{ }\PY{c+c1}{w}\PY{c+c1}{i}\PY{c+c1}{t}\PY{c+c1}{h}\PY{c+c1}{ }\PY{c+c1}{i}\PY{c+c1}{n}\PY{c+c1}{t}\PY{c+c1}{e}\PY{c+c1}{r}\PY{c+c1}{a}\PY{c+c1}{c}\PY{c+c1}{t}\PY{c+c1}{i}\PY{c+c1}{o}\PY{c+c1}{n}\PY{c+c1}{ }\PY{c+c1}{b}\PY{c+c1}{e}\PY{c+c1}{t}\PY{c+c1}{w}\PY{c+c1}{e}\PY{c+c1}{e}\PY{c+c1}{n}\PY{c+c1}{ }
+	\PY{c+c1}{//}\PY{c+c1}{h}\PY{c+c1}{a}\PY{c+c1}{p}\PY{c+c1}{p}\PY{c+c1}{y}\PY{c+c1}{f}\PY{c+c1}{a}\PY{c+c1}{c}\PY{c+c1}{e}\PY{c+c1}{ }\PY{c+c1}{a}\PY{c+c1}{n}\PY{c+c1}{d}\PY{c+c1}{ }\PY{c+c1}{w}\PY{c+c1}{a}\PY{c+c1}{i}\PY{c+c1}{t}\PY{c+c1}{s}\PY{c+c1}{t}\PY{c+c1}{a}\PY{c+c1}{f}\PY{c+c1}{f}\PY{c+c1}{ }\PY{c+c1}{s}\PY{c+c1}{e}\PY{c+c1}{x}
+        \PY{k}{regress} Y Z female zfemale
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+
+      Source |       SS           df       MS      Number of obs   =        89
+-------------+----------------------------------   F(3, 85)        =      9.32
+       Model |  3072.39611         3  1024.13204   Prob > F        =    0.0000
+    Residual |  9335.52582        85  109.829716   R-squared       =    0.2476
+-------------+----------------------------------   Adj R-squared   =    0.2211
+       Total |  12407.9219        88  140.999113   Root MSE        =     10.48
+
+------------------------------------------------------------------------------
+           Y |      Coef.   Std. Err.      t    P>|t|     [95\% Conf. Interval]
+-------------+----------------------------------------------------------------
+           Z |  -3.629627   3.163098    -1.15   0.254    -9.918714     2.65946
+      female |   6.378199   3.163098     2.02   0.047      .089112    12.66729
+     zfemale |   8.887078   4.446646     2.00   0.049     .0459551     17.7282
+       \_cons |   21.40571   2.286916     9.36   0.000     16.85871    25.95272
+------------------------------------------------------------------------------
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}7}]:} \PY{c+c1}{//}\PY{c+c1}{l}\PY{c+c1}{m}\PY{c+c1}{m}\PY{c+c1}{o}\PY{c+c1}{d}\PY{c+c1}{e}\PY{c+c1}{l}\PY{c+c1}{:}\PY{c+c1}{ }\PY{c+c1}{r}\PY{c+c1}{e}\PY{c+c1}{g}\PY{c+c1}{r}\PY{c+c1}{e}\PY{c+c1}{s}\PY{c+c1}{s}\PY{c+c1}{i}\PY{c+c1}{o}\PY{c+c1}{n}\PY{c+c1}{ }\PY{c+c1}{m}\PY{c+c1}{o}\PY{c+c1}{d}\PY{c+c1}{e}\PY{c+c1}{l}\PY{c+c1}{ }\PY{c+c1}{w}\PY{c+c1}{i}\PY{c+c1}{t}\PY{c+c1}{h}\PY{c+c1}{o}\PY{c+c1}{u}\PY{c+c1}{t}\PY{c+c1}{ }\PY{c+c1}{i}\PY{c+c1}{n}\PY{c+c1}{t}\PY{c+c1}{e}\PY{c+c1}{r}\PY{c+c1}{a}\PY{c+c1}{c}\PY{c+c1}{t}\PY{c+c1}{i}\PY{c+c1}{o}\PY{c+c1}{n}
+        \PY{k}{regress} Y Z female
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+
+      Source |       SS           df       MS      Number of obs   =        89
+-------------+----------------------------------   F(2, 86)        =     11.59
+       Model |  2633.69091         2  1316.84545   Prob > F        =    0.0000
+    Residual |  9774.23103        86  113.653849   R-squared       =    0.2123
+-------------+----------------------------------   Adj R-squared   =    0.1939
+       Total |  12407.9219        88  140.999113   Root MSE        =    10.661
+
+------------------------------------------------------------------------------
+           Y |      Coef.   Std. Err.      t    P>|t|     [95\% Conf. Interval]
+-------------+----------------------------------------------------------------
+           Z |   .8673363   2.261535     0.38   0.702    -3.628446    5.363119
+      female |   10.87516   2.261535     4.81   0.000      6.37938    15.37094
+       \_cons |   19.05503   1.995134     9.55   0.000     15.08883    23.02122
+------------------------------------------------------------------------------
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}8}]:} \PY{k}{scalar} coeff\PYZus{}z = \PYZus{}b[Z]
+        \PY{k}{cap}\PY{k}{ drop} Y0 Y1
+        \PY{k}{gen} Y0 = Y \PY{o}{\PYZhy{}} coeff\PYZus{}z \PY{o}{*} Z
+        \PY{k}{gen} Y1 = Y \PY{o}{+} coeff\PYZus{}z\PY{o}{*}(\PY{l+m}{1}\PY{o}{\PYZhy{}} Z)
+        
+        
+        \PY{k}{qui}\PY{k}{ regress} Y Z female zfemale
+        \PY{k}{qui}\PY{k}{ test} zfemale		
+        \PY{k}{global} f\PYZus{}obs = \PY{n+nf}{r}(F)
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}9}]:} \PY{k}{capture}\PY{k}{ program}\PY{k}{ drop} wald\PYZus{}f
+        \PY{k}{program} define wald\PYZus{}f, rclass
+        \PY{k}{	tempvar} Y\PYZus{}sim zsimfemale
+        \PY{k}{	gen} \PY{n+nv}{`}\PY{n+nv}{Y}\PY{n+nv}{\PYZus{}}\PY{n+nv}{s}\PY{n+nv}{i}\PY{n+nv}{m}\PY{n+nv}{\PYZsq{}} = Y1 \PY{o}{*} Z \PY{o}{+} Y0 \PY{o}{*} (\PY{l+m}{1} \PY{o}{\PYZhy{}} Z)
+        \PY{k}{	gen}  \PY{n+nv}{`}\PY{n+nv}{z}\PY{n+nv}{s}\PY{n+nv}{i}\PY{n+nv}{m}\PY{n+nv}{f}\PY{n+nv}{e}\PY{n+nv}{m}\PY{n+nv}{a}\PY{n+nv}{l}\PY{n+nv}{e}\PY{n+nv}{\PYZsq{}} = female\PY{o}{*}Z
+        \PY{k}{	qui}\PY{k}{ reg} \PY{n+nv}{`}\PY{n+nv}{Y}\PY{n+nv}{\PYZus{}}\PY{n+nv}{s}\PY{n+nv}{i}\PY{n+nv}{m}\PY{n+nv}{\PYZsq{}} Z female \PY{n+nv}{`}\PY{n+nv}{z}\PY{n+nv}{s}\PY{n+nv}{i}\PY{n+nv}{m}\PY{n+nv}{f}\PY{n+nv}{e}\PY{n+nv}{m}\PY{n+nv}{a}\PY{n+nv}{l}\PY{n+nv}{e}\PY{n+nv}{\PYZsq{}}
+        \PY{k}{	test} \PY{n+nv}{`}\PY{n+nv}{z}\PY{n+nv}{s}\PY{n+nv}{i}\PY{n+nv}{m}\PY{n+nv}{f}\PY{n+nv}{e}\PY{n+nv}{m}\PY{n+nv}{a}\PY{n+nv}{l}\PY{n+nv}{e}\PY{n+nv}{\PYZsq{}}
+        \PY{k}{	return}\PY{k}{ scalar} f\PYZus{}sims = \PY{n+nf}{r}(F)
+        end
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}10}]:} tsrtest Z \PY{n+nf}{r}(f\PYZus{}sims) using 9\PYZus{}6\PYZus{}fsims\PY{l+m}{.}dta, overwrite: wald\PYZus{}f
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Two-sample randomization test for theta=r(f\_sims) of wald\_f by Z
+
+Combinations:   5.19137106438e+25 = (89 choose 44)
+Assuming null=0
+Observed theta: 3.994
+
+Minimum time needed for exact test (h:m:s):  6.84e+19:00:00
+Reverting to Monte Carlo simulation.
+Mode: simulation (10000 repetitions)
+
+progress: |{\ldots}|
+
+ p=0.04740 [one-tailed test of Ho:  theta(Z==0)<=theta(Z==1)]
+ p=0.95250 [one-tailed test of Ho:  theta(Z==0)>=theta(Z==1)]
+ p=0.04740 [two-tailed test of Ho:  theta(Z==0)==theta(Z==1)]
+
+Saving log file to 9\_6\_fsims.dta{\ldots}done.
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}11}]:} \PY{k}{di} \PY{n+nFormat}{\PYZpc{}8.4f} \PY{n+nf}{r}(uppertail)
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+  0.0474
+
+    \end{Verbatim}
+
+\end{kframe}
+\end{knitrout}
+\end{enumerate}
+
+The regression reported above suggests a positive interaction between the happyface treatment and female, implying that female waitstaff receive much more return from happyfaces than male waitstaff. The two-sided p-value from the regression is 0.049, which is similar to the result from randomization inference ($p=0.0474$).  A two-sided test is appropriate here because the direction of the effect was not predicted ex ante.  Thinking back to section (a), the specific interaction posited by this regression sets the stage for a more powerful test of treatment effect heterogeneity.
+
+\section*{Question 7}
+In their 2004 study of racial discrimination in employment markets, Bertrand and Mullainathan sent resumes with varying characteristics to firms advertising job openings. Some firms were sent resumes with putative African American names, while other firms received resumes with putatively Caucasian names. The researchers also varied other attributes of the resume, such as whether the resume was judged to be of high or low quality (based on labor market experience, career profile, gaps in employment, and skills listed).\footnote{Bertrand and Mullainathan 2004, p. 994.} The table below shows the rate at which applicants were called back by employers, by the city in which the experiment took place and by the randomly assigned attributes of their applications.
+
+% Table generated by Excel2LaTeX from sheet 'Sheet1'
+\begin{table}[H]
+  \centering
+  \caption{Question 7 Table}
+    \begin{tabular}{rrrrrrrrr}
+    \toprule
+          & \multicolumn{4}{c}{Boston}    & \multicolumn{4}{c}{Chicago} \\
+    \midrule
+          & \multicolumn{2}{c}{Low-quality resume} & \multicolumn{2}{c}{High-quality resume } & \multicolumn{2}{c}{Low-quality resume} & \multicolumn{2}{c}{High-quality resume } \\
+          & Black & White & Black & White & Black & White & Black & White \\
+    \% Received Call & 7.01  & 10.15 & 8.5   & 13.12 & 5.52  & 7.16  & 5.28  & 8.94 \\
+    (N)   & (542) & (542) & (541) & (541) & (670) & (670) & (682) & (682) \\
+    \bottomrule
+    \end{tabular}%
+  \label{tab:addlabel}%
+\end{table}%
+
+\begin{enumerate}[a)]
+\item For each city, interpret the apparent treatment effects of race and resume quality on the probability of receiving a follow-up call.\\
+Answer:\\
+For Boston, the effect of (white) race is 10.15 - 7.01 = 3.14 when resume quality is low and 13.12 - 8.50 = 4.62 when resume quality is high. For Chicago, the effect of (white) race is 7.16 - 5.52 = 1.64 when resume quality is low and 8.94 - 5.28 = 3.66 when resume quality is high. Note that another, equally valid way to interpret the table is to assess the effect of resume quality for each race, but the substantive focus of this study is on race effects.
+
+\item Propose a regression model that assesses the effects of the treatments, interaction between them, and interactions between the treatments and the covariate, city. \\
+Answer:\\
+This model is similar to the interactive regression specifications described above, but it contains treatment-by-treatment interactions (race x resume) and treatment-by-covariate interactions (race x city, resume x city) and a higher order interaction (race x resume x city) that allows for the possibility that the race x resume interaction differs by city.  Here, City is scored 1 if Chicago.  Race = 1 if white.  Resume =1 if high quality.  Notice that the ``saturated'' regression model contains eight parameters, one for each cell of the table. 
+
+\begin{align*}
+Y_i &= \gamma_0 + \gamma_1 Race_i + \gamma_2 Resume_i + \gamma_3 City_i + \\
+& \gamma_4 (Race_i * Resume_i) + \gamma_5 (Race_i * City_i) + \gamma_6 (Resume_i * City_i) + \gamma_7 (Race_i * Resume_i * City_i) + e_i
+\end{align*}
+
+\item Estimate the parameters in your regression model. Interpret the results (This can be done by hand based on the percentages given in the table.) \\
+Answer:\\
+Because there as many parameters as experimental groups, the estimated coefficients reproduce the percentages given in the table:
+
+\begin{align*}
+Y_i &= 7.01 + 3.14 Race_i + 1.49 Resume_i -1.49 City_i + \\
+& 1.48 (Race_i * Resume_i) -1.50  (Race_i * City_i) -1.73  (Resume_i * City_i) + 0.54 (Race_i * Resume_i * City_i) + e_i
+\end{align*}
+
+Additional response (Boston = 1; Black = 1; Low quality = 1)
+\begin{align*}
+Y_i &= 8.94 - 3.66 Race_i - 1.78 Resume_i + 4.18 City_i + \\
+& 2.02 (Race_i * Resume_i) - 0.96  (Race_i * City_i) - 1.19  (Resume_i * City_i) -0.54 (Race_i * Resume_i * City_i) + e_i
+\end{align*}
+
+Additional response (Boston = 1; Black = 1; High quality = 1)
+\begin{align*}
+Y_i &= 7.16 - 1.64 Race_i + 1.78 Resume_i + 2.99 City_i - \\
+& 2.02 (Race_i * Resume_i) - 1.50  (Race_i * City_i) + 1.19  (Resume_i * City_i) + 0.54 (Race_i * Resume_i * City_i) + e_i
+\end{align*}
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
+\begin{kframe}
+   \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}1}]:} \PY{k}{clear}
+        \PY{k}{qui}\PY{k}{ set} obs \PY{l+m}{4870}
+        \PY{k}{qui}\PY{k}{ egen} y = fill(\PY{l+m}{1},\PY{l+m}{1})
+        \PY{k}{qui}\PY{k}{ replace} y = \PY{l+m}{0}\PY{k}{ in} \PY{l+m}{39}\PY{o}{/}\PY{l+m}{542}
+        \PY{k}{qui}\PY{k}{ replace} y = \PY{l+m}{0}\PY{k}{ in} \PY{l+m}{598}\PY{o}{/}\PY{l+m}{1084}
+        \PY{k}{qui}\PY{k}{ replace} y = \PY{l+m}{0}\PY{k}{ in} \PY{l+m}{1131}\PY{o}{/}\PY{l+m}{1625}
+        \PY{k}{qui}\PY{k}{ replace} y = \PY{l+m}{0}\PY{k}{ in} \PY{l+m}{1697}\PY{o}{/}\PY{l+m}{2166}
+        \PY{k}{qui}\PY{k}{ replace} y=\PY{l+m}{0}\PY{k}{ in} \PY{l+m}{2204}\PY{o}{/}\PY{l+m}{2836}
+        \PY{k}{qui}\PY{k}{ replace} y=\PY{l+m}{0}\PY{k}{ in} \PY{l+m}{2885}\PY{o}{/}\PY{l+m}{3506}
+        \PY{k}{qui}\PY{k}{ replace} y=\PY{l+m}{0}\PY{k}{ in} \PY{l+m}{3543}\PY{o}{/}\PY{l+m}{4188}
+        \PY{k}{qui}\PY{k}{ replace} y=\PY{l+m}{0}\PY{k}{ in} \PY{l+m}{4250}\PY{o}{/}\PY{l+m}{4870}
+        
+        \PY{k}{qui}\PY{k}{ egen} boston = fill(\PY{l+m}{1},\PY{l+m}{1})
+        \PY{k}{qui}\PY{k}{ replace} boston = \PY{l+m}{0}\PY{k}{ in} \PY{l+m}{2167}\PY{o}{/}\PY{l+m}{4870}
+        \PY{k}{qui}\PY{k}{ gen} chicago = \PY{l+m}{1}\PY{o}{\PYZhy{}}boston
+        \PY{k}{qui}\PY{k}{ egen} lowquality = fill(\PY{l+m}{1},\PY{l+m}{1})
+        \PY{k}{qui}\PY{k}{ replace} lowquality = \PY{l+m}{0}\PY{k}{ in} \PY{l+m}{1085}\PY{o}{/}\PY{l+m}{2166}
+        \PY{k}{qui}\PY{k}{ replace} lowquality = \PY{l+m}{0}\PY{k}{ in} \PY{l+m}{3507}\PY{o}{/}\PY{l+m}{4870}
+        \PY{k}{qui}\PY{k}{ gen} highquality = \PY{l+m}{1}\PY{o}{\PYZhy{}}lowquality
+        \PY{k}{qui}\PY{k}{ egen} black = fill(\PY{l+m}{1},\PY{l+m}{1})
+        \PY{k}{qui}\PY{k}{ replace} black = \PY{l+m}{0}\PY{k}{ in} \PY{l+m}{543}\PY{o}{/}\PY{l+m}{1084}
+        \PY{k}{qui}\PY{k}{ replace} black = \PY{l+m}{0}\PY{k}{ in} \PY{l+m}{1626}\PY{o}{/}\PY{l+m}{2166}
+        \PY{k}{qui}\PY{k}{ replace} black = \PY{l+m}{0}\PY{k}{ in} \PY{l+m}{2837}\PY{o}{/}\PY{l+m}{3506}
+        \PY{k}{qui}\PY{k}{ replace} black = \PY{l+m}{0}\PY{k}{ in} \PY{l+m}{4188}\PY{o}{/}\PY{l+m}{4870}
+        \PY{k}{qui}\PY{k}{ replace} black = \PY{l+m}{0}\PY{k}{ in} \PY{l+m}{4189}\PY{o}{/}\PY{l+m}{4870}
+        \PY{k}{qui}\PY{k}{ gen} white = \PY{l+m}{1}\PY{o}{\PYZhy{}}black
+        
+        \PY{k}{qui}\PY{k}{ gen} whitehighquality = white\PY{o}{*}highquality
+        \PY{k}{qui}\PY{k}{ gen} whitechicago = white\PY{o}{*}chicago
+        \PY{k}{qui}\PY{k}{ gen} highqualitychicago = highquality\PY{o}{*}chicago
+        \PY{k}{qui}\PY{k}{ gen} whitehighqualitychicago = white \PY{o}{*} highquality \PY{o}{*} chicago
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}2}]:} \PY{c+c1}{//}\PY{c+c1}{ }\PY{c+c1}{f}\PY{c+c1}{i}\PY{c+c1}{t}\PY{c+c1}{\PYZus{}}\PY{c+c1}{1}
+        \PY{k}{qui}\PY{k}{ regress} y white highquality chicago whitehighquality \PY{c+cs}{///}
+        whitechicago highqualitychicago whitehighqualitychicago
+        \PY{k}{estimates} store m1, title(Model \PY{l+m}{1})
+        
+        \PY{k}{gen} blackhighquality = black\PY{o}{*}highquality
+        \PY{k}{gen} blackchicago = black\PY{o}{*}chicago
+        \PY{k}{gen} blackhighqualitychicago = black \PY{o}{*} highquality \PY{o}{*} chicago
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}3}]:} \PY{c+c1}{//}\PY{c+c1}{ }\PY{c+c1}{f}\PY{c+c1}{i}\PY{c+c1}{t}\PY{c+c1}{\PYZus{}}\PY{c+c1}{2}
+        \PY{k}{qui}\PY{k}{ regress} y black highquality chicago blackhighquality \PY{c+cs}{///}
+        blackchicago highqualitychicago blackhighqualitychicago	
+        \PY{k}{estimates} store m2, title(Model \PY{l+m}{2})
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}4}]:} \PY{c+c1}{//}\PY{c+c1}{ }\PY{c+c1}{f}\PY{c+c1}{i}\PY{c+c1}{t}\PY{c+c1}{\PYZus{}}\PY{c+c1}{3}
+        \PY{k}{gen} whiteboston = white\PY{o}{*}boston
+        \PY{k}{gen} highqualityboston = highquality\PY{o}{*}boston
+        \PY{k}{gen} whitehighqualityboston = white \PY{o}{*} highquality \PY{o}{*} boston
+        \PY{k}{qui}\PY{k}{ regress} y white highquality boston whitehighquality \PY{c+cs}{///}
+        whiteboston highqualityboston whitehighqualityboston
+        
+        \PY{k}{estimates} store m3, title(Model \PY{l+m}{3})
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}5}]:} \PY{c+c1}{//}\PY{c+c1}{ }\PY{c+c1}{f}\PY{c+c1}{i}\PY{c+c1}{t}\PY{c+c1}{\PYZus{}}\PY{c+c1}{4}
+        \PY{k}{gen} blacklowquality = black\PY{o}{*}lowquality
+        \PY{k}{gen} lowqualitychicago = lowquality\PY{o}{*}chicago
+        \PY{k}{gen} blacklowqualitychicago = black \PY{o}{*} lowquality \PY{o}{*} chicago
+        \PY{k}{qui}\PY{k}{ regress} y black lowquality chicago blacklowquality \PY{c+cs}{///}
+        blackchicago lowqualitychicago blacklowqualitychicago
+        
+        \PY{k}{estimates} store m4, title(Model \PY{l+m}{4})
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}6}]:} estout m1 m2 m3 m4, cells(b(star fmt(\PY{l+m}{3}))\PY{k}{ se}(par fmt(\PY{l+m}{3}))) \PY{c+cs}{///}
+        starlevels( \PY{o}{*} \PY{l+m}{0.10} \PY{o}{*}\PY{o}{*} \PY{l+m}{0.05} \PY{o}{*}\PY{o}{*}\PY{o}{*} \PY{l+m}{0.010}) \PY{c+cs}{///}
+        legend\PY{k}{ label} varlabels(\PYZus{}cons constant) \PY{c+cs}{///}
+        stats(N r2 r2\PYZus{}a rmse F, fmt(\PY{l+m}{0} \PY{l+m}{3} \PY{l+m}{3} \PY{l+m}{3} \PY{l+m}{3}) \PY{c+cs}{///}
+        \PY{k}{label}(N R\PY{o}{\PYZhy{}}squared Ajusted\PY{o}{\PYZhy{}}R2 Residual\PYZus{}Std\PYZus{}Error F\PY{o}{\PYZhy{}}Statistic))
+\end{Verbatim}
+
+\begin{footnotesize}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+
+------------------------------------------------------------------------------------
+                          Model 1         Model 2         Model 3         Model 4   
+                             b/se            b/se            b/se            b/se   
+------------------------------------------------------------------------------------
+white                       0.031*                          0.016                   
+                          (0.016)                         (0.015)                   
+highquality                 0.015           0.030*         -0.002                   
+                          (0.016)         (0.016)         (0.015)                   
+chicago                    -0.015          -0.030*                         -0.042***
+                          (0.016)         (0.016)                         (0.016)   
+whitehighquality            0.015                           0.020                   
+                          (0.023)                         (0.021)                   
+whitechicago               -0.015                                                   
+                          (0.022)                                                   
+highqualitychicago         -0.017          -0.012                                   
+                          (0.022)         (0.022)                                   
+whitehighqualitych\textasciitilde{}o        0.005                                                   
+                          (0.031)                                                   
+black                                      -0.031*                         -0.046***
+                                          (0.016)                         (0.016)   
+blackhighquality                           -0.015                                   
+                                          (0.023)                                   
+blackchicago                                0.015                           0.010   
+                                          (0.022)                         (0.022)   
+blackhighqualitych\textasciitilde{}o                       -0.005                                   
+                                          (0.031)                                   
+boston                                                      0.015                   
+                                                          (0.016)                   
+whiteboston                                                 0.015                   
+                                                          (0.022)                   
+highqualityboston                                           0.017                   
+                                                          (0.022)                   
+whitehighqualitybo\textasciitilde{}n                                       -0.005                   
+                                                          (0.031)                   
+lowquality                                                                 -0.030*  
+                                                                          (0.016)   
+blacklowquality                                                             0.015   
+                                                                          (0.023)   
+lowqualitychicago                                                           0.012   
+                                                                          (0.022)   
+blacklowqualitychi\textasciitilde{}o                                                        0.005   
+                                                                          (0.031)   
+constant                    0.070***        0.101***        0.055***        0.131***
+                          (0.012)         (0.012)         (0.010)         (0.012)   
+------------------------------------------------------------------------------------
+N                            4870            4870            4870            4870   
+R-squared                   0.008           0.008           0.008           0.008   
+Ajusted-R2                  0.006           0.006           0.006           0.006   
+Residual\_Std\_Error          0.271           0.271           0.271           0.271   
+F-Statistic                 5.349           5.349           5.349           5.349   
+------------------------------------------------------------------------------------
+* p<0.10, ** p<0.05, *** p<0.010
+
+    \end{Verbatim}
+\end{footnotesize}
+
+\end{kframe}
+\end{knitrout}
+\end{enumerate}
+
+\section*{Question 8}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{verbatim}
+
+
+
+
+
+
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+
+\section*{Question 9}
+An example of a two-factor design that encounters one-sided noncompliance may be found in Fieldhouse et al.'s study of voter mobilization in the United Kingdom.\footnote{Fieldhouse et al. 2010.} In this study, the first factor is whether each voter was mailed a letter encouraging him or her to vote in the upcoming election. The second factor is whether each voter was called with an encouragement to vote. Noncompliance occurs in the case of phone calls, as some targeted voters cannot be reached when called. The experimental design consists of four groups: a control group, a mail-only group, a phone-only group, and a group targeted for both mail and phone. The following table shows the results by assigned experimental group.
+% Table generated by Excel2LaTeX from sheet 'Sheet1'
+\begin{table}[htbp]
+  \centering
+  \caption{Question 9 Table}
+    \begin{tabular}{R{5cm}rrrr}
+    \toprule
+          & Control  & Mail Only  & Phone Only  & Mail and Phone  \\
+    \midrule
+    N     & 5179  & 4367  & 3466  & 2287 \\
+    Number Contacted by Phone  & 0     & 0     & 2003  & 1363 \\
+    Among those Assigned to this Experimental Group, Percent who Voted  & 0.397 & 0.403 & 0.397 & 0.418 \\
+    Among those Contacted by Phone, Percent who Voted  & NA    & NA    & 0.465 & 0.468 \\
+    \bottomrule
+    \end{tabular}%
+  \label{tab:addlabel}%
+\end{table}%
+
+
+\begin{enumerate}[a)]
+\item Show that, under certain assumptions, this experimental design allows one to identify the following parameters: (i) the ATE of mail, (ii) the Complier average causal effect (CACE) of phone calls, (iii) the CATE of mail among those who comply with the phone call treatment, (iv) the CATE of mail among those who do not comply with the phone call treatment, and (v) the CACE of phone calls among those who receive mail. \\
+Answer:\\
+\begin{enumerate}[(i)]
+
+\item \textbf{ATE of mail.} The ATE of mail is identified using the core assumptions of chapter 2 (random assignment, non-interference, and excludability). Excludability in this holds that the only way that random assignment of mail affects outcomes is through the mail treatment itself. 
+
+\item \textbf{Complier average causal effect (CACE) of phone calls.} In order identify the CACE of phone calls, we must invoke the assumptions of Chapter 5, since this is a case of one-sided non-compliance. Again, the exclusion restriction holds that the only way that the assignment of phone calls affects outcomes is through actual phone contacts. The CACE here is ATE among those who receive phone calls if assigned to the treatment group.
+
+\item \textbf{CATE of mail among those who comply with the phone call treatment.}  The CATE of mail is identified in the same was as an ATE, except that it is restricted to those who actually receive phone calls
+
+\item \textbf{CATE of mail among those who do not comply with the phone call treatment.} Same as above, but among those who are not treated when called.
+
+\item \textbf{CACE of phone calls among those who receive mail.} The CACE of phone calls among those who receive mail is identified among the same group of compliers as the CACE above, since mail is assigned and received randomly (because we assume full compliance with the mail treatment). However, the ATE of the calls among Compliers may differ from the ATE among Compliers who also receive mail, due to a treatment-by-treatment interaction. 
+
+\end{enumerate}
+
+\item Using the identification strategies you laid out in part (a), estimate each of the five parameters using the results in the table.
+
+\begin{enumerate}[(i)]
+
+\item \textbf{ATE of mail.} The estimated ATE of mail is 40.3 - 39.7 = 0.6 percentage points.
+
+\item \textbf{Complier average causal effect (CACE) of phone calls.} The estimated CACE of phone calls is the ITT divided by the share of compliers: (39.7 - 39.7)/ (2003/3466) = 0. 
+
+\item \textbf{CATE of mail among those who comply with the phone call treatment.}  The CATE of mail among those who receive a call is 46.8 - 46.5 = 0.3 percentage points. 
+
+\item \textbf{CATE of mail among those who do not comply with the phone call treatment.}  In order to figure out the CATE of mail among those who did not comply when called, we must first back out the voting rates given the numbers presented above. For example, the overall voting rate in the treatment group of 41.8 is a weighted average of the voting rates among the contacted and uncontacted. Thus, 41.8 = 46.8(1363/2287) + X(923/2287). Solving for X gives 34.4, and repeating the same calculation for the control group gives 30.4. Therefore, the estimated effect of mail for this subgroup is 4.0 percentage points. 
+
+\item \textbf{CACE of phone calls among those who receive mail.} The CACE of phone calls among those who receive mail is the ITT divided by the contact rate: (41.8 - 40.3) / (1363/2287) = 2.5 percentage points
+
+\end{enumerate}
+
+
+\item In Chapters 5 and 6, we discussed the use of instrumental variables regression to estimate CACEs when experiments involve noncompliance. Here, we can apply instrumental variables regression to a factorial experiment in which one factor encounters noncompliance. With the replication dataset at http://isps.research.yale.edu/FEDAI, use instrumental variables regression to estimate the parameters of the Vote equation in the following three-equation regression model:\\
+
+\begin{align*}
+PhoneContact_i &= \alpha_0 + \alpha_1 Mail_i + \alpha_2 PhoneAssign_i + \alpha_3(PhoneAssign_i * Mail_i) + e_i \\
+PhoneContact_i * Mail_i &= \gamma_0 + \gamma_1 Mail_i + \gamma_2 PhoneAssign_i + \gamma_3(PhoneAssign_i *
+Mail_i) + \epsilon_i \\
+Vote_i &= \beta_0 + \beta_1 Mail_i + \beta_2 PhoneContact_i + \beta_3(PhoneContact_i * Mail_i) + u_i
+\end{align*}
+
+Interpret the regression estimates in light of the five parameters you estimated in part (b). Which causal parameters does instrumental variables regression estimate or fail to estimate?
+
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+   \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}1}]:} import delim .\PY{o}{/}data\PY{o}{/}chapter09\PY{o}{/}Fieldhouse\PYZus{}et\PYZus{}al\PYZus{}unpublished\PYZus{}2010\PYZus{}expanded,clear
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}2}]:} \PY{k}{rename}\PY{k}{ m} mail
+        \PY{k}{rename} p phone\PYZus{}assign
+        \PY{k}{rename} c phone\PYZus{}contact
+        \PY{k}{rename} y vote
+        \PY{k}{rename} c\PYZus{}m phone\PYZus{}contact\PYZus{}mail
+        \PY{k}{rename} p\PYZus{}m phone\PYZus{}assign\PYZus{}mail
+        
+        
+        \PY{k}{gen} mail\PYZus{}phone\PYZus{}contact = mail\PY{o}{*}phone\PYZus{}contact
+        \PY{k}{gen} mail\PYZus{}phone\PYZus{}assign = mail\PY{o}{*}phone\PYZus{}assign
+        	
+        ivregress 2sls vote mail \PY{c+cs}{///}
+        (mail\PYZus{}phone\PYZus{}contact phone\PYZus{}contact = mail phone\PYZus{}assign mail\PYZus{}phone\PYZus{}assign)
+\end{Verbatim}
+
+\begin{footnotesize}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Instrumental variables (2SLS) regression          Number of obs   =     15,300
+                                                  Wald chi2(3)    =       3.38
+                                                  Prob > chi2     =     0.3367
+                                                  R-squared       =     0.0010
+                                                  Root MSE        =     .49001
+
+------------------------------------------------------------------------------------
+              vote |      Coef.   Std. Err.      z    P>|z|     [95\% Conf. Interval]
+-------------------+----------------------------------------------------------------
+mail\_phone\_contact |   .0253338   .0282274     0.90   0.369    -.0299908    .0806584
+     phone\_contact |  -.0001781   .0186117    -0.01   0.992    -.0366565    .0363002
+              mail |   .0060348   .0100671     0.60   0.549    -.0136962    .0257659
+             \_cons |   .3969878    .006809    58.30   0.000     .3836424    .4103332
+------------------------------------------------------------------------------------
+Instrumented:  mail\_phone\_contact phone\_contact
+Instruments:   mail phone\_assign mail\_phone\_assign
+
+    \end{Verbatim}  
+\end{footnotesize}
+\end{kframe}
+\end{knitrout}
+
+The intercept is the voting rate in the control group. The coefficient for ``phone contact'' is the estimated CACE for phones when no mail is assigned.  The effect for ``mail'' is the ATE for mail when no phone calls are assigned. The coefficient for ``mail:phone contact'' is the extent to which the apparent CACE of phone calls increases when we move from the no-mail to the mail group. These estimates reproduce the estimates generated by hand above. Notice that IV regression does not report the effect of mail for non-compliers.
+\end{enumerate}
+
+
+\end{document}
+

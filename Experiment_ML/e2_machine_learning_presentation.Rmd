@@ -1,0 +1,828 @@
+---
+title: "Machine Learning for Heterogenous Treatment Effects"
+author: "Dylan Groves"
+date: "October 10, 2018"
+output: ioslides_presentation
+---
+
+
+```{r setup, include=FALSE, cache = FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+
+setwd("C:/Users/Dylan Groves/Dropbox/Columbia/2018 Fall/Experiments 2/Machine Learning Presentation")
+
+library(BayesTree)
+library(bartMachine)
+library(dplyr)
+library(stargazer)
+library(kableExtra)
+library(ggplot2)
+library(grid)
+library(stargazer)
+library(png)
+library(jpeg)
+
+```
+
+## Overview
+
+1. Conceptual Goal, Challenge, and Strategy
+2. Challenges with Heterogenous Treatment Effects
+3. Bayesian Additive Regression Trees
+4. Recursive Partitioning
+5. Conclusion
+
+# Introduction
+
+## The Goal 
+
+- We are usually interested in the average treatment effect (ATE)
+
+- But we might also be interested in how the ATE varies with other covariates: the conditional average treatment effect (CATE).
+
+1. How does effect of "welfare priming" vary by respondents' baseline attitudes towards blacks?
+2. How does effect of a village-level agriculture program vary with rainfall?
+
+- Goal is prediction, not causal identification
+
+## The Obstacles {.build}
+
+Modelling Conditional Average Treatment Effects (CATE) is challenging:
+
+1. Ad-hockery and data dredging in search for "interesting" interactions (Pocock 2002; Gabler et al. 2009)
+
+2. Non-statistical uncertainty (the interaction model might itself by biased)
+
+3. Multiple comparisons problem
+
+The historical record on heterogenous treatment effects in the social sciences is very weak
+
+## The Solution (Conceptually) {.build}
+
+The solution is to automate the search for heterogeneity:
+
+1. No ad-hockery: Let the data decide the key sources of heterogeneity
+
+2. No functional form assumptions: non-parametric regression trees
+
+3. No multiple hypothesis testing: identify the search parameters ex-ante
+
+# Notation
+
+## Formal Notation (no covariates) {.build}
+
+No interaction and consistent treatment effect
+
+$$ Y_i = \beta_0 + \beta_{Di}D_{i} + \epsilon_{i} $$
+
+Idiosyncratic treatment effect:
+
+$$ Y_i = B_0 + \beta_{Di}D_{i} +  \underbrace{[B_{Di} - B_D]}_\text{idiosyncratic effect of treatment}D_i + \epsilon_i $$
+
+## Formal Notation (with covariates) {.build}
+
+But both outcome and treatment effect may vary with covariates:
+
+$$ Y_i =  \beta'_0 + \beta_X X_i + (\beta_D + \beta_{DX}X_i)D_i + $$
+$$ [(\beta_{Di} -\beta_D - \beta_{DX}X_i)D_i+ \epsilon'_i $$
+
+Systematic, not idiosyncratic, treatment effect heterogeneity (although the latter doesn't bias the CATE):
+
+$$ Y_i =  \beta'_0 + \beta_X X_i + \underbrace{(\beta_D + \beta_{DX}X_i)D_i}_\text{How treatment effect varies with covariates} + \epsilon'_i $$
+
+# Examples of Het FX
+
+## Example 1 - Binary Covariate
+
+```{r, echo = FALSE, cache = FALSE}
+
+rm(list = ls())
+set.seed(1956)
+
+## Drought Version
+N = 100
+base = rnorm(N, 100, 1)
+t <- rbinom(N, 1, 0.5)
+drought <- rbinom(N, 1, 0.25)
+f.drought <- as.factor(drought)
+error <- rnorm(N, mean = 0, sd = 10)
+
+# Effects (Constant)
+effect.drought <- -5
+effect.treat.d <- 5 - 5*drought
+
+# Potential Outcomes with Interaction
+p0.d <- base + effect.drought*drought + error
+p1.d <- base + effect.drought*drought + effect.treat.d + error
+t.effect <- p1.d - p0.d
+
+# Calculate true treatment effects
+ate = mean(t.effect)
+ate.drought = mean(t.effect[drought == 1])
+ate.nodrought = mean(t.effect[drought == 0])
+
+# Revealed outcomes (interaction)
+y <- ifelse(t == 1, p1.d, p0.d)
+
+# Regression
+lm_interact <- lm(y ~ base + t + drought + t*drought)
+
+# Create data frame
+df <- data.frame(base, t, y, drought, f.drought, error, p0.d, p1.d)
+
+# Plot
+fig.drought <- ggplot(df, aes(y = y, x = t, shape = f.drought, colour = f.drought)) +
+  geom_point() + 
+  stat_smooth(method = lm)  +
+  labs(x="Treatment",y="Environment Outcome") +
+  geom_jitter(width = 0.1) +
+  scale_colour_discrete(name="Drought",
+                        breaks = c("0", "1"),
+                        labels = c("No Drought", "Drought")) +
+  scale_shape_discrete(name="Drought",
+                       breaks = c("0", "1"),
+                       labels = c("No Drought", "Drought")) +
+  scale_x_discrete(breaks=c("", ""),
+                   labels=c("", ""))
+
+# Estimate CATE for drought and no drought condition
+cate.drought = mean(y[t==1 & drought==1]) - mean(y[t==0 & drought==1])
+cate.nodrought = mean(y[t==1 & drought==0]) - mean(y[t==0 & drought==0])
+
+# Multiply CATE by proportion of population
+ate_est = cate.drought*mean(drought) + cate.nodrought*(1-mean(drought))
+
+table <- data.frame(cate.drought, mean(drought), cate.nodrought, 1-mean(drought), ate)
+
+colnames(table) <- c("CATE (drought)", "Pct Drought", "CATE (no drought)", "Pct No Drought", "True ATE")
+
+table <- round(table, 2)
+```
+
+Consider a case where drought moderates the effect of treatment on a continous outcome.
+```{r, echo=FALSE, fig.height = 4}
+fig.drought
+```
+
+## Example 1 - Binary Covariate
+
+Estimating the conditional average treatment effect for drought and non-drought conditions is straightforward:
+
+$$ \tau(x) = E[Y_i(0) - Y_i(1)|X_i] $$
+
+```{r, echo = FALSE, results='asis', }
+kable(table) %>% kable_styling(bootstrap_options = c("hover", "condensed"))
+```
+
+We can then weight the CATE by the probability of each condition to estimate the ATE:
+
+```{r, echo = TRUE, results='asis', }
+cate.drought*mean(drought) + cate.nodrought*(1-mean(drought))
+```
+
+
+
+
+## Example 2 - Categorical {.columns-2}
+
+```{r, echo = FALSE, cache = FALSE} 
+
+rm(list = ls())
+set.seed(1956)
+
+# Set Effects
+N = 100
+base = rnorm(N, 100, 1)
+t.rain <- rbinom(N, 1, 0.5)
+rain <- sample(4:10, N ,replace=T)
+effect.rain <- 1
+effect.treat.r <- 5
+interact <- rnorm(N, 0.5, 0.2)
+error.rain <- rnorm(N, mean = 0, sd = 10)
+
+# Identify Potential Outcomes (Categorial)
+p0.rain <- rnorm(n = N, mean = c(base + rain*effect.rain), sd = 1)
+p1.rain <- rnorm(n = N, mean = c(base + rain*effect.rain + effect.treat.r + interact*rain), sd = 1)
+                                 
+# Revealed outcomes
+y.rain <- ifelse(t.rain == 1, p1.rain, p0.rain)
+
+# Calculate Treatment effect
+ite.rain = p1.rain - p0.rain
+ate.rain = mean(p1.rain - p0.rain)
+ate.rain_est = mean(y.rain[t.rain == 1]) - mean(y.rain[t.rain == 0])
+
+# Regression
+lm_interact <- lm(y.rain ~ base + t.rain + rain + t.rain*rain)
+
+# Create Data Frame
+df.rain <- data.frame(base, t.rain, y.rain, rain, ite.rain, ate.rain, p0.rain, p1.rain, error.rain)
+
+  
+# With categorical
+fig.cat1 <- ggplot(df.rain, aes(y = y.rain, x = t.rain, colour = as.factor(rain))) +
+  stat_smooth(method = lm)  +
+  geom_point() +
+  labs(x = "Treatment", y = "Environment Outcome") +
+  geom_jitter(width = 0.1) + 
+  scale_x_discrete(breaks=c("", ""),
+                   labels=c("", "")) +
+  labs(color='Rainfall') 
+
+fig.cat2 <- ggplot(df.rain, aes(y = ite.rain, x = rain)) +
+  geom_point() + 
+  stat_smooth(method = lm)  +
+  labs(x="Rainfall",y="True Individual Treatment Effect") +
+  geom_jitter(width = 0.1)
+
+table2 <- df.rain %>%
+  group_by(as.factor(rain)) %>%
+  summarise(t1_mean = mean(y.rain[t.rain == 1]),
+            t0_mean = mean(y.rain[t.rain == 0]),
+            pct = length(y.rain)/1000)
+
+table2$treatment <- table2$t1_mean - table2$t0_mean
+
+table2[,-1] <- round(table2[,-1], 2)
+colnames(table2) <- c("Rainfall", "Mean (Z=1)", "Mean (Z=0)", "Pct", "Y(1)-Y(0)")
+
+```
+
+```{r, echo=FALSE, fig.width=4, fig.height=4}
+fig.cat1
+```
+
+```{r, echo=FALSE,fig.width = 4, fig.height = 4}
+fig.cat2
+```
+
+## Example 2 - Categorical
+
+```{r, echo=FALSE, out.width='100%'}
+kable(table2) %>% kable_styling(bootstrap_options = c("hover", "condensed"))
+```
+
+
+## Example 3 - Continous {.columns-2}
+```{r, echo=FALSE}
+
+# Create continuous variable  
+N = 100
+base.con = rnorm(N, 100, 1)
+t.rain.con <- rbinom(N, 1, 0.5)
+rain.con <- rnorm(N, 10, 1)
+effect.treat.r <- rnorm(N, 5 + 0.5*rain.con, 0)
+error.rain <- rnorm(N, mean = 0, sd = 1)
+base.con = rnorm(N, 100, 1)
+effect.rain.con <- 1
+effect.treat.r.con <- 5
+interact.con <- 2
+error.rain <- rnorm(N, mean = 0, sd = 10)
+
+# Identify Potential Outcomes (Continuous)
+p0.rain.con <- rnorm(n = N, mean = c(base.con + rain.con*effect.rain.con), sd = 1)
+p1.rain.con <- rnorm(n = N, mean = c(base.con + rain.con*effect.rain.con + effect.treat.r.con + interact.con*rain.con), sd = 1)
+
+# Reveal Potential Outcomes
+y.rain.con <- ifelse(t.rain.con == 1, p1.rain.con, p0.rain.con)
+
+# Calculate Treatment effect
+ite.rain.con = p1.rain.con - p0.rain.con
+ate.rain.con = mean(p1.rain.con - p0.rain.con)
+ate.rain_est.con = mean(y.rain.con[t.rain.con == 1]) - mean(y.rain.con[t.rain.con == 0])
+  
+# Create Data Frame
+df.rain <- data.frame(base, t.rain.con, y.rain.con, rain.con, ite.rain.con, ate.rain.con, p0.rain.con, p1.rain.con)
+median.rain <- median(rain.con)
+df.rain$medianrain.dum <- ifelse(rain.con > median.rain, "Higher", "Lower")
+
+# Regression
+lm_interact <- lm(y.rain.con ~ base.con + t.rain.con + rain.con + t.rain.con*rain.con)
+
+# Changing Individual Treatment Effects
+fig.con1 <- ggplot(df.rain, aes(y =ite.rain.con, x = rain.con)) +
+  geom_point() + 
+  stat_smooth(method = lm)  +
+  labs(x="Rainfall",y="Individual Treatment Effect")
+
+# Changing Individual Treatment Effects
+fig.con2 <- ggplot(df.rain, aes(y = y.rain.con, x = t.rain.con, colour = medianrain.dum)) +
+  geom_point() + 
+  stat_smooth(method = lm)  +
+  labs(x="Treatment",y="Environmental Outcome", colour = "Rain (Med)")
+
+```
+
+```{r, echo=FALSE, fig.width=4, fig.height=4}
+fig.con1 
+```
+
+```{r, echo=FALSE,fig.width = 4, fig.height = 4}
+fig.con2 
+```
+
+## Example 4 - Curvilinear {.columns-2}
+
+```{r, echo = FALSE} 
+# Create variables  
+N = 200
+t.curv <- rbinom(N, 1, 0.5)
+rain.curv <- runif(N, 0, 7)
+base.curv = rnorm(N, 100, 1)
+effect.rain.curv <- 1
+effect.treat.curv <- 10
+interact.curv <- -0.65*rain.curv^2 + 3.3*rain.curv + 2.5
+
+# Generate Potential Outcomes
+p0.curv <- rnorm(n = N, mean = c(base.curv + rain.curv*effect.rain.curv), sd = 1)
+p1.curv <- rnorm(n = N, mean = c(base.curv + rain.curv*effect.rain.curv + effect.treat.curv + interact.curv), sd = 1)
+
+# Reveal Potential Outcomes
+y.curv <- ifelse(t.curv == 1, p1.curv, p0.curv)
+
+# Find Individual Treatment Effects
+ite.curv = p1.curv - p0.curv
+
+# Estimate Regression
+lm_interact <- lm(y.curv ~ base.curv + t.curv + rain.curv + t.curv*rain.curv)
+
+# Create Data Frame
+df.curv <- data.frame(base.curv, t.curv, y.curv, rain.curv, interact.curv, ite.curv, p0.curv, p1.curv)
+median.curv <- median(rain.curv)
+df.curv$median.curv.dum <- ifelse(rain.curv > median.curv, "Higher", "Lower")
+
+# Individual Treatment Effect Plot
+fig.curv1 <- ggplot(df.curv, aes(y = ite.curv, x = rain.curv)) +
+  geom_point() + 
+  stat_smooth(method = lm)  +
+  labs(x="Rainfall",y="Individual Treatment Effect")
+
+# Individual Treatment Effect Plot
+fig.curv4 <- ggplot(df.curv, aes(y = ite.curv, x = rain.curv)) +
+  geom_point() + 
+  stat_smooth(method = loess)  +
+  labs(x="Rainfall",y="Individual Treatment Effect")
+
+# Individual Treatment Effect Plot
+fig.curv3 <- ggplot(df.curv, aes(y = y.curv, x = rain.curv, colour = as.factor(t.curv))) +
+  geom_point() + 
+  stat_smooth(method = loess)  +
+  labs(x="Rainfall",y="Individual Treatment Effect", colour = "Treat")
+
+# T/C Plot with Median Difference
+fig.curv2 <- ggplot(df.curv, aes(y = y.curv, x = t.curv, colour = as.factor(median.curv.dum))) +
+  geom_point() + 
+  stat_smooth(method = lm)  +
+  labs(x="Treatment",y="Outcome") +
+  scale_x_discrete(breaks=c("0", "1"),
+                   labels=c("Control", "Treat"))+
+  labs(colour='Median Rain') 
+```
+
+
+```{r, echo=FALSE, fig.width=4, fig.height=4}
+fig.curv1
+```
+
+```{r, echo=FALSE,fig.width = 4, fig.height = 4}
+fig.curv3
+```
+
+## Example 5 - Multiple Interactions
+
+Consider a case in which the the heterogenous effect is itself conditional on another covariate. 
+
+For example, perhaps rainfall only influences treatment effects in desertified areas. 
+
+$$ Y_i = \beta_0 + \beta_1*Treat + \beta_2*Rain + \beta_3*T*R*Desert $$
+
+## Example 5 - Complex {.columns-2}
+
+```{r, echo = FALSE}
+# Rainfall (Complex) ---------------------------------------------------
+
+# Create continuous variable  
+N = 100
+base.com = rnorm(N, 100, 1)
+t.rain.com <- rbinom(N, 1, 0.5)
+rain.com <- rnorm(N, 10, 3)
+veg <- rbinom(N, 1, 0.5)
+effect.treat.r <- rnorm(N, 5 + 0.5*rain.com, 0)
+error.rain <- rnorm(N, mean = 0, sd = 1)
+base.com = rnorm(N, 100, 1)
+effect.rain.com <- 0.5
+effect.treat.r.com <- 3
+interact.com <- 0.5
+error.rain <- rnorm(N, mean = 0, sd = 20)
+
+# Identify Potential Outcomes (Continuous)
+p0.rain.com <- rnorm(n = N, mean = c(base.com + rain.com*effect.rain.com), sd = 1)
+p1.rain.com <- rnorm(n = N, mean = c(base.com + rain.com*effect.rain.com + effect.treat.r.com + interact.com*rain.com*veg), sd = 1)
+
+# Reveal Potential Outcomes
+y.rain.com <- ifelse(t.rain.com == 1, p1.rain.com, p0.rain.com)
+
+# Calculate Treatment effect
+ite.rain.com = p1.rain.com - p0.rain.com
+ate.rain.com = mean(p1.rain.com - p0.rain.com)
+ate.rain_est.com = mean(y.rain.com[t.rain.com == 1]) - mean(y.rain.com[t.rain.com == 0])
+
+# Create Data Frame
+df.rain <- data.frame(base, veg, t.rain.com, y.rain.com, rain.com, ite.rain.com, ate.rain.com, p0.rain.com, p1.rain.com)
+median.rain <- median(rain.com)
+df.rain$medianrain.dum <- ifelse(rain.com > median.rain, "Higher", "Lower")
+
+# Regression
+lm_interact <- lm(y.rain.com ~ base.com + t.rain.com + rain.com + t.rain.com*rain.com)
+
+# Changing Individual Treatment Effects
+fig.com1 <- ggplot(df.rain, aes(y =ite.rain.com, x = rain.com, colour = as.factor(veg))) +
+  geom_point() + 
+  stat_smooth(method = lm)  +
+  labs(x="Rainfall",y="Individual Treatment Effect", colour = "Desert")
+
+
+# Changing Individual Treatment Effects
+fig.com2 <- ggplot(df.rain, aes(y = y.rain.com, x = t.rain.com, colour = as.factor(veg))) +
+  geom_point() + 
+  stat_smooth(method = lm)  +
+  geom_jitter() +
+  labs(x="Treatment",y="Environmental Outcome", colour = "Desert")
+```
+
+```{r, echo=FALSE, fig.width=4, fig.height=4}
+fig.com1
+```
+
+```{r, echo=FALSE,fig.width = 4, fig.height = 4}
+fig.com2
+```
+
+# BART
+
+## Review of Challenges {.build}
+
+1. Ad-hockery
+2. Too many interactions (Imprecise estimates)
+3. Sub-group analysis (Multiple comparisons problems)
+4. Strong modelling assumptions (non-statistical uncertainty)
+
+These problems expand with:
+
+1. Continuous covariates (where do you make cuts)?
+2. Large numbers of covariates (which covariates matter)?
+3. Interacting and curvilinear effects (how do you know if you have specified the right model)?
+
+## The Solution in Principle
+
+We want a solution that:
+
+- Lets the data make the choices
+- Identifies meaningful interactions (precise)
+- Doesn't overfit the data (out-of-sample validity)
+
+## Bayesian Additive Regression Trees (BART)
+
+Green and Holger 2012 propose Bayesian Additive Regression Trees (Chipman, George, and McCulloch 2010). 
+
+1. Eliminate ad-hoc data mining
+2. Non-parametric estimation of CATEs
+3. Distinguish exploration and confirmation by splitting samples into training and test groups
+
+BART models an outcome $Y$ as an unknown function $f$ of a p-dimensional vector of predictors $x$ and an i.i.d error term:
+
+$$Y = f(x) + \epsilon$$
+
+## What is a Regression Tree?
+
+We call a tree $T$. It includes: (1) decision nodes and the decision rules at each node, (2) terminal nodes. Every observation fits in exactly one terminal node.
+
+We call $M$ the terminal node parameter values $\mu_1, \mu_2, .... \mu_b$. $\mu_k$ is the mean response of the subgroup of observations falling in terminal node k. 
+
+$g(x; T, M)$ generates a $\mu_{kj}$ for an observation with characteristics $x$ by giving it the median of its terminal node. Y is therefore modelled as:
+
+$$ Y = g(x; T, M) + \epsilon, \space \epsilon \sim N(0,\sigma^2) $$
+
+## What is a Regression Tree?
+
+```{r, echo=FALSE,out.width='85%', fig.align="center"}
+knitr::include_graphics('simple_tree.jpg')
+``` 
+
+
+## Regression Tree Example
+
+```{r, echo=FALSE,out.width='95%', fig.align="center"}
+knitr::include_graphics('fig_tree.jpg')
+``` 
+
+## Single Tree vs BART fit
+
+```{r, echo=FALSE,out.width='75%'} 
+knitr::include_graphics('fig_fit.jpg')
+``` 
+
+
+
+
+## Aggregating Regression Trees 
+
+BART approximates $f(x) = E(Y|x)$ by a sum of regression trees:
+
+$$ Y(\sum_{j=1}^{m}g(x; T_j, M_j) + \epsilon, \; \; \epsilon ~ Normal(0,\sigma^2) $$
+
+- The output of $g(x, T_j, M_j)$ is the value obtained by dropping an observation with chracteristics x down the tree until it hits a terminal node, and then reporting $\mu_{zj} \in M_j$.
+
+- $E(Y|x)$ equals the sum of all terminal node parameters in $g(x, T_j, M_j)$ assigned to an observation with characteristics $x$
+
+## Aggregating Regression Trees
+
+$$ Y(\sum_{j=1}^{m}g(x; T_j, M_j) + \epsilon, \; \; \epsilon ~ Normal(0,\sigma^2) $$
+
+- $\mu_{zj}$ is a direct effect of $x$ on $Y$ when $g(x; T_j, M_j)$ includes only one component of $x$. 
+- $\mu_{zj}$ is a interaction effect when $g(x; T_j, M_j)$ depends on multiple $x$'s
+- A nice feature of BART is that many different trees can model many different interactions
+
+## BART Fit (Ex 4) {.columns-2}
+
+```{r, echo=FALSE, fig.width=4, fig.height=4}
+fig.curv1
+```
+
+```{r, echo=FALSE,fig.width = 4, fig.height = 4}
+fig.curv3
+```
+
+## BART Fit (Ex 4)
+
+```{r, echo=FALSE,out.width='100%'}
+knitr::include_graphics('curv_bart.png')
+``` 
+
+## BART Fit {.columns-2}
+
+```{r, echo=FALSE,out.width='100%', fig.align="center"}
+knitr::include_graphics('bart_example_lin.jpg')
+``` 
+
+
+```{r, echo=FALSE,out.width='100%', fig.align="center"}
+knitr::include_graphics('bart_example_quar.jpg')
+``` 
+
+
+## BART's Fitting Strategy
+
+Need a way to decide (1) When to split, and (2) How to aggregate trees
+
+- BART treats $(T, M)$ and $\sigma$ as parameters with priors in a statistical modelused Markov Chain Monte Carlo (MCMC)  
+- Posteriors are computed using Markov Chain Monte Carlo (MCMC). Redraw $T, M, and \sigma$ after each interation.
+- Start with 1,000 burn-in draws and 1,000 draws from posterior
+
+## BART's Standard Priors
+
+1. The $T_j$ prior keeps the number of tree branches small by putting more weight on smaller trees (highest probability on trees with 2 or 3 terminal nodes)
+- Doesn't mean large trees are impossible if data calls for it
+
+2. The $\mu_ij | T_j$ prior shrinks tree parameters towards zero (as number of trees increases, contribution of each tree decreases. 
+
+3. $m$ sets the number of trees for which BART cycles back through trees to refit. 
+
+Chipman, George, and McCullough (2010) propose a set of defaults and show that default priors work well across a variety of actual and simulated data sets.   
+
+# Application
+
+## Empirical Example
+
+Green and Holger (2012) apply BART to classic survey experiment in the General Social Survey (GSS).
+
+- Outcome: public support for government spending on "welfare"
+- Randomized treatment: using "welfare" versus "assistance to the poor"
+- Investigating treatment effect heterogeneity across year, age, education, party ID, negative attitudes towards blacks
+- N = 14,555, split randomly into training and test datasets
+
+## Overview of Data {.smaller}
+
+```{r, echo = FALSE, out.height='60%'}
+setwd("C:/Users/Dylan Groves/Dropbox/Columbia/2018 Fall/Experiments 2/Machine Learning Presentation/")
+load(file = "Recursive Partitioning/GSSeduc.RData")
+
+data4$year <- as.factor(data4$year)
+data4$Y1 <- ifelse(as.numeric(data4$Y) == 2, 1, 0)
+
+gss <- data4 %>%
+  dplyr::group_by(year) %>%
+  dplyr::summarize(sample_assistance = length(index[Tr == 1]),
+            sample_welfare = length(index[Tr == 0]),
+            mean_assistance = round(mean(Y1[Tr == 1], na.rm = T),2),
+            mean_welfare = round(mean(Y1[Tr == 0], na.rm = T),2),
+            ATE = round(mean(Y1[Tr == 1], na.rm = T) - mean(Y1[Tr == 0], na.rm = T),2))
+
+colnames(gss) = c("Year", "Assistance", "Welfare", "Assistance", "Welfare", "ATE")
+
+kable(gss) %>% 
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed")) %>% 
+  add_header_above(c(" " = 1, "Sample Size" = 2, "Means" = 2, " " = 1))
+```
+
+## Misclassification Rates
+
+```{r, echo=FALSE,out.width='80%', fig.align="center"}
+knitr::include_graphics('misclassification.jpg')
+``` 
+
+## CATE - Age
+
+```{r, echo=FALSE,out.width='100%', fig.align="center"}
+knitr::include_graphics('CATE_age.jpg')
+```
+
+## CATE - Attitudes Towards Blacks
+
+```{r, echo=FALSE,out.width='100%', fig.align="center"}
+knitr::include_graphics('bart_blacks.jpg')
+```
+
+## Conditional Average Treatment Effects
+
+Test for treatment effect heterogeniety with two-sided Wald test (Cameron and Trivedi 2005)
+
+- Party ID: Treatment effect increases with Republican Party ID and conservative ideology (p = 0.029)
+- Education: Treatment effect not moderated by education (p = 0.99) towards blacks (p < .001)
+- Variation across time (Start of Clinton presidency)
+
+## Overall Effect Heterogenity
+
+```{r, echo=FALSE,out.width='90%'}
+knitr::include_graphics('bart_histogram.jpg')
+```
+
+## Cross Validation
+
+```{r, echo=FALSE,out.width='80%', fig.align="center"}
+knitr::include_graphics('bart_cross validation.jpg')
+```
+
+## Kernel-Density Plots of CATES
+
+How much difference does allowing for systematic treatment effect heterogeneity make?  
+
+```{r, echo=FALSE,out.width='90%', fig.align="center"}
+knitr::include_graphics('bart_kernel density plot.jpg')
+```
+
+## BART Conclusion
+
+Approach provides a framework for investigation of systematic heterogeneity in large-scale experiments
+
+BART is:
+
+1. Automated (not ad-hoc)
+2. Non-parametric (no functional form assumptions)
+3. Cross-validated (split sample and multiple comparison problems)
+
+# Recursive Partioning
+
+## Alternative: "Honest" Recursive Partitioning
+
+Athey and Imbens (2015) - Recursive Partitioning for Hterogeneous Causal Effects
+
+Core proposal: Split the sample into two:
+- $S^tr$ to create the partition
+- $S^est$ to estimate the conditional mean
+- "Honesty" in using difference information for model structure and model estimation
+
+## Recursive Partitioning
+
+Tradeoffs:
+- Cost is sample size and precision: setting aside data for estimation leaves lest for training
+- Benefit is more valid confidence intervals and reduced sampling bias
+
+## Review of CART {.build}
+
+We are interested in the conditional expectation 
+
+$$\mu(x) = E[Y_i|X_i = x]$$
+
+CART takes place in two steps:
+
+Tree building: CART recursively partions observations in training sample.
+- Identifies splits to achieve "in sampel goodness of fit"
+- Solve overfitting by estimating a penalty on tree depth
+
+Cross-validation: select a complexity parameter for pruning
+- Estimate penalty by randomly selecting a cross-validation sample
+- Use cross-validation sample to choose a penalty parameter
+
+## CART for Prediction
+
+In CART, we are interested in minimizing the Means Squared Error (MSE) of our partition:
+
+$$Q^C(\pi) = -E_{S^{tes}, S^{tr}}[MSE(S^{te}, S^{est}, \pi(S^{tr}))]$$
+
+$$ MSE(S^{te}, S^{est}, \Pi) = \frac{1}{N^{tr}}\sum_{i \in S^{tr}} \mu^2 (X_i; S^{tr}, \Pi) $$
+
+## RP for Prediction
+
+In honest estimation, we are interested in the same measure over the test and estimation sample:
+
+$$Q^H(\pi) = -E_{S^{tes}, S^{est}, S^{tr}}[MSE, S^{te}, S^{est}, \pi(S^{tr}))]$$
+$$ \hat{EMSE(S^{tr}}, \Pi) = \frac{1}{N^{tr}} \sum_{i \in S^{tr}} \mu^2 (X_i; S^{tr}, \Pi) - \frac{2}{N^{tr}} \cdot \sum_{\ell \in \Pi} S^2_{S^{tr}}(\ell) $$
+
+Note: this doesn't make much of a difference for prediction, because gains in $MSE$ and $EMSE$ are proportional.
+
+## CART for Treatment Effects
+
+CART estimator:
+
+$$ MSE(S^{te}, S^{est}, \Pi) = \frac{1}{N^{tr}}\sum_{i \in S^{tr}} \tau^2 (X_i; S^{tr}, \Pi) $$
+
+## RP for Treatment Effects
+
+"Honest" estimator:
+
+$$ \hat{EMSE(S^{tr}}, \Pi) = \frac{1}{N^{tr}} \sum_{i \in S^{tr}} \tau^2 (X_i; S^{tr}, \Pi)$$
+$$ - \frac{2}{N^{tr}} \cdot \sum_{\ell \in \Pi} \frac{S^2_{S^{tr}_{Tr}}(\ell)}{p} + \frac{S^2_{S^{tr}_{CO}}(\ell)}{1-p} $$
+
+These are NOT proportional because covariates may effect the outcome but not the treatment effect, you can reduce the variance of a treatment effect estimator by introducing a split even if both child leaves have the same treatment effect. 
+
+## BART v RP Comparison - GSS
+
+Does recursive partitioning (RP) make a difference in empirical settings? Lets return to the GSS analysis:
+
+Thankfully, same ATE: 0.36
+
+## BART v RP Comparison {.columns-2}
+
+```{r, echo=FALSE,out.height='60%', fig.align="center"}
+knitr::include_graphics('negblacks.jpg')
+knitr::include_graphics('holger_age.jpg')
+``` 
+
+```{r, echo=FALSE,out.height='100%', fig.align="center"}
+knitr::include_graphics('bart_blacks.jpg')
+knitr::include_graphics('bart_age.jpg')
+``` 
+
+## BART v RP Comparison {.columns-2}
+
+```{r, echo=FALSE,out.height='60%', fig.align="center"}
+knitr::include_graphics('holger_libcon.jpg')
+knitr::include_graphics('holger_partyid.jpg')
+``` 
+
+```{r, echo=FALSE,out.height='100%', fig.align="center"}
+knitr::include_graphics('bart_libcon.jpg')
+knitr::include_graphics('bart_partyid.jpg')
+``` 
+
+## BART v RP Comparison {.columns-2}
+
+```{r, echo=FALSE, out.height='200%', fig.align="center"}
+knitr::include_graphics('honesty.png')
+```
+
+## RP Conclusion
+
+What does an "honest approach" mean in practice?
+
+- Divides data for tree building and parameter estimation
+- Performs similar cross-validation exercise
+- Sacrifices sample size for confidence interval coverage rates 
+- In many situations, doesn't seem to matter much
+
+## Machine learning more broadly
+
+BART and RP are two of MANY machine learning approaches to estimating heterogenous treatment effects:
+
+- Regression trees (Imai and Strauss, 2011)
+- BART (Holger and Green, 2012)
+- LASSO (Imai and Ratkovic, 2013)
+- Kernal Regularized Least Squares (Gelman et al 2008,, Hainmueller and Hzlett, 2014)
+- Elastic-Net (haste et al, 2001)
+- Ensemble of all methods (Grimmer et al, 2017)
+
+## Conclusion
+
+Trying to avoid three problems in investigating CATEs
+
+1. Ad-hockery and data dredging i
+
+2. Non-statistical uncertainty 
+
+3. Multiple comparisons problem
+
+The spirit of the exercise implies that data should be determining the methhods, with as little room for monkey business as possible. 
+
+
+## MCMC
+
+"Sculpting a complex figure by adding and subtracting small dabs of clay" (Chipman et al 2010)
+
+- Start with $m$ simple single node trees
+- Iteratively increase (grow), decrease (prune) terminal nodes or change decision rule.
+- Look for convergence
+
+Predict Y after burn-in sample $f^*_1,....f^*_K$ with the mean:
+
+$$\frac{1}{K}\sum_{k=1}^Kf^*_k(x)$$

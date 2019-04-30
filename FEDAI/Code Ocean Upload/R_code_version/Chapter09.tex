@@ -1,0 +1,595 @@
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% PROBLEM SET LATEX TEMPLATE FILE
+% DEFINE DOCUMENT STYLE, LOAD PACKAGES
+\documentclass[11pt,notitlepage]{article}\usepackage[]{graphicx}\usepackage[]{color}
+%% maxwidth is the original width if it is less than linewidth
+%% otherwise use linewidth (to make sure the graphics do not exceed the margin)
+\makeatletter
+\def\maxwidth{ %
+  \ifdim\Gin@nat@width>\linewidth
+    \linewidth
+  \else
+    \Gin@nat@width
+  \fi
+}
+\makeatother
+
+\definecolor{fgcolor}{rgb}{0.345, 0.345, 0.345}
+\newcommand{\hlnum}[1]{\textcolor[rgb]{0.686,0.059,0.569}{#1}}%
+\newcommand{\hlstr}[1]{\textcolor[rgb]{0.192,0.494,0.8}{#1}}%
+\newcommand{\hlcom}[1]{\textcolor[rgb]{0.678,0.584,0.686}{\textit{#1}}}%
+\newcommand{\hlopt}[1]{\textcolor[rgb]{0,0,0}{#1}}%
+\newcommand{\hlstd}[1]{\textcolor[rgb]{0.345,0.345,0.345}{#1}}%
+\newcommand{\hlkwa}[1]{\textcolor[rgb]{0.161,0.373,0.58}{\textbf{#1}}}%
+\newcommand{\hlkwb}[1]{\textcolor[rgb]{0.69,0.353,0.396}{#1}}%
+\newcommand{\hlkwc}[1]{\textcolor[rgb]{0.333,0.667,0.333}{#1}}%
+\newcommand{\hlkwd}[1]{\textcolor[rgb]{0.737,0.353,0.396}{\textbf{#1}}}%
+\let\hlipl\hlkwb
+
+\usepackage{framed}
+\makeatletter
+\newenvironment{kframe}{%
+ \def\at@end@of@kframe{}%
+ \ifinner\ifhmode%
+  \def\at@end@of@kframe{\end{minipage}}%
+  \begin{minipage}{\columnwidth}%
+ \fi\fi%
+ \def\FrameCommand##1{\hskip\@totalleftmargin \hskip-\fboxsep
+ \colorbox{shadecolor}{##1}\hskip-\fboxsep
+     % There is no \\@totalrightmargin, so:
+     \hskip-\linewidth \hskip-\@totalleftmargin \hskip\columnwidth}%
+ \MakeFramed {\advance\hsize-\width
+   \@totalleftmargin\z@ \linewidth\hsize
+   \@setminipage}}%
+ {\par\unskip\endMakeFramed%
+ \at@end@of@kframe}
+\makeatother
+
+\definecolor{shadecolor}{rgb}{.97, .97, .97}
+\definecolor{messagecolor}{rgb}{0, 0, 0}
+\definecolor{warningcolor}{rgb}{1, 0, 1}
+\definecolor{errorcolor}{rgb}{1, 0, 0}
+\newenvironment{knitrout}{}{} % an empty environment to be redefined in TeX
+
+\usepackage{alltt}    % ADD COMMENTS USING A PERCENT SIGN
+\usepackage{amsfonts}
+\usepackage{amsthm}
+\usepackage{amsmath, booktabs}
+\usepackage{mathtools}
+\usepackage{amssymb}
+\usepackage{subfig}
+\usepackage{setspace}
+\usepackage{fullpage}
+\usepackage{verbatim}
+\usepackage{graphicx}
+\usepackage{tabularx}
+\usepackage{longtable}
+\usepackage{multicol}
+\usepackage{multirow}
+\setlength{\parindent}{0in}  	% uncomment to remove indent at start of paragraphs
+\usepackage{pdflscape}
+\usepackage[english]{babel}
+\usepackage[pdftex]{hyperref}
+\usepackage{natbib}
+\usepackage{caption}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{graphics}
+\usepackage{multirow}
+\usepackage{graphics}
+\usepackage{hyperref}
+\usepackage{longtable}
+\usepackage{latexsym}
+\usepackage{rotating}
+\usepackage{setspace}
+\usepackage{layouts} 
+\usepackage[titletoc]{appendix}
+\DeclareGraphicsExtensions{.pdf,.jpg,.png}
+\usepackage[margin=1in]{geometry}
+\usepackage{enumerate}
+\usepackage{float}
+
+\newcolumntype{L}[1]{>{\raggedright\let\newline\\\arraybackslash\hspace{0pt}}p{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\let\newline\\\arraybackslash\hspace{0pt}}p{#1}}
+
+\usepackage[T1]{fontenc}				
+
+\usepackage{xcolor}
+\usepackage[printwatermark]{xwatermark}
+
+
+
+
+
+\title{Field Experiments: Design, Analysis and Interpretation \\
+Solutions for Chapter 9 Exercises}
+\author{Alan S. Gerber and Donald P. Green\footnote{Solutions prepared by Peter M. Aronow and revised by Alexander Coppock}}
+\date{\vspace{-5ex}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\begin{document}
+
+\maketitle
+
+
+\section*{Question 1}
+Important concepts:
+
+\begin{enumerate}[a)]
+\item Define CATE. Is a Complier average causal effect (CACE) an example of a CATE?\\
+Answer:\\
+CATE stands for conditional average treatment effect, or the ATE among a subgroup. Typically, the subgroup in question is defined by some observable covariate(s), such as the CATE for women over 40 years of age. One could, however, define a CATE for a latent group such as Compliers (those who take the treatment if and only if assigned to the treatment group). Therefore, a CACE is a CATE.
+
+\item What is an interaction effect?\\
+Answer:\\
+An interaction refers to systematic variation in treatment effects. A treatment-by-covariate interaction refers to variation in ATEs that is a function of covariates. A treatment-by-treatment interaction refers to variation in the average effect of one randomized intervention that occurs as a function of other assigned treatments.
+
+\item Describe the multiple comparisons problem and the Bonferroni correction.\\
+Answer:\\
+The multiple comparisons problem refers to the disortion in $p$-values that occurs when researchers conduct a series of hypothesis tests. When several hypothesis tests are conducted, the chances that at least one of them appears significant may be substantially greater than 0.05, the nominal size of each test. The Bonferroni correction reestablishes the proper size of each test when several hypothesis tests are conducted.   If $k$ tests are conducted at the 0.05 level, the Bonferroni-corrected target significance level is $0.05/k$.
+\end{enumerate}
+
+\section*{Question 2}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{verbatim}
+
+
+
+
+
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+\section*{Question 3}
+One way to reduce variance in $Y_i(0)$ is to block on a prognostic covariate. When blocking is used, the joint distribution of $Y_i(0)$ and $Y_i(1)$ is simulated within blocks using the bounding procedure described in section 9.2. Using the schedule of potential outcomes below, show how the maximum and minimum values of the covariance of $Y_i(0)$ and $Y_i(1)$ compare to the maximum and minimum values of the covariance of $Y_i(0)$ and $Y_i(1)$ for the dataset as a whole (i.e., had blocking not been used).
+
+% Table generated by Excel2LaTeX from sheet 'Sheet1'
+\begin{table}[H]
+  \centering
+  \caption{Question 3 Table}
+    \begin{tabular}{rrrr}
+    \toprule
+    Block  & Subject  & Yi(0)  & Yi(1)  \\
+    \midrule
+    A     & A-1   & 0     & 2 \\
+    A     & A-2   & 1     & 5 \\
+    A     & A-3   & 1     & 3 \\
+    A     & A-4   & 2     & 1 \\
+    B     & B-1   & 2     & 3 \\
+    B     & B-2   & 3     & 3 \\
+    B     & B-3   & 4     & 9 \\
+    B     & B-4   & 4     & 7 \\
+    \bottomrule
+    \end{tabular}%
+  \label{tab:addlabel}%
+\end{table}%
+
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{block} \hlkwb{<-} \hlkwd{c}\hlstd{(}\hlkwd{rep}\hlstd{(}\hlstr{"A"}\hlstd{,} \hlnum{4}\hlstd{),} \hlkwd{rep}\hlstd{(}\hlstr{"B"}\hlstd{,} \hlnum{4}\hlstd{))}
+\hlstd{Y0} \hlkwb{<-} \hlkwd{c}\hlstd{(}\hlnum{0}\hlstd{,}\hlnum{1}\hlstd{,}\hlnum{1}\hlstd{,}\hlnum{2}\hlstd{,}\hlnum{2}\hlstd{,}\hlnum{3}\hlstd{,}\hlnum{4}\hlstd{,}\hlnum{4}\hlstd{)}
+\hlstd{Y1} \hlkwb{<-} \hlkwd{c}\hlstd{(}\hlnum{2}\hlstd{,}\hlnum{5}\hlstd{,}\hlnum{3}\hlstd{,}\hlnum{1}\hlstd{,}\hlnum{3}\hlstd{,}\hlnum{3}\hlstd{,}\hlnum{9}\hlstd{,}\hlnum{7}\hlstd{)}
+
+\hlcom{# function for calculating population covariances}
+\hlstd{cov.pop} \hlkwb{<-} \hlkwa{function}\hlstd{(}\hlkwc{x}\hlstd{,}\hlkwc{y}\hlstd{)\{}\hlkwd{sum}\hlstd{((x}\hlopt{-}\hlkwd{mean}\hlstd{(x))}\hlopt{*}\hlstd{(y}\hlopt{-}\hlkwd{mean}\hlstd{(y)))}\hlopt{/}\hlstd{(}\hlkwd{length}\hlstd{(x))\}}
+
+\hlcom{# Ignoring blocks}
+\hlstd{Y1.lowtohigh} \hlkwb{<-} \hlkwd{sort}\hlstd{(Y1)}
+\hlstd{Y1.hightolow} \hlkwb{<-} \hlkwd{sort}\hlstd{(Y1,} \hlkwc{decreasing}\hlstd{=}\hlnum{TRUE}\hlstd{)}
+
+\hlstd{cov.min} \hlkwb{<-} \hlkwd{cov.pop}\hlstd{(Y0, Y1.hightolow)}
+\hlstd{cov.max} \hlkwb{<-} \hlkwd{cov.pop}\hlstd{(Y0, Y1.lowtohigh)}
+\hlstd{cov.min}
+\end{alltt}
+\begin{verbatim}
+## [1] -3.141
+\end{verbatim}
+\begin{alltt}
+\hlstd{cov.max}
+\end{alltt}
+\begin{verbatim}
+## [1] 3.234
+\end{verbatim}
+\begin{alltt}
+\hlcom{# Including blocks}
+\hlstd{Y1.lowtohigh.block} \hlkwb{<-} \hlkwd{c}\hlstd{(}\hlkwd{sort}\hlstd{(Y1[block}\hlopt{==}\hlstr{"A"}\hlstd{]),} \hlkwd{sort}\hlstd{(Y1[block}\hlopt{==}\hlstr{"B"}\hlstd{]))}
+\hlstd{Y1.hightolow.block} \hlkwb{<-} \hlkwd{c}\hlstd{(}\hlkwd{sort}\hlstd{(Y1[block}\hlopt{==}\hlstr{"A"}\hlstd{],}\hlkwc{decreasing}\hlstd{=}\hlnum{TRUE}\hlstd{),}
+                        \hlkwd{sort}\hlstd{(Y1[block}\hlopt{==}\hlstr{"B"}\hlstd{],}\hlkwc{decreasing}\hlstd{=}\hlnum{TRUE}\hlstd{))}
+\hlstd{cov.min.block} \hlkwb{<-} \hlkwd{cov.pop}\hlstd{(Y0, Y1.hightolow.block)}
+\hlstd{cov.max.block} \hlkwb{<-} \hlkwd{cov.pop}\hlstd{(Y0, Y1.lowtohigh.block)}
+\hlstd{cov.min.block}
+\end{alltt}
+\begin{verbatim}
+## [1] -0.01562
+\end{verbatim}
+\begin{alltt}
+\hlstd{cov.max.block}
+\end{alltt}
+\begin{verbatim}
+## [1] 2.984
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+The lowest and highest covariances under simple random assignment are -3.14 and 3.23.  In order to find the lowest and highest covariances under blocked assignment, sort the potential outcomes within blocks before calculating the covariances for all observations.  Under blocked random assignment, the lowest covariance is -0.02, and the highest covariance is 2.98. Taking advantange of the blocks reduces the range of possible covariances.
+
+
+\section*{Question 4}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{verbatim}
+
+
+
+
+
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+\section*{Question 5}
+The table below shows hypothetical potential outcomes for an experiment in which low-income subjects in a developing country are randomly assigned to receive (i) loans to aid their small businesses; (ii) business training to improve their accounting, hiring, and inventory-management skills; (iii) both; or (iv) neither. The outcome measure in business income during the subsequent year. The table also includes a pre-treatment covariate, an indicator scored 1 if the subject was judged to be proficient in these basic business skills.
+
+% Table generated by Excel2LaTeX from sheet 'Sheet1'
+\begin{table}[H]
+  \centering
+  \caption{Question 5 Table}
+    \begin{tabular}{rrrrrr}
+    \toprule
+    Subject & $Y_i(loan)$ & $Y_i(training)$ & $Y_i(both)$ & $Y_i(Neither)$ & Prior business skills \\
+    \midrule
+    1     & 2     & 2     & 3     & 2     & 0 \\
+    2     & 2     & 3     & 2     & 1     & 0 \\
+    3     & 5     & 6     & 6     & 4     & 1 \\
+    4     & 3     & 1     & 5     & 1     & 1 \\
+    5     & 4     & 4     & 5     & 0     & 0 \\
+    6     & 10    & 8     & 11    & 10    & 1 \\
+    7     & 1     & 3     & 3     & 1     & 0 \\
+    8     & 5     & 5     & 5     & 5     & 1 \\ \midrule
+    Average & 4     & 4     & 5     & 3     & 0.5 \\
+    \bottomrule
+    \end{tabular}%
+  \label{tab:addlabel}%
+\end{table}%
+
+\begin{enumerate}[a)]
+\item What is the ATE of the loan if all subjects were also to receive training?\\
+Answer:\\
+The relevant comparison is the average potential outcomes under ``both'' to the average potential outcome under only ``training.''  The ATE is 5-4=1.
+
+\item What is the ATE of the loan if no subjects receive training?\\
+Answer:\\
+The relevant comparison is the average potential outcomes under ``loan'' to the average potential outcome under only ``neither.''  The ATE is 4-3=1.
+
+\item What is the ATE of the training if all subjects also receive a loan?\\
+Answer:\\
+The relevant comparison is the average potential outcomes under ``both'' to the average potential outcome under only ``loan.''  The ATE is 5-4=1.
+
+\item What is the ATE of the training if no subjects receive a loan?\\
+Answer:\\
+The relevant comparison is the average potential outcomes under ``training'' to the average potential outcome under only ``neither.''  The ATE is 4-3=1.
+
+\item Suppose subjects were randomly assigned to one of the four experimental treatments in equal proportions. Use the table above to fill in the expected values of the four regression coefficients for the model and interpret the results:
+
+\begin{equation}
+Y_i = \alpha_0 + \alpha_1 Loan_i + \alpha_2 Training_i + \alpha_3 (Loan_i * Training_i) + e_i
+\end{equation}
+
+The four coefficients are $\alpha_0=3$, the average outcome under ``neither''; $\alpha_1=1$, the ATE of loan when there is no training; $\alpha_2=1$, the ATE of training when there is no loan; and $\alpha_3=0$ the change in the effect of training that occurs when our focus switches from those who receive no loan to those who receive a loan.  Note that this interaction term can also be interpreted as the change in the ATE of loans that we observe when we move from the untrained subgroup to the trained subgroup. 
+
+\begin{equation}
+Y_i = 3 + 1*Loan_i + 1*Training_i + 0*(Loan_i * Training_i) + e_i
+\end{equation}
+
+
+\item Suppose a researcher were to implement a block randomized experiment, such that two subjects with business skills are assigned to receive loans, and two subjects without business skills are assigned to receive loans, and the rest are assigned to control. No subjects are assigned to receive training. The researcher estimates the model
+
+\begin{equation}
+Y_i = \gamma_0 + \gamma_1 Loan_i + \gamma_2 Skills_i + \gamma_3 (Loan_i * Skills_i) + e_i
+\end{equation}
+
+Over all 36 possible random assignments, the average estimated regression is as follows:
+
+\begin{equation}
+Y_i = 1.00 + 1.25 Loan_i + 4.00 Skills_i - 0.50 (Loan_i * Skills_i)
+\end{equation}
+
+Interpret the results and contrast them with the results from part (e). (Hint: the block randomized design does not affect the interpretation. Focus on the distinction between treatment-by-treatment and treatment-by-covariate interactions.)\\
+Answer:\\
+The key thing to bear in mind when interpreting these results is that the interaction between loans and skills is a treatment-by-covariate interaction because skills are not randomly assigned. The results seem to suggest that loans are more effective amongst those without skills (CATE = 1.25) than among those with skills (CATE = 1.25 - 0.5 = 0.75). These CATEs may describe the ATEs in these two skill groups, but the change in CATEs does not necessarily imply that a random increase in skill would diminish the effects of loans.  
+\end{enumerate}
+
+\section*{Question 6}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{verbatim}
+
+
+
+
+
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+\section*{Question 7}
+In their 2004 study of racial discrimination in employment markets, Bertrand and Mullainathan sent resumes with varying characteristics to firms advertising job openings. Some firms were sent resumes with putative African American names, while other firms received resumes with putatively Caucasian names. The researchers also varied other attributes of the resume, such as whether the resume was judged to be of high or low quality (based on labor market experience, career profile, gaps in employment, and skills listed).\footnote{Bertrand and Mullainathan 2004, p. 994.} The table below shows the rate at which applicants were called back by employers, by the city in which the experiment took place and by the randomly assigned attributes of their applications.
+
+% Table generated by Excel2LaTeX from sheet 'Sheet1'
+\begin{table}[H]
+  \centering
+  \caption{Question 7 Table}
+    \begin{tabular}{rrrrrrrrr}
+    \toprule
+          & \multicolumn{4}{c}{Boston}    & \multicolumn{4}{c}{Chicago} \\
+    \midrule
+          & \multicolumn{2}{c}{Low-quality resume} & \multicolumn{2}{c}{High-quality resume } & \multicolumn{2}{c}{Low-quality resume} & \multicolumn{2}{c}{High-quality resume } \\
+          & Black & White & Black & White & Black & White & Black & White \\
+    \% Received Call & 7.01  & 10.15 & 8.5   & 13.12 & 5.52  & 7.16  & 5.28  & 8.94 \\
+    (N)   & (542) & (542) & (541) & (541) & (670) & (670) & (682) & (682) \\
+    \bottomrule
+    \end{tabular}%
+  \label{tab:addlabel}%
+\end{table}%
+
+\begin{enumerate}[a)]
+\item For each city, interpret the apparent treatment effects of race and resume quality on the probability of receiving a follow-up call.\\
+Answer:\\
+For Boston, the effect of (white) race is 10.15 - 7.01 = 3.14 when resume quality is low and 13.12 - 8.50 = 4.62 when resume quality is high. For Chicago, the effect of (white) race is 7.16 - 5.52 = 1.64 when resume quality is low and 8.94 - 5.28 = 3.66 when resume quality is high. Note that another, equally valid way to interpret the table is to assess the effect of resume quality for each race, but the substantive focus of this study is on race effects.
+
+\item Propose a regression model that assesses the effects of the treatments, interaction between them, and interactions between the treatments and the covariate, city. \\
+Answer:\\
+This model is similar to the interactive regression specifications described above, but it contains treatment-by-treatment interactions (race x resume) and treatment-by-covariate interactions (race x city, resume x city) and a higher order interaction (race x resume x city) that allows for the possibility that the race x resume interaction differs by city.  Here, City is scored 1 if Chicago.  Race = 1 if white.  Resume =1 if high quality.  Notice that the ``saturated'' regression model contains eight parameters, one for each cell of the table. 
+
+\begin{align*}
+Y_i &= \gamma_0 + \gamma_1 Race_i + \gamma_2 Resume_i + \gamma_3 City_i + \\
+& \gamma_4 (Race_i * Resume_i) + \gamma_5 (Race_i * City_i) + \gamma_6 (Resume_i * City_i) + \gamma_7 (Race_i * Resume_i * City_i) + e_i
+\end{align*}
+
+\item Estimate the parameters in your regression model. Interpret the results (This can be done by hand based on the percentages given in the table.) \\
+Answer:\\
+Because there as many parameters as experimental groups, the estimated coefficients reproduce the percentages given in the table:
+
+\begin{align*}
+Y_i &= 7.01 + 3.14 Race_i + 1.49 Resume_i -1.49 City_i + \\
+& 1.48 (Race_i * Resume_i) -1.50  (Race_i * City_i) -1.73  (Resume_i * City_i) + 0.54 (Race_i * Resume_i * City_i) + e_i
+\end{align*}
+
+Additional response (Boston = 1; Black = 1; Low quality = 1)
+\begin{align*}
+Y_i &= 8.94 - 3.66 Race_i - 1.78 Resume_i + 4.18 City_i + \\
+& 2.02 (Race_i * Resume_i) - 0.96  (Race_i * City_i) - 1.19  (Resume_i * City_i) -0.54 (Race_i * Resume_i * City_i) + e_i
+\end{align*}
+
+Additional response (Boston = 1; Black = 1; High quality = 1)
+\begin{align*}
+Y_i &= 7.16 - 1.64 Race_i + 1.78 Resume_i + 2.99 City_i - \\
+& 2.02 (Race_i * Resume_i) - 1.50  (Race_i * City_i) + 1.19  (Resume_i * City_i) + 0.54 (Race_i * Resume_i * City_i) + e_i
+\end{align*}
+
+\begin{kframe}
+\begin{alltt}
+\hlstd{Y} \hlkwb{<-} \hlkwd{c}\hlstd{(}\hlkwd{rep}\hlstd{(}\hlnum{1}\hlstd{,} \hlnum{38}\hlstd{),} \hlkwd{rep}\hlstd{(}\hlnum{0}\hlstd{,} \hlnum{542}\hlopt{-}\hlnum{38}\hlstd{),} \hlkwd{rep}\hlstd{(}\hlnum{1}\hlstd{,} \hlnum{55}\hlstd{),} \hlkwd{rep}\hlstd{(}\hlnum{0}\hlstd{,} \hlnum{542}\hlopt{-}\hlnum{55}\hlstd{),}
+       \hlkwd{rep}\hlstd{(}\hlnum{1}\hlstd{,} \hlnum{46}\hlstd{),} \hlkwd{rep}\hlstd{(}\hlnum{0}\hlstd{,} \hlnum{541}\hlopt{-}\hlnum{46}\hlstd{),} \hlkwd{rep}\hlstd{(}\hlnum{1}\hlstd{,} \hlnum{71}\hlstd{),} \hlkwd{rep}\hlstd{(}\hlnum{0}\hlstd{,} \hlnum{541}\hlopt{-}\hlnum{71}\hlstd{),}
+       \hlkwd{rep}\hlstd{(}\hlnum{1}\hlstd{,} \hlnum{37}\hlstd{),} \hlkwd{rep}\hlstd{(}\hlnum{0}\hlstd{,} \hlnum{670}\hlopt{-}\hlnum{37}\hlstd{),} \hlkwd{rep}\hlstd{(}\hlnum{1}\hlstd{,} \hlnum{48}\hlstd{),} \hlkwd{rep}\hlstd{(}\hlnum{0}\hlstd{,} \hlnum{670}\hlopt{-}\hlnum{48}\hlstd{),}
+       \hlkwd{rep}\hlstd{(}\hlnum{1}\hlstd{,} \hlnum{36}\hlstd{),} \hlkwd{rep}\hlstd{(}\hlnum{0}\hlstd{,} \hlnum{682}\hlopt{-}\hlnum{36}\hlstd{),} \hlkwd{rep}\hlstd{(}\hlnum{1}\hlstd{,} \hlnum{61}\hlstd{),} \hlkwd{rep}\hlstd{(}\hlnum{0}\hlstd{,} \hlnum{682}\hlopt{-}\hlnum{61}\hlstd{))}
+
+\hlstd{boston} \hlkwb{<-} \hlkwd{c}\hlstd{(}\hlkwd{rep}\hlstd{(}\hlnum{1}\hlstd{,} \hlnum{542}\hlopt{+}\hlnum{542}\hlopt{+}\hlnum{541}\hlopt{+}\hlnum{541}\hlstd{),} \hlkwd{rep}\hlstd{(}\hlnum{0}\hlstd{,} \hlnum{670}\hlopt{+}\hlnum{670}\hlopt{+}\hlnum{682}\hlopt{+}\hlnum{682}\hlstd{))}
+\hlstd{chicago} \hlkwb{<-} \hlnum{1}\hlopt{-}\hlstd{boston}
+\hlstd{lowquality} \hlkwb{<-} \hlkwd{c}\hlstd{(}\hlkwd{rep}\hlstd{(}\hlnum{1}\hlstd{,} \hlnum{542}\hlopt{+}\hlnum{542}\hlstd{),} \hlkwd{rep}\hlstd{(}\hlnum{0}\hlstd{,} \hlnum{541}\hlopt{+}\hlnum{541}\hlstd{),} \hlkwd{rep}\hlstd{(}\hlnum{1}\hlstd{,} \hlnum{670}\hlopt{+}\hlnum{670}\hlstd{),} \hlkwd{rep}\hlstd{(}\hlnum{0}\hlstd{,} \hlnum{682}\hlopt{+}\hlnum{682}\hlstd{))}
+\hlstd{highquality} \hlkwb{<-} \hlnum{1}\hlopt{-}\hlstd{lowquality}
+\hlstd{black}\hlkwb{<-} \hlkwd{c}\hlstd{(}\hlkwd{rep}\hlstd{(}\hlnum{1}\hlstd{,} \hlnum{542}\hlstd{),} \hlkwd{rep}\hlstd{(}\hlnum{0}\hlstd{,}\hlnum{542}\hlstd{),} \hlkwd{rep}\hlstd{(}\hlnum{1}\hlstd{,} \hlnum{541}\hlstd{),} \hlkwd{rep}\hlstd{(}\hlnum{0}\hlstd{,}\hlnum{541}\hlstd{),}
+          \hlkwd{rep}\hlstd{(}\hlnum{1}\hlstd{,} \hlnum{670}\hlstd{),} \hlkwd{rep}\hlstd{(}\hlnum{0}\hlstd{,}\hlnum{670}\hlstd{),} \hlkwd{rep}\hlstd{(}\hlnum{1}\hlstd{,} \hlnum{682}\hlstd{),} \hlkwd{rep}\hlstd{(}\hlnum{0}\hlstd{,}\hlnum{682}\hlstd{))}
+\hlstd{white} \hlkwb{<-} \hlnum{1}\hlopt{-}\hlstd{black}
+
+\hlcom{# All the models are}
+\hlcom{# Y ~ race + quality + city + race*quality + race*city + quality*city + race*quality*city}
+\hlcom{# In principle, there are 8 possibilities... here are 4.}
+
+\hlstd{fit_1} \hlkwb{<-} \hlkwd{lm}\hlstd{(Y} \hlopt{~} \hlstd{white} \hlopt{+} \hlstd{highquality} \hlopt{+} \hlstd{chicago} \hlopt{+} \hlstd{white}\hlopt{*}\hlstd{highquality} \hlopt{+}
+              \hlstd{white}\hlopt{*}\hlstd{chicago} \hlopt{+} \hlstd{highquality}\hlopt{*}\hlstd{chicago} \hlopt{+} \hlstd{white}\hlopt{*}\hlstd{highquality}\hlopt{*}\hlstd{chicago)}
+\hlstd{fit_2} \hlkwb{<-} \hlkwd{lm}\hlstd{(Y} \hlopt{~} \hlstd{black} \hlopt{+} \hlstd{highquality} \hlopt{+} \hlstd{chicago} \hlopt{+} \hlstd{black}\hlopt{*}\hlstd{highquality} \hlopt{+}
+              \hlstd{black}\hlopt{*}\hlstd{chicago} \hlopt{+} \hlstd{highquality}\hlopt{*}\hlstd{chicago} \hlopt{+} \hlstd{black}\hlopt{*}\hlstd{highquality}\hlopt{*}\hlstd{chicago)}
+\hlstd{fit_3} \hlkwb{<-} \hlkwd{lm}\hlstd{(Y} \hlopt{~} \hlstd{white} \hlopt{+} \hlstd{highquality} \hlopt{+} \hlstd{boston} \hlopt{+} \hlstd{white}\hlopt{*}\hlstd{highquality} \hlopt{+}
+              \hlstd{white}\hlopt{*}\hlstd{boston} \hlopt{+} \hlstd{highquality}\hlopt{*}\hlstd{boston} \hlopt{+} \hlstd{white}\hlopt{*}\hlstd{highquality}\hlopt{*}\hlstd{boston)}
+\hlstd{fit_4} \hlkwb{<-} \hlkwd{lm}\hlstd{(Y} \hlopt{~} \hlstd{black} \hlopt{+} \hlstd{lowquality} \hlopt{+} \hlstd{chicago} \hlopt{+} \hlstd{black}\hlopt{*}\hlstd{lowquality} \hlopt{+}
+              \hlstd{black}\hlopt{*}\hlstd{chicago} \hlopt{+} \hlstd{lowquality}\hlopt{*}\hlstd{chicago} \hlopt{+} \hlstd{black}\hlopt{*}\hlstd{lowquality}\hlopt{*}\hlstd{chicago)}
+\hlkwd{stargazer}\hlstd{(fit_1, fit_2, fit_3, fit_4,} \hlkwc{style} \hlstd{=} \hlstr{"apsr"}\hlstd{,} \hlkwc{notes} \hlstd{=} \hlkwd{c}\hlstd{(}\hlstr{"Coeffcients depend on student's parameterization"}\hlstd{,} \hlstr{"All four models are equivalent."} \hlstd{),} \hlkwc{title}\hlstd{=} \hlstr{"Question 7C Table"}\hlstd{)}
+\end{alltt}
+\end{kframe}
+% Table created by stargazer v.5.2 by Marek Hlavac, Harvard University. E-mail: hlavac at fas.harvard.edu
+% Date and time: Tue, Sep 15, 2015 - 14:47:37
+\begin{table}[!htbp] \centering 
+  \caption{Question 7C Table} 
+  \label{} 
+\begin{tabular}{@{\extracolsep{5pt}}lcccc} 
+\\[-1.8ex]\hline \\[-1.8ex] 
+\\[-1.8ex] & \multicolumn{4}{c}{Y} \\ 
+\\[-1.8ex] & (1) & (2) & (3) & (4)\\ 
+\hline \\[-1.8ex] 
+ white & 0.031$^{*}$ &  & 0.016 &  \\ 
+  & (0.016) &  & (0.015) &  \\ 
+  black &  & $-$0.031$^{*}$ &  & $-$0.046$^{***}$ \\ 
+  &  & (0.016) &  & (0.016) \\ 
+  highquality & 0.015 & 0.030$^{*}$ & $-$0.002 &  \\ 
+  & (0.016) & (0.016) & (0.015) &  \\ 
+  lowquality &  &  &  & $-$0.030$^{*}$ \\ 
+  &  &  &  & (0.016) \\ 
+  chicago & $-$0.015 & $-$0.030$^{*}$ &  & $-$0.042$^{***}$ \\ 
+  & (0.016) & (0.016) &  & (0.016) \\ 
+  boston &  &  & 0.015 &  \\ 
+  &  &  & (0.016) &  \\ 
+  white:highquality & 0.015 &  & 0.020 &  \\ 
+  & (0.023) &  & (0.021) &  \\ 
+  white:chicago & $-$0.015 &  &  &  \\ 
+  & (0.022) &  &  &  \\ 
+  black:highquality &  & $-$0.015 &  &  \\ 
+  &  & (0.023) &  &  \\ 
+  black:lowquality &  &  &  & 0.015 \\ 
+  &  &  &  & (0.023) \\ 
+  black:chicago &  & 0.015 &  & 0.010 \\ 
+  &  & (0.022) &  & (0.022) \\ 
+  highquality:chicago & $-$0.017 & $-$0.012 &  &  \\ 
+  & (0.022) & (0.022) &  &  \\ 
+  white:highquality:chicago & 0.005 &  &  &  \\ 
+  & (0.031) &  &  &  \\ 
+  black:highquality:chicago &  & $-$0.005 &  &  \\ 
+  &  & (0.031) &  &  \\ 
+  white:boston &  &  & 0.015 &  \\ 
+  &  &  & (0.022) &  \\ 
+  highquality:boston &  &  & 0.017 &  \\ 
+  &  &  & (0.022) &  \\ 
+  white:highquality:boston &  &  & $-$0.005 &  \\ 
+  &  &  & (0.031) &  \\ 
+  lowquality:chicago &  &  &  & 0.012 \\ 
+  &  &  &  & (0.022) \\ 
+  black:lowquality:chicago &  &  &  & 0.005 \\ 
+  &  &  &  & (0.031) \\ 
+  Constant & 0.070$^{***}$ & 0.101$^{***}$ & 0.055$^{***}$ & 0.131$^{***}$ \\ 
+  & (0.012) & (0.012) & (0.010) & (0.012) \\ 
+ N & 4,870 & 4,870 & 4,870 & 4,870 \\ 
+R$^{2}$ & 0.008 & 0.008 & 0.008 & 0.008 \\ 
+Adjusted R$^{2}$ & 0.006 & 0.006 & 0.006 & 0.006 \\ 
+Residual Std. Error (df = 4862) & 0.271 & 0.271 & 0.271 & 0.271 \\ 
+F Statistic (df = 7; 4862) & 5.359$^{***}$ & 5.359$^{***}$ & 5.359$^{***}$ & 5.359$^{***}$ \\ 
+\hline \\[-1.8ex] 
+\multicolumn{5}{l}{$^{*}$p $<$ .1; $^{**}$p $<$ .05; $^{***}$p $<$ .01} \\ 
+\multicolumn{5}{l}{Coeffcients depend on student's parameterization} \\ 
+\multicolumn{5}{l}{All four models are equivalent.} \\ 
+\end{tabular} 
+\end{table} 
+
+\end{enumerate}
+
+\section*{Question 8}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{verbatim}
+
+
+
+
+
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+\section*{Question 9}
+An example of a two-factor design that encounters one-sided noncompliance may be found in Fieldhouse et al.'s study of voter mobilization in the United Kingdom.\footnote{Fieldhouse et al. 2010.} In this study, the first factor is whether each voter was mailed a letter encouraging him or her to vote in the upcoming election. The second factor is whether each voter was called with an encouragement to vote. Noncompliance occurs in the case of phone calls, as some targeted voters cannot be reached when called. The experimental design consists of four groups: a control group, a mail-only group, a phone-only group, and a group targeted for both mail and phone. The following table shows the results by assigned experimental group.
+% Table generated by Excel2LaTeX from sheet 'Sheet1'
+\begin{table}[htbp]
+  \centering
+  \caption{Question 9 Table}
+    \begin{tabular}{R{5cm}rrrr}
+    \toprule
+          & Control  & Mail Only  & Phone Only  & Mail and Phone  \\
+    \midrule
+    N     & 5179  & 4367  & 3466  & 2287 \\
+    Number Contacted by Phone  & 0     & 0     & 2003  & 1363 \\
+    Among those Assigned to this Experimental Group, Percent who Voted  & 0.397 & 0.403 & 0.397 & 0.418 \\
+    Among those Contacted by Phone, Percent who Voted  & NA    & NA    & 0.465 & 0.468 \\
+    \bottomrule
+    \end{tabular}%
+  \label{tab:addlabel}%
+\end{table}%
+
+
+\begin{enumerate}[a)]
+\item Show that, under certain assumptions, this experimental design allows one to identify the following parameters: (i) the ATE of mail, (ii) the Complier average causal effect (CACE) of phone calls, (iii) the CATE of mail among those who comply with the phone call treatment, (iv) the CATE of mail among those who do not comply with the phone call treatment, and (v) the CACE of phone calls among those who receive mail. \\
+Answer:\\
+\begin{enumerate}[(i)]
+
+\item \textbf{ATE of mail.} The ATE of mail is identified using the core assumptions of chapter 2 (random assignment, non-interference, and excludability). Excludability in this holds that the only way that random assignment of mail affects outcomes is through the mail treatment itself. 
+
+\item \textbf{Complier average causal effect (CACE) of phone calls.} In order identify the CACE of phone calls, we must invoke the assumptions of Chapter 5, since this is a case of one-sided non-compliance. Again, the exclusion restriction holds that the only way that the assignment of phone calls affects outcomes is through actual phone contacts. The CACE here is ATE among those who receive phone calls if assigned to the treatment group.
+
+\item \textbf{CATE of mail among those who comply with the phone call treatment.}  The CATE of mail is identified in the same was as an ATE, except that it is restricted to those who actually receive phone calls
+
+\item \textbf{CATE of mail among those who do not comply with the phone call treatment.} Same as above, but among those who are not treated when called.
+
+\item \textbf{CACE of phone calls among those who receive mail.} The CACE of phone calls among those who receive mail is identified among the same group of compliers as the CACE above, since mail is assigned and received randomly (because we assume full compliance with the mail treatment). However, the ATE of the calls among Compliers may differ from the ATE among Compliers who also receive mail, due to a treatment-by-treatment interaction. 
+
+\end{enumerate}
+
+\item Using the identification strategies you laid out in part (a), estimate each of the five parameters using the results in the table.
+
+\begin{enumerate}[(i)]
+
+\item \textbf{ATE of mail.} The estimated ATE of mail is 40.3 - 39.7 = 0.6 percentage points.
+
+\item \textbf{Complier average causal effect (CACE) of phone calls.} The estimated CACE of phone calls is the ITT divided by the share of compliers: (39.7 - 39.7)/ (2003/3466) = 0. 
+
+\item \textbf{CATE of mail among those who comply with the phone call treatment.}  The CATE of mail among those who receive a call is 46.8 - 46.5 = 0.3 percentage points. 
+
+\item \textbf{CATE of mail among those who do not comply with the phone call treatment.}  In order to figure out the CATE of mail among those who did not comply when called, we must first back out the voting rates given the numbers presented above. For example, the overall voting rate in the treatment group of 41.8 is a weighted average of the voting rates among the contacted and uncontacted. Thus, 41.8 = 46.8(1363/2287) + X(923/2287). Solving for X gives 34.4, and repeating the same calculation for the control group gives 30.4. Therefore, the estimated effect of mail for this subgroup is 4.0 percentage points. 
+
+\item \textbf{CACE of phone calls among those who receive mail.} The CACE of phone calls among those who receive mail is the ITT divided by the contact rate: (41.8 - 40.3) / (1363/2287) = 2.5 percentage points
+
+\end{enumerate}
+
+
+\item In Chapters 5 and 6, we discussed the use of instrumental variables regression to estimate CACEs when experiments involve noncompliance. Here, we can apply instrumental variables regression to a factorial experiment in which one factor encounters noncompliance. With the replication dataset at http://isps.research.yale.edu/FEDAI, use instrumental variables regression to estimate the parameters of the Vote equation in the following three-equation regression model:\\
+
+\begin{align*}
+PhoneContact_i &= \alpha_0 + \alpha_1 Mail_i + \alpha_2 PhoneAssign_i + \alpha_3(PhoneAssign_i * Mail_i) + e_i \\
+PhoneContact_i * Mail_i &= \gamma_0 + \gamma_1 Mail_i + \gamma_2 PhoneAssign_i + \gamma_3(PhoneAssign_i *
+Mail_i) + \epsilon_i \\
+Vote_i &= \beta_0 + \beta_1 Mail_i + \beta_2 PhoneContact_i + \beta_3(PhoneContact_i * Mail_i) + u_i
+\end{align*}
+
+Interpret the regression estimates in light of the five parameters you estimated in part (b). Which causal parameters does instrumental variables regression estimate or fail to estimate?
+
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{fieldhouse} \hlkwb{<-} \hlkwd{within}\hlstd{(fieldhouse,\{}
+  \hlstd{mail} \hlkwb{<-} \hlstd{m}
+  \hlstd{phone} \hlkwb{<-} \hlstd{p}
+  \hlstd{phone_contact} \hlkwb{<-} \hlstd{c}
+  \hlstd{vote} \hlkwb{<-} \hlstd{y}
+\hlstd{\})}
+
+\hlstd{fit.iv} \hlkwb{<-} \hlkwd{ivreg}\hlstd{(vote} \hlopt{~} \hlstd{mail} \hlopt{+} \hlstd{phone_contact} \hlopt{+} \hlstd{phone_contact} \hlopt{*} \hlstd{mail}
+                \hlopt{|} \hlstd{mail} \hlopt{+} \hlstd{phone} \hlopt{+} \hlstd{mail} \hlopt{*} \hlstd{phone,}
+                \hlkwc{data} \hlstd{= fieldhouse)}
+\hlkwd{summary}\hlstd{(fit.iv)}
+\end{alltt}
+\begin{verbatim}
+## 
+## Call:
+## ivreg(formula = vote ~ mail + phone_contact + phone_contact * 
+##     mail | mail + phone + mail * phone, data = fieldhouse)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -0.4282 -0.4030 -0.3970  0.5970  0.6032 
+## 
+## Coefficients:
+##                      Estimate Std. Error t value Pr(>|t|)    
+## (Intercept)         0.3969878  0.0068099  58.296   <2e-16 ***
+## mail                0.0060348  0.0100684   0.599    0.549    
+## phone_contact      -0.0001781  0.0186142  -0.010    0.992    
+## mail:phone_contact  0.0253338  0.0282311   0.897    0.370    
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 0.4901 on 15296 degrees of freedom
+## Multiple R-Squared: 0.001046,	Adjusted R-squared: 0.0008504 
+## Wald test: 1.126 on 3 and 15296 DF,  p-value: 0.3369
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+The intercept is the voting rate in the control group. The coefficient for ``phone contact'' is the estimated CACE for phones when no mail is assigned.  The effect for ``mail'' is the ATE for mail when no phone calls are assigned. The coefficient for ``mail:phone contact'' is the extent to which the apparent CACE of phone calls increases when we move from the no-mail to the mail group. These estimates reproduce the estimates generated by hand above. Notice that IV regression does not report the effect of mail for non-compliers.
+\end{enumerate}
+
+
+\end{document}
+

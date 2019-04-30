@@ -1,0 +1,4 @@
+Cash or Condition_QJE 126(4)-1709-53.pdf (application/pdf) 316021 bytes.
+CorC_Public_Data_FINAL_DEIDENTIFIED.dta (application/x-stata-13) 3469671 bytes.
+QJE_CorC_public_analysis_FINAL.do (application/x-stata-syntax) 18582 bytes.
+QJE_CorC_Public_Dataset_and_Analysis_Notes_PUBLIC.docx (application/vnd.openxmlformats-officedocument.wordprocessingml.document) 38933 bytes.

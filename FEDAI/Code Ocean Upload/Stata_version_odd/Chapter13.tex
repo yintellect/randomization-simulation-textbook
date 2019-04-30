@@ -1,0 +1,414 @@
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% PROBLEM SET LATEX TEMPLATE FILE
+% DEFINE DOCUMENT STYLE, LOAD PACKAGES
+\documentclass[11pt,notitlepage]{article}\usepackage[]{graphicx}\usepackage[]{color}
+%% maxwidth is the original width if it is less than linewidth
+%% otherwise use linewidth (to make sure the graphics do not exceed the margin)
+\makeatletter
+\def\maxwidth{ %
+  \ifdim\Gin@nat@width>\linewidth
+    \linewidth
+  \else
+    \Gin@nat@width
+  \fi
+}
+\makeatother
+
+\definecolor{fgcolor}{rgb}{0.345, 0.345, 0.345}
+\newcommand{\hlnum}[1]{\textcolor[rgb]{0.686,0.059,0.569}{#1}}%
+\newcommand{\hlstr}[1]{\textcolor[rgb]{0.192,0.494,0.8}{#1}}%
+\newcommand{\hlcom}[1]{\textcolor[rgb]{0.678,0.584,0.686}{\textit{#1}}}%
+\newcommand{\hlopt}[1]{\textcolor[rgb]{0,0,0}{#1}}%
+\newcommand{\hlstd}[1]{\textcolor[rgb]{0.345,0.345,0.345}{#1}}%
+\newcommand{\hlkwa}[1]{\textcolor[rgb]{0.161,0.373,0.58}{\textbf{#1}}}%
+\newcommand{\hlkwb}[1]{\textcolor[rgb]{0.69,0.353,0.396}{#1}}%
+\newcommand{\hlkwc}[1]{\textcolor[rgb]{0.333,0.667,0.333}{#1}}%
+\newcommand{\hlkwd}[1]{\textcolor[rgb]{0.737,0.353,0.396}{\textbf{#1}}}%
+
+\usepackage{framed}
+\makeatletter
+\newenvironment{kframe}{%
+ \def\at@end@of@kframe{}%
+ \ifinner\ifhmode%
+  \def\at@end@of@kframe{\end{minipage}}%
+  \begin{minipage}{\columnwidth}%
+ \fi\fi%
+ \def\FrameCommand##1{\hskip\@totalleftmargin \hskip-\fboxsep
+ \colorbox{shadecolor}{##1}\hskip-\fboxsep
+     % There is no \\@totalrightmargin, so:
+     \hskip-\linewidth \hskip-\@totalleftmargin \hskip\columnwidth}%
+ \MakeFramed {\advance\hsize-\width
+   \@totalleftmargin\z@ \linewidth\hsize
+   \@setminipage}}%
+ {\par\unskip\endMakeFramed%
+ \at@end@of@kframe}
+\makeatother
+
+\definecolor{shadecolor}{rgb}{.97, .97, .97}
+\definecolor{messagecolor}{rgb}{0, 0, 0}
+\definecolor{warningcolor}{rgb}{1, 0, 1}
+\definecolor{errorcolor}{rgb}{1, 0, 0}
+\newenvironment{knitrout}{}{} % an empty environment to be redefined in TeX
+
+\usepackage{alltt}    % ADD COMMENTS USING A PERCENT SIGN
+\usepackage{amsfonts}
+\usepackage{amsthm}
+\usepackage{amsmath, booktabs}
+\usepackage{mathtools}
+\usepackage{amssymb}
+\usepackage{subfig}
+\usepackage{setspace}
+\usepackage{fullpage}
+\usepackage{verbatim}
+\usepackage{graphicx}
+\usepackage{tabularx}
+\usepackage{longtable}
+\usepackage{multicol}
+\usepackage{multirow}
+\setlength{\parindent}{0in}  	% uncomment to remove indent at start of paragraphs
+\usepackage{pdflscape}
+\usepackage[english]{babel}
+\usepackage[pdftex]{hyperref}
+\usepackage{natbib}
+\usepackage{caption}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{graphics}
+\usepackage{multirow}
+\usepackage{graphics}
+\usepackage{hyperref}
+\usepackage{longtable}
+\usepackage{latexsym}
+\usepackage{rotating}
+\usepackage{setspace}
+\usepackage{layouts} 
+\usepackage[titletoc]{appendix}
+\DeclareGraphicsExtensions{.pdf,.jpg,.png}
+\usepackage[margin=1in]{geometry}
+\usepackage{enumerate}
+\usepackage{float}
+\usepackage{url}
+
+\newcolumntype{L}[1]{>{\raggedright\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\usepackage[T1]{fontenc}				
+
+\usepackage{xcolor}
+\usepackage[printwatermark]{xwatermark}
+
+\input{../data/pygments.tex}
+
+
+
+\title{Field Experiments: Design, Analysis and Interpretation \\
+Solutions for Chapter 13 Exercises}
+\author{Alan S. Gerber and Donald P. Green\footnote{Solutions prepared by Peter M. Aronow and revised by Alexander Coppock}}
+\date{\vspace{-5ex}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\begin{document}
+
+\maketitle
+
+
+\section*{Question 1}
+Middleton and Rogers report the results of an experiment in which ballot guides were mailed to randomly assigned precincts in Oregon prior to the 2008 November election. The guides were designed to encourage voters to support certain ballot measures and oppose others. Load the example dataset from \url{http://isps.research.yale.edu/FEDAI}. The dataset contains election results for 65 precincts, each of which contains approximately 550 voters. The outcome measure is the number of net votes won by the sponsors of the guide across the four ballot measures that they endorsed or opposed. The treatment is scored 0 or 1, depending on whether the precinct was assigned to receive ballot guides. A prognostic covariate is the average share of the vote cast for Democratic candidates in 2006.
+
+
+
+
+\begin{enumerate}[a)]
+\item Estimate the average treatment effect, and illustrate the relationship between treatment and outcomes graphically using an individual values plot.\\
+Answer:\\
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}1}]:} \PY{k}{qui} import delim .\PY{o}{/}data\PY{o}{/}chapter13\PY{o}{/}Middleton\PYZus{}Rogers\PYZus{}AI\PYZus{}2010,\PY{k}{ clear}
+        
+        \PY{k}{rename} relevant\PYZus{}measures\PYZus{}net Y
+        \PY{k}{gen} int Z=.
+        \PY{k}{replace} Z = \PY{l+m}{1}\PY{k}{ if} treatment \PY{o}{==}\PY{l+m}{1}
+        \PY{k}{replace} Z = \PY{l+m}{0}\PY{k}{ if} treatment \PY{o}{==}\PY{l+m}{0}
+        
+        \PY{k}{qui}\PY{k}{ mean} Y\PY{k}{ if} Z\PY{o}{==}\PY{l+m}{1}
+        \PY{k}{scalar} avg\PYZus{}treat = \PYZus{}b[Y]
+        \PY{k}{qui}\PY{k}{ mean} Y\PY{k}{ if} Z\PY{o}{==}\PY{l+m}{0}
+        \PY{k}{scalar} avg\PYZus{}control = \PYZus{}b[Y]
+        \PY{k}{global} tau = avg\PYZus{}treat \PY{o}{\PYZhy{}} avg\PYZus{}control
+        
+        \PY{k}{disp} \PY{l+s}{\PYZdq{}}\PY{l+s}{a}\PY{l+s}{v}\PY{l+s}{e}\PY{l+s}{r}\PY{l+s}{a}\PY{l+s}{g}\PY{l+s}{e}\PY{l+s}{ }\PY{l+s}{t}\PY{l+s}{r}\PY{l+s}{e}\PY{l+s}{a}\PY{l+s}{t}\PY{l+s}{m}\PY{l+s}{e}\PY{l+s}{n}\PY{l+s}{t}\PY{l+s}{ }\PY{l+s}{e}\PY{l+s}{f}\PY{l+s}{f}\PY{l+s}{e}\PY{l+s}{c}\PY{l+s}{t}\PY{l+s}{ }\PY{l+s}{=}\PY{l+s}{ }\PY{l+s}{\PYZdq{}} \PY{n+nv+vg}{\PYZdl{}}\PY{n+nv+vg}{tau}
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+average treatment effect = 90.20098
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}2}]:} \PY{k}{twoway} (scatter Y Z), \PY{c+cs}{///}
+        xlabel(\PY{l+m}{0}\PY{l+s}{\PYZdq{}}\PY{l+s}{n}\PY{l+s}{o}\PY{l+s}{\PYZdq{}} \PY{l+m}{1} \PY{l+s}{\PYZdq{}}\PY{l+s}{y}\PY{l+s}{e}\PY{l+s}{s}\PY{l+s}{\PYZdq{}}) xmtick(\PY{o}{\PYZhy{}}\PY{l+m}{0.5}(\PY{l+m}{1})\PY{l+m}{1.5},grid) xtitle(\PY{l+s}{\PYZdq{}}\PY{l+s}{T}\PY{l+s}{r}\PY{l+s}{e}\PY{l+s}{a}\PY{l+s}{t}\PY{l+s}{m}\PY{l+s}{e}\PY{l+s}{n}\PY{l+s}{t}\PY{l+s}{\PYZdq{}})
+        
+        \PY{k}{graph} export ..\PY{o}{/}results\PY{o}{/}chapter13\PY{o}{/}exercise\PYZus{}13\PYZus{}1\PYZus{}a\PYZus{}graph\PY{l+m}{.}pdf
+\end{Verbatim}
+\end{kframe}
+
+{\centering \includegraphics[width=4.2in,height=3.3in]{../data/Stata_version/figure/exercise_13_1_a_graph.pdf} 
+
+}
+
+
+
+\end{knitrout}
+
+
+\item Interpret the graph in part (a).\\
+Answer:\\
+The mean of the treatment observations (164) is higher than the mean of the control observations (74), suggesting that the the treatment led to 90 more Democratic votes per precinct.  The amount of dispersion around the mean is similar in both groups.
+
+\item Use randomization inference to test whether the apparent difference-in-means could
+have occurred by chance under the sharp null hypothesis of no treatment effect for
+any precinct. Interpret the results.
+Answer:\\
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}3}]:} ritest Z ate\PYZus{}sim = \PYZus{}b[Z], \PY{c+cs}{///}
+        	reps(\PY{l+m}{10000})\PY{k}{ sav}(13\PYZus{}1\PYZus{}distout\PY{l+m}{.}dta,\PY{k}{ replace}) right nodots: \PY{c+cs}{///}
+        \PY{k}{	regress} Y Z
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+
+      Source |       SS           df       MS      Number of obs   =        65
+-------------+----------------------------------   F(1, 63)        =      1.50
+       Model |  102140.815         1  102140.815   Prob > F        =    0.2248
+    Residual |  4281899.43        63  67966.6576   R-squared       =    0.0233
+-------------+----------------------------------   Adj R-squared   =    0.0078
+       Total |  4384040.25        64  68500.6288   Root MSE        =     260.7
+
+------------------------------------------------------------------------------
+           Y |      Coef.   Std. Err.      t    P>|t|     [95\% Conf. Interval]
+-------------+----------------------------------------------------------------
+           Z |   90.20098   73.57996     1.23   0.225    -56.83684    237.2388
+       \_cons |   73.88235   63.23005     1.17   0.247    -52.47281    200.2375
+------------------------------------------------------------------------------
+
+      command:  regress Y Z
+      ate\_sim:  \_b[Z]
+  res. var(s):  Z
+   Resampling:  Permuting Z
+Clust. var(s):  \_\_000003
+     Clusters:  65
+Strata var(s):  none
+       Strata:  1
+
+------------------------------------------------------------------------------
+T            |     T(obs)       c       n   p=c/n   SE(p) [95\% Conf. Interval]
+-------------+----------------------------------------------------------------
+     ate\_sim |   90.20098    1119   10000  0.1119  0.0032   .105785    .118242
+------------------------------------------------------------------------------
+Note: Confidence interval is with respect to p=c/n.
+Note: c = \#\{T >= T(obs)\}
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}4}]:} \PY{c+c1}{//}\PY{c+c1}{ }\PY{c+c1}{o}\PY{c+c1}{n}\PY{c+c1}{e}\PY{c+c1}{\PYZhy{}}\PY{c+c1}{t}\PY{c+c1}{a}\PY{c+c1}{i}\PY{c+c1}{l}\PY{c+c1}{ }\PY{c+c1}{p}\PY{c+c1}{\PYZhy{}}\PY{c+c1}{v}\PY{c+c1}{a}\PY{c+c1}{l}\PY{c+c1}{u}\PY{c+c1}{e}
+        \PY{k}{di} \PY{n+nFormat}{\PYZpc{}8.4f} \PY{n+nf}{el}(\PY{n+nf}{r}(p), \PY{l+m}{1}, \PY{l+m}{1})
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+  0.1119
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}5}]:} \PY{k}{set}\PY{k}{ more} off
+        \PY{k}{preserve}
+        \PY{k}{use} \PY{l+s}{\PYZdq{}}\PY{l+s}{1}\PY{l+s}{3}\PY{l+s}{\PYZus{}}\PY{l+s}{1}\PY{l+s}{\PYZus{}}\PY{l+s}{d}\PY{l+s}{i}\PY{l+s}{s}\PY{l+s}{t}\PY{l+s}{o}\PY{l+s}{u}\PY{l+s}{t}\PY{l+s}{\PYZdq{}},\PY{k}{ clear}
+        \PY{c+c1}{//}\PY{c+c1}{h}\PY{c+c1}{i}\PY{c+c1}{s}\PY{c+c1}{t}\PY{c+c1}{o}\PY{c+c1}{r}\PY{c+c1}{g}\PY{c+c1}{a}\PY{c+c1}{m}
+        
+        \PY{k}{graph}\PY{k}{ twoway} (histogram ate\PYZus{}sim,frequency bin(\PY{l+m}{100})) \PY{c+cs}{///}
+        (scatteri \PY{l+m}{0} \PY{n+nv+vg}{\PYZdl{}}\PY{n+nv+vg}{tau} \PY{l+m}{300} \PY{n+nv+vg}{\PYZdl{}}\PY{n+nv+vg}{tau}, \PY{n+nf}{c}(l) lc(red) lw(thick) lp(dash)\PY{k}{ m}(i)), legend(off) \PY{c+cs}{///}
+        b1title(\PY{l+s}{\PYZdq{}}\PY{l+s}{E}\PY{l+s}{s}\PY{l+s}{t}\PY{l+s}{i}\PY{l+s}{m}\PY{l+s}{a}\PY{l+s}{t}\PY{l+s}{e}\PY{l+s}{d}\PY{l+s}{ }\PY{l+s}{A}\PY{l+s}{T}\PY{l+s}{E}\PY{l+s}{\PYZdq{}}) title(\PY{l+s}{\PYZdq{}}\PY{l+s}{D}\PY{l+s}{i}\PY{l+s}{s}\PY{l+s}{t}\PY{l+s}{r}\PY{l+s}{i}\PY{l+s}{b}\PY{l+s}{u}\PY{l+s}{t}\PY{l+s}{i}\PY{l+s}{o}\PY{l+s}{n}\PY{l+s}{ }\PY{l+s}{o}\PY{l+s}{f}\PY{l+s}{ }\PY{l+s}{t}\PY{l+s}{h}\PY{l+s}{e}\PY{l+s}{ }\PY{l+s}{E}\PY{l+s}{s}\PY{l+s}{t}\PY{l+s}{i}\PY{l+s}{m}\PY{l+s}{a}\PY{l+s}{t}\PY{l+s}{e}\PY{l+s}{d}\PY{l+s}{ }\PY{l+s}{A}\PY{l+s}{T}\PY{l+s}{E}\PY{l+s}{\PYZdq{}}) \PY{c+cs}{///}
+        xtitle(\PY{l+s}{\PYZdq{}}\PY{l+s}{\PYZdq{}}) 
+        
+        \PY{k}{graph} export ..\PY{o}{/}results\PY{o}{/}chapter13\PY{o}{/}exercise\PYZus{}13\PYZus{}1\PYZus{}c\PYZus{}graph\PY{l+m}{.}pdf	
+        
+        \PY{k}{restore}
+\end{Verbatim}
+\end{kframe}
+
+{\centering \includegraphics[width=4.2in,height=3.3in]{../data/Stata_version/figure/exercise_13_1_c_graph.pdf} 
+
+}
+
+
+
+\end{knitrout}
+
+A one-tailed test is appropriate here given that the campaign sought to increase its votes.  Randomization inference applied to 10,000 simulated randomizations shows that one-tailed p-value of the estimated ATE is 0.119. This figure is short of the conventional 0.05 threshold.
+
+\item Suppose it were the case that when randomly assigning precincts, the authors used the following screening procedure: no random allocation was acceptable unless the average 2006 Democratic support score in the treatment group was within 0.5 percentage points of the average 2006 Democratic support score in the control group. Do all subjects have the same probability of being assigned to the treatment group? If not, re-estimate the ATE, weighting the data as described in Box 4.5. Redo your hypothesis test in part (c) subject to this restriction on the randomization. Interpret the results.\\
+Answer:\\
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+   \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}6}]:} \PY{k}{clear}
+        \PY{k}{clear}\PY{k}{ matrix}
+        \PY{k}{clear}\PY{k}{ mata}
+        \PY{k}{set} matsize \PY{l+m}{11000} 
+        \PY{k}{set} maxvar \PY{l+m}{32767}
+        \PY{k}{set} seed \PY{l+m}{67887975}
+        
+        
+        \PY{k}{cap}\PY{k}{ matrix}\PY{k}{ drop} z
+        \PY{k}{matrix} z=\PY{n+nf}{J}(\PY{l+m}{65}, \PY{l+m}{10000}, .)
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}7}]:} \PY{c+c1}{//}\PY{c+c1}{ }\PY{c+c1}{r}\PY{c+c1}{e}\PY{c+c1}{s}\PY{c+c1}{t}\PY{c+c1}{i}\PY{c+c1}{r}\PY{c+c1}{c}\PY{c+c1}{t}\PY{c+c1}{e}\PY{c+c1}{d}\PY{c+c1}{ }\PY{c+c1}{R}\PY{c+c1}{A}\PY{c+c1}{ }\PY{c+c1}{l}\PY{c+c1}{o}\PY{c+c1}{o}\PY{c+c1}{p}
+        \PY{k}{qui}\PY{k}{ forvalues} i = \PY{l+m}{1}\PY{o}{/}\PY{l+m}{10000} \PYZob{}
+        	import delim .\PY{o}{/}data\PY{o}{/}chapter13\PY{o}{/}Middleton\PYZus{}Rogers\PYZus{}AI\PYZus{}2010,\PY{k}{ clear}	
+        \PY{k}{	tempvar} teststat Z
+        \PY{k}{	gen} \PY{n+nv}{`}\PY{n+nv}{Z}\PY{n+nv}{\PYZsq{}} = .
+        \PY{k}{	gen} \PY{n+nv}{`}\PY{n+nv}{t}\PY{n+nv}{e}\PY{n+nv}{s}\PY{n+nv}{t}\PY{n+nv}{s}\PY{n+nv}{t}\PY{n+nv}{a}\PY{n+nv}{t}\PY{n+nv}{\PYZsq{}} = \PY{l+m}{5}
+        \PY{k}{	while} (\PY{n+nf}{abs}(\PY{n+nv}{`}\PY{n+nv}{t}\PY{n+nv}{e}\PY{n+nv}{s}\PY{n+nv}{t}\PY{n+nv}{s}\PY{n+nv}{t}\PY{n+nv}{a}\PY{n+nv}{t}\PY{n+nv}{\PYZsq{}})\PY{o}{\PYZgt{}=}\PY{l+m}{0.5})\PYZob{}
+        \PY{k}{		tempvar} rannum ordering Zri 
+        \PY{k}{	    gen} \PY{n+nv}{`}\PY{n+nv}{r}\PY{n+nv}{a}\PY{n+nv}{n}\PY{n+nv}{n}\PY{n+nv}{u}\PY{n+nv}{m}\PY{n+nv}{\PYZsq{}}=\PY{n+nf}{uniform}()
+        \PY{k}{		egen} \PY{n+nv}{`}\PY{n+nv}{o}\PY{n+nv}{r}\PY{n+nv}{d}\PY{n+nv}{e}\PY{n+nv}{r}\PY{n+nv}{i}\PY{n+nv}{n}\PY{n+nv}{g}\PY{n+nv}{\PYZsq{}} = rank(\PY{n+nv}{`}\PY{n+nv}{r}\PY{n+nv}{a}\PY{n+nv}{n}\PY{n+nv}{n}\PY{n+nv}{u}\PY{n+nv}{m}\PY{n+nv}{\PYZsq{}})
+        \PY{k}{		gen} \PY{n+nv}{`}\PY{n+nv}{Z}\PY{n+nv}{r}\PY{n+nv}{i}\PY{n+nv}{\PYZsq{}} = \PY{l+m}{1}\PY{k}{ if} \PY{n+nv}{`}\PY{n+nv}{o}\PY{n+nv}{r}\PY{n+nv}{d}\PY{n+nv}{e}\PY{n+nv}{r}\PY{n+nv}{i}\PY{n+nv}{n}\PY{n+nv}{g}\PY{n+nv}{\PYZsq{}} \PY{o}{\PYZlt{}=} \PY{l+m}{48}
+        \PY{k}{		replace} \PY{n+nv}{`}\PY{n+nv}{Z}\PY{n+nv}{r}\PY{n+nv}{i}\PY{n+nv}{\PYZsq{}} = \PY{l+m}{0}\PY{k}{ if} \PY{n+nv}{`}\PY{n+nv}{o}\PY{n+nv}{r}\PY{n+nv}{d}\PY{n+nv}{e}\PY{n+nv}{r}\PY{n+nv}{i}\PY{n+nv}{n}\PY{n+nv}{g}\PY{n+nv}{\PYZsq{}} \PY{o}{\PYZgt{}} \PY{l+m}{48}
+        \PY{k}{				}
+        \PY{k}{		qui}\PY{k}{ reg} dem\PYZus{}perf\PYZus{}06 \PY{n+nv}{`}\PY{n+nv}{Z}\PY{n+nv}{r}\PY{n+nv}{i}\PY{n+nv}{\PYZsq{}}		
+        \PY{k}{		replace} \PY{n+nv}{`}\PY{n+nv}{t}\PY{n+nv}{e}\PY{n+nv}{s}\PY{n+nv}{t}\PY{n+nv}{s}\PY{n+nv}{t}\PY{n+nv}{a}\PY{n+nv}{t}\PY{n+nv}{\PYZsq{}} = \PYZus{}b[\PY{n+nv}{`}\PY{n+nv}{Z}\PY{n+nv}{r}\PY{n+nv}{i}\PY{n+nv}{\PYZsq{}}]
+        	\PYZcb{}
+        \PY{k}{	replace} \PY{n+nv}{`}\PY{n+nv}{Z}\PY{n+nv}{\PYZsq{}} = \PY{n+nv}{`}\PY{n+nv}{Z}\PY{n+nv}{r}\PY{n+nv}{i}\PY{n+nv}{\PYZsq{}}
+        \PY{k}{	forvalues} j = \PY{l+m}{1}\PY{o}{/}\PY{l+m}{65} \PYZob{}
+        \PY{k}{	matrix} z[\PY{n+nv}{`}\PY{n+nv}{j}\PY{n+nv}{\PYZsq{}}, \PY{n+nv}{`}\PY{n+nv}{i}\PY{n+nv}{\PYZsq{}}] = \PY{n+nv}{`}\PY{n+nv}{Z}\PY{n+nv}{\PYZsq{}}[\PY{n+nv}{`}\PY{n+nv}{j}\PY{n+nv}{\PYZsq{}}]
+        	\PYZcb{}
+        \PY{k}{	drop} \PYZus{}all
+        \PYZcb{}
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}8}]:} import delim .\PY{o}{/}data\PY{o}{/}chapter13\PY{o}{/}Middleton\PYZus{}Rogers\PYZus{}AI\PYZus{}2010,\PY{k}{ clear}
+         \PY{k}{rename} relevant\PYZus{}measures\PYZus{}net Y
+         \PY{k}{gen} int Z=.
+         \PY{k}{replace} Z = \PY{l+m}{1}\PY{k}{ if} treatment \PY{o}{==}\PY{l+m}{1}
+         \PY{k}{replace} Z = \PY{l+m}{0}\PY{k}{ if} treatment \PY{o}{==}\PY{l+m}{0}
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}9}]:} \PY{k}{matrix} rowm = z \PY{o}{*} \PY{n+nf}{J}(\PY{n+nf}{colsof}(z), \PY{l+m}{1}, \PY{l+m}{1}\PY{o}{/}\PY{n+nf}{colsof}(z))
+         \PY{k}{matrix} colnames rowm=probs
+         \PY{k}{svmat} double rowm, names(col)
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}10}]:} \PY{c+c1}{//}\PY{c+c1}{ }\PY{c+c1}{d}\PY{c+c1}{i}\PY{c+c1}{s}\PY{c+c1}{t}\PY{c+c1}{r}\PY{c+c1}{i}\PY{c+c1}{b}\PY{c+c1}{u}\PY{c+c1}{t}\PY{c+c1}{i}\PY{c+c1}{o}\PY{c+c1}{n}\PY{c+c1}{ }\PY{c+c1}{o}\PY{c+c1}{f}\PY{c+c1}{ }\PY{c+c1}{p}\PY{c+c1}{r}\PY{c+c1}{o}\PY{c+c1}{b}\PY{c+c1}{a}\PY{c+c1}{b}\PY{c+c1}{i}\PY{c+c1}{l}\PY{c+c1}{i}\PY{c+c1}{t}\PY{c+c1}{i}\PY{c+c1}{e}\PY{c+c1}{s}
+         \PY{k}{tabstat} probs, stat(min p25 med\PY{k}{ mean} p75 max)
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+
+    variable |       min       p25       p50      mean       p75       max
+-------------+------------------------------------------------------------
+       probs |     .7263     .7341      .737  .7384615     .7425     .7619
+--------------------------------------------------------------------------
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}11}]:} \PY{k}{svmat} z
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}12}]:} \PY{k}{cap}\PY{k}{ matrix}\PY{k}{ drop} tau\PYZus{}dis
+         \PY{k}{matrix} tau\PYZus{}dis=\PY{n+nf}{J}(\PY{l+m}{10000}, \PY{l+m}{1}, .)
+         
+         
+         \PY{c+c1}{//}\PY{c+c1}{ }\PY{c+c1}{c}\PY{c+c1}{a}\PY{c+c1}{l}\PY{c+c1}{c}\PY{c+c1}{u}\PY{c+c1}{l}\PY{c+c1}{a}\PY{c+c1}{t}\PY{c+c1}{e}\PY{c+c1}{ }\PY{c+c1}{e}\PY{c+c1}{s}\PY{c+c1}{t}\PY{c+c1}{i}\PY{c+c1}{m}\PY{c+c1}{a}\PY{c+c1}{t}\PY{c+c1}{e}\PY{c+c1}{ }\PY{c+c1}{d}\PY{c+c1}{i}\PY{c+c1}{s}\PY{c+c1}{t}\PY{c+c1}{r}\PY{c+c1}{i}\PY{c+c1}{b}\PY{c+c1}{u}\PY{c+c1}{t}\PY{c+c1}{i}\PY{c+c1}{o}\PY{c+c1}{n}
+         \PY{k}{forvalues} i = \PY{l+m}{1}\PY{o}{/}\PY{l+m}{10000}\PYZob{}
+         \PY{k}{	tempvar} weight\PY{n+nv}{`}\PY{n+nv}{i}\PY{n+nv}{\PYZsq{}}
+         \PY{k}{	gen} \PY{n+nv}{`}\PY{n+nv}{w}\PY{n+nv}{e}\PY{n+nv}{i}\PY{n+nv}{g}\PY{n+nv}{h}\PY{n+nv}{t}\PY{n+nv}{`}\PY{n+nv}{i}\PY{n+nv}{\PYZsq{}}\PY{n+nv}{\PYZsq{}} = z\PY{n+nv}{`}\PY{n+nv}{i}\PY{n+nv}{\PYZsq{}}\PY{o}{/}probs \PY{o}{+} (\PY{l+m}{1} \PY{o}{\PYZhy{}} z\PY{n+nv}{`}\PY{n+nv}{i}\PY{n+nv}{\PYZsq{}})\PY{o}{/}(\PY{l+m}{1} \PY{o}{\PYZhy{}} probs)
+         \PY{k}{	qui}\PY{k}{ reg} Y z\PY{n+nv}{`}\PY{n+nv}{i}\PY{n+nv}{\PYZsq{}} [pw=\PY{n+nv}{`}\PY{n+nv}{w}\PY{n+nv}{e}\PY{n+nv}{i}\PY{n+nv}{g}\PY{n+nv}{h}\PY{n+nv}{t}\PY{n+nv}{`}\PY{n+nv}{i}\PY{n+nv}{\PYZsq{}}\PY{n+nv}{\PYZsq{}}]
+         \PY{k}{	matrix} tau\PYZus{}dis[\PY{n+nv}{`}\PY{n+nv}{i}\PY{n+nv}{\PYZsq{}}, \PY{l+m}{1}] = \PYZus{}b[z\PY{n+nv}{`}\PY{n+nv}{i}\PY{n+nv}{\PYZsq{}}]	
+         
+         \PYZcb{}
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}13}]:} \PY{k}{set}\PY{k}{ more} off
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}14}]:} \PY{k}{preserve}
+         \PY{k}{svmat} tau\PYZus{}dis
+         \PY{k}{qui}\PY{k}{ count}\PY{k}{ if} tau\PYZus{}dis1 \PY{o}{\PYZgt{}} \PY{n+nv+vg}{\PYZdl{}}\PY{n+nv+vg}{tau}
+         \PY{c+c1}{//}\PY{c+c1}{ }\PY{c+c1}{o}\PY{c+c1}{n}\PY{c+c1}{e}\PY{c+c1}{ }\PY{c+c1}{t}\PY{c+c1}{a}\PY{c+c1}{i}\PY{c+c1}{l}\PY{c+c1}{e}\PY{c+c1}{d}\PY{c+c1}{ }\PY{c+c1}{p}\PY{c+c1}{\PYZhy{}}\PY{c+c1}{v}\PY{c+c1}{a}\PY{c+c1}{l}\PY{c+c1}{u}\PY{c+c1}{e}
+         \PY{k}{di} \PY{n+nf}{r}(N)\PY{o}{/}\PYZus{}N
+         
+         \PY{k}{graph}\PY{k}{ twoway} (histogram tau\PYZus{}dis1,frequency bin(\PY{l+m}{100})) \PY{c+cs}{///}
+         (scatteri \PY{l+m}{0} \PY{n+nv+vg}{\PYZdl{}}\PY{n+nv+vg}{tau} \PY{l+m}{300} \PY{n+nv+vg}{\PYZdl{}}\PY{n+nv+vg}{tau}, \PY{n+nf}{c}(l) lc(red) lw(thick) lp(dash)\PY{k}{ m}(i)), legend(off) \PY{c+cs}{///}
+         b1title(\PY{l+s}{\PYZdq{}}\PY{l+s}{E}\PY{l+s}{s}\PY{l+s}{t}\PY{l+s}{i}\PY{l+s}{m}\PY{l+s}{a}\PY{l+s}{t}\PY{l+s}{e}\PY{l+s}{d}\PY{l+s}{ }\PY{l+s}{A}\PY{l+s}{T}\PY{l+s}{E}\PY{l+s}{\PYZdq{}}) title(\PY{l+s}{\PYZdq{}}\PY{l+s}{D}\PY{l+s}{i}\PY{l+s}{s}\PY{l+s}{t}\PY{l+s}{r}\PY{l+s}{i}\PY{l+s}{b}\PY{l+s}{u}\PY{l+s}{t}\PY{l+s}{i}\PY{l+s}{o}\PY{l+s}{n}\PY{l+s}{ }\PY{l+s}{o}\PY{l+s}{f}\PY{l+s}{ }\PY{l+s}{t}\PY{l+s}{h}\PY{l+s}{e}\PY{l+s}{ }\PY{l+s}{E}\PY{l+s}{s}\PY{l+s}{t}\PY{l+s}{i}\PY{l+s}{m}\PY{l+s}{a}\PY{l+s}{t}\PY{l+s}{e}\PY{l+s}{d}\PY{l+s}{ }\PY{l+s}{A}\PY{l+s}{T}\PY{l+s}{E}\PY{l+s}{\PYZdq{}}) \PY{c+cs}{///}
+         xtitle(\PY{l+s}{\PYZdq{}}\PY{l+s}{\PYZdq{}}) 
+         
+         \PY{k}{graph} export ..\PY{o}{/}results\PY{o}{/}chapter13\PY{o}{/}exercise\PYZus{}13\PYZus{}1\PYZus{}d\PYZus{}graph\PY{l+m}{.}pdf	
+         
+         \PY{k}{restore}
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+.0238
+
+    \end{Verbatim}
+\end{kframe}
+
+{\centering \includegraphics[width=4.2in,height=3.3in]{../data/Stata_version/figure/exercise_13_1_d_graph.pdf} 
+
+}
+
+
+
+\end{knitrout}
+
+Randomization inference applied to 10,000 simulated restricted randomizations shows that one-tailed p-value of the estimated ATE is 0.0238. This figure allows us to reject the null hypothesis at the conventional 0.05 threshold.  The p-value here is lower than when we assume unrestricted randomization because re-randomization functions as a form of blocking..
+\end{enumerate}
+
+\section*{Question 2}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{verbatim}
+
+
+
+
+
+
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+
+
+\section*{Question 3}
+Conduct your own randomized experiment, based on one of the suggested topics in Appendix B.
+\begin{enumerate}[a)]
+\item Compose a planning document.
+\item Take an online research ethics course, and obtain your certification to conduct human subjects research. Obtain approval for your study from the institutional review board at your college or university.
+\item Conduct a small pilot study to work out any problems in administering the treatment or measuring outcomes.
+\item Conduct the experiment. Construct a data file and supporting metadata.
+\item Compose a research report.
+\end{enumerate}
+Answer:\\
+Answers to this question will vary.
+
+
+
+\end{document}
+
