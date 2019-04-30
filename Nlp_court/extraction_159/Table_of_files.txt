@@ -1,0 +1,13 @@
+=======================
+=           Table of Files               =
+=======================
+
+1. Extraction_LexNLP. ipynb: A jupiter notebook file you can run the python code in your computer, if you download the required python packages.
+
+2.Extraction_LexNLP.html: the result when I run the Extraction_Code in my computer, stored in a html file. You can open the html using web browser (Google Chrome)
+
+3. Extraction_Code_Result.pdf: he result when I run the Extraction_Code in my computer, stored in a pdf file. The same content as the html file above, but in pdf format, for the convenience of opening and reading.
+
+4. Meta_file.csv: the meta data I have extracted from the case documents.
+
+5. reference_extract.csv: the extracted references from the case documents.
