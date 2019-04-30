@@ -2,19 +2,19 @@
 
 ## Repository Description:
 
-| Folder Name                        | Description |
-| ---------------------------------- | ----------- |
-| `raw_stata_code`(./raw_stata_code) |             |
-|                                    |             |
-|                                    |             |
-|                                    |             |
-|                                    |             |
-|                                    |             |
-|                                    |             |
-|                                    |             |
-|                                    |             |
-|                                    |             |
-|                                    |             |
-|                                    |             |
-|                                    |             |
+| Folder Name                             | Description |
+| --------------------------------------- | ----------- |
+| `raw_stata_code`[RAW](./raw_stata_code) |             |
+|                                         |             |
+|                                         |             |
+|                                         |             |
+|                                         |             |
+|                                         |             |
+|                                         |             |
+|                                         |             |
+|                                         |             |
+|                                         |             |
+|                                         |             |
+|                                         |             |
+|                                         |             |
 
