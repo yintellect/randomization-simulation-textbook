@@ -1,9 +1,11 @@
 
-Cloud_Computing_Intro/
+*/Cloud_Computing_Intro/*
 
-.Idea/
-.ipynb_checkpoints/
+*/.Idea/*
+.ipynb_checkpoints
 .Rdata
 .Rhistory
-.Rproj.user/
+*/.Rproj.user/*
 Icon?
+.ipynb_checkpoints
+*/.ipynb_checkpoints/*
