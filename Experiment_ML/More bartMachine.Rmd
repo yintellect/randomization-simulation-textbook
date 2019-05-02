@@ -3,10 +3,12 @@ title: "Thesis Analysis"
 author: "Nicole Smith"
 date: "4/19/2018"
 output: html_document
+editor_options: 
+  chunk_output_type: inline
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(fig.path="/Users/Nicole/Desktop/Masters Thesis/Data/figs/",
+knitr::opts_chunk$set(fig.path="figs/",
                cache.path="cache/",
                cache=TRUE)
 
@@ -15,14 +17,13 @@ library(foreign)
 library(haven)
 library(tidyverse)
 
-setwd("/Users/Nicole/Desktop/Masters Thesis/Data/")
 set.seed(2184)
 ```
 
 
 #### Baird, McIntosh, Ozler (2011), "Cash or Condition? Evidence from a cash transfer experiment", Quarterly Journal of Economics, 126(4), pp. 1709-1753
 ```{r Baird (2011) Housekeeping}
-baird <- read_dta("./Baird Data/CorC_Public_Data_FINAL_DEIDENTIFIED.dta")
+baird <- read_dta("./baird_dataverse_files/CorC_Public_Data_FINAL_DEIDENTIFIED.dta")
 
 baird <- plyr::rename(baird, c("_Iage_R1_14" = "Iage_R1_14", "_Iage_R1_15" = "Iage_R1_15", "_Iage_R1_16" = "Iage_R1_16", "_Iage_R1_17" = "Iage_R1_17", "_Iage_R1_18" = "Iage_R1_18", "_Iage_R1_19" = "Iage_R1_19", "_Iage_R1_20" = "Iage_R1_20"))
 

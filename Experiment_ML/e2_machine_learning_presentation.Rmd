@@ -9,8 +9,7 @@ output: ioslides_presentation
 ```{r setup, include=FALSE, cache = FALSE}
 knitr::opts_chunk$set(echo = FALSE)
 
-setwd("C:/Users/Dylan Groves/Dropbox/Columbia/2018 Fall/Experiments 2/Machine Learning Presentation")
-
+dyn.load('/Library/Java/JavaVirtualMachines/jdk1.8.0_141.jdk/Contents/Home/jre/lib/server/libjvm.dylib')
 library(BayesTree)
 library(bartMachine)
 library(dplyr)

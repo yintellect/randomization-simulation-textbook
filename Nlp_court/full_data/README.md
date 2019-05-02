@@ -13,13 +13,20 @@
 
 ## Intermediate Dataset
 
-| Dataset                 | Description                                                  |
-| ----------------------- | ------------------------------------------------------------ |
-| `0_amy_cases.json`      | large dictionary {file name: raw text} for 854 cases, from Lilian's PDF parsing |
-| `0_full_name_text.json` | convert `amy_cases.json` key value pair to two list: `file_name`, `raw_text` |
-| `cite_edge.csv`         | edge list of citation                                        |
-| `cite_node.csv`         | node list contains `case_code`, `case_name`, `court_from`, `court_type` |
-| `extraction854.csv`     | full extractions include `case_code`, `case_name`, `court_from`, `court_type`, `result`, `author`, `judge_panel` |
-| `decision_text.json`    | json file include `author`, `decision`(result of the case), `opinion` (opinion text), `cleaned_text` (cleaned opinion text) |
-| `cleaned_text.csv`      | csv file contains allt the cleaned text                      |
+| Dataset               | Description                                                  |
+| --------------------- | ------------------------------------------------------------ |
+| `amy_cases.json`      | large dictionary {file name: raw text} for 854 cases, from Lilian's PDF parsing |
+| `full_name_text.json` | convert `amy_cases.json` key value pair to two list: `file_name`, `raw_text` |
+| `cite_edge.csv`       | edge list of citation                                        |
+| `cite_node.csv`       | node list contains `case_code`, `case_name`, `court_from`, `court_type` |
+| `extraction854.csv`   | full extractions include `case_code`, `case_name`, `court_from`, `court_type`, `result`, `author`, `judge_panel` |
+| `decision_text.json`  | json file include `author`, `decision`(result of the case), `opinion` (opinion text), `cleaned_text` (cleaned opinion text) |
+| `cleaned_text.csv`    | csv file contains allt the cleaned text                      |
 
+## Visulization Charts
+
+### Full Citation Network (all cases and cited cases)
+
+![Full Network](Full Network.png)
+
+### Citation Between Available Cases!Full Network](Full Network.png)![Between_Node](Between_Node.png)
