@@ -10,3 +10,13 @@ qjy010/
 *.DS_Store
 
 .Rproj.user
+
+Nlp_court/Cloud_Computing_Intro/*
+
+*/.idea/*
+.ipynb_checkpoints
+.Rdata
+.Rhistory
+*/.Rproj.user/*
+Icon?
+*/.ipynb_checkpoints/*
