@@ -11,10 +11,14 @@ qjy010/
 
 .Rproj.user
 
-Nlp_court/Cloud_Computing_Intro/*
+Icon
+*/Icon
+Nlp_court/Cloud_Computing_Intro/
+Nlp_court//.idea/
+Nlp_court/.ipynb_checkpoints
+Nlp_court/extraction_159/.ipynb_checkpoints
+Nlp_court/full_data/.ipynb_checkpoints
 
-*/.idea/*
-.ipynb_checkpoints
 .Rdata
 .Rhistory
 */.Rproj.user/*
