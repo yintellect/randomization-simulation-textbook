@@ -27,6 +27,6 @@
 
 ### Full Citation Network (all cases and cited cases)
 
-![Full Network](Full Network.png)
+![Full Network](Full Network.jpg)
 
-### Citation Between Available Cases!Full Network](Full Network.png)![Between_Node](Between_Node.png)
+### Citation Between Available Cases!Full Network](Full Network.png)![Between_Node](Between_Node.jpg)

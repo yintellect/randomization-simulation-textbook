@@ -23,4 +23,4 @@
 
 #### Citation Frequency![case_freq](case_freq.png)
 
-#### Citation Network![citation_net](citation_net.png)
+#### Citation Network![citation_net](citation_net.jpg)
