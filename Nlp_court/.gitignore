@@ -1,2 +1,9 @@
 
 Cloud_Computing_Intro/
+
+.Idea/
+.ipynb_checkpoints/
+.Rdata
+.Rhistory
+.Rproj.user/
+Icon?

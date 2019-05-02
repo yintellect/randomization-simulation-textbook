@@ -29,4 +29,6 @@
 
 ![Full Network](Full Network.jpg)
 
-### Citation Between Available Cases!Full Network](Full Network.png)![Between_Node](Between_Node.jpg)
+### Citation Between Available Cases
+
+![Between_Node](Between_Node.jpg)
