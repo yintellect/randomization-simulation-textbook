@@ -1,6 +1,6 @@
 # Field Experiemnt Simulation and Randomization via R and Stata
 
-This project is to prepare a new edication for textbook [*Field Experiments: Design, Analysis, and Interpretation (FEDAI)*](https://isps.yale.edu/FEDAI) to add Stata program for all the simulations and randomization inferences in this book and problem sets.
+This project is to prepare a new edition for the textbook  [*Field Experiments: Design, Analysis, and Interpretation (FEDAI)*](https://isps.yale.edu/FEDAI)  by converting the R program to Stata for all the simulations and randomization inferences in this book and problem sets.
 
 ![cover](cover.png)
 
