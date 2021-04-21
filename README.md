@@ -10,7 +10,7 @@ This project is to prepare a new edition for the textbook  [*Field Experiments: 
 
 **Software**: `Stata`, `R`, `Jupyter Notebook`, `LaTex`, `Bash`
 
-To run the script on this repository, datasets can be dowloaded from Yale University [FEDAI](https://isps.yale.edu/FEDAI) page.
+To run the script on this repository, datasets are under `/R_program_and_dataset`
 
 #### Work Description:
 
